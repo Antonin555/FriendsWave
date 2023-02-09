@@ -8,6 +8,7 @@ L'utilisateur pourra remplir son profil, créer des évenements, ajouter des ami
 Auteurs
 
 Alexandre Caron
+
 Antonin Lenoir
 
 Fonctionnalités
