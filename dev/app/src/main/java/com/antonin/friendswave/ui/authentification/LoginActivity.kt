@@ -27,6 +27,4 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
         binding.viewmodel = viewModel
     }
 
-
-
 }
