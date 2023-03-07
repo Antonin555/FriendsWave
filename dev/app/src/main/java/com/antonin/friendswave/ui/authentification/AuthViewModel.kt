@@ -11,6 +11,8 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
     var email: String? = null
     var password: String? = null
 
+    var interfaceAuth : InterfaceAuth? = null
+
     fun login(){
         if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
             return
@@ -33,10 +35,13 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
     fun signup() {
         if (email.isNullOrEmpty()  || password.isNullOrEmpty()  || name.isNullOrEmpty()) {
 
+            interfaceAuth?.onFailure("Please input all values")
             return
-        }
-        repository.register(name!!,email!!, password!!)
 
+        }
+
+        repository.register(name!!,email!!, password!!)
+        interfaceAuth?.onSuccess()
     }
 
     fun goToLogin(view: View){

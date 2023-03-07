@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 
 import com.antonin.friendswave.R
 import com.antonin.friendswave.databinding.ActivitySingupBinding
+import com.antonin.friendswave.outils.startHomeActivity
 
 import com.antonin.friendswave.ui.home.HomeActivity
 
@@ -19,7 +20,7 @@ import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
 
-class SignupActivity : AppCompatActivity(), KodeinAware {
+class SignupActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
 
     //    private lateinit var progressbar : ProgressBar
     override val kodein by kodein()
@@ -37,8 +38,23 @@ class SignupActivity : AppCompatActivity(), KodeinAware {
         viewModel = ViewModelProviders.of(this, factory).get(AuthViewModel::class.java)
         binding.viewmodel = viewModel
 
+        viewModel.interfaceAuth = this
 
+    }
 
+    override fun onStarted() {
+        Intent(this, HomeActivity::class.java).also {
+            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(it)
+        }
+    }
+
+    override fun onSuccess() {
+        startHomeActivity()
+    }
+
+    override fun onFailure(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
 //    override fun onStarted() {

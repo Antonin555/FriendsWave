@@ -1,11 +1,13 @@
 package com.antonin.friendswave.data.firebase
 
 import android.content.Intent
+import android.view.View
 import android.widget.Toast
 import com.antonin.friendswave.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.antonin.friendswave.outils.startHomeActivity
 
 class FirebaseSource {
 
@@ -55,10 +57,10 @@ class FirebaseSource {
             if (it.isSuccessful) {
                 //code for jumping to home
                 addUserToDatabase(name,email, firebaseAuth.currentUser?.uid!!)
+
             } else {
                 //mettre un toast pour indiquer le fail
                 println("erreur ajouter un toast")
-
             }
         }
 
