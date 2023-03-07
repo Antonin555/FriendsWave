@@ -21,7 +21,7 @@ class AdapterFragment(fa: FragmentActivity) : FragmentStateAdapter(fa) {
 //
 //            }
 //            3  -> return NotificationsFragment()
-//        }
-        return HomeFragment(
+        }
+        return HomeFragment()
     }
 }

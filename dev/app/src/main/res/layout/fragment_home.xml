@@ -1,14 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragment.HomeFragment">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+
+    <data>
+        <variable name="viewmodel"
+            type="com.antonin.friendswave.ui.home.HomeViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:paddingTop="100dp"
+        tools:context=".ui.Fragments.MyHomeFragment">
 
-</FrameLayout>
+        <!-- TODO: Update blank fragment layout -->
+        <FrameLayout
+            android:id="@+id/map_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/mapView"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.3"
+                    android:gravity="center"
+                    android:text="@string/hello_blank_fragment"
+                    android:textSize="24sp" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+
+                    android:layout_weight="0.3"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+
+                        <Button
+                            android:id="@+id/btn_add_event"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Add Event" />
+
+                        <Button
+                            android:id="@+id/btn_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Button" />
+
+                        <Button
+                            android:id="@+id/btn_maps"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Maps" />
+
+                        <Button
+                            android:id="@+id/btn_test1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Button" />
+
+                        <Button
+                            android:id="@+id/btn_test2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Button" />
+
+                        <Button
+                            android:id="@+id/btn_test3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Button" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerFragmentHome"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
