@@ -16,7 +16,10 @@ class FirebaseSource {
 
     val firebaseData : DatabaseReference = FirebaseDatabase.getInstance().getReference()
 
+    fun currentUser() = firebaseAuth.currentUser
 
+
+    fun logout() = firebaseAuth.signOut()
 
     fun login(email: String, password: String) {
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
