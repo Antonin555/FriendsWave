@@ -5,8 +5,8 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import org.kodein.di.generic.instance
 import androidx.lifecycle.ViewModelProviders
-import com.antonin.app_mvvm_firebase.R
-import com.antonin.app_mvvm_firebase.databinding.ActivityLoginBinding
+import com.antonin.friendswave.R
+import com.antonin.friendswave.databinding.ActivityLoginBinding
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 

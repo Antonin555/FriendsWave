@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace 'com.antonin.app_mvvm_firebase'
+    namespace 'com.antonin.friendswave'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.antonin.app_mvvm_firebase"
+        applicationId "com.antonin.friendswave"
         minSdk 21
         targetSdk 33
         versionCode 1
@@ -98,7 +98,7 @@ dependencies {
 
 
     // TextDrawable
-    implementation "com.amulyakhare:com.amulyakhare.textdrawable:1.0.1"
+//    implementation "com.amulyakhare:com.amulyakhare.textdrawable:1.0.1"
 
 
 
