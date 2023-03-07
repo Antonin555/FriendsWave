@@ -8,5 +8,5 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     fun login(email: String, password: String) = firebase.login(email, password)
 
-    fun logout() = firebase.logout()
+    fun register(name : String,email: String, password: String) = firebase.register(name,email, password)
 }

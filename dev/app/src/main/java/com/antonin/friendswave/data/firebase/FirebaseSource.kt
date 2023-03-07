@@ -49,6 +49,19 @@ class FirebaseSource {
         firebaseData.push().setValue(User(name,email,uid))
 
     }
+
+    fun register(name: String, email: String, password: String) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+            if (it.isSuccessful) {
+                //code for jumping to home
+                addUserToDatabase(name,email, firebaseAuth.currentUser?.uid!!)
+            } else {
+                //mettre un toast pour indiquer le fail
+                println("erreur ajouter un toast")
+            }
+        }
+
+    }
 }
 
 

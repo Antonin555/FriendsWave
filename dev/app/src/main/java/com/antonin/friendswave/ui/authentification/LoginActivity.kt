@@ -1,14 +1,15 @@
 package com.antonin.friendswave.ui.authentification
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import org.kodein.di.generic.instance
 import androidx.lifecycle.ViewModelProviders
 import com.antonin.friendswave.R
 import com.antonin.friendswave.databinding.ActivityLoginBinding
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
+import org.kodein.di.generic.instance
+
 
 
 
@@ -25,6 +26,8 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
         val binding: ActivityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         viewModel = ViewModelProviders.of(this, factory).get(AuthViewModel::class.java)
         binding.view = viewModel
+
+        
 
     }
 

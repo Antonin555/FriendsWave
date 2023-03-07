@@ -30,5 +30,24 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
 
     }
 
+    fun signup() {
+        if (email.isNullOrEmpty()  || password.isNullOrEmpty()  || name.isNullOrEmpty()) {
+
+            return
+        }
+        repository.register(name!!,email!!, password!!)
+
+    }
+
+    fun goToLogin(view: View){
+
+        // .also permet d'eviter de déclarer une variable :
+        Intent(view.context, LoginActivity::class.java).also {
+            view.context.startActivity(it)
+        }
+
+
+    }
+
 
 }
