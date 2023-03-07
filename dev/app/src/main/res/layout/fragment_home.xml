@@ -6,10 +6,6 @@
 
 
 
-    <data>
-        <variable name="viewmodel"
-            type="com.antonin.friendswave.ui.home.HomeViewModel"/>
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -101,7 +97,6 @@
                     android:layout_weight="1" />
             </LinearLayout>
         </FrameLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

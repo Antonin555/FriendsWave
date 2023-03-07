@@ -24,7 +24,8 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
 
         val binding: ActivityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         viewModel = ViewModelProviders.of(this, factory).get(AuthViewModel::class.java)
-        binding.viewmodel = viewModel
+        binding.view = viewModel
+
     }
 
 }
