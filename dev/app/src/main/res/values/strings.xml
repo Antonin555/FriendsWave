@@ -5,5 +5,9 @@
     <string name="titre_fragment_contact">CONTACT</string>
     <string name="titre_fragment_home">HOME</string>
     <string name="titre_fragment_event">EVENTS</string>
+    <string name="suggests_fragment_home">SUGGESTIONS </string>
+    <string name="rating_fragment_home">rating : </string>
+    <string name="friends_fragment_home">friends : </string>
+
 
 </resources>

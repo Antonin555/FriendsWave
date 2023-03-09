@@ -37,7 +37,6 @@ class HomeActivity : AppCompatActivity() {
             "Home",
             "Events",
             "Contact",
-
         )
 
 

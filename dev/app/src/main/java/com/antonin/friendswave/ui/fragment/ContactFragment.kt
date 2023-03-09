@@ -19,49 +19,33 @@ import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 class ContactFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-
     private lateinit var adapter1 : ListGeneriqueAdapter<User>
-
     private var viewModel: HomeFragmentViewModel  = HomeFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         viewModel.fetchUsers()
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-
         return inflater.inflate(R.layout.fragment_contact, container, false)
     }
 
     override fun onResume() {
         super.onResume()
 
-
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_contact)
-
         val layoutManager = LinearLayoutManager(context)
-
         recyclerView = view?.findViewById(R.id.recyclerFragmentContact)!!
         recyclerView.layoutManager = layoutManager
-
         recyclerView.adapter = adapter1
-
         adapter1.addItems(contactList)
-
-
     }
 
 
-
     companion object {
-
         var contactList:ArrayList<User> = ArrayList()
-
     }
 
 }
