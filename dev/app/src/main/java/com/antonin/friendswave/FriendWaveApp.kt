@@ -6,6 +6,8 @@ import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityLoginBinding.bind
 import com.antonin.friendswave.ui.authentification.AuthViewModelFactory
+import com.antonin.friendswave.ui.fragment.HomeFragment
+import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -25,6 +27,8 @@ class FriendWaveApp : Application(), KodeinAware {
         bind() from singleton { FirebaseSource() }
         bind() from singleton { UserRepo(instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
+        bind() from provider { HomeFragmentVMFactory(instance()) }
+
 
     }
 }

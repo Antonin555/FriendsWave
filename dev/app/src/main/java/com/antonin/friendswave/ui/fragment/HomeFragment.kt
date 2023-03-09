@@ -7,9 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.antonin.friendswave.R
 import com.antonin.friendswave.data.model.User
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
+import org.kodein.di.generic.instance
+
+class HomeFragment : Fragment(), KodeinAware {
 
 
-class HomeFragment : Fragment() {
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +27,9 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
+
+    override val kodein: Kodein
+        get() = TODO("Not yet implemented")
 
 
 }

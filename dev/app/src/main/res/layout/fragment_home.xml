@@ -4,7 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
 
+        <variable name="item" type="com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel" />
+    </data>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -59,7 +62,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="@string/titre_fragment_home"
+                            android:text="@{item.user.email}"
                             android:textSize="24sp" />
 
                         <LinearLayout
@@ -80,7 +83,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="TextView" />
+                                android:text="@{item.user.displayName}" />
 
                             <TextView
                                 android:id="@+id/textView7"
@@ -108,8 +111,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="TextView" />
-
+                                 />
+<!--                            android:text="@{String.valueOf(item.rating)}"-->
                             <TextView
                                 android:id="@+id/textView2"
                                 android:layout_width="0dp"
@@ -138,8 +141,7 @@
                 android:id="@+id/recyclerFragmentHome"
                 android:layout_width="match_parent"
                 android:layout_height="234dp"
-                android:layout_gravity="center"
-                android:layout_weight="1" />
+                android:layout_gravity="center" />
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

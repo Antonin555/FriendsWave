@@ -28,6 +28,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-black"
             android:gravity="center_horizontal"
             android:text="New User Signup"
             android:textColor="#000000"
@@ -52,14 +53,6 @@
                 android:orientation="vertical"
                 android:paddingTop="30dp">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:gravity="center"
-                    android:labelFor="@id/text_name"
-                    android:text="name" />
-
                 <EditText
                     android:id="@+id/text_name"
                     android:layout_width="fill_parent"
@@ -67,18 +60,10 @@
                     android:layout_marginBottom="10dp"
                     android:drawableLeft="@color/design_default_color_primary"
                     android:drawablePadding="10dp"
-                    android:hint="john@gmail.com"
+                    android:hint="name"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
                     android:text="@={viewmodel.name}" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:gravity="center"
-                    android:labelFor="@id/text_email"
-                    android:text="email" />
 
                 <EditText
                     android:id="@+id/text_email"
@@ -87,18 +72,10 @@
                     android:layout_marginBottom="10dp"
                     android:drawableLeft="@color/design_default_color_primary"
                     android:drawablePadding="10dp"
-                    android:hint="john@gmail.com"
+                    android:hint="email"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
                     android:text="@={viewmodel.email}" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:gravity="center"
-                    android:labelFor="@id/edit_text_password"
-                    android:text="password" />
 
                 <EditText
                     android:id="@+id/edit_text_password"
@@ -106,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@color/black"
                     android:drawablePadding="10dp"
-                    android:hint="Password"
+                    android:hint="password"
                     android:inputType="textPassword"
                     android:singleLine="true"
                     android:text="@={viewmodel.password}" />

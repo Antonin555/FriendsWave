@@ -30,6 +30,7 @@ data class User (
     var email: String? = "",
     var uid: String? = "",
     var rating: Double? =0.0,
+    var friends : Int? = 1
 
 
 
