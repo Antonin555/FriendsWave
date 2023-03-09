@@ -12,5 +12,5 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     fun logout() = firebase.logout()
 
-    fun fetchUSers() = firebase.fetchUsers()
+    fun fetchUsers() = firebase.fetchUsers()
 }

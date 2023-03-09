@@ -19,9 +19,9 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
         view.context.startLoginActivity() // va chercher les fonctions utiles pour les Intent
     }
 
-    fun fetchUser() {
+    fun fetchUsers() {
 
-        repository.fetchUSers()
+        repository.fetchUsers()
     }
 //
 //    fun addContact(view: View) {

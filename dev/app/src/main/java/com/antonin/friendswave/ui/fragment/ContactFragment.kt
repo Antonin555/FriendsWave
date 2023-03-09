@@ -27,32 +27,39 @@ class ContactFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        var recyclerView : RecyclerView
+
 
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+
+
         return inflater.inflate(R.layout.fragment_contact, container, false)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter1 = ListGeneriqueAdapter(R.layout.recycler_contact)
+
+        val layoutManager = LinearLayoutManager(context)
+
+        recyclerView = view?.findViewById(R.id.recyclerFragmentContact)!!
+        recyclerView.layoutManager = layoutManager
+
+        recyclerView.adapter = adapter1
+        viewModel.fetchUsers()
+
+        adapter1.addItems(contactList)
+
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter1 = ListGeneriqueAdapter(R.layout.recycler_contact)
 
-        val layoutManager = LinearLayoutManager(context)
 
-        recyclerView = view?.findViewById(R.id.recyclerFragmentContact)!!
-
-        recyclerView.layoutManager = layoutManager
-
-//        adapter = HomeAdapter(requireContext(), eventList)
-//        adapter = ItemsAdapter(eventList)
-        recyclerView.adapter = adapter1
-
-        viewModel.fetchUser()
-        adapter1.addItems(contactList)
 
         println("hello")
 
