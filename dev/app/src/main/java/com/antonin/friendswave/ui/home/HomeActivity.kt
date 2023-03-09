@@ -35,11 +35,10 @@ class HomeActivity : AppCompatActivity() {
 
         val tabLayoutArray = arrayOf(
             "Home",
-            "Contact",
             "Events",
-            "Notifs"
-        )
+            "Contact",
 
+        )
 
 
         tabLayout = findViewById(R.id.tabLayout)
@@ -62,21 +61,6 @@ class HomeActivity : AppCompatActivity() {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabLayoutArray[position]
         }.attach()
-
-//        val binding: ActivityHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_home)
-//        viewModel = ViewModelProviders.of(this, factory).get(HomeViewModel::class.java)
-//        binding.viewmodel = viewModel
-
-//        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-//        val navController = navHostFragment.navController
-
-
-
-//        button2.setOnClickListener{
-//                    getLocation()
-//        }
-
-
 
     }
 

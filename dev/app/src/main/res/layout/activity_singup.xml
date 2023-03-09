@@ -124,15 +124,16 @@
                     android:textColor="#fff"
                     android:textSize="18sp" />
 
-<!--                <Button-->
-<!--                    android:id="@+id/text_view_register"-->
-<!--                    android:layout_width="262dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center_horizontal"-->
-<!--                    android:onClick="@{(v) -> viewmodel.goToLogin(v)}"-->
-<!--                    android:text="login"-->
-<!--                    android:textAlignment="center"-->
-<!--                    android:textAppearance="@style/TextAppearance.AppCompat.Headline" />-->
+                <Button
+                    android:id="@+id/text_view_register"
+                    android:layout_width="262dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:onClick="@{(v) -> viewmodel.goToLogin(v)}"
+                    android:text="login"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
             </LinearLayout>
 
         </RelativeLayout>

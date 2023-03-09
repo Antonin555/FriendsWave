@@ -1,6 +1,7 @@
 package com.antonin.friendswave.ui.authentification
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -36,16 +37,16 @@ class LoginActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
         TODO("Not yet implemented")
     }
 
+
     override fun onSuccess() {
         startHomeActivity()
     }
 
     override fun onFailure(message: String) {
-        TODO("Not yet implemented")
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-
-
+    // Permet d'accéder directement a l'app sans remettre son login :
     override fun onStart() {
         super.onStart()
         viewModel.user?.let {

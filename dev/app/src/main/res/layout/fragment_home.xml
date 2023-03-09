@@ -37,7 +37,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="0.3"
                     android:gravity="center"
-                    android:text="@string/hello_blank_fragment"
+                    android:text="@string/titre_fragment_home"
                     android:textSize="24sp" />
 
                 <HorizontalScrollView

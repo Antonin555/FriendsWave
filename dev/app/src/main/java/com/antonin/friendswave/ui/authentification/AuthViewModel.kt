@@ -20,6 +20,8 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
 
     fun login(){
         if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
+
+            interfaceAuth?.onFailure("Please enter a valid mail and a valid password")
             return
         }
 
@@ -45,7 +47,6 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
             return
 
         }
-
         repository.register(name!!,email!!, password!!)
         interfaceAuth?.onSuccess()
     }
@@ -53,7 +54,7 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
     fun goToLogin(view: View){
 
         // .also permet d'eviter de déclarer une variable :
-        Intent(view.context, HomeActivity::class.java).also {
+        Intent(view.context, LoginActivity::class.java).also {
             view.context.startActivity(it)
         }
 

@@ -5,9 +5,10 @@ import android.view.View
 import android.widget.Toast
 import com.antonin.friendswave.data.model.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.antonin.friendswave.outils.startHomeActivity
+import com.antonin.friendswave.ui.fragment.ContactFragment
+import com.antonin.friendswave.ui.fragment.HomeFragment
+import com.google.firebase.database.*
 
 class FirebaseSource {
 
@@ -34,26 +35,47 @@ class FirebaseSource {
     }
 
 
-//
-//    fun addUserToDatabase(name: String, email: String, uid: String, ){
-//
-//
-//
-//    }
+
+    fun addUserToDatabase(name: String, email: String, uid: String, ){
+
+        firebaseData.child("user").child(uid).setValue(User(name,email,uid))
+
+    }
 
     fun register(name: String, email: String, password: String) {
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+
+
             if (it.isSuccessful) {
-                //code for jumping to home
+                addUserToDatabase(name,email, firebaseAuth.currentUser?.uid!!)
 
-                firebaseData.push().setValue(User(name,email,firebaseAuth.currentUser?.uid!!))
-//                addUserToDatabase(name,email, firebaseAuth.currentUser?.uid!!)
-
-
+            }
         }
-
     }
-}
+
+
+    fun fetchUsers(){
+        firebaseData.child("user").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                ContactFragment.contactList.clear()
+                for (postSnapshot in snapshot.children){
+
+                    val user = postSnapshot.getValue(User::class.java)
+
+                    ContactFragment.contactList.add(user!!)
+
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+    }
+
+
+
 }
 
 

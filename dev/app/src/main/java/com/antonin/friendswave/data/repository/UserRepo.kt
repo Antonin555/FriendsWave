@@ -11,4 +11,6 @@ class UserRepo(private val firebase: FirebaseSource) {
     fun register(name : String,email: String, password: String) = firebase.register(name,email, password)
 
     fun logout() = firebase.logout()
+
+    fun fetchUSers() = firebase.fetchUsers()
 }

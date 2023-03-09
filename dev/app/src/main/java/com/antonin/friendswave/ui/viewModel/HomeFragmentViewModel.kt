@@ -18,6 +18,11 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
         repository.logout()
         view.context.startLoginActivity() // va chercher les fonctions utiles pour les Intent
     }
+
+    fun fetchUser() {
+
+        repository.fetchUSers()
+    }
 //
 //    fun addContact(view: View) {
 //
@@ -34,12 +39,8 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 //        repository.fetchEvents(recyclerView,context,adapter)
 //    }
 //
-//
-//    fun fetchEvents1() {
-//
-//        repository.fetchEvents1()
-//    }
-//
+
+
 //    fun addCalendar(event: Event) {
 //
 //        repository.addEvent( event.name!!,event.date!!, event.prenom!!, event.isActive!!, event.lattitude!!, event.longitude!!)
