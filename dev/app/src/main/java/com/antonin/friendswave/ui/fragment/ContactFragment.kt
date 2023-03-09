@@ -27,8 +27,8 @@ class ContactFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        var recyclerView : RecyclerView
 
+        viewModel.fetchUsers()
 
     }
 
@@ -40,6 +40,8 @@ class ContactFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_contact)
 
         val layoutManager = LinearLayoutManager(context)
@@ -48,9 +50,9 @@ class ContactFragment : Fragment() {
         recyclerView.layoutManager = layoutManager
 
         recyclerView.adapter = adapter1
-        viewModel.fetchUsers()
 
         adapter1.addItems(contactList)
+
 
     }
 
