@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.antonin.friendswave.R
 import com.antonin.friendswave.databinding.ActivityLoginBinding
+import com.antonin.friendswave.outils.startHomeActivity
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -13,7 +14,7 @@ import org.kodein.di.generic.instance
 
 
 
-class LoginActivity : AppCompatActivity(), KodeinAware {
+class LoginActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
 
     override val kodein by kodein()
     private lateinit var viewModel: AuthViewModel
@@ -27,8 +28,28 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
         viewModel = ViewModelProviders.of(this, factory).get(AuthViewModel::class.java)
         binding.view = viewModel
 
-        
+        viewModel.interfaceAuth = this
 
     }
 
+    override fun onStarted() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSuccess() {
+        startHomeActivity()
+    }
+
+    override fun onFailure(message: String) {
+        TODO("Not yet implemented")
+    }
+
+
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.user?.let {
+            startHomeActivity()
+        }
+    }
 }

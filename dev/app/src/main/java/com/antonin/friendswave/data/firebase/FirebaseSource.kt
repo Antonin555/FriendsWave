@@ -26,45 +26,34 @@ class FirebaseSource {
     fun login(email: String, password: String) {
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
-                println("yo")
+                println("yo1")
             }
             else
-                println("yo")
+                println("yo-bad")
         }
     }
 
-    fun singUp(name: String, email: String, password: String){
-        //logik of creating a user
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    //code for jumping to home
 
-                } else {
-
-                }
-            }
-    }
-
-    fun addUserToDatabase(name: String, email: String, uid: String, ){
-
-        firebaseData.push().setValue(User(name,email,uid))
-
-    }
+//
+//    fun addUserToDatabase(name: String, email: String, uid: String, ){
+//
+//
+//
+//    }
 
     fun register(name: String, email: String, password: String) {
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 //code for jumping to home
-                addUserToDatabase(name,email, firebaseAuth.currentUser?.uid!!)
 
-            } else {
-                //mettre un toast pour indiquer le fail
-                println("erreur ajouter un toast")
-            }
+                firebaseData.push().setValue(User(name,email,firebaseAuth.currentUser?.uid!!))
+//                addUserToDatabase(name,email, firebaseAuth.currentUser?.uid!!)
+
+
         }
 
     }
+}
 }
 
 

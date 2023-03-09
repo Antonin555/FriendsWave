@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.View
 import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.repository.UserRepo
+import com.antonin.friendswave.ui.home.HomeActivity
 
 class AuthViewModel(private val repository: UserRepo) : ViewModel() {
 
@@ -13,13 +14,18 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
 
     var interfaceAuth : InterfaceAuth? = null
 
+    val user by lazy {
+        repository.currentUser()
+    }
+
     fun login(){
         if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
             return
         }
-        else{
-            repository.login(email!!, password!!)
-        }
+
+        repository.login(email!!, password!!)
+        interfaceAuth?.onSuccess()
+
     }
 
     fun goToSignup(view: View){
@@ -47,7 +53,7 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
     fun goToLogin(view: View){
 
         // .also permet d'eviter de déclarer une variable :
-        Intent(view.context, LoginActivity::class.java).also {
+        Intent(view.context, HomeActivity::class.java).also {
             view.context.startActivity(it)
         }
 
