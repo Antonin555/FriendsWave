@@ -5,6 +5,7 @@ import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.antonin.friendswave.data.repository.UserRepo
+import com.antonin.friendswave.outils.startLoginActivity
 
 class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
@@ -13,10 +14,10 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
         repository.currentUser()
     }
 
-//    fun logout(view: View){
-//        repository.logout()
-//        view.context.startLoginActivity() // va chercher les fonctions utiles pour les Intent
-//    }
+    fun logout(view: View){
+        repository.logout()
+        view.context.startLoginActivity() // va chercher les fonctions utiles pour les Intent
+    }
 //
 //    fun addContact(view: View) {
 //

@@ -9,6 +9,9 @@ import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.AdapterFragment
+import com.antonin.friendswave.data.firebase.FirebaseSource
+import com.antonin.friendswave.data.repository.UserRepo
+import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -21,12 +24,14 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var adapterFragment : AdapterFragment
 
+    private lateinit var viewModel : HomeFragmentViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-
+        viewModel = HomeFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
 
         val tabLayoutArray = arrayOf(
             "Home",
@@ -84,7 +89,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if(item.itemId == R.id.logout){
-//            viewModel.logout(View(this))
+            viewModel.logout(View(this))
             return true
         }
 
