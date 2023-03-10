@@ -7,6 +7,7 @@ import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityLoginBinding.bind
 import com.antonin.friendswave.ui.authentification.AuthViewModelFactory
 import com.antonin.friendswave.ui.fragment.HomeFragment
+import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -28,6 +29,7 @@ class FriendWaveApp : Application(), KodeinAware {
         bind() from singleton { UserRepo(instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
         bind() from provider { HomeFragmentVMFactory(instance()) }
+        bind() from provider { EventFragmentVMFactory(instance()) }
 
 
     }

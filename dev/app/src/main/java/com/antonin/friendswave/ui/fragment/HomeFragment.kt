@@ -39,21 +39,24 @@ class HomeFragment : Fragment(), KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
-
         binding.item = viewModel
 
         return binding.root
     }
 
+
+
+
     companion object {
 
-        var str : String? = ""
+        var str : ArrayList<User>? = ArrayList()
     }
 
 

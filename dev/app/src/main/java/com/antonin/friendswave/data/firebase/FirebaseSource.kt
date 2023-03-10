@@ -30,15 +30,26 @@ class FirebaseSource {
     fun currentUser() = firebaseAuth.currentUser
 
 
+
     fun getUserName(){
 
         firebaseData.child("user").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                var name : String? = ""
-//
-//                name = snapshot.getValue(User::class.java)!!.name!!.get(0).toString()
 
-                HomeFragment.str = name
+//                var name: String? = ""
+
+                for (snap in snapshot.children) {
+
+                    val name  = snap.getValue(User::class.java)
+                    HomeFragment.str?.add(name!!)
+
+                }
+
+//                var name : String? = snapshot.children.getValue(User::class.java)!!.name!!.toString()
+//
+//                name =
+
+
 
             }
 

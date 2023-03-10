@@ -62,7 +62,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="@{item.userName.toString()}"
+                            android:text="@{item.user.toString()}"
                             android:textSize="24sp" />
 
                         <LinearLayout
