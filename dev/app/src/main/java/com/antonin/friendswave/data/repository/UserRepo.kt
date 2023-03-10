@@ -13,4 +13,6 @@ class UserRepo(private val firebase: FirebaseSource) {
     fun logout() = firebase.logout()
 
     fun fetchUsers() = firebase.fetchUsers()
+
+    fun getUserName() = firebase.getUserName()
 }

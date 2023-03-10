@@ -20,6 +20,10 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
         repository.currentUser()
     }
 
+    val userName by lazy {
+        repository.getUserName()
+    }
+
     fun logout(view: View){
         repository.logout()
         view.context.startLoginActivity() // va chercher les fonctions utiles pour les Intent

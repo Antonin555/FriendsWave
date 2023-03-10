@@ -9,6 +9,7 @@ import com.antonin.friendswave.outils.startHomeActivity
 import com.antonin.friendswave.ui.fragment.ContactFragment
 import com.antonin.friendswave.ui.fragment.HomeFragment
 import com.google.firebase.database.*
+import com.google.firebase.database.ktx.snapshots
 
 class FirebaseSource {
 
@@ -19,10 +20,35 @@ class FirebaseSource {
 
     val firebaseData : DatabaseReference = FirebaseDatabase.getInstance().getReference()
 
+
     fun currentUser() = firebaseAuth.currentUser
 
 
+    fun getUserName(){
+
+        firebaseData.child("user").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var name : String? = ""
+                name = snapshot.getValue(User::class.java)?.name
+//                var user: User? = snapshot.getValue(User::class.java)
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+    }
+
+
+
+
+
     fun logout() = firebaseAuth.signOut()
+
+
 
     fun login(email: String, password: String) {
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
