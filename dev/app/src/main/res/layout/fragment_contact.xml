@@ -11,6 +11,7 @@
     <data>
         <variable name="viewmodel"
             type="com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel"/>
+
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -54,6 +55,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_marginBottom="50dp"
                 android:clickable="true"
+                android:onClick="@{(v) -> viewmodel.goToAddContact(v)}"
                 android:src="@android:drawable/ic_input_add" />
         </LinearLayout>
     </FrameLayout>

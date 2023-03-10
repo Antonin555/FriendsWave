@@ -1,6 +1,7 @@
 package com.antonin.friendswave.ui.viewModel
 
 import android.content.Context
+import android.content.Intent
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.outils.startLoginActivity
+import com.antonin.friendswave.ui.authentification.SignupActivity
+import com.antonin.friendswave.ui.contact.AddContactActivity
 
 class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
@@ -58,4 +61,14 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 //
 //        repository.addEvent( event.name!!,event.date!!, event.prenom!!, event.isActive!!, event.lattitude!!, event.longitude!!)
 //    }
+
+    fun goToAddContact(view: View){
+
+        // .also permet d'eviter de déclarer une variable :
+        Intent(view.context, AddContactActivity::class.java).also {
+            view.context.startActivity(it)
+        }
+
+
+    }
 }
