@@ -1,5 +1,6 @@
 package com.antonin.friendswave.data.repository
 
+import androidx.lifecycle.MutableLiveData
 import com.antonin.friendswave.data.firebase.FirebaseSource
 
 class UserRepo(private val firebase: FirebaseSource) {

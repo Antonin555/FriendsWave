@@ -32,6 +32,4 @@ data class User (
     var rating: Double? =0.0,
     var friends : Int? = 1
 
-
-
     ): ListItemViewModel()

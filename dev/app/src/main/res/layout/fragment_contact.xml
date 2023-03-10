@@ -17,7 +17,7 @@
     android:layout_height="match_parent"
     android:paddingTop="100dp"
     android:id="@+id/fragmentContact"
-    tools:context=".ui.fragment.HomeFragment">
+    tools:context=".ui.fragment.ContactFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <FrameLayout

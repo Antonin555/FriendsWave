@@ -3,6 +3,8 @@ package com.antonin.friendswave.data.firebase
 import android.content.Intent
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.antonin.friendswave.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.antonin.friendswave.outils.startHomeActivity
@@ -12,6 +14,10 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.snapshots
 
 class FirebaseSource {
+
+
+
+
 
 
     private val firebaseAuth: FirebaseAuth by lazy {
@@ -29,8 +35,10 @@ class FirebaseSource {
         firebaseData.child("user").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var name : String? = ""
-                name = snapshot.getValue(User::class.java)?.name
-//                var user: User? = snapshot.getValue(User::class.java)
+//
+//                name = snapshot.getValue(User::class.java)!!.name!!.get(0).toString()
+
+                HomeFragment.str = name
 
             }
 

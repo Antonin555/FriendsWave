@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
 
-        <variable name="item" type="com.antonin.friendswave.data.model.User" />
+        <variable name="item"
+            type="com.antonin.friendswave.data.model.User" />
     </data>
 
 <LinearLayout
