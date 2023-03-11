@@ -47,7 +47,8 @@ class HomeFragment : Fragment(), KodeinAware {
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
         binding.item = viewModel
-
+        binding.userName = viewModel.userName.toString()
+        str = binding.userName
         return binding.root
     }
 
@@ -56,7 +57,7 @@ class HomeFragment : Fragment(), KodeinAware {
 
     companion object {
 
-        var str : ArrayList<User>? = ArrayList()
+        var str : String? = ""
     }
 
 

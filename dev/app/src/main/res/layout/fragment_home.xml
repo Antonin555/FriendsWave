@@ -7,6 +7,7 @@
     <data>
 
         <variable name="item" type="com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel" />
+        <variable  name="userName"  type="String" />
     </data>
 
 
@@ -14,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="100dp"
-        tools:context=".ui.Fragments.MyHomeFragment">
+        tools:context=".ui.fragment.HomeFragment">
 
         <!-- TODO: Update blank fragment layout -->
         <FrameLayout
@@ -62,7 +63,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="@{item.user.toString()}"
+                            android:text="@{userName.toString()}"
                             android:textSize="24sp" />
 
                         <LinearLayout

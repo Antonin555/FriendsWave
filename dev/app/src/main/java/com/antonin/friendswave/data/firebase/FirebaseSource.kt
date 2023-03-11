@@ -34,35 +34,42 @@ class FirebaseSource {
 
 
 
-    fun getUserName(){
 
-        firebaseData.child("user").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+    val uid = FirebaseAuth.getInstance().currentUser?.uid
+    val userRef = FirebaseDatabase.getInstance().getReference("user").child(uid!!)
 
-//                var name: String? = ""
+    fun getUserName()  {
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                for (snap in snapshot.children) {
-
-                    val name  = snap.getValue(User::class.java)
-                    HomeFragment.str?.add(name!!)
-
-                }
-
-//                var name : String? = snapshot.children.getValue(User::class.java)!!.name!!.toString()
-//
-//                name =
-
-
-
+                val userName = dataSnapshot.child("name").getValue(String::class.java)
+                println("helllloooooooooooooooo " + userName!!)
+                HomeFragment.str = userName
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+            override fun onCancelled(databaseError: DatabaseError) {
 
+            }
         })
-
     }
+
+//    fun getUserName() : String{
+//        val snapshot = firebaseData.child("user").child(firebaseAuth.currentUser!!.uid).child("name").get()
+//        HomeFragment.str = snapshot.toString()
+//        return snapshot.getoString()
+////        firebaseData.child("user").child(firebaseAuth.currentUser!!.uid).child("name").addListenerForSingleValueEvent(object:ValueEventListener {
+////            override fun onDataChange(snapshot: DataSnapshot) {
+////                var name  = snapshot.getValue().toString()
+////                HomeFragment.str = name
+////            }
+////
+////            override fun onCancelled(error: DatabaseError) {
+////                TODO("Not yet implemented")
+////            }
+////
+////        })
+//
+//    }
 
 
 
@@ -87,6 +94,8 @@ class FirebaseSource {
     fun addUserToDatabase(name: String, email: String, uid: String ){
 
         firebaseData.child("user").child(uid).setValue(User(name,email,uid))
+
+
 
     }
 
