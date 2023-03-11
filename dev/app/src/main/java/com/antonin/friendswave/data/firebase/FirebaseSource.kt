@@ -127,8 +127,8 @@ class FirebaseSource {
 
     fun addEventUser(name: String, isPublic : Boolean, nbrePersonnes:Int) {
         val database = Firebase.database
-        val myRef = database.getReference("user")
-        myRef.child(firebaseAuth.currentUser?.uid!!).child("event").push().setValue(Event(name,isPublic,nbrePersonnes))
+        val myRef = database.getReference("event")
+        myRef.child(firebaseAuth.currentUser?.uid!!).setValue(Event(name,isPublic,nbrePersonnes))
 
     }
 
