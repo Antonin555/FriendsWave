@@ -3,8 +3,6 @@ package com.antonin.friendswave.ui.authentification
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.DataBindingUtil
@@ -14,6 +12,8 @@ import com.antonin.friendswave.databinding.ActivitySingupBinding
 import com.antonin.friendswave.outils.startHomeActivity
 
 import com.antonin.friendswave.ui.home.HomeActivity
+import com.antonin.friendswave.ui.viewModel.AuthViewModel
+import com.antonin.friendswave.ui.viewModel.AuthViewModelFactory
 
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein

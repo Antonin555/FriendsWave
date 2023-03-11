@@ -1,4 +1,4 @@
-package com.antonin.friendswave.ui.authentification
+package com.antonin.friendswave.ui.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

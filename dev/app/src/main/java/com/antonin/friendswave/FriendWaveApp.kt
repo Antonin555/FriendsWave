@@ -4,9 +4,7 @@ import android.app.Application
 
 import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.repository.UserRepo
-import com.antonin.friendswave.databinding.ActivityLoginBinding.bind
-import com.antonin.friendswave.ui.authentification.AuthViewModelFactory
-import com.antonin.friendswave.ui.fragment.HomeFragment
+import com.antonin.friendswave.ui.viewModel.AuthViewModelFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import org.kodein.di.Kodein

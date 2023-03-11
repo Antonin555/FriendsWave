@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.antonin.friendswave.R
 import com.antonin.friendswave.databinding.ActivityLoginBinding
 import com.antonin.friendswave.outils.startHomeActivity
+import com.antonin.friendswave.ui.viewModel.AuthViewModel
+import com.antonin.friendswave.ui.viewModel.AuthViewModelFactory
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance

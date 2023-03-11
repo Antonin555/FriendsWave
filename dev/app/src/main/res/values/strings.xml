@@ -20,6 +20,7 @@
     <string name="add_event_heure">Heure : </string>
     <string name="add_event_description">Description : </string>
     <string name="add_event_nbre_personnes">Nombre de personnes : </string>
+    <string name="add_event_btn_publier">publier </string>
 
 
 </resources>

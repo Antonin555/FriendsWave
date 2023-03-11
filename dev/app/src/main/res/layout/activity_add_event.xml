@@ -279,6 +279,12 @@
                     android:ems="10"
                     android:inputType="time" />
 
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_event_btn_publier" />
+
             </LinearLayout>
         </ScrollView>
 

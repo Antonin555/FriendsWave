@@ -9,11 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.antonin.friendswave.R
 import com.antonin.friendswave.databinding.FragmentEventBinding
-import com.antonin.friendswave.ui.authentification.AuthViewModel
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
-import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
-import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
