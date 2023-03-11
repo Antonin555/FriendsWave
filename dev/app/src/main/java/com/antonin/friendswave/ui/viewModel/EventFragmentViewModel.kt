@@ -9,6 +9,17 @@ import com.antonin.friendswave.ui.event.AddEventActivity
 
 class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
+    var name: String? = null
+    var description: String? = null
+    var isPhotoLoad : Boolean? = false
+    var isPublic : Boolean? = true
+    var photo: String? = null
+    var nbrePersonnes : Int? = 0
+    var categorie: String? = ""
+    var lattitude: String? = ""
+    var longitude : String?  =""
+    var date: String? = ""
+    var horaire: String? = ""
 
 
     fun goToAddEvent(view: View){
@@ -17,6 +28,14 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
         Intent(view.context, AddEventActivity::class.java).also {
             view.context.startActivity(it)
         }
+
+
+    }
+
+
+    fun addEventUser() {
+
+        repository.addEventUser(name!!, isPublic!!,nbrePersonnes!!)
 
 
     }

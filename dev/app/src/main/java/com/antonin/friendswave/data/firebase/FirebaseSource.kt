@@ -5,13 +5,16 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.antonin.friendswave.outils.startHomeActivity
 import com.antonin.friendswave.ui.fragment.ContactFragment
 import com.antonin.friendswave.ui.fragment.HomeFragment
 import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.snapshots
+import com.google.firebase.ktx.Firebase
 
 class FirebaseSource {
 
@@ -81,7 +84,7 @@ class FirebaseSource {
 
 
 
-    fun addUserToDatabase(name: String, email: String, uid: String, ){
+    fun addUserToDatabase(name: String, email: String, uid: String ){
 
         firebaseData.child("user").child(uid).setValue(User(name,email,uid))
 
@@ -117,6 +120,16 @@ class FirebaseSource {
 
             }
         })
+    }
+
+
+
+
+    fun addEventUser(name: String, isPublic : Boolean, nbrePersonnes:Int) {
+        val database = Firebase.database
+        val myRef = database.getReference("user")
+        myRef.child(firebaseAuth.currentUser?.uid!!).child("event").push().setValue(Event(name,isPublic,nbrePersonnes))
+
     }
 
 

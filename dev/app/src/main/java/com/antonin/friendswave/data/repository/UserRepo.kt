@@ -16,4 +16,11 @@ class UserRepo(private val firebase: FirebaseSource) {
     fun fetchUsers() = firebase.fetchUsers()
 
     fun getUserName() = firebase.getUserName()
+
+
+
+    fun addEventUser(name: String, isPublic : Boolean, nbrePersonnes:Int) =
+        firebase.addEventUser(name,isPublic,nbrePersonnes)
+
+
 }
