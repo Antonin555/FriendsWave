@@ -17,7 +17,7 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     fun fetchUsers() = firebase.fetchUsers()
 
-    fun fetchEvents() = firebase.fetchEvents()
+    fun fetchEventsPublic() = firebase.fetchEventsPublic()
 
 
     fun getUser(): LiveData<User> {
@@ -32,8 +32,8 @@ class UserRepo(private val firebase: FirebaseSource) {
 
 
 
-    fun addEventUser(name: String, isPublic : Boolean, nbrePersonnes:Int) =
-        firebase.addEventUser(name,isPublic,nbrePersonnes)
+    fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int) =
+        firebase.addEventUserPublic(name,isPublic,nbrePersonnes)
 
 
 }

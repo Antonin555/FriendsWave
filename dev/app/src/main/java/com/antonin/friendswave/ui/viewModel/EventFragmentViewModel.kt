@@ -33,17 +33,20 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     }
 
 
-    fun addEventUser() {
+    fun addEventUserPublic() {
 
-        repository.addEventUser(name!!, isPublic!!,nbrePersonnes!!)
+        repository.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!)
+
+
+    }
+    fun fetchEventsPrivate() {
 
 
     }
 
+    fun fetchEventsPublic() {
 
-    fun fetchEvents() {
-
-        repository.fetchEvents()
+        repository.fetchEventsPublic()
     }
 
 }
