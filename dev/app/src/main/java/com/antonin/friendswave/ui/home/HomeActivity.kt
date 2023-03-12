@@ -14,6 +14,7 @@ import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.antonin.friendswave.outils.startEditProfilActivity
 
 
 class HomeActivity : AppCompatActivity() {
@@ -91,13 +92,11 @@ class HomeActivity : AppCompatActivity() {
         }
 
         if(item.itemId == R.id.edit_profil) {
-//            val intent = Intent(this@HomeActivity, EditProfileActivity::class.java)
+            val intent = Intent(this@HomeActivity, EditProfilActivity::class.java)
             startActivity(intent)
-//            val demoFragment = fragmentHobbies()
-//            val transaction: FragmentTransaction = this.supportFragmentManager.beginTransaction()
-//            transaction.replace(com.antonin.app_mvvm_firebase.R.id.home_layout, demoFragment)
-//            transaction.addToBackStack(null).commit()
-//            viewModel.fragmentHobbies(View(this))
+//            startEditProfilActivity()
+
+
         }
 
         return true

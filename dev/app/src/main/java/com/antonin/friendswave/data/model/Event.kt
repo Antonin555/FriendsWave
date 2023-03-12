@@ -1,5 +1,7 @@
 package com.antonin.friendswave.data.model
 
+import com.antonin.friendswave.adapter.ListItemViewModel
+
 data class Event(
 
     var name: String? = "",
@@ -11,4 +13,4 @@ data class Event(
 //    var lattitude : String = "",
 //    var longitude : String = ""
 
-)
+):ListItemViewModel()

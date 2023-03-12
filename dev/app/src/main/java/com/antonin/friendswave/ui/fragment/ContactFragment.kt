@@ -58,10 +58,8 @@ class ContactFragment : Fragment(), KodeinAware {
 
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_contact)
         val layoutManager = LinearLayoutManager(context)
-
-        recyclerView = view?.findViewById(R.id.recyclerFragmentContact)!!
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = adapter1
+        binding.recyclerFragmentContact.layoutManager = layoutManager
+        binding.recyclerFragmentContact.adapter = adapter1
         adapter1.addItems(contactList)
     }
 

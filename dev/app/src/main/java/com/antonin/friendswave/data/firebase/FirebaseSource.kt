@@ -10,6 +10,7 @@ import com.antonin.friendswave.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.antonin.friendswave.outils.startHomeActivity
 import com.antonin.friendswave.ui.fragment.ContactFragment
+import com.antonin.friendswave.ui.fragment.EventFragment
 import com.antonin.friendswave.ui.fragment.HomeFragment
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -18,17 +19,25 @@ import com.google.firebase.ktx.Firebase
 
 class FirebaseSource {
 
-
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
     val firebaseData : DatabaseReference = FirebaseDatabase.getInstance().getReference()
     val uid = FirebaseAuth.getInstance().currentUser?.uid
 
-
     fun currentUser() = firebaseAuth.currentUser
 
     fun logout() = firebaseAuth.signOut()
+
+    fun login(email: String, password: String) {
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+            if (it.isSuccessful) {
+                println("yo1")
+            }
+            else
+                println("yo-bad")
+        }
+    }
 
     fun getUser(onResult: (User?) -> Unit) {
         firebaseData.child("user").child(uid!!)
@@ -46,15 +55,6 @@ class FirebaseSource {
     }
 
 
-    fun login(email: String, password: String) {
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
-            if (it.isSuccessful) {
-                println("yo1")
-            }
-            else
-                println("yo-bad")
-        }
-    }
 
 
 
@@ -78,6 +78,23 @@ class FirebaseSource {
                 for (postSnapshot in snapshot.children){
                     val user = postSnapshot.getValue(User::class.java)
                     ContactFragment.contactList.add(user!!)
+                }
+
+            }
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+    }
+
+
+    fun fetchEvents(){
+        firebaseData.child("event").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                EventFragment.eventList.clear()
+                for (postSnapshot in snapshot.children){
+                    val event = postSnapshot.getValue(Event::class.java)
+                    EventFragment.eventList.add(event!!)
                 }
 
             }

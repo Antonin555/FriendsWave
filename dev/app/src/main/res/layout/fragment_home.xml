@@ -83,7 +83,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="ok" />
+                                android:text="@{item.user_live.friends.toString()}" />
 
                             <TextView
                                 android:id="@+id/textView7"
@@ -111,6 +111,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:text="@{item.user_live.rating.toString()}"
                                  />
 <!--                            android:text="@{String.valueOf(item.rating)}"-->
                             <TextView

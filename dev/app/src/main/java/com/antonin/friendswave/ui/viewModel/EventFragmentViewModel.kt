@@ -40,4 +40,10 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     }
 
+
+    fun fetchEvents() {
+
+        repository.fetchEvents()
+    }
+
 }

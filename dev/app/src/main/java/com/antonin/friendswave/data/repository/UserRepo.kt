@@ -17,7 +17,7 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     fun fetchUsers() = firebase.fetchUsers()
 
-
+    fun fetchEvents() = firebase.fetchEvents()
 
 
     fun getUser(): LiveData<User> {
