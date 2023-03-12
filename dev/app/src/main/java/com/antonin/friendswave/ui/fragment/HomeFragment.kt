@@ -35,7 +35,7 @@ class HomeFragment : Fragment(), KodeinAware {
     private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
 
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var adapter1 : ListGeneriqueAdapter<Event>
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +64,6 @@ class HomeFragment : Fragment(), KodeinAware {
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
         return binding.root
     }
-
 
 
 

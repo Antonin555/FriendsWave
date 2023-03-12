@@ -89,7 +89,7 @@ class FirebaseSource {
 
 
     fun fetchEvents(){
-        firebaseData.child("event").addValueEventListener(object : ValueEventListener {
+        firebaseData.child("event/event").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 EventFragment.eventList.clear()
                 for (postSnapshot in snapshot.children){
@@ -108,7 +108,7 @@ class FirebaseSource {
     fun addEventUser(name: String, isPublic : Boolean, nbrePersonnes:Int) {
         val database = Firebase.database
         val myRef = database.getReference("event")
-        myRef.child(firebaseAuth.currentUser?.uid!!).setValue(Event(name,isPublic,nbrePersonnes))
+        myRef.child("event/").push().setValue(Event(name,isPublic,nbrePersonnes))
 
     }
 }

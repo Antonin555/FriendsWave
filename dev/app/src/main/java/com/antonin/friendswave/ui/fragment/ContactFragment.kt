@@ -30,11 +30,8 @@ class ContactFragment : Fragment(), KodeinAware {
     override val kodein : Kodein by kodein()
 
     private val factory : HomeFragmentVMFactory by instance()
-
-    private lateinit var recyclerView: RecyclerView
     private lateinit var adapter1 : ListGeneriqueAdapter<User>
     private var viewModel: HomeFragmentViewModel  = HomeFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
-
     private lateinit var binding: FragmentContactBinding
 
 
@@ -44,9 +41,7 @@ class ContactFragment : Fragment(), KodeinAware {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        return inflater.inflate(R.layout.fragment_contact, container, false)
 
-        // Inflate the layout for this fragment
         binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_contact, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
         binding.viewmodel = viewModel
@@ -55,7 +50,6 @@ class ContactFragment : Fragment(), KodeinAware {
 
     override fun onResume() {
         super.onResume()
-
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_contact)
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerFragmentContact.layoutManager = layoutManager
