@@ -19,10 +19,6 @@ import com.google.firebase.ktx.Firebase
 class FirebaseSource {
 
 
-
-
-
-
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
@@ -33,25 +29,25 @@ class FirebaseSource {
     fun currentUser() = firebaseAuth.currentUser
 
 
-
-
     val uid = FirebaseAuth.getInstance().currentUser?.uid
-    val userRef = FirebaseDatabase.getInstance().getReference("user").child(uid!!)
 
-    fun getUserName()  {
-        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
+    fun getUser(onResult: (User?) -> Unit) {
+        firebaseData.child("user").child(uid!!)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val user = dataSnapshot.getValue(User::class.java)
+                    onResult(user)
+                }
 
-                val userName = dataSnapshot.child("name").getValue(String::class.java)
-                println("helllloooooooooooooooo " + userName!!)
-                HomeFragment.str = userName
-            }
+                override fun onCancelled(databaseError: DatabaseError) {
 
-            override fun onCancelled(databaseError: DatabaseError) {
-
-            }
-        })
+                    onResult(null)
+                }
+            })
     }
+
+
+
 
 //    fun getUserName() : String{
 //        val snapshot = firebaseData.child("user").child(firebaseAuth.currentUser!!.uid).child("name").get()
@@ -130,6 +126,9 @@ class FirebaseSource {
             }
         })
     }
+
+
+
 
 
 

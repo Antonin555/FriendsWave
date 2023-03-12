@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil.inflate
 import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.asFlow
 import com.antonin.friendswave.R
+import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentHomeBinding
@@ -23,41 +25,40 @@ import org.kodein.di.android.x.kodein
 
 class HomeFragment : Fragment(), KodeinAware {
 
-
-
     override val kodein : Kodein by kodein()
 
-
     private val factory : HomeFragmentVMFactory by instance()
-//    private lateinit var progressbar : ProgressBar
 
-
-    private lateinit var viewModel: HomeFragmentViewModel
+    private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
 
     private lateinit var binding: FragmentHomeBinding
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchUserData()
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
+        binding.lifecycleOwner = this
+        binding.item = viewModel
 
     }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
-        viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
-        binding.item = viewModel
-        binding.userName = viewModel.userName.toString()
-        str = binding.userName
         return binding.root
-    }
-
-
-
-
-    companion object {
-
-        var str : String? = ""
     }
 
 

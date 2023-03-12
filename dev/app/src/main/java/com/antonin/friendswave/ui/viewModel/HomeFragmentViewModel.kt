@@ -17,10 +17,28 @@ import com.antonin.friendswave.ui.contact.AddContactActivity
 class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
 
-    val userName by lazy {
-        repository.getUserName()
 
+    private val _user = MutableLiveData<User>()
+    var user_live: LiveData<User> = _user
+
+
+    fun fetchUserData() {
+        repository.getUser().observeForever { user ->
+            _user.value = user
+        }
     }
+
+
+
+//    val userName by lazy {
+//        repository.getUserName()
+//
+//    }
+
+//    fun getUserName() {
+//
+//        repository.getUserName()
+//    }
 
     val user by lazy {
         repository.currentUser()
@@ -39,6 +57,10 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
         repository.fetchUsers()
     }
+
+
+
+
 //
 //    fun addContact(view: View) {
 //

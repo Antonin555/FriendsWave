@@ -7,7 +7,6 @@
     <data>
 
         <variable name="item" type="com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel" />
-        <variable  name="userName"  type="String" />
     </data>
 
 
@@ -63,7 +62,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="@{userName.toString()}"
+                            android:text="@{item.user_live.name}"
                             android:textSize="24sp" />
 
                         <LinearLayout
