@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="100dp"
+        android:paddingTop="50dp"
         tools:context=".ui.fragment.HomeFragment">
 
         <!-- TODO: Update blank fragment layout -->
@@ -21,13 +21,13 @@
             android:id="@+id/map_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="100dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -111,9 +111,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="@{item.user_live.rating.toString()}"
-                                 />
-<!--                            android:text="@{String.valueOf(item.rating)}"-->
+                                android:text="@{item.user_live.rating.toString()}" />
+                            <!--                            android:text="@{String.valueOf(item.rating)}"-->
                             <TextView
                                 android:id="@+id/textView2"
                                 android:layout_width="0dp"

@@ -13,53 +13,54 @@
             type="com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel"/>
 
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="100dp"
-    android:id="@+id/fragmentContact"
-    tools:context=".ui.fragment.ContactFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <FrameLayout
-        android:id="@+id/map_frame"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragmentContact"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingTop="50dp"
+        tools:context=".ui.fragment.ContactFragment">
 
-        <LinearLayout
+        <!-- TODO: Update blank fragment layout -->
+        <FrameLayout
+            android:id="@+id/map_frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.3"
-                android:gravity="center"
-                android:text="@string/titre_fragment_contact"
-                android:textSize="24sp" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.3"
+                    android:gravity="center"
+                    android:text="@string/titre_fragment_contact"
+                    android:textSize="24sp" />
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerFragmentContact"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerFragmentContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabAddContact"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="30dp"
-                android:layout_marginBottom="50dp"
-                android:clickable="true"
-                android:onClick="@{(v) -> viewmodel.goToAddContact(v)}"
-                android:src="@android:drawable/ic_input_add" />
-        </LinearLayout>
-    </FrameLayout>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fabAddContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="50dp"
+                    android:clickable="true"
+                    android:onClick="@{(v) -> viewmodel.goToAddContact(v)}"
+                    android:src="@android:drawable/ic_input_add" />
+            </LinearLayout>
+        </FrameLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

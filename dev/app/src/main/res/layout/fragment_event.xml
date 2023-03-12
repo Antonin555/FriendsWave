@@ -29,19 +29,12 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.3"
-                    android:gravity="center"
-                    android:text="@string/titre_fragment_event"
-                    android:textSize="24sp" />
-
                 <com.google.android.gms.maps.MapView
                     android:id="@+id/mapView"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="15dp"
                     android:layout_weight="1"
                     android:background="#7986CB"
