@@ -22,14 +22,13 @@ class FirebaseSource {
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
-
     val firebaseData : DatabaseReference = FirebaseDatabase.getInstance().getReference()
+    val uid = FirebaseAuth.getInstance().currentUser?.uid
 
 
     fun currentUser() = firebaseAuth.currentUser
 
-
-    val uid = FirebaseAuth.getInstance().currentUser?.uid
+    fun logout() = firebaseAuth.signOut()
 
     fun getUser(onResult: (User?) -> Unit) {
         firebaseData.child("user").child(uid!!)
@@ -47,34 +46,6 @@ class FirebaseSource {
     }
 
 
-
-
-//    fun getUserName() : String{
-//        val snapshot = firebaseData.child("user").child(firebaseAuth.currentUser!!.uid).child("name").get()
-//        HomeFragment.str = snapshot.toString()
-//        return snapshot.getoString()
-////        firebaseData.child("user").child(firebaseAuth.currentUser!!.uid).child("name").addListenerForSingleValueEvent(object:ValueEventListener {
-////            override fun onDataChange(snapshot: DataSnapshot) {
-////                var name  = snapshot.getValue().toString()
-////                HomeFragment.str = name
-////            }
-////
-////            override fun onCancelled(error: DatabaseError) {
-////                TODO("Not yet implemented")
-////            }
-////
-////        })
-//
-//    }
-
-
-
-
-
-    fun logout() = firebaseAuth.signOut()
-
-
-
     fun login(email: String, password: String) {
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful) {
@@ -88,20 +59,13 @@ class FirebaseSource {
 
 
     fun addUserToDatabase(name: String, email: String, uid: String ){
-
         firebaseData.child("user").child(uid).setValue(User(name,email,uid))
-
-
-
     }
 
     fun register(name: String, email: String, password: String) {
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-
-
             if (it.isSuccessful) {
                 addUserToDatabase(name,email, firebaseAuth.currentUser?.uid!!)
-
             }
         }
     }
@@ -112,25 +76,16 @@ class FirebaseSource {
             override fun onDataChange(snapshot: DataSnapshot) {
                 ContactFragment.contactList.clear()
                 for (postSnapshot in snapshot.children){
-
                     val user = postSnapshot.getValue(User::class.java)
-
                     ContactFragment.contactList.add(user!!)
-
                 }
 
             }
-
             override fun onCancelled(error: DatabaseError) {
 
             }
         })
     }
-
-
-
-
-
 
 
     fun addEventUser(name: String, isPublic : Boolean, nbrePersonnes:Int) {
@@ -139,9 +94,6 @@ class FirebaseSource {
         myRef.child(firebaseAuth.currentUser?.uid!!).setValue(Event(name,isPublic,nbrePersonnes))
 
     }
-
-
-
 }
 
 

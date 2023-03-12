@@ -17,7 +17,8 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     fun fetchUsers() = firebase.fetchUsers()
 
-//    fun getUserName() = firebase.getUserName()
+
+
 
     fun getUser(): LiveData<User> {
         val userLiveData = MutableLiveData<User>()
@@ -28,6 +29,8 @@ class UserRepo(private val firebase: FirebaseSource) {
 
         return userLiveData
     }
+
+
 
     fun addEventUser(name: String, isPublic : Boolean, nbrePersonnes:Int) =
         firebase.addEventUser(name,isPublic,nbrePersonnes)

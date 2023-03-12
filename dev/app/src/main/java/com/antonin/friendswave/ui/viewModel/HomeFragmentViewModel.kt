@@ -29,24 +29,10 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
     }
 
 
-
-//    val userName by lazy {
-//        repository.getUserName()
-//
-//    }
-
-//    fun getUserName() {
-//
-//        repository.getUserName()
-//    }
-
     val user by lazy {
         repository.currentUser()
     }
 
-//    val userName by lazy {
-//        repository.getUserName()
-//    }
 
     fun logout(view: View){
         repository.logout()
@@ -58,31 +44,6 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
         repository.fetchUsers()
     }
 
-
-
-
-//
-//    fun addContact(view: View) {
-//
-//        view.context.startContactActivity()
-//    }
-//
-//    fun fragmentHobbies(view: View) {
-//
-//        view.context.startProfilFragment()
-//    }
-//
-//    fun fetchEvents(recyclerView: RecyclerView, context: Context, adapter: HomeAdapter) {
-//
-//        repository.fetchEvents(recyclerView,context,adapter)
-//    }
-//
-
-
-//    fun addCalendar(event: Event) {
-//
-//        repository.addEvent( event.name!!,event.date!!, event.prenom!!, event.isActive!!, event.lattitude!!, event.longitude!!)
-//    }
 
     fun goToAddContact(view: View){
 
