@@ -50,7 +50,7 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
 
         //validating email and password
         if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
-            interfaceAuth?.onFailure("Invalid email or password")
+            interfaceAuth?.onFailure("Mauvais courriel ou mot de passe")
             return
         }
 

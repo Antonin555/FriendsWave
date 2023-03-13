@@ -34,5 +34,8 @@ class UserRepo(private val firebase: FirebaseSource) {
     fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int) =
         firebase.addEventUserPublic(name,isPublic,nbrePersonnes)
 
+    fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int) =
+        firebase.addEventUserPrivate(name,isPublic,nbrePersonnes)
+
 
 }

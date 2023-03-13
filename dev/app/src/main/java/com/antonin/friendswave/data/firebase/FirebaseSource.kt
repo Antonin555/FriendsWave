@@ -119,6 +119,14 @@ class FirebaseSource {
         myRef.child("eventPublic/").push().setValue(Event(name,isPublic,nbrePersonnes))
 
     }
+
+
+    fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int) {
+        val database = Firebase.database
+        val myRef = database.getReference("event")
+        myRef.child("eventPrivate/").push().setValue(Event(name,isPublic,nbrePersonnes))
+
+    }
 }
 
 

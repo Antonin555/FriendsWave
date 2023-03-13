@@ -8,7 +8,8 @@
     <string name="suggests_fragment_home">SUGGESTIONS </string>
     <string name="rating_fragment_home">rating : </string>
     <string name="friends_fragment_home">friends : </string>
-    <string name="add_event_pp">public / private </string>
+    <string name="add_event_public">public</string>
+    <string name="add_event_private">private </string>
     <string name="add_event_confidential">Confidentialité : </string>
     <string name="add_event_name">Nom : </string>
     <string name="add_event_title">My EVENT </string>

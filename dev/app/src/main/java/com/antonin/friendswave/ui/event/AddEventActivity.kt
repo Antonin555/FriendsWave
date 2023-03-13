@@ -15,7 +15,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class AddEventActivity : AppCompatActivity(), KodeinAware {
+class AddEventActivity : AppCompatActivity(), KodeinAware, InterfaceEvent {
 
     override val kodein by kodein()
 
@@ -32,5 +32,15 @@ class AddEventActivity : AppCompatActivity(), KodeinAware {
         val binding: ActivityAddEventBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_event)
         viewModel = ViewModelProviders.of(this, factory).get(EventFragmentViewModel::class.java)
         binding.viewmodel = viewModel
+        binding.lifecycleOwner = this
+
+    }
+
+    override fun saveOn() {
+        TODO("Not yet implemented")
+    }
+
+    override fun saveOff() {
+        TODO("Not yet implemented")
     }
 }
