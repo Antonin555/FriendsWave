@@ -31,6 +31,6 @@ data class User (
     var uid: String? = "",
     var rating: Double? =0.0,
     var friends : Int? = 1,
-    var eventList: ArrayList<Event>? = ArrayList()
+//    var eventList: ArrayList<Event>? = ArrayList()
 
     ): ListItemViewModel()

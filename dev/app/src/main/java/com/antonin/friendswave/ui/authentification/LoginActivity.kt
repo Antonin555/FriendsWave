@@ -35,10 +35,6 @@ class LoginActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
 
     }
 
-    override fun onStarted() {
-        TODO("Not yet implemented")
-    }
-
 
     override fun onSuccess() {
         startHomeActivity()

@@ -23,7 +23,7 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
 
     fun fetchUserData() {
-        repository.getUser().observeForever { user ->
+        repository.getUserData().observeForever { user ->
             _user.value = user
         }
     }

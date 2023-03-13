@@ -40,6 +40,7 @@ class HomeFragment : Fragment(), KodeinAware {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
     }
 
     override fun onResume() {
@@ -51,8 +52,6 @@ class HomeFragment : Fragment(), KodeinAware {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
         binding.lifecycleOwner = this
         binding.item = viewModel
 

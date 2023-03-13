@@ -33,7 +33,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         viewModel = HomeFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
-
+//        viewModel.fetchUserData()
         val tabLayoutArray = arrayOf(
             "Home",
             "Events",
@@ -63,6 +63,7 @@ class HomeActivity : AppCompatActivity() {
         }.attach()
 
     }
+
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

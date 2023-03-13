@@ -16,6 +16,8 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.snapshots
 import com.google.firebase.ktx.Firebase
+import io.reactivex.Completable
+
 
 class FirebaseSource {
 
@@ -29,18 +31,19 @@ class FirebaseSource {
 
     fun logout() = firebaseAuth.signOut()
 
-    fun login(email: String, password: String) {
+    fun login(email: String, password: String) = Completable.create { emitter ->
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
-            if (it.isSuccessful) {
-                println("yo1")
+            if (!emitter.isDisposed) {
+                if (it.isSuccessful)
+                    emitter.onComplete()
+                else
+                    emitter.onError(it.exception!!)
             }
-            else
-                println("yo-bad")
         }
     }
 
-    fun getUser(onResult: (User?) -> Unit) {
-        firebaseData.child("user").child(uid!!)
+    fun getUserData(onResult: (User?) -> Unit) {
+        firebaseData.child("user").child(FirebaseAuth.getInstance().currentUser!!.uid)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val user = dataSnapshot.getValue(User::class.java)
@@ -56,17 +59,22 @@ class FirebaseSource {
 
 
 
-
-
     fun addUserToDatabase(name: String, email: String, uid: String ){
         firebaseData.child("user").child(uid).setValue(User(name,email,uid))
     }
 
-    fun register(name: String, email: String, password: String) {
+
+    fun register(name: String, email: String, password: String) = Completable.create { emitter ->
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-            if (it.isSuccessful) {
-                addUserToDatabase(name,email, firebaseAuth.currentUser?.uid!!)
+            addUserToDatabase(name,email, firebaseAuth.currentUser?.uid!!)
+            if (!emitter.isDisposed) {
+                if (it.isSuccessful) {
+                    emitter.onComplete()
+                } else {
+                    emitter.onError(it.exception!!)
+                }
             }
+
         }
     }
 
