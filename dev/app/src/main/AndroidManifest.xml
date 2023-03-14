@@ -14,7 +14,7 @@
         android:theme="@style/Theme.FriendsWave"
         tools:targetApi="31">
         <activity
-            android:name=".DetailEventActivity"
+            android:name=".ui.event.DetailEventActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -28,7 +28,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".AddEventActivity"
+            android:name=".ui.event.AddEventActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"

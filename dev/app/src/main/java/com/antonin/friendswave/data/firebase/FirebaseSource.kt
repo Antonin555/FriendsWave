@@ -96,6 +96,28 @@ class FirebaseSource {
         })
     }
 
+
+    fun fetchOneEvent(onResult: (Event?) -> Unit) = {
+
+        firebaseData.child("event/eventPublic")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val event = dataSnapshot.getValue(Event::class.java)
+                    onResult(event)
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+
+                    onResult(null)
+                }
+            })
+
+
+    }
+
+
+
+
     fun fetchUsersR(){
         firebaseData.child("user").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {

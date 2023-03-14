@@ -3,6 +3,7 @@ package com.antonin.friendswave.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.antonin.friendswave.data.firebase.FirebaseSource
+import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 
 class UserRepo(private val firebase: FirebaseSource) {
@@ -23,16 +24,29 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     fun fetchEventsPublic() = firebase.fetchEventsPublic()
 
+    fun fetchOneEvent(): LiveData<Event> {
+        val eventLiveData = MutableLiveData<Event>()
+
+        firebase.fetchOneEvent { event ->
+            eventLiveData.postValue(event)
+        }
+
+        return eventLiveData
+
+
+    }
+
     fun addFriendRequestToUser(email: String) = firebase.addFriendRequestToUser(email)
 
     fun getUserData(): LiveData<User> {
         val userLiveData = MutableLiveData<User>()
 
-        firebase.getUserData() { user ->
+        firebase.getUserData { user ->
             userLiveData.postValue(user)
         }
 
         return userLiveData
+
     }
 
     fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int) =

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.antonin.friendswave.R
 import com.antonin.friendswave.databinding.ActivityAddEventBinding
 import com.antonin.friendswave.databinding.ActivitySingupBinding
+import com.antonin.friendswave.outils.startDetailEventActivity
 import com.antonin.friendswave.ui.viewModel.AuthViewModel
 import com.antonin.friendswave.ui.viewModel.AuthViewModelFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
@@ -15,7 +16,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class AddEventActivity : AppCompatActivity(), KodeinAware, InterfaceEvent {
+class AddEventActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein by kodein()
 
@@ -36,15 +37,5 @@ class AddEventActivity : AppCompatActivity(), KodeinAware, InterfaceEvent {
 
     }
 
-    override fun saveOn() {
-        TODO("Not yet implemented")
-    }
 
-    override fun saveOff() {
-        TODO("Not yet implemented")
-    }
-
-    override fun checkContent() {
-        TODO("Not yet implemented")
-    }
 }

@@ -1,5 +1,6 @@
 package com.antonin.friendswave.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentEventBinding
 import com.antonin.friendswave.databinding.FragmentHomeBinding
+import com.antonin.friendswave.ui.event.DetailEventActivity
 import com.antonin.friendswave.ui.event.InterfaceEvent
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
@@ -23,6 +25,7 @@ import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
+
 
 
 class EventFragment : Fragment(), KodeinAware, InterfaceEvent {
@@ -40,7 +43,7 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent {
         super.onCreate(savedInstanceState)
         viewModel.fetchEventsPublic()
 
-
+        viewModel.interfaceEvent = this
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -70,6 +73,10 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent {
 
                 val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
                 toast.show()
+                viewModel.fetchOneEvent()
+                var intent : Intent = Intent(context, DetailEventActivity::class.java )
+                startActivity(intent)
+
             }
 
         })
@@ -88,6 +95,9 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent {
     }
 
     override fun checkContent() {
-        TODO("Not yet implemented")
+        println("checkkkkkkkkkkkkkkkkkkkk innnnnnnnnnnnnnnnnnnnnnnntent")
+
+
+
     }
 }
