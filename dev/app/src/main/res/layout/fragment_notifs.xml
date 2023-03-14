@@ -6,7 +6,7 @@
 
     <data>
         <variable name="viewmodel"
-            type="com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel"/>
+            type="com.antonin.friendswave.ui.viewModel.NotifFragmentViewModel"/>
 
     </data>
 

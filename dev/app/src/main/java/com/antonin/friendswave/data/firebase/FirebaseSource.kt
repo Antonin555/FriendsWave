@@ -147,8 +147,8 @@ class FirebaseSource {
                     if (email == currentUser?.email) {
                         emailDB = currentUser?.email!!
                         //a voir si c'est la meilleur maniere de gerer les friend request
-                        firebaseData.child("user").child(currentUser?.uid!!).child("request").child(firebaseAuth.currentUser?.uid!!).setValue(firebaseAuth.currentUser?.email)
-//                        firebaseData.child("user").child(currentUser?.uid!!).child("request").push().setValue(firebaseAuth.currentUser?.email)
+                        firebaseData.child("user").child(currentUser?.uid!!).child("friendRequest").child(firebaseAuth.currentUser?.uid!!).setValue(firebaseAuth.currentUser?.email)
+//                        firebaseData.child("user").child(currentUser?.uid!!).child("request/").push().setValue(firebaseAuth.currentUser?.email)
                         return
                     }
                 }
@@ -172,9 +172,9 @@ class FirebaseSource {
 
                 for (postSnapshot in snapshot.children){
                     val currentUser = postSnapshot.getValue(User::class.java)
-                    if (NotifsFragment.user?.request != null){
+                    if (NotifsFragment.user?.friendRequest != null){
                         if (currentUser != null) {
-                            if(NotifsFragment.user?.request!!.containsKey(currentUser.uid)){
+                            if(NotifsFragment.user?.friendRequest!!.containsKey(currentUser.uid)){
                                 NotifsFragment.requestList.add(currentUser)
                             }
                         }
@@ -207,7 +207,6 @@ class FirebaseSource {
         })
     }
 
-
     fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int) {
         val database = Firebase.database
         val myRef = database.getReference("event")
@@ -215,13 +214,48 @@ class FirebaseSource {
 
     }
 
-
     fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int) {
         val database = Firebase.database
         val myRef = database.getReference("event")
         myRef.child("eventPrivate/").push().setValue(Event(name,isPublic,nbrePersonnes))
 
     }
+
+    fun acceptRequest(position: Int, key: String){
+
+        if (uid != null) {
+            firebaseData.child("user").child(uid).setValue(NotifsFragment.user)
+        }
+
+        firebaseData.child("user").addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (postSnapshot in snapshot.children){
+                    val User = postSnapshot.getValue(User::class.java)
+                    if(User?.uid == key){
+                        if (uid != null) {
+                            firebaseData.child("user").child(User?.uid!!).child("friendList").child(uid).setValue(
+                                NotifsFragment.user?.email)
+                        }
+
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+
+
+    }
+
+    fun refuseRequest(position: Int){
+        if (uid != null) {
+            firebaseData.child("user").child(uid).setValue(NotifsFragment.user)
+        }
+    }
+
 }
 
 

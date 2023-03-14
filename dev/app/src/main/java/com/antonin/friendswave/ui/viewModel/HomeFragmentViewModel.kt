@@ -41,14 +41,6 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
         repository.fetchUsers()
     }
 
-    fun fetchUsersR() {
-        repository.fetchUsersR()
-    }
-
-    fun fetchUsersRequest(){
-        repository.fetchUsersRequest()
-    }
-
 
     fun goToAddContact(view: View){
 
@@ -57,4 +49,5 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
             view.context.startActivity(it)
         }
     }
+
 }
