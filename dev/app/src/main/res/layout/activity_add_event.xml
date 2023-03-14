@@ -78,22 +78,29 @@
                     android:layout_weight="0.2"
                     android:background="#9575CD" />
 
-                <TextView
-                    android:id="@+id/textView9"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:text=""
-                    android:textSize="16sp" />
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:orientation="horizontal">
 
-                <Switch
-                    android:id="@+id/switch1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onCheckedChanged="@{viewmodel::executeOnStatusChanged}"
-                    android:checked="@={viewmodel.isChecked()}"
-                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@{viewmodel.isChecked() ? @string/add_event_private : @string/add_event_public}"
+                        android:textSize="16sp" />
+
+                    <Switch
+                        android:id="@+id/switch1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="@={viewmodel.isChecked()}"
+                        android:onCheckedChanged="@{viewmodel::executeOnStatusChanged}"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/textView"
@@ -200,8 +207,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:gravity="start|top"
-                    android:inputType="textMultiLine" />
+                    android:gravity="top|left"
+                    android:hint="@string/add_event_hint_name"
+                    android:inputType="textMultiLine"
+                    android:lines="10" />
 
                 <View
                     android:id="@+id/view5"
@@ -256,10 +265,13 @@
                     android:text="@string/add_event_date"
                     android:textSize="20sp" />
 
-                <CalendarView
-                    android:id="@+id/calendarView"
+                <EditText
+                    android:id="@+id/editTextDate"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:ems="10"
+                    android:inputType="date" />
 
                 <View
                     android:id="@+id/view7"
@@ -288,8 +300,10 @@
 
                 <Button
                     android:id="@+id/button4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="3"
                     android:onClick="@{()-> viewmodel.addEventUser()}" />
 
             </LinearLayout>
