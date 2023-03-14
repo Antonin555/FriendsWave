@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentEventBinding
 import com.antonin.friendswave.databinding.FragmentHomeBinding
+import com.antonin.friendswave.ui.event.InterfaceEvent
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import org.kodein.di.Kodein
@@ -23,7 +25,7 @@ import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
 
-class EventFragment : Fragment(), KodeinAware {
+class EventFragment : Fragment(), KodeinAware, InterfaceEvent {
 
 
     override val kodein : Kodein by kodein()
@@ -32,11 +34,13 @@ class EventFragment : Fragment(), KodeinAware {
     private lateinit var binding : FragmentEventBinding
     private var viewModel: EventFragmentViewModel = EventFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
 
-    private lateinit var adapter1 : ListGeneriqueAdapter<Event>
+    private var adapter1 : ListGeneriqueAdapter<Event> = ListGeneriqueAdapter<Event>(R.layout.recycler_events)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.fetchEventsPublic()
+
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -45,6 +49,8 @@ class EventFragment : Fragment(), KodeinAware {
         binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_event, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
         binding.viewmodel = viewModel
+
+
         return binding.root
     }
 
@@ -53,14 +59,35 @@ class EventFragment : Fragment(), KodeinAware {
         super.onResume()
 
 
-        adapter1 = ListGeneriqueAdapter(R.layout.recycler_events)
+        adapter1 = ListGeneriqueAdapter<Event>(R.layout.recycler_events)
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerFragmentEvent.layoutManager = layoutManager
         binding.recyclerFragmentEvent.adapter = adapter1
         adapter1.addItems(eventList)
+
+        adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
+            override fun onClick(view: View, position: Int) {
+
+                val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
+                toast.show()
+            }
+
+        })
     }
 
     companion object {
         var eventList:ArrayList<Event> = ArrayList()
+    }
+
+    override fun saveOn() {
+        TODO("Not yet implemented")
+    }
+
+    override fun saveOff() {
+        TODO("Not yet implemented")
+    }
+
+    override fun checkContent() {
+        TODO("Not yet implemented")
     }
 }

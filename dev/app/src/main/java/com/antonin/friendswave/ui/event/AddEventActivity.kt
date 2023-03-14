@@ -43,4 +43,8 @@ class AddEventActivity : AppCompatActivity(), KodeinAware, InterfaceEvent {
     override fun saveOff() {
         TODO("Not yet implemented")
     }
+
+    override fun checkContent() {
+        TODO("Not yet implemented")
+    }
 }

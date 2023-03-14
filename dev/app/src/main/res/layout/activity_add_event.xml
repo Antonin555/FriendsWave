@@ -48,7 +48,7 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_weight="2"
+                    android:layout_weight="4"
                     android:text="@string/add_event_name"
                     android:textSize="20sp" />
 
@@ -65,7 +65,7 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_weight="3.5"
+                    android:layout_weight="4"
                     android:ems="10"
                     android:hint="@string/add_event_hint_name"
                     android:inputType="textPersonName"
@@ -102,23 +102,30 @@
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="@string/add_event_nbre_personnes"
-                    android:textSize="16sp" />
 
-
-                <EditText
-                    android:id="@+id/editTextNumber"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:text="@={`` + viewmodel.nbrePersonnes}"
-                    android:inputType="number" />
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/add_event_nbre_personnes"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/editTextNumber"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:text="@={`` + viewmodel.nbrePersonnes}" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/textView10"
@@ -148,7 +155,7 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_weight="2"
+                    android:layout_weight="4"
                     android:text="@string/add_event_photo"
                     android:textSize="20sp" />
 
@@ -156,7 +163,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_gravity="center"
-                    android:layout_weight="6"
+                    android:layout_weight="12"
                     android:gravity="bottom"
                     android:orientation="horizontal">
 
@@ -198,14 +205,15 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_weight="2"
+                    android:layout_weight="4"
                     android:text="@string/add_event_description"
                     android:textSize="20sp" />
 
                 <EditText
                     android:id="@+id/editTextTextMultiLine"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="10"
                     android:ems="10"
                     android:gravity="top|left"
                     android:hint="@string/add_event_hint_name"
@@ -226,7 +234,7 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_weight="2"
+                    android:layout_weight="4"
                     android:text="@string/add_event_lieu"
                     android:textSize="20sp" />
 
@@ -236,7 +244,7 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_weight="2"
+                    android:layout_weight="4"
                     android:ems="10"
                     android:hint="lieu"
                     android:inputType="textPersonName" />
@@ -245,7 +253,7 @@
                     android:id="@+id/mapView2"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="8" />
+                    android:layout_weight="12" />
 
                 <View
                     android:id="@+id/view6"
@@ -261,7 +269,7 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_weight="2"
+                    android:layout_weight="4"
                     android:text="@string/add_event_date"
                     android:textSize="20sp" />
 
@@ -269,7 +277,7 @@
                     android:id="@+id/editTextDate"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="2"
+                    android:layout_weight="4"
                     android:ems="10"
                     android:inputType="date" />
 
@@ -287,14 +295,15 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_weight="2"
+                    android:layout_weight="4"
                     android:text="@string/add_event_heure"
                     android:textSize="20sp" />
 
                 <EditText
                     android:id="@+id/editTextTime"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="4"
                     android:ems="10"
                     android:inputType="time" />
 
@@ -303,7 +312,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_gravity="center"
-                    android:layout_weight="3"
+                    android:layout_weight="5"
                     android:onClick="@{()-> viewmodel.addEventUser()}" />
 
             </LinearLayout>

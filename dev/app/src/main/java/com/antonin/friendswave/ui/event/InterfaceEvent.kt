@@ -4,5 +4,6 @@ interface InterfaceEvent {
 
     fun saveOn()
     fun saveOff()
+    fun checkContent()
 
 }

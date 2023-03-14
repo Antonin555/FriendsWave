@@ -9,6 +9,9 @@
     <data>
         <variable name="viewmodel"
             type="com.antonin.friendswave.ui.viewModel.EventFragmentViewModel"/>
+
+        <variable name="item"
+            type="com.antonin.friendswave.adapter.ListGeneriqueAdapter"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
