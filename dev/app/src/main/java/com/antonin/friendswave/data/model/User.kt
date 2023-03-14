@@ -23,14 +23,13 @@ import com.antonin.friendswave.adapter.ListItemViewModel
 //
 //}
 
-
 data class User (
-
     var name: String? = "",
     var email: String? = "",
     var uid: String? = "",
     var rating: Double? =0.0,
     var friends : Int? = 1,
+    var request: Map<String, String>? = null
 //    var eventList: ArrayList<Event>? = ArrayList()
 
     ): ListItemViewModel()

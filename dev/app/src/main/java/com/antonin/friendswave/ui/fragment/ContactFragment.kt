@@ -8,15 +8,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.data.firebase.FirebaseSource
-import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentContactBinding
-import com.antonin.friendswave.databinding.FragmentHomeBinding
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import org.kodein.di.Kodein
@@ -28,7 +25,6 @@ import org.kodein.di.generic.instance
 class ContactFragment : Fragment(), KodeinAware {
 
     override val kodein : Kodein by kodein()
-
     private val factory : HomeFragmentVMFactory by instance()
     private lateinit var adapter1 : ListGeneriqueAdapter<User>
     private var viewModel: HomeFragmentViewModel  = HomeFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))

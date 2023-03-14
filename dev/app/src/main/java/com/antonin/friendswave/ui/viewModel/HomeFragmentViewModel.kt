@@ -20,18 +20,11 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
     private val _user = MutableLiveData<User>()
     var user_live: LiveData<User> = _user
 
-
-
     fun fetchUserData() {
         repository.getUserData().observeForever { user ->
             _user.value = user
         }
     }
-
-
-
-
-
 
 
     val user by lazy {
@@ -45,8 +38,15 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
     }
 
     fun fetchUsers() {
-
         repository.fetchUsers()
+    }
+
+    fun fetchUsersR() {
+        repository.fetchUsersR()
+    }
+
+    fun fetchUsersRequest(){
+        repository.fetchUsersRequest()
     }
 
 
@@ -56,7 +56,5 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
         Intent(view.context, AddContactActivity::class.java).also {
             view.context.startActivity(it)
         }
-
-
     }
 }

@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.antonin.friendswave.outils.startHomeActivity
 import com.antonin.friendswave.ui.fragment.ContactFragment
 import com.antonin.friendswave.ui.fragment.EventFragment
+import com.antonin.friendswave.ui.fragment.NotifsFragment
 import com.antonin.friendswave.ui.fragment.HomeFragment
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -95,6 +96,78 @@ class FirebaseSource {
         })
     }
 
+    fun fetchUsersR(){
+        firebaseData.child("user").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+//                ContactFragment.contactList.clear()
+                for (postSnapshot in snapshot.children){
+                    val user = postSnapshot.getValue(User::class.java)
+                    if (user != null) {
+                        if (user.uid == firebaseAuth.currentUser?.uid!!)
+                            NotifsFragment.user = user!!
+
+                    }
+                }
+
+            }
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+    }
+
+    fun addFriendRequestToUser(email: String) {
+        firebaseData.child("user").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var emailDB = ""
+                for (postSnapshot in snapshot.children) {
+                    val currentUser = postSnapshot.getValue(User::class.java)
+                    if (email == currentUser?.email) {
+                        emailDB = currentUser?.email!!
+                        //a voir si c'est la meilleur maniere de gerer les friend request
+                        firebaseData.child("user").child(currentUser?.uid!!).child("request").child(firebaseAuth.currentUser?.uid!!).setValue(firebaseAuth.currentUser?.email)
+//                        firebaseData.child("user").child(currentUser?.uid!!).child("request").push().setValue(firebaseAuth.currentUser?.email)
+                        return
+                    }
+                }
+                if (emailDB == null) {
+                    //envoyer une demande via email
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+
+    fun fetchUsersRequest(){
+        firebaseData.child("user").addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                NotifsFragment.requestList.clear()
+
+
+                for (postSnapshot in snapshot.children){
+                    val currentUser = postSnapshot.getValue(User::class.java)
+                    if (NotifsFragment.user?.request != null){
+                        if (currentUser != null) {
+                            if(NotifsFragment.user?.request!!.containsKey(currentUser.uid)){
+                                NotifsFragment.requestList.add(currentUser)
+                            }
+                        }
+                    }
+                }
+
+//                adapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+    }
 
     fun fetchEventsPublic(){
         firebaseData.child("event/eventPublic").addValueEventListener(object : ValueEventListener {

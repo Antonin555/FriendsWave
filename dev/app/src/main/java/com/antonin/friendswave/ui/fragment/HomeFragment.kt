@@ -37,7 +37,6 @@ class HomeFragment : Fragment(), KodeinAware {
     private lateinit var binding: FragmentHomeBinding
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
@@ -46,7 +45,6 @@ class HomeFragment : Fragment(), KodeinAware {
     override fun onResume() {
         super.onResume()
         viewModel.fetchUserData()
-
     }
 
 
@@ -54,17 +52,13 @@ class HomeFragment : Fragment(), KodeinAware {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = this
         binding.item = viewModel
-
     }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
         return binding.root
     }
-
-
 
 }
 

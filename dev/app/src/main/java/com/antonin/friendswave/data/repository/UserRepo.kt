@@ -17,8 +17,13 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     fun fetchUsers() = firebase.fetchUsers()
 
+    fun fetchUsersR() = firebase.fetchUsersR()
+
+    fun fetchUsersRequest() = firebase.fetchUsersRequest()
+
     fun fetchEventsPublic() = firebase.fetchEventsPublic()
 
+    fun addFriendRequestToUser(email: String) = firebase.addFriendRequestToUser(email)
 
     fun getUserData(): LiveData<User> {
         val userLiveData = MutableLiveData<User>()
@@ -29,7 +34,6 @@ class UserRepo(private val firebase: FirebaseSource) {
 
         return userLiveData
     }
-
 
     fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int) =
         firebase.addEventUserPublic(name,isPublic,nbrePersonnes)
