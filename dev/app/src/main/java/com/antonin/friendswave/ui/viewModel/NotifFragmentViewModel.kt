@@ -23,8 +23,8 @@ class NotifFragmentViewModel (private val repository: UserRepo): ViewModel() {
         NotifsFragment.user?.friendList!!.put(key.toString(), email.toString())
         NotifsFragment.user?.friendRequest!!.remove(key)
 
-        if (key != null) {
-            repository.acceptRequest(position, key)
+        if (key != null && email != null) {
+            repository.acceptRequest(key, email)
         }
     }
 

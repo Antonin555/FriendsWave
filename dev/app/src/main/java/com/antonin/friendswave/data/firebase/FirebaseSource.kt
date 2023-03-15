@@ -26,7 +26,7 @@ class FirebaseSource {
         FirebaseAuth.getInstance()
     }
     val firebaseData : DatabaseReference = FirebaseDatabase.getInstance().getReference()
-    val uid = FirebaseAuth.getInstance().currentUser?.uid
+    val mainUid = FirebaseAuth.getInstance().currentUser?.uid
 
     fun currentUser() = firebaseAuth.currentUser
 
@@ -98,7 +98,6 @@ class FirebaseSource {
 
 
     fun fetchOneEvent(onResult: (Event?) -> Unit) = {
-
         firebaseData.child("event/eventPublic")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -111,8 +110,6 @@ class FirebaseSource {
                     onResult(null)
                 }
             })
-
-
     }
 
 
@@ -221,38 +218,49 @@ class FirebaseSource {
 
     }
 
-    fun acceptRequest(position: Int, key: String){
+    fun acceptRequest(key: String, email: String){
 
-        if (uid != null) {
-            firebaseData.child("user").child(uid).setValue(NotifsFragment.user)
-        }
 
-        firebaseData.child("user").addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (postSnapshot in snapshot.children){
-                    val User = postSnapshot.getValue(User::class.java)
-                    if(User?.uid == key){
-                        if (uid != null) {
-                            firebaseData.child("user").child(User?.uid!!).child("friendList").child(uid).setValue(
-                                NotifsFragment.user?.email)
-                        }
+//        if (mainUid != null) {
+//            firebaseData.child("user").child(mainUid).setValue(NotifsFragment.user)
+//        }
 
-                    }
-                }
-            }
+        firebaseData.child("user").child(mainUid!!).child("friendList").child(key).setValue(email)
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
+
+        firebaseData.child("user").child(key).child("friendList").child(mainUid).setValue(NotifsFragment.user?.email)
+
+
+        firebaseData.child("user").child(mainUid!!).child("friendRequest").child(key).removeValue()
+
+//        firebaseData.child("user").addValueEventListener(object: ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                for (postSnapshot in snapshot.children){
+//                    val user = postSnapshot.getValue(User::class.java)
+//                    if(user?.uid == key){
+//                        if (mainUid != null) {
+//                            firebaseData.child("user").child(user?.uid!!).child("friendList").child(mainUid).setValue(
+//                                NotifsFragment.user?.email)
+//                            return
+//                        }
+//
+//                    }
+//                }
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                TODO("Not yet implemented")
+//            }
+//        })
+
 
 
 
     }
 
     fun refuseRequest(position: Int){
-        if (uid != null) {
-            firebaseData.child("user").child(uid).setValue(NotifsFragment.user)
+        if (mainUid != null) {
+            firebaseData.child("user").child(mainUid).setValue(NotifsFragment.user)
         }
     }
 
