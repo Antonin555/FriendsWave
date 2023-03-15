@@ -231,27 +231,27 @@ class FirebaseSource {
         firebaseData.child("user").child(key).child("friendList").child(mainUid).setValue(NotifsFragment.user?.email)
 
 
-        firebaseData.child("user").child(key).child("friendRequest").child(mainUid).setValue(null)
+//        firebaseData.child("user").child(key).child("friendRequest").child(mainUid).removeValue()
 
-//        firebaseData.child("user").addValueEventListener(object: ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                for (postSnapshot in snapshot.children){
-//                    val user = postSnapshot.getValue(User::class.java)
-//                    if(user?.uid == key){
-//                        if (mainUid != null) {
-//                            firebaseData.child("user").child(user?.uid!!).child("friendList").child(mainUid).setValue(
-//                                NotifsFragment.user?.email)
-//                            return
-//                        }
-//
-//                    }
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//        })
+        firebaseData.child("user").addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (postSnapshot in snapshot.children){
+                    val user = postSnapshot.getValue(User::class.java)
+                    if(user?.uid == key){
+                        if (mainUid != null) {
+                            firebaseData.child("user").child(user?.uid!!).child("friendList").child(mainUid).setValue(
+                                NotifsFragment.user?.email)
+                            return
+                        }
+
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
 
 
 
