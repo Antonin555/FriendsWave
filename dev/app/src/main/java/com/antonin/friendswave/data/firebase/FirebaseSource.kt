@@ -98,6 +98,7 @@ class FirebaseSource {
 
 
     fun fetchOneEvent(onResult: (Event?) -> Unit) = {
+
         firebaseData.child("event/eventPublic")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -110,6 +111,8 @@ class FirebaseSource {
                     onResult(null)
                 }
             })
+
+
     }
 
 
@@ -195,6 +198,24 @@ class FirebaseSource {
                 for (postSnapshot in snapshot.children){
                     val event = postSnapshot.getValue(Event::class.java)
                     EventFragment.eventList.add(event!!)
+                }
+
+            }
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+    }
+
+
+    fun fetchEventsPublic1(eventList: ArrayList<Event>){
+        firebaseData.child("event/eventPublic").addValueEventListener(object : ValueEventListener {
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                eventList.clear()
+                for (postSnapshot in snapshot.children){
+                    val event = postSnapshot.getValue(Event::class.java)
+                        eventList.add(event!!)
                 }
 
             }

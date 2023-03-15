@@ -22,6 +22,8 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
     private lateinit var viewModel: EventFragmentViewModel
     private val factory : EventFragmentVMFactory by instance()
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_event)
@@ -30,7 +32,14 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
         viewModel = ViewModelProviders.of(this, factory).get(EventFragmentViewModel::class.java)
         binding.event = viewModel
         binding.lifecycleOwner = this
+        viewModel.fetchOneEvent()
 
+    }
+
+    companion object {
+
+
+        var str:String = ""
     }
 
 

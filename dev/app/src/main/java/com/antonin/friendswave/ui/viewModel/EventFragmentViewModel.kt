@@ -71,6 +71,7 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
         repository.fetchOneEvent().observeForever { event ->
             _event.value = event
         }
+
     }
 
 
@@ -81,6 +82,10 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     fun fetchEventsPublic() {
         repository.fetchEventsPublic()
+    }
+
+    fun fetchEventsPublic1(eventList:ArrayList<Event>) {
+        repository.fetchEventsPublic1(eventList)
     }
 
 //    fun fetchOneEvent() : String {

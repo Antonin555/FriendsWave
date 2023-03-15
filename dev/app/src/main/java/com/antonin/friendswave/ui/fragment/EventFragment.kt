@@ -30,6 +30,8 @@ import org.kodein.di.generic.instance
 
 class EventFragment : Fragment(), KodeinAware, InterfaceEvent {
 
+    var eventList1:ArrayList<Event> = ArrayList()
+
 
     override val kodein : Kodein by kodein()
 
@@ -41,7 +43,8 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.fetchEventsPublic()
+//        viewModel.fetchEventsPublic()
+        viewModel.fetchEventsPublic1(eventList1)
 
         viewModel.interfaceEvent = this
     }
@@ -66,14 +69,15 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent {
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerFragmentEvent.layoutManager = layoutManager
         binding.recyclerFragmentEvent.adapter = adapter1
-        adapter1.addItems(eventList)
+//        adapter1.addItems(eventList)
+        adapter1.addItems(eventList1)
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
 
                 val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
                 toast.show()
-                viewModel.fetchOneEvent()
+//                viewModel.fetchOneEvent()
                 var intent : Intent = Intent(context, DetailEventActivity::class.java )
                 startActivity(intent)
 

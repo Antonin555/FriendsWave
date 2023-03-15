@@ -24,6 +24,9 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     fun fetchEventsPublic() = firebase.fetchEventsPublic()
 
+
+    fun fetchEventsPublic1(eventList:ArrayList<Event>) = firebase.fetchEventsPublic1(eventList)
+
     fun fetchOneEvent(): LiveData<Event> {
         val eventLiveData = MutableLiveData<Event>()
 
@@ -32,7 +35,6 @@ class UserRepo(private val firebase: FirebaseSource) {
         }
 
         return eventLiveData
-
 
     }
 
