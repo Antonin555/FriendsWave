@@ -231,7 +231,7 @@ class FirebaseSource {
         firebaseData.child("user").child(key).child("friendList").child(mainUid).setValue(NotifsFragment.user?.email)
 
 
-        firebaseData.child("user").child(key).child("friendRequest").child(mainUid).removeValue()
+        firebaseData.child("user").child(key).child("friendRequest").child(mainUid).setValue(null)
 
 //        firebaseData.child("user").addValueEventListener(object: ValueEventListener {
 //            override fun onDataChange(snapshot: DataSnapshot) {
