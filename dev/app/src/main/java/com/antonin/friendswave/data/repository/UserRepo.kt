@@ -27,16 +27,16 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     fun fetchEventsPublic1(eventList:ArrayList<Event>) = firebase.fetchEventsPublic1(eventList)
 
-    fun fetchOneEvent(): LiveData<Event> {
+    fun getEventData(position: Int) : LiveData<Event> {
         val eventLiveData = MutableLiveData<Event>()
 
-        firebase.fetchOneEvent { event ->
+        firebase.getEventData(position) { event ->
             eventLiveData.postValue(event)
         }
 
         return eventLiveData
-
     }
+
 
     fun addFriendRequestToUser(email: String) = firebase.addFriendRequestToUser(email)
 

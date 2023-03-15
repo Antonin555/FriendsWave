@@ -7,6 +7,7 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
@@ -15,11 +16,12 @@ import com.antonin.friendswave.ui.event.InterfaceEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 
 
 class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
-    var name: String? = "COCO"
+    var name: String? = null
     var description: String? = null
     var isPhotoLoad : Boolean? = false
     private var isPublic : Boolean? = false
@@ -30,8 +32,18 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     var longitude : String?  =""
     var date: String? = ""
     var horaire: String? = ""
-    private val disposables = CompositeDisposable()
+
     var  interfaceEvent: InterfaceEvent? = null
+
+    private val _eventData = MutableLiveData<Event>()
+    val eventData: LiveData<Event> = _eventData
+
+    fun fetchDataEvent(position: Int) {
+        repository.getEventData(position).observeForever { event ->
+            _eventData.value = event
+        }
+    }
+
 
     fun goToAddEvent(view: View){
 
@@ -42,7 +54,6 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
 
     }
-
 
     fun addEventUser() {
 
@@ -56,8 +67,6 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     }
 
-
-
     val isChecked: MutableLiveData<Boolean> = MutableLiveData()
     fun executeOnStatusChanged(switch: CompoundButton, isChecked: Boolean) {
         isPublic = isChecked
@@ -67,18 +76,6 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     private val _event = MutableLiveData<Event>()
     var event_live: LiveData<Event> = _event
 
-    fun fetchOneEvent() {
-        repository.fetchOneEvent().observeForever { event ->
-            _event.value = event
-        }
-
-    }
-
-
-    fun fetchEventsPrivate() {
-
-
-    }
 
     fun fetchEventsPublic() {
         repository.fetchEventsPublic()
@@ -87,14 +84,6 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     fun fetchEventsPublic1(eventList:ArrayList<Event>) {
         repository.fetchEventsPublic1(eventList)
     }
-
-//    fun fetchOneEvent() : String {
-//        var str : String? = null
-//        str = repository.fetchOneEvent().toString()
-//        return str
-//    }
-
-
 
 
 }

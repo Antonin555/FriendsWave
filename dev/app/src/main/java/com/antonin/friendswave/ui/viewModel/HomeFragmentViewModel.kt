@@ -26,7 +26,6 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
         }
     }
 
-
     val user by lazy {
         repository.currentUser()
     }
@@ -40,7 +39,6 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
     fun fetchUsers() {
         repository.fetchUsers()
     }
-
 
     fun goToAddContact(view: View){
 

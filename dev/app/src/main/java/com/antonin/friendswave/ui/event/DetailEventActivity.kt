@@ -1,5 +1,6 @@
 package com.antonin.friendswave.ui.event
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -23,25 +24,20 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
     private val factory : EventFragmentVMFactory by instance()
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_event)
-
+        var pos   = intent.getIntExtra("position", 0)
         val binding: ActivityDetailEventBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail_event)
         viewModel = ViewModelProviders.of(this, factory).get(EventFragmentViewModel::class.java)
         binding.event = viewModel
         binding.lifecycleOwner = this
-        viewModel.fetchOneEvent()
+        viewModel.fetchDataEvent(pos)
+
 
     }
-
-    companion object {
-
-
-        var str:String = ""
-    }
-
 
 
 }
+
+

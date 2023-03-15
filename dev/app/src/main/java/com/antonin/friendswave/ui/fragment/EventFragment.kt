@@ -79,11 +79,14 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent {
                 toast.show()
 //                viewModel.fetchOneEvent()
                 var intent : Intent = Intent(context, DetailEventActivity::class.java )
+                intent.putExtra("position", position)
                 startActivity(intent)
 
             }
 
         })
+
+
     }
 
     companion object {
