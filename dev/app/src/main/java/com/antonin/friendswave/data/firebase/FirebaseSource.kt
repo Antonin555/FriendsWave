@@ -242,37 +242,48 @@ class FirebaseSource {
     fun acceptRequest(key: String, email: String){
 
 
+        firebaseData.child("user").child(key).child("friendRequest").addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (postSnapshot in snapshot.children){
+                    val requete = postSnapshot.getValue(String::class.java)
+                    if(requete == mainUid!!){
+                        if (mainUid != null) {
+
+                            postSnapshot.ref.removeValue()
+
+//                            firebaseData.child("user").child(requete).child("friendList").child(mainUid).setValue(
+//                                NotifsFragment.user?.email)
+//                            return
+                        }
+
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+//
+//        firebaseData.child("user").child(mainUid!!).child("friendList").child(key).setValue(email)
+//        firebaseData.child("user").child(mainUid!!).child("friendRequest").child(key).removeValue()
+//        firebaseData.child("user").child(key).child("friendList").child(mainUid!!)
+//            .setValue(NotifsFragment.user?.email)
+
+
+
 //        NotifsFragment.user
 //        if (mainUid != null) {
 //            firebaseData.child("user").child(mainUid).setValue(NotifsFragment.user)
 //        }
 
-        firebaseData.child("user").child(mainUid!!).child("friendList").child(key).setValue(email)
-        firebaseData.child("user").child(mainUid!!).child("friendRequest").child(key).ref.removeValue()
 
-        firebaseData.child("user").child(key).child("friendList").child(mainUid!!).setValue(NotifsFragment.user?.email)
 
-//        firebaseData.child("user").child(key).child("friendRequest").addValueEventListener(object: ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                for (postSnapshot in snapshot.children){
-//                    val requete = postSnapshot.getValue(String::class.java)
-//                    if(requete == mainUid!!){
-//                        if (mainUid != null) {
-//                            postSnapshot.ref.removeValue()
-//
-////                            firebaseData.child("user").child(requete).child("friendList").child(mainUid).setValue(
-////                                NotifsFragment.user?.email)
-////                            return
-//                        }
-//
-//                    }
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//        })
+
+
+
+
+
 
     }
 
@@ -281,6 +292,7 @@ class FirebaseSource {
             firebaseData.child("user").child(mainUid).setValue(NotifsFragment.user)
         }
     }
+
 
 }
 
