@@ -62,8 +62,7 @@ class NotifsFragment : Fragment(), KodeinAware {
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
 
-                if(view.id == R.id.btn_accept) {
-
+                if (view.id == R.id.btn_accept){
                     viewModel.acceptRequest(position)
                     val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
                     toast.show()
@@ -76,13 +75,6 @@ class NotifsFragment : Fragment(), KodeinAware {
                     toast.show()
 
                 }
-
-//                if(view.findViewById<Button>(R.id.btn_accept).text == "ACCEPT") {
-//
-//                }
-//                if(view.findViewById<Button>(R.id.btn_refuse).text == "DECLINE"){
-//
-//                }
             }
 
         })
