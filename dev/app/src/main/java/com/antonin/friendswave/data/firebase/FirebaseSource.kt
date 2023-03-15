@@ -242,16 +242,15 @@ class FirebaseSource {
     fun acceptRequest(key: String, email: String){
 
 
-        if (mainUid != null) {
-            firebaseData.child("user").child(mainUid).setValue(NotifsFragment.user)
-        }
+//        NotifsFragment.user
+//        if (mainUid != null) {
+//            firebaseData.child("user").child(mainUid).setValue(NotifsFragment.user)
+//        }
 
-//        firebaseData.child("user").child(mainUid!!).child("friendList").child(key).setValue(email)
+        firebaseData.child("user").child(mainUid!!).child("friendList").child(key).setValue(email)
+        firebaseData.child("user").child(mainUid!!).child("friendRequest").child(key).ref.removeValue()
 
         firebaseData.child("user").child(key).child("friendList").child(mainUid!!).setValue(NotifsFragment.user?.email)
-
-
-//        firebaseData.child("user").child(key).child("friendRequest").child(mainUid).ref.removeValue()
 
 //        firebaseData.child("user").child(key).child("friendRequest").addValueEventListener(object: ValueEventListener {
 //            override fun onDataChange(snapshot: DataSnapshot) {
@@ -274,9 +273,6 @@ class FirebaseSource {
 //                TODO("Not yet implemented")
 //            }
 //        })
-
-
-
 
     }
 
