@@ -1,6 +1,7 @@
 package com.antonin.friendswave.data.firebase
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.LiveData
