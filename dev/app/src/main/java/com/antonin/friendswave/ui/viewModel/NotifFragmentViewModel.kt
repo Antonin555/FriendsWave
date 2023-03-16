@@ -1,17 +1,10 @@
 package com.antonin.friendswave.ui.viewModel
 
-import android.app.appsearch.observer.ObserverCallback
 import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.ui.fragment.NotifsFragment
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-
 
 class NotifFragmentViewModel (private val repository: UserRepo): ViewModel() {
-
-    val disposables = CompositeDisposable()
 
     fun fetchUsersR() {
         repository.fetchUsersR()
@@ -30,10 +23,9 @@ class NotifFragmentViewModel (private val repository: UserRepo): ViewModel() {
         NotifsFragment.user?.friendList!!.put(key.toString(), email.toString())
         NotifsFragment.user?.friendRequest!!.remove(key)
 
-
-        repository.acceptRequest(key!!, email!!)
-
-
+        if (key != null && email != null) {
+            repository.acceptRequest(key, email)
+        }
     }
 
     fun refuseRequest(position: Int){
@@ -41,11 +33,5 @@ class NotifFragmentViewModel (private val repository: UserRepo): ViewModel() {
         NotifsFragment.user?.friendRequest!!.remove(key)
 
         repository.refuseRequest(position)
-    }
-
-
-    override fun onCleared() {
-        super.onCleared()
-        disposables.dispose()
     }
 }
