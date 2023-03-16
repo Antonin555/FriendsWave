@@ -57,8 +57,12 @@ class UserRepo(private val firebase: FirebaseSource) {
     fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int) =
         firebase.addEventUserPrivate(name,isPublic,nbrePersonnes)
 
-    fun acceptRequest(key: String, email: String){
-        firebase.acceptRequest(key, email)
+    fun acceptRequest1(key: String, email: String){
+        firebase.acceptRequestUpdateUser(key, email)
+    }
+
+    fun acceptRequest2(key: String, email: String){
+        firebase.acceptRequests(key, email)
     }
 
     fun refuseRequest(position: Int){
