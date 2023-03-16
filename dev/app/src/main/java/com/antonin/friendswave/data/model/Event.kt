@@ -10,7 +10,9 @@ data class Event(
     var categorie : String? = "",
     var description : String? = "",
     var date: String? = "",
+    var heure: String? = "",
     var lattitude : String = "",
-    var longitude : String = ""
+    var longitude : String = "",
+    var duree: Int? = 0
 
 ):ListItemViewModel()
