@@ -29,11 +29,8 @@ import org.kodein.di.android.x.kodein
 class HomeFragment : Fragment(), KodeinAware {
 
     override val kodein : Kodein by kodein()
-
     private val factory : HomeFragmentVMFactory by instance()
-
     private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
-
     private lateinit var binding: FragmentHomeBinding
 
 
@@ -47,17 +44,15 @@ class HomeFragment : Fragment(), KodeinAware {
         viewModel.fetchUserData()
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding  = inflate(inflater, R.layout.fragment_home, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = this
         binding.item = viewModel
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        binding  = inflate(inflater, R.layout.fragment_home, container, false)
-        return binding.root
     }
 
 }

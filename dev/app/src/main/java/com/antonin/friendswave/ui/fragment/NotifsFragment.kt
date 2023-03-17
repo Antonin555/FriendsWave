@@ -29,17 +29,17 @@ import org.kodein.di.generic.instance
 
 class NotifsFragment : Fragment(), KodeinAware {
 
+    var requestList:ArrayList<User> = ArrayList()
+
     override val kodein : Kodein by kodein()
     private val factory : NotifFragmentVMFactory by instance()
     private lateinit var adapter1 : ListGeneriqueAdapter<User>
     private var viewModel: NotifFragmentViewModel = NotifFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
     private lateinit var binding : FragmentNotifsBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.fetchUsersR()
-        viewModel.fetchUsersRequest()
+        viewModel.fetchUsersRequest(requestList)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,6 +52,7 @@ class NotifsFragment : Fragment(), KodeinAware {
 
     override fun onResume() {
         super.onResume()
+
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerFragmentNotif.layoutManager = layoutManager
@@ -78,12 +79,5 @@ class NotifsFragment : Fragment(), KodeinAware {
             }
 
         })
-
     }
-
-    companion object {
-        var requestList:ArrayList<User> = ArrayList()
-        var user: User? = User()
-    }
-
 }

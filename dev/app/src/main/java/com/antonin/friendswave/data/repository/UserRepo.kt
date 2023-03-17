@@ -18,9 +18,9 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     fun fetchUsers() = firebase.fetchUsers()
 
-    fun fetchUsersR() = firebase.fetchUsersR()
+//    fun fetchUsersR() = firebase.fetchUsersR()
 
-    fun fetchUsersRequest() = firebase.fetchUsersRequest()
+    fun fetchUsersRequest(requestList: ArrayList<User>) = firebase.fetchUsersRequest(requestList)
 
     fun fetchEventsPublic() = firebase.fetchEventsPublic()
 
@@ -57,8 +57,8 @@ class UserRepo(private val firebase: FirebaseSource) {
     fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int) =
         firebase.addEventUserPrivate(name,isPublic,nbrePersonnes)
 
-    fun acceptRequest1(key: String, email: String){
-        firebase.acceptRequestUpdateUser(key, email)
+    fun acceptRequest1(position: Int){
+        firebase.acceptRequestUpdateUser(position)
     }
 
     fun acceptRequest2(key: String, email: String){

@@ -32,30 +32,24 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent {
 
     var eventList1:ArrayList<Event> = ArrayList()
 
-
     override val kodein : Kodein by kodein()
-
     private val factory : EventFragmentVMFactory by instance()
     private lateinit var binding : FragmentEventBinding
     private var viewModel: EventFragmentViewModel = EventFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
-
     private var adapter1 : ListGeneriqueAdapter<Event> = ListGeneriqueAdapter<Event>(R.layout.recycler_events)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        viewModel.fetchEventsPublic()
         viewModel.fetchEventsPublic1(eventList1)
-
         viewModel.interfaceEvent = this
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-
         binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_event, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
         binding.viewmodel = viewModel
-
 
         return binding.root
     }
@@ -63,7 +57,6 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent {
 
     override fun onResume() {
         super.onResume()
-
 
         adapter1 = ListGeneriqueAdapter<Event>(R.layout.recycler_events)
         val layoutManager = LinearLayoutManager(context)
@@ -81,9 +74,7 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent {
                 var intent : Intent = Intent(context, DetailEventActivity::class.java )
                 intent.putExtra("position", position)
                 startActivity(intent)
-
             }
-
         })
 
 

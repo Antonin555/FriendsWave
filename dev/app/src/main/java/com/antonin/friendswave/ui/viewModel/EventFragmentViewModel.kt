@@ -18,7 +18,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
 
-
 class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     var name: String? = null
@@ -44,27 +43,19 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
         }
     }
 
-
     fun goToAddEvent(view: View){
-
         // .also permet d'eviter de déclarer une variable :
         Intent(view.context, AddEventActivity::class.java).also {
             view.context.startActivity(it)
         }
-
-
     }
 
     fun addEventUser() {
-
         if(isPublic == true) {
             repository.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!)
-
         }else {
             repository.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!)
-
         }
-
     }
 
     val isChecked: MutableLiveData<Boolean> = MutableLiveData()
@@ -72,10 +63,8 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
         isPublic = isChecked
     }
 
-
     private val _event = MutableLiveData<Event>()
     var event_live: LiveData<Event> = _event
-
 
     fun fetchEventsPublic() {
         repository.fetchEventsPublic()
@@ -84,6 +73,5 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     fun fetchEventsPublic1(eventList:ArrayList<Event>) {
         repository.fetchEventsPublic1(eventList)
     }
-
 
 }
