@@ -3,23 +3,14 @@ package com.antonin.friendswave.ui.viewModel
 import android.content.Intent
 import android.view.View
 import android.widget.CompoundButton
-import androidx.databinding.Bindable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.antonin.friendswave.data.model.Event
-import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
-import com.antonin.friendswave.outils.startMesEventsActivity
-import com.antonin.friendswave.ui.home.authentification.InterfaceAuth
 import com.antonin.friendswave.ui.event.AddEventActivity
 import com.antonin.friendswave.ui.event.InterfaceEvent
 import com.antonin.friendswave.ui.event.MyEventActivity
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.Scheduler
-import io.reactivex.schedulers.Schedulers
 
 
 class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {

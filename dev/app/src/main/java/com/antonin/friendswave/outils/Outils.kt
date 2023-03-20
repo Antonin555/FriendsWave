@@ -2,8 +2,7 @@ package com.antonin.friendswave.outils
 
 import android.content.Context
 import android.content.Intent
-import com.antonin.friendswave.ui.home.authentification.LoginActivity
-import com.antonin.friendswave.ui.event.AddEventActivity
+import com.antonin.friendswave.ui.authentification.LoginActivity
 import com.antonin.friendswave.ui.event.DetailEventActivity
 import com.antonin.friendswave.ui.event.MyEventActivity
 import com.antonin.friendswave.ui.home.EditProfilActivity

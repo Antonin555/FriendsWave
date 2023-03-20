@@ -1,6 +1,5 @@
-package com.antonin.friendswave.ui.home.authentification
+package com.antonin.friendswave.ui.authentification
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -11,7 +10,6 @@ import com.antonin.friendswave.R
 import com.antonin.friendswave.databinding.ActivitySingupBinding
 import com.antonin.friendswave.outils.startHomeActivity
 
-import com.antonin.friendswave.ui.home.HomeActivity
 import com.antonin.friendswave.ui.viewModel.AuthViewModel
 import com.antonin.friendswave.ui.viewModel.AuthViewModelFactory
 

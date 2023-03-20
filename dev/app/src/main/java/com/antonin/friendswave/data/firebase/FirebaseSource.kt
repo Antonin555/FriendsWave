@@ -172,7 +172,7 @@ class FirebaseSource {
                             for (postSnapshot in snapshot.children){
                                 val currentUser = postSnapshot.getValue(User::class.java)
                                 if(mainUser.friendRequest!!.containsKey(currentUser?.uid)){
-                                    if(currentUser?.uid != mainUid){ //patch de merde
+                                    if(currentUser?.uid != mainUid){
                                         requestList.add(currentUser!!)
                                     }
                                 }
@@ -218,7 +218,7 @@ class FirebaseSource {
         }
     }
 
-
+        // va chercher juste les evenements de l'utilisateur dans la partie Privée
 
         fun fetchEventsPublic2(onResult: (List<Event>) -> Unit) {
             firebaseData.child("event/eventPrivate").get().addOnCompleteListener { task ->
@@ -235,9 +235,8 @@ class FirebaseSource {
 
                     onResult(eventsList)
 
-
                 } else {
-                    // Handle error
+
                 }
             }
         }

@@ -5,9 +5,9 @@ import android.view.View
 import androidx.lifecycle.ViewModel
 
 import com.antonin.friendswave.data.repository.UserRepo
-import com.antonin.friendswave.ui.home.authentification.InterfaceAuth
-import com.antonin.friendswave.ui.home.authentification.LoginActivity
-import com.antonin.friendswave.ui.home.authentification.SignupActivity
+import com.antonin.friendswave.ui.authentification.InterfaceAuth
+import com.antonin.friendswave.ui.authentification.LoginActivity
+import com.antonin.friendswave.ui.authentification.SignupActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
