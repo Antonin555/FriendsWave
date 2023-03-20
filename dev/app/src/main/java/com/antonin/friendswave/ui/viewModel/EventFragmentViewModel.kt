@@ -11,12 +11,16 @@ import androidx.lifecycle.viewModelScope
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
+import com.antonin.friendswave.outils.startMesEventsActivity
+import com.antonin.friendswave.ui.authentification.InterfaceAuth
 import com.antonin.friendswave.ui.event.AddEventActivity
 import com.antonin.friendswave.ui.event.InterfaceEvent
+import com.antonin.friendswave.ui.event.MyEventActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.launch
+
 
 class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
@@ -31,6 +35,11 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     var longitude : String?  =""
     var date: String? = ""
     var horaire: String? = ""
+
+
+    val user by lazy {
+        repository.currentUser()
+    }
 
     var  interfaceEvent: InterfaceEvent? = null
 
@@ -63,15 +72,72 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
         isPublic = isChecked
     }
 
-    private val _event = MutableLiveData<Event>()
-    var event_live: LiveData<Event> = _event
+//    private val _event = MutableLiveData<Event>()
+//    var event_live: LiveData<Event> = _event
 
-    fun fetchEventsPublic() {
-        repository.fetchEventsPublic()
+//    fun fetchEventsPublic() {
+//        repository.fetchEventsPublic()
+//    }
+
+
+
+
+
+
+
+    // ViewModel pour MyEvent :
+
+
+
+    private val _eventList = MutableLiveData<List<Event>>()
+    val eventList: LiveData<List<Event>> = _eventList
+
+//    init {
+//        fetchEventsPublic2()
+//    }
+    fun fetchEventsPublic1() {
+        repository.fetchEventsPublic1().observeForever{ event ->
+        _eventList.value = event
+        }
     }
 
-    fun fetchEventsPublic1(eventList:ArrayList<Event>) {
-        repository.fetchEventsPublic1(eventList)
+    fun fetchEventsPublic2() {
+        repository.fetchEventsPublic2().observeForever{ event ->
+            _eventList.value = event
+        }
+
+    }
+
+    private val disposables = CompositeDisposable()
+
+
+
+    fun gotoMyEventActivity(view: View) {
+        Intent(view.context, MyEventActivity::class.java).also {
+            view.context.startActivity(it)
+        }
+    }
+
+
+//    fun fetchEventsPublic2() {
+////        val disposable = repository.fetchEventsPublic2(eventList).subscribeOn(io.reactivex.schedulers.Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
+//
+//        val disposable = repository.fetchEventsPublic2().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+//            interfaceAuth?.checkContent()
+//        }, {
+//            //sending a failure callback
+//
+//
+//        })
+//        disposables.add(disposable)
+//    }
+
+    //disposing the disposables
+    override fun onCleared() {
+        super.onCleared()
+        disposables.dispose()
     }
 
 }
+
+

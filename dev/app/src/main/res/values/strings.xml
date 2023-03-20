@@ -26,12 +26,15 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
-
     <string name="detail_event_nbre_inscrit">nombre inscrits : </string>
     <string name="detail_event_inscrit">Inscrits : </string>
     <string name="detail_event_inscription">inscrivez vous</string>
     <string name="detail_event_infos">Infos :</string>
     <string name="detail_event_duration">Durée :</string>
+
+
+    <string name="activity_event_inscrit">events inscrits</string>
+    <string name="activity_event_perso">mes events</string>
 
 
 </resources>

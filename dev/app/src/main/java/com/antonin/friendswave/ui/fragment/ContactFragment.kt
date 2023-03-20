@@ -44,6 +44,8 @@ class ContactFragment : Fragment(), KodeinAware {
         return binding.root
     }
 
+
+
     override fun onResume() {
         super.onResume()
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_contact)

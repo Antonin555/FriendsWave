@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
@@ -40,37 +41,45 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        viewModel.fetchEventsPublic()
-        viewModel.fetchEventsPublic1(eventList1)
+
+        viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
+        viewModel.fetchEventsPublic1()
+
         viewModel.interfaceEvent = this
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_event, container, false)
-        viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
+
         binding.viewmodel = viewModel
+        binding.lifecycleOwner = this
 
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+
+    }
     override fun onResume() {
         super.onResume()
 
-        adapter1 = ListGeneriqueAdapter<Event>(R.layout.recycler_events)
+
+        viewModel.eventList.observe(this, Observer { eventList ->
+            adapter1.addItems(eventList)
+        })
+
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerFragmentEvent.layoutManager = layoutManager
         binding.recyclerFragmentEvent.adapter = adapter1
-//        adapter1.addItems(eventList)
-        adapter1.addItems(eventList1)
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
 
                 val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
                 toast.show()
-//                viewModel.fetchOneEvent()
                 var intent : Intent = Intent(context, DetailEventActivity::class.java )
                 intent.putExtra("position", position)
                 startActivity(intent)
@@ -80,9 +89,7 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent {
 
     }
 
-    companion object {
-        var eventList:ArrayList<Event> = ArrayList()
-    }
+
 
     override fun saveOn() {
         TODO("Not yet implemented")

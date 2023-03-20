@@ -37,6 +37,7 @@ class NotifsFragment : Fragment(), KodeinAware {
     private var viewModel: NotifFragmentViewModel = NotifFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
     private lateinit var binding : FragmentNotifsBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.fetchUsersRequest(requestList)
