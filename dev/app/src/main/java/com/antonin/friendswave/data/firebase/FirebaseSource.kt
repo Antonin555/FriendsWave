@@ -194,22 +194,6 @@ class FirebaseSource {
 
 
 
-//    fun fetchEventsPublic(){
-//        firebaseData.child("event/eventPublic").addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                EventFragment.eventList.clear()
-//                for (postSnapshot in snapshot.children){
-//                    val event = postSnapshot.getValue(Event::class.java)
-//                    EventFragment.eventList.add(event!!)
-//                }
-//
-//            }
-//            override fun onCancelled(error: DatabaseError) {
-//
-//            }
-//        })
-//    }
-
 
     fun fetchEventsPublic1(onResult: (List<Event>) -> Unit){
 
@@ -243,7 +227,8 @@ class FirebaseSource {
                     for (snap in task.result.children) {
                         if (snap.exists()) {
                             val event = snap.getValue(Event::class.java)
-                            eventsList.add(event!!)
+                            if(event!!.admin == mainUid!!)
+                                eventsList.add(event!!)
 
                         }
                     }
@@ -263,20 +248,19 @@ class FirebaseSource {
 
 
 
-    fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int) {
+    fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid : String) {
         val database = Firebase.database
         val myRef = database.getReference("event")
-        myRef.child("eventPublic/").push().setValue(Event(name,isPublic,nbrePersonnes))
+        myRef.child("eventPublic/").push().setValue(Event(name,isPublic,nbrePersonnes, uid))
 
     }
 
-    fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int) {
+    fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid: String) {
         val database = Firebase.database
         val myRef = database.getReference("event")
-        myRef.child("eventPrivate/").push().setValue(Event(name,isPublic,nbrePersonnes))
+        myRef.child("eventPrivate/").push().setValue(Event(name,isPublic,nbrePersonnes, uid))
 
     }
-
 
 
     fun acceptRequestUpdateUser(position: Int){
@@ -319,11 +303,11 @@ class FirebaseSource {
 //                    // la transaction a réussi
 //                }
 //            }
+        //fonctionne
+
+
 //        })
 
-
-
-        //fonctionne
 
 
 
@@ -392,14 +376,6 @@ class FirebaseSource {
                 // Gérer l'exception
             }
         }
-
-
-
-
-
-
-
-
 
 
 //

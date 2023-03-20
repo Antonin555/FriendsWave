@@ -7,6 +7,7 @@ data class Event(
     var name: String? = "",
     var isPublic : Boolean? = true,
     var nbrePersonnes : Int? = 0,
+    var admin:String = "",
     var categorie : String? = "",
     var description : String? = "",
     var date: String? = "",
@@ -14,7 +15,6 @@ data class Event(
     var lattitude : String = "",
     var longitude : String = "",
     var duree: Int? = 0,
-    var admin:String = "",
     var listInscrits : HashMap<String, String> = HashMap(),
     var listAttente : HashMap<String, String> = HashMap(),
 

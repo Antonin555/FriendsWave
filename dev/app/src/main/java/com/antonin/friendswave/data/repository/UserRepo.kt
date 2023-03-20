@@ -73,11 +73,11 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     }
 
-    fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int) =
-        firebase.addEventUserPublic(name,isPublic,nbrePersonnes)
+    fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid: String) =
+        firebase.addEventUserPublic(name,isPublic,nbrePersonnes, uid)
 
-    fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int) =
-        firebase.addEventUserPrivate(name,isPublic,nbrePersonnes)
+    fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid:String) =
+        firebase.addEventUserPrivate(name,isPublic,nbrePersonnes,uid)
 
     fun acceptRequest1(position: Int){
         firebase.acceptRequestUpdateUser1(position)

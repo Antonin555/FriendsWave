@@ -24,9 +24,6 @@ import org.kodein.di.generic.instance
 
 
 
-//////////////// A revoir dans le recycler si ca fait le binding !
-
-
 class MyEventActivity : AppCompatActivity(),KodeinAware {
 
 
@@ -55,10 +52,6 @@ class MyEventActivity : AppCompatActivity(),KodeinAware {
         })
 
 
-
-//        adapter1.addItems(eventList1)
     }
-
-
 
 }

@@ -56,14 +56,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name="com.antonin.friendswave.ui.authentification.SignupActivity"
+            android:name="com.antonin.friendswave.ui.home.authentification.SignupActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name="com.antonin.friendswave.ui.authentification.LoginActivity"
+            android:name="com.antonin.friendswave.ui.home.authentification.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

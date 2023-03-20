@@ -16,7 +16,7 @@
         android:background="#FFFFFF"
         android:orientation="vertical"
         android:scrollbarAlwaysDrawVerticalTrack="true"
-        tools:context=".ui.authentification.LoginActivity">
+        tools:context=".ui.home.authentification.LoginActivity">
 
         <RelativeLayout
             android:id="@+id/loginLayout"

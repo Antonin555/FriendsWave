@@ -34,7 +34,6 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
         binding.lifecycleOwner = this
         viewModel.fetchDataEvent(pos)
 
-
     }
 
 

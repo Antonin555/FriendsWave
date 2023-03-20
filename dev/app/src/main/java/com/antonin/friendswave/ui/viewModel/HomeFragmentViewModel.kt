@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.outils.startLoginActivity
-import com.antonin.friendswave.ui.authentification.SignupActivity
+import com.antonin.friendswave.ui.home.authentification.SignupActivity
 import com.antonin.friendswave.ui.contact.AddContactActivity
 
 class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {

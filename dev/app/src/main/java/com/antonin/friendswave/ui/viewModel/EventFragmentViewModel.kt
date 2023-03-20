@@ -12,7 +12,7 @@ import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.outils.startMesEventsActivity
-import com.antonin.friendswave.ui.authentification.InterfaceAuth
+import com.antonin.friendswave.ui.home.authentification.InterfaceAuth
 import com.antonin.friendswave.ui.event.AddEventActivity
 import com.antonin.friendswave.ui.event.InterfaceEvent
 import com.antonin.friendswave.ui.event.MyEventActivity
@@ -61,9 +61,9 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     fun addEventUser() {
         if(isPublic == true) {
-            repository.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!)
+            repository.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!, user!!.uid)
         }else {
-            repository.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!)
+            repository.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid)
         }
     }
 
@@ -71,16 +71,6 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     fun executeOnStatusChanged(switch: CompoundButton, isChecked: Boolean) {
         isPublic = isChecked
     }
-
-//    private val _event = MutableLiveData<Event>()
-//    var event_live: LiveData<Event> = _event
-
-//    fun fetchEventsPublic() {
-//        repository.fetchEventsPublic()
-//    }
-
-
-
 
 
 
@@ -92,9 +82,7 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     private val _eventList = MutableLiveData<List<Event>>()
     val eventList: LiveData<List<Event>> = _eventList
 
-//    init {
-//        fetchEventsPublic2()
-//    }
+
     fun fetchEventsPublic1() {
         repository.fetchEventsPublic1().observeForever{ event ->
         _eventList.value = event
@@ -108,9 +96,6 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     }
 
-    private val disposables = CompositeDisposable()
-
-
 
     fun gotoMyEventActivity(view: View) {
         Intent(view.context, MyEventActivity::class.java).also {
@@ -119,24 +104,9 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     }
 
 
-//    fun fetchEventsPublic2() {
-////        val disposable = repository.fetchEventsPublic2(eventList).subscribeOn(io.reactivex.schedulers.Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
-//
-//        val disposable = repository.fetchEventsPublic2().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
-//            interfaceAuth?.checkContent()
-//        }, {
-//            //sending a failure callback
-//
-//
-//        })
-//        disposables.add(disposable)
-//    }
 
-    //disposing the disposables
-    override fun onCleared() {
-        super.onCleared()
-        disposables.dispose()
-    }
+
+
 
 }
 

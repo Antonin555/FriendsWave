@@ -1,4 +1,4 @@
-package com.antonin.friendswave.ui.authentification
+package com.antonin.friendswave.ui.home.authentification
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
