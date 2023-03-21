@@ -45,7 +45,6 @@ class ContactFragment : Fragment(), KodeinAware {
     }
 
 
-
     override fun onResume() {
         super.onResume()
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_contact)
@@ -54,7 +53,6 @@ class ContactFragment : Fragment(), KodeinAware {
         binding.recyclerFragmentContact.adapter = adapter1
         adapter1.addItems(contactList)
     }
-
 
     companion object {
         var contactList:ArrayList<User> = ArrayList()

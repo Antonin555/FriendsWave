@@ -84,7 +84,7 @@ class FirebaseSource {
 
 
     fun fetchUsers(){
-        firebaseData.child("user").addValueEventListener(object : ValueEventListener {
+        firebaseData.child("user/").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 ContactFragment.contactList.clear()
                 for (postSnapshot in snapshot.children){
@@ -98,9 +98,6 @@ class FirebaseSource {
             }
         })
     }
-
-
-
 
 
     fun getEventData(position: Int,onResult: (Event?) -> Unit) {
@@ -127,10 +124,31 @@ class FirebaseSource {
 
 
     }
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    /// RECUPERER QUE LA FRIEND LIST : A ESSAYER ////
 
 
 
+//    var ref = FirebaseDatabase.getInstance().getReference().child("user").child(mainUid!!).child("friendList")
+//    var query : Query = ref.orderByChild("email")
+//    query.addListenerForSingleValueEvent(object:  ValueEventListener {
+//
+//        override fun onDataChange(snapshot: DataSnapshot) {
+//            for (userSnapshot in snapshot.getChildren()) {
+//            Map<String, Object> userMap = (Map<String, Object>) userSnapshot.getValue();
+//            Map<String, String> friendList = (Map<String, String>) userMap.get("friendList");
+//
+//        }
+//        }
+//
+//        override fun onCancelled(error: DatabaseError) {
+//            // gestion de l'erreur
+//        }
+//    })
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     fun addFriendRequestToUser(email: String) {
