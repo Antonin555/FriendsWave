@@ -56,7 +56,8 @@
                         android:layout_height="0dp"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="@string/activity_event_inscrit" />
+                        android:text="@string/activity_event_inscrit"
+                        android:onClick="@{(v)-> viewmodel.goToEventsInscrits(v)}"/>
 
                     <Button
                         android:id="@+id/button"
@@ -65,7 +66,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="@string/activity_event_perso"
-                        android:onClick="@{(v)->viewmodel.gotoMyEventActivity(v)}"/>
+                        android:onClick="@{(v)->viewmodel.gotoMesEventsActivity(v)}"/>
                 </LinearLayout>
 
                 <SearchView

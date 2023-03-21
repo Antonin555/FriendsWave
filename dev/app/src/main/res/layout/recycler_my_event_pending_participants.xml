@@ -32,38 +32,32 @@
                 android:id="@+id/event_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
+                android:layout_weight="0.4"
                 android:text="@string/add_event_name" />
 
             <TextView
+                android:id="@+id/nom_user"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.6"
+                android:layout_weight="1"
                 android:text="@{item.name}" />
 
             <Button
-                android:id="@+id/btn_accept"
-                android:layout_width="wrap_content"
+                android:id="@+id/button15"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:backgroundTint="#7986CB"
-                android:text="ACCEPT"
-                android:background="@drawable/btn_accept"
-                android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
-                ></Button>
+                android:layout_weight="0.2"
+                android:backgroundTint="#81C784" />
 
             <Button
                 android:id="@+id/btn_delete"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="5dp"
-                android:backgroundTint="#7986CB"
-                android:text="DECLINE"
-                android:background="@drawable/btn_accept"
-                android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
-                ></Button>
+                android:layout_weight="0.2"
+                android:backgroundTint="#E57373"
+                android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'></Button>
         </LinearLayout>
 
 

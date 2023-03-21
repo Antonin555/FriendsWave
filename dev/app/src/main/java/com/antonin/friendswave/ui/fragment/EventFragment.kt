@@ -31,7 +31,6 @@ import org.kodein.di.generic.instance
 
 class EventFragment : Fragment(), KodeinAware, InterfaceEvent {
 
-    var eventList1:ArrayList<Event> = ArrayList()
 
     override val kodein : Kodein by kodein()
     private val factory : EventFragmentVMFactory by instance()
@@ -44,25 +43,19 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent {
 
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
         viewModel.fetchEventsPublic1()
-
         viewModel.interfaceEvent = this
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_event, container, false)
-
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-
-    }
     override fun onResume() {
         super.onResume()
 

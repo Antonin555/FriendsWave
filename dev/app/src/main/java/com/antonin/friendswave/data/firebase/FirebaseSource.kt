@@ -11,7 +11,7 @@ import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.antonin.friendswave.outils.startHomeActivity
-import com.antonin.friendswave.ui.event.MyEventActivity
+import com.antonin.friendswave.ui.event.MesEventsActivity
 import com.antonin.friendswave.ui.fragment.ContactFragment
 import com.antonin.friendswave.ui.fragment.EventFragment
 import com.antonin.friendswave.ui.fragment.NotifsFragment

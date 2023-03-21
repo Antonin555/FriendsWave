@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -16,11 +15,8 @@ import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentNotifsBinding
-import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
-import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.antonin.friendswave.ui.viewModel.NotifFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.NotifFragmentViewModel
-import com.google.android.material.button.MaterialButton
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -71,7 +67,7 @@ class NotifsFragment : Fragment(), KodeinAware {
 
                 }
 
-                else if (view.id == R.id.btn_refuse){
+                else if (view.id == R.id.btn_delete){
                     viewModel.refuseRequest(position)
                     val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
                     toast.show()

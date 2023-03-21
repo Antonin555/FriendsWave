@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.antonin.friendswave.ui.authentification.LoginActivity
 import com.antonin.friendswave.ui.event.DetailEventActivity
-import com.antonin.friendswave.ui.event.MyEventActivity
+
 import com.antonin.friendswave.ui.home.EditProfilActivity
 import com.antonin.friendswave.ui.home.HomeActivity
 
@@ -42,8 +42,3 @@ fun Context.startDetailEventActivity() =
     }
 
 
-fun Context.startMesEventsActivity() =
-    Intent(this, MyEventActivity::class.java).also {
-        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(it)
-    }

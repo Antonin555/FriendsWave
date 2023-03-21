@@ -8,9 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.repository.UserRepo
-import com.antonin.friendswave.ui.event.AddEventActivity
-import com.antonin.friendswave.ui.event.InterfaceEvent
-import com.antonin.friendswave.ui.event.MyEventActivity
+import com.antonin.friendswave.ui.event.*
 
 
 class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
@@ -46,6 +44,14 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     fun goToAddEvent(view: View){
         // .also permet d'eviter de déclarer une variable :
         Intent(view.context, AddEventActivity::class.java).also {
+            view.context.startActivity(it)
+        }
+    }
+
+
+    fun goToEventsInscrits(view: View){
+        // .also permet d'eviter de déclarer une variable :
+        Intent(view.context, EventsInscritsActivity::class.java).also {
             view.context.startActivity(it)
         }
     }
@@ -88,8 +94,8 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     }
 
 
-    fun gotoMyEventActivity(view: View) {
-        Intent(view.context, MyEventActivity::class.java).also {
+    fun gotoMesEventsActivity(view: View) {
+        Intent(view.context, MesEventsActivity::class.java).also {
             view.context.startActivity(it)
         }
     }

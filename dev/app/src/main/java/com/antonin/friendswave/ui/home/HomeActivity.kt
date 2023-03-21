@@ -79,25 +79,10 @@ class HomeActivity : AppCompatActivity() {
             return true
         }
 
-        if(item.itemId == R.id.contact) {
-//            viewModel.addContact(View(this))
-            return true
-        }
-
-        if(item.itemId == R.id.calendar) {
-//            getResult.launch(viewModel.addCalendar(View(this)))
-//            val intent = Intent(this@HomeActivity, Activity_Calendar::class.java)
-
-//            getResult.launch(intent)
-
-            return true
-        }
 
         if(item.itemId == R.id.edit_profil) {
             val intent = Intent(this@HomeActivity, EditProfilActivity::class.java)
             startActivity(intent)
-//            startEditProfilActivity()
-
 
         }
 

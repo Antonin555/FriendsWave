@@ -9,7 +9,7 @@
     <string name="rating_fragment_home">rating : </string>
     <string name="friends_fragment_home">friends : </string>
     <string name="add_event_public">public</string>
-    <string name="add_event_private">private </string>
+    <string name="add_event_private">privée </string>
     <string name="add_event_confidential">Confidentialité : </string>
     <string name="add_event_name">Nom : </string>
     <string name="add_event_title">My EVENT </string>
@@ -22,7 +22,6 @@
     <string name="add_event_description">Description : </string>
     <string name="add_event_nbre_personnes">Nombre de personnes : </string>
     <string name="add_event_btn_publier">publier </string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
@@ -35,6 +34,14 @@
 
     <string name="activity_event_inscrit">events inscrits</string>
     <string name="activity_event_perso">mes events</string>
+    <string name="activity_event_confirm">events confirmés</string>
+    <string name="activity_event_pending">events en attente</string>
+
+    <string name="activity_manage_my_event_search">ajoutez des participants :</string>
+    <string name="activity_manage_my_event_pending_participants">participants en attente :</string>
+    <string name="activity_manage_my_event_manage">gestion :</string>
+
+    <string name="recycler_delete">supprimer</string>
 
 
 </resources>
