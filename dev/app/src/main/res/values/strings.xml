@@ -44,4 +44,8 @@
     <string name="recycler_delete">supprimer</string>
 
 
+
+
+    <string name="api_key_google_map">AIzaSyDDvmYhowxWZi-TRhLBK1bduYexZAHhaQ8</string>
+
 </resources>
