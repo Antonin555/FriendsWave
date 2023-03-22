@@ -40,8 +40,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="15dp"
                     android:layout_weight="1"
-                    android:background="#7986CB"
-                    android:backgroundTint="#7986CB"
+                    android:backgroundTint="#F06292"
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <LinearLayout

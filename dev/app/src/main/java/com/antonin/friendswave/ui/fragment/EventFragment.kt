@@ -31,11 +31,10 @@ import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -146,6 +145,7 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
                 binding.mapView.getMapAsync { googleMap ->
 
                     EventFragment.mMap = googleMap
+
                     val latLng = LatLng(location.latitude, location.longitude)
                     val markerOptions = MarkerOptions()
                         .position(latLng)
@@ -156,6 +156,7 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
 
                     val cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 12f)
                     googleMap.moveCamera(cameraUpdate)
+
 
 
                 }
@@ -185,6 +186,7 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
 
     override fun onMapReady(p0: GoogleMap) {
         TODO("Not yet implemented")
+
     }
 
     override fun onLocationChanged(p0: Location) {
