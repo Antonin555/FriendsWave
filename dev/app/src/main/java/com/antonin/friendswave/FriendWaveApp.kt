@@ -26,6 +26,7 @@ class FriendWaveApp : Application(), KodeinAware {
         bind() from provider { HomeFragmentVMFactory(instance()) }
         bind() from provider { EventFragmentVMFactory(instance()) }
         bind() from provider { NotifFragmentVMFactory(instance()) }
+        bind() from provider { ChatVMFactory(instance()) }
 
 
     }

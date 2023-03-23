@@ -59,7 +59,8 @@ class NotifsFragment : Fragment(), KodeinAware {
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
-
+                println(view.id)
+                println(R.id.btn_delete)
                 if (view.id == R.id.btn_accept){
                     viewModel.acceptRequest(position)
                     val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)

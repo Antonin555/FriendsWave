@@ -7,9 +7,9 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
 
     var email: String? = null
 
-    val user by lazy {
-        repository.currentUser()
-    }
+//    val user by lazy {
+//        repository.currentUser()
+//    }
 
     fun addFriendRequestToUser(){
 

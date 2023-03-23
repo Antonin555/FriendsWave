@@ -1,13 +1,25 @@
 package com.antonin.friendswave.data.firebase
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.util.Log
+import android.view.View
+import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.antonin.friendswave.data.model.Event
+import com.antonin.friendswave.data.model.Message
 import com.antonin.friendswave.data.model.User
 import com.google.firebase.auth.FirebaseAuth
+import com.antonin.friendswave.outils.startHomeActivity
+import com.antonin.friendswave.ui.event.MesEventsActivity
 import com.antonin.friendswave.ui.fragment.ContactFragment
+import com.antonin.friendswave.ui.fragment.EventFragment
+import com.antonin.friendswave.ui.fragment.NotifsFragment
+import com.antonin.friendswave.ui.fragment.HomeFragment
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.snapshots
 import com.google.firebase.ktx.Firebase
 import io.reactivex.Completable
 
@@ -18,7 +30,7 @@ class FirebaseSource {
         FirebaseAuth.getInstance()
     }
     val firebaseData : DatabaseReference = FirebaseDatabase.getInstance().getReference()
-    val mainUid = FirebaseAuth.getInstance().currentUser?.uid
+    var mainUid = FirebaseAuth.getInstance().currentUser?.uid
 
     fun currentUser() = firebaseAuth.currentUser
 
@@ -73,18 +85,12 @@ class FirebaseSource {
 
 
     fun fetchUsers(){
-
-
-        firebaseData.child("user").child(mainUid!!).child("friendList").addValueEventListener(object : ValueEventListener {
+        firebaseData.child("user/").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 ContactFragment.contactList.clear()
                 for (postSnapshot in snapshot.children){
-                    val friendId = postSnapshot.key.toString() // Récupère l'ID de l'ami
-                    val friendEmail = postSnapshot.value.toString() // Récupère l'e-mail de l'ami
-//                    val friendEmail = friendSnapshot.child("email").value
-//                    val friendName = friendSnapshot.child("name").value
-                    val user = User(friendId, friendEmail) // Crée une instance de User
-                    ContactFragment.contactList.add(user)
+                    val user = postSnapshot.getValue(User::class.java)
+                    ContactFragment.contactList.add(user!!)
                 }
 
             }
@@ -123,9 +129,31 @@ class FirebaseSource {
 
 
     /// RECUPERER QUE LA FRIEND LIST : A ESSAYER ////
+    fun fetchUsersFriend(){
+        var mainUser: User = User()
+        firebaseData.child("user").child(mainUid!!).addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    mainUser = snapshot.getValue(User::class.java)!!
+                    firebaseData.child("user").addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            ContactFragment.contactList.clear()
+                            for (postSnapshot in snapshot.children) {
+                                val currentUser = postSnapshot.getValue(User::class.java)
+                                if (mainUser.friendList!!.containsKey(currentUser?.uid)) {
+                                    if (currentUser?.uid != mainUid) { //patch de merde
+                                        ContactFragment.contactList.add(currentUser!!)
+                                    }
+                                }
+                            }
+                        }
 
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+                    })
 
-
+                }
 //    var ref = FirebaseDatabase.getInstance().getReference().child("user").child(mainUid!!).child("friendList")
 //    var query : Query = ref.orderByChild("email")
 //    query.addListenerForSingleValueEvent(object:  ValueEventListener {
@@ -276,489 +304,91 @@ class FirebaseSource {
 
 
     fun acceptRequestUpdateUser(position: Int){
+        mainUid = FirebaseAuth.getInstance().currentUser?.uid
+        var key: String?
+        var email: String?
+
+        val userRef = FirebaseDatabase.getInstance().getReference("user").child(mainUid!!)
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val mainUser = dataSnapshot.getValue(User::class.java)
+                println(mainUser)
+                key = mainUser!!.friendRequest!!.keys?.elementAt(position)
+                email = mainUser.friendRequest!!.get(key)
+                mainUser.friendRequest!!.remove(key)
+                mainUser.friendList!!.put(key.toString(), email.toString())
+                firebaseData.child("user").child(mainUid!!).setValue(mainUser)
+                firebaseData.child("user").child(key!!).child("friendList").child(mainUid!!).setValue(mainUser.email)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Gérer les erreurs éventuelles ici
+            }
+        })
 
 
-        //fonctionne
-
-//        var mainUser: User = User()
-//        val userRef = firebaseData.child("user").child(mainUid!!)
-//        userRef.runTransaction(object : Transaction.Handler {
-//            override fun doTransaction(mutableData: MutableData): Transaction.Result {
-//                val mainUserSnapshot = mutableData.getValue(User::class.java)
-//                if (mainUserSnapshot == null) {
-//                    return Transaction.success(mutableData)
-//                }
-//
-//                mainUser = mainUserSnapshot
-//                val friendRequest = mainUser.friendRequest
-//                if (friendRequest != null && friendRequest.isNotEmpty()) {
-//                    val key = friendRequest.keys.elementAt(position)
-//                    val email = friendRequest[key].toString()
-//
-//                    mainUser.friendRequest?.remove(key)
-//                    mainUser.friendList?.put(key, email)
-//                }
-//
-//                mutableData.value = mainUser
-//                return Transaction.success(mutableData)
-//            }
-//
-//            override fun onComplete(
-//                databaseError: DatabaseError?,
-//                committed: Boolean,
-//                dataSnapshot: DataSnapshot?
-//            ) {
-//                if (databaseError != null) {
-//                    // la transaction a échoué
-//                    // Gérer l'exception
-//                } else {
-//                    // la transaction a réussi
-//                }
-//            }
-        //fonctionne
+    }
 
 
-//        })
+    fun refuseRequest(position: Int){
 
+        mainUid = FirebaseAuth.getInstance().currentUser?.uid
+        var key: String?
 
-
-
-        var mainUser: User = User()
-        val userRef = firebaseData.child("user").child(mainUid!!)
-
-        userRef.get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val userSnapshot = task.result
-                if (userSnapshot.exists()) {
-                    // L'utilisateur existe, vous pouvez accéder aux données
-                    mainUser = userSnapshot.getValue(User::class.java)!!
-
-                    var key = mainUser.friendRequest!!.keys?.elementAt(position)
-
-                    var kke = mainUser.friendRequest!!
-
-//                    kke.put()
-
-                    var email = mainUser.friendRequest!!.get(key)
+        val userRef = FirebaseDatabase.getInstance().getReference("user").child(mainUid!!)
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val mainUser = dataSnapshot.getValue(User::class.java)
+                println(mainUser)
+                println(mainUser!!.friendRequest!!.isNotEmpty())
+                if(mainUser!!.friendRequest!!.isNotEmpty()){
+                    key = mainUser!!.friendRequest!!.keys?.elementAt(position)
                     mainUser.friendRequest!!.remove(key)
-                    mainUser.friendList!!.put(key.toString(), email.toString())
-
-                    userSnapshot.ref.setValue(mainUser)
-
-                    val userRef = firebaseData.child("user").child(key!!)
-                    userRef.get().addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            val userSnapshot = task.result
-                            if (userSnapshot.exists()) {
-                                // L'utilisateur existe, vous pouvez accéder aux données
-                                val user = userSnapshot.getValue(User::class.java)
-                                user!!.friendList!!.put(mainUid.toString(), mainUser.email.toString())
-                                // Faire quelque chose avec l'utilisateur récupéré
-                            } else {
-                                // L'utilisateur n'existe pas
-                            }
-                        } else {
-                            // La tâche a échoué
-                            val exception = task.exception
-                            // Gérer l'exception
-                        }
-                    }
-
-                    firebaseData.child("user").addValueEventListener(object: ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            for (postSnapshot in snapshot.children){
-                                val currentUser = postSnapshot.getValue(User::class.java)
-                                if(currentUser!!.uid.equals(key) && !currentUser.uid.equals(mainUser.uid)){  //fuckin chatgpt
-                                    currentUser.friendList!!.put(mainUser.uid.toString(), mainUser.email.toString())
-                                    postSnapshot.ref.setValue(currentUser)
-                                }
-                            }
-                        }
-                        override fun onCancelled(error: DatabaseError) {
-                            TODO("Not yet implemented")
-                        }
-                    })
-
-                } else {
-                    // L'utilisateur n'existe pas
-                }
-            } else {
-                // La tâche a échoué
-                val exception = task.exception
-                // Gérer l'exception
-            }
-        }
-
-
-//
-//        firebaseData.child("user").addValueEventListener(object: ValueEventListener {
-//                        override fun onDataChange(snapshot: DataSnapshot) {
-//                            for (postSnapshot in snapshot.children){
-//                                val currentUser = postSnapshot.getValue(User::class.java)
-//                                if(currentUser!!.uid.equals(key)){
-//                                    currentUser.friendList!!.put(mainUser.uid.toString(), mainUser.email.toString())
-//                                    postSnapshot.ref.setValue(currentUser)
-//                                }
-//                            }
-//                        }
-//                        override fun onCancelled(error: DatabaseError) {
-//                            TODO("Not yet implemented")
-//                        }
-//        })
-
-
-//        firebaseData.child("user").child(mainUid!!).addValueEventListener(object: ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                if (snapshot.exists()) {
-//                    mainUser = snapshot.getValue(User::class.java)!!
-//
-//                    var key = mainUser.friendRequest!!.keys?.elementAt(position)
-//
-//                    var email = mainUser.friendRequest!!.get(key)
-//
-//                    mainUser.friendList!!.put(key.toString(), email.toString())
-//                    mainUser.friendRequest!!.remove(key)
-//
-//                    snapshot.ref.setValue(mainUser)
-//
-////                    firebaseData.child("user").addValueEventListener(object: ValueEventListener {
-////                        override fun onDataChange(snapshot: DataSnapshot) {
-////                            for (postSnapshot in snapshot.children){
-////                                val currentUser = postSnapshot.getValue(User::class.java)
-////                                if(currentUser!!.uid.equals(key)){
-////                                    currentUser.friendList!!.put(mainUser.uid.toString(), mainUser.email.toString())
-////                                    postSnapshot.ref.setValue(currentUser)
-////                                }
-////                            }
-////                        }
-////                        override fun onCancelled(error: DatabaseError) {
-////                            TODO("Not yet implemented")
-////                        }
-////                    })
-//                }
-//            }
-//            override fun onCancelled(error: DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//        })
-
-
-
-//        firebaseData.child("user").child(mainUid!!).setValue(NotifsFragment.user)
-
-
-//        firebaseData.child("user").child(key).child("friendList").child(mainUid).addValueEventListener(object : ValueEventListener {
-//
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//
-//            }
-//            override fun onCancelled(error: DatabaseError) {
-//
-//            }
-//        })  setValue(NotifsFragment.user?.email)
-
-
-//
-//        firebaseData.child("user").child(mainUid!!).child("friendList").child(key).setValue(email)
-//        firebaseData.child("user").child(mainUid!!).child("friendRequest").child(key).removeValue()
-//        firebaseData.child("user").child(key).child("friendList").child(mainUid!!)
-//            .setValue(NotifsFragment.user?.email)
-
-
-        }
-
-
-
-
-        //fonctionne
-
-//        var mainUser: User = User()
-//        val userRef = firebaseData.child("user").child(mainUid!!)
-//        userRef.runTransaction(object : Transaction.Handler {
-//            override fun doTransaction(mutableData: MutableData): Transaction.Result {
-//                val mainUserSnapshot = mutableData.getValue(User::class.java)
-//                if (mainUserSnapshot == null) {
-//                    return Transaction.success(mutableData)
-//                }
-//
-//                mainUser = mainUserSnapshot
-//                val friendRequest = mainUser.friendRequest
-//                if (friendRequest != null && friendRequest.isNotEmpty()) {
-//                    val key = friendRequest.keys.elementAt(position)
-//                    val email = friendRequest[key].toString()
-//
-//                    mainUser.friendRequest?.remove(key)
-//                    mainUser.friendList?.put(key, email)
-//                }
-//
-//                mutableData.value = mainUser
-//                return Transaction.success(mutableData)
-//            }
-//
-//            override fun onComplete(
-//                databaseError: DatabaseError?,
-//                committed: Boolean,
-//                dataSnapshot: DataSnapshot?
-//            ) {
-//                if (databaseError != null) {
-//                    // la transaction a échoué
-//                    // Gérer l'exception
-//                } else {
-//                    // la transaction a réussi
-//                }
-//            }
-//        })
-
-
-
-        //fonctionne
-//        fun acceptRequestUpdateUser1(position: Int){
-//        var mainUser: User = User()
-//        val userRef = firebaseData.child("user").child(mainUid!!)
-//
-//        userRef.addValueEventListener(object :ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//
-//                var key = mainUser.friendRequest!!.keys?.elementAt(position)
-//                var email = mainUser.friendRequest!!.get(key)
-//                var currentUser = snapshot.getValue(User::class.java)
-//
-//                if(currentUser!!.uid.equals(key) && !currentUser.uid.equals(userRef.toString())){
-//
-//
-//                    currentUser.friendList!!.put(userRef.toString(), mainUser.email.toString())
-//                    if (key != null) {
-////                        mainUser.friendRequest!!.put(key, null.toString())
-//                        mainUser.friendRequest!!.remove(key)
-//                    }
-//
-//                }
-//
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//
-//
-//        })
-
-
-
-
-
-
-//        userRef.get().addOnCompleteListener { task ->
-//            if (task.isSuccessful) {
-//                val userSnapshot = task.result
-//                if (userSnapshot.exists()) {
-//                    // L'utilisateur existe, vous pouvez accéder aux données
-//
-//
-//                    var key = mainUser.friendRequest!!.keys?.elementAt(position)
-//
-//                    var email = mainUser.friendRequest!!.get(key)
-//                    mainUser.friendRequest!!.remove(key)
-//                    mainUser.friendList!!.put(key.toString(), email.toString())
-//
-//                    userSnapshot.ref.setValue(mainUser)
-//
-//                    val userRef = firebaseData.child("user").child(key!!)
-//                    userRef.get().addOnCompleteListener { task ->
-//                        if (task.isSuccessful) {
-//                            val userSnapshot = task.result
-//                            if (userSnapshot.exists()) {
-//                                // L'utilisateur existe, vous pouvez accéder aux données
-//                                val user = userSnapshot.getValue(User::class.java)
-//                                user!!.friendList!!.put(mainUid.toString(), mainUser.email.toString())
-//                                // Faire quelque chose avec l'utilisateur récupéré
-//                            } else {
-//                                // L'utilisateur n'existe pas
-//                            }
-//                        } else {
-//                            // La tâche a échoué
-//                            val exception = task.exception
-//                            // Gérer l'exception
-//                        }
-//                    }
-//
-//                    firebaseData.child("user").addValueEventListener(object: ValueEventListener {
-//                        override fun onDataChange(snapshot: DataSnapshot) {
-//                            for (postSnapshot in snapshot.children){
-//                                val currentUser = postSnapshot.getValue(User::class.java)
-//                                if(currentUser!!.uid.equals(key) && !currentUser.uid.equals(mainUser.uid)){  //fuckin chatgpt
-//                                    currentUser.friendList!!.put(mainUser.uid.toString(), mainUser.email.toString())
-//                                    postSnapshot.ref.setValue(currentUser)
-//                                }
-//                            }
-//                        }
-//                        override fun onCancelled(error: DatabaseError) {
-//                            TODO("Not yet implemented")
-//                        }
-//                    })
-//
-//                } else {
-//                    // L'utilisateur n'existe pas
-//                }
-//            } else {
-//                // La tâche a échoué
-//                val exception = task.exception
-//                // Gérer l'exception
-//            }
-//        }
-
-
-
-    fun acceptRequestUpdateUser1(position: Int){
-        val userRef = firebaseData.child("user").child(mainUid!!)
-        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val mainUser = snapshot.getValue(User::class.java)
-                val key = mainUser!!.friendRequest!!.keys.elementAt(position)
-
-                val updateFriendListTransaction = object : Transaction.Handler {
-                    override fun doTransaction(mutableData: MutableData): Transaction.Result {
-                        val currentUser = mutableData.getValue(User::class.java)
-                        if (currentUser == null) {
-                            return Transaction.success(mutableData)
-                        }
-
-                        if (currentUser.uid == key) {
-                            // Supprimer l'invitation de la liste d'amis
-                            currentUser.friendRequest!!.remove(key)
-                        } else {
-                            // Ajouter l'invitation à la liste d'amis
-                            currentUser.friendList!!.put(key, mainUser.friendRequest!![key]!!)
-                            currentUser.friendRequest!!.remove(key)
-                        }
-
-                        mutableData.value = currentUser
-                        return Transaction.success(mutableData)
-                    }
-
-                    override fun onComplete(
-                        error: DatabaseError?,
-                        committed: Boolean,
-                        currentData: DataSnapshot?
-                    ) {
-                        if (error != null) {
-                            // Gérer les erreurs ici
-                        }
-                    }
+                    mainUser.friendRequest!!.remove(mainUid)
+                    println(mainUser)
+                    firebaseData.child("user").child(mainUid!!).setValue(mainUser)
                 }
 
-                userRef.runTransaction(updateFriendListTransaction)
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                // Gérer les erreurs ici
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Gérer les erreurs éventuelles ici
             }
         })
     }
 
+    fun addMessagetoDatabase(messageEnvoye: String, receiverUid: String){
+        mainUid = FirebaseAuth.getInstance().currentUser?.uid
+        val messageObject = Message(messageEnvoye, mainUid)
+        val senderRoom = receiverUid + mainUid
+        val receiverRoom = mainUid + receiverUid
 
-
-
-
-
-//
-//        firebaseData.child("user").addValueEventListener(object: ValueEventListener {
-//                        override fun onDataChange(snapshot: DataSnapshot) {
-//                            for (postSnapshot in snapshot.children){
-//                                val currentUser = postSnapshot.getValue(User::class.java)
-//                                if(currentUser!!.uid.equals(key)){
-//                                    currentUser.friendList!!.put(mainUser.uid.toString(), mainUser.email.toString())
-//                                    postSnapshot.ref.setValue(currentUser)
-//                                }
-//                            }
-//                        }
-//                        override fun onCancelled(error: DatabaseError) {
-//                            TODO("Not yet implemented")
-//                        }
-//        })
-
-
-//        firebaseData.child("user").child(mainUid!!).addValueEventListener(object: ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                if (snapshot.exists()) {
-//                    mainUser = snapshot.getValue(User::class.java)!!
-//
-//                    var key = mainUser.friendRequest!!.keys?.elementAt(position)
-//
-//                    var email = mainUser.friendRequest!!.get(key)
-//
-//                    mainUser.friendList!!.put(key.toString(), email.toString())
-//                    mainUser.friendRequest!!.remove(key)
-//
-//                    snapshot.ref.setValue(mainUser)
-//
-////                    firebaseData.child("user").addValueEventListener(object: ValueEventListener {
-////                        override fun onDataChange(snapshot: DataSnapshot) {
-////                            for (postSnapshot in snapshot.children){
-////                                val currentUser = postSnapshot.getValue(User::class.java)
-////                                if(currentUser!!.uid.equals(key)){
-////                                    currentUser.friendList!!.put(mainUser.uid.toString(), mainUser.email.toString())
-////                                    postSnapshot.ref.setValue(currentUser)
-////                                }
-////                            }
-////                        }
-////                        override fun onCancelled(error: DatabaseError) {
-////                            TODO("Not yet implemented")
-////                        }
-////                    })
-//                }
-//            }
-//            override fun onCancelled(error: DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//        })
-
-
-
-//        firebaseData.child("user").child(mainUid!!).setValue(NotifsFragment.user)
-
-
-//        firebaseData.child("user").child(key).child("friendList").child(mainUid).addValueEventListener(object : ValueEventListener {
-//
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//
-//            }
-//            override fun onCancelled(error: DatabaseError) {
-//
-//            }
-//        })  setValue(NotifsFragment.user?.email)
-
-
-//
-//        firebaseData.child("user").child(mainUid!!).child("friendList").child(key).setValue(email)
-//        firebaseData.child("user").child(mainUid!!).child("friendRequest").child(key).removeValue()
-//        firebaseData.child("user").child(key).child("friendList").child(mainUid!!)
-//            .setValue(NotifsFragment.user?.email)
-
-
-//    }
-
-    fun acceptRequests(key: String, email: String){
-//        firebaseData.child("user").child(key).child("friendList").child(mainUid!!)
-//        firebaseData.child("user").child(mainUid!!).setValue(NotifsFragment.user)
-
-
-
-
+        firebaseData.child("chats").child(senderRoom!!).child("message").push()
+            .setValue(messageObject).addOnSuccessListener {
+                firebaseData.child("chats").child(receiverRoom!!).child("message").push()
+                    .setValue(messageObject)
+            }
     }
 
-    fun refuseRequest(position: Int){
+    fun fetchDiscussion(receiverUid: String, onResult: (List<Message>) -> Unit){
 
-//        firebaseData.child("user").child(mainUid!!).setValue(NotifsFragment.user)
+        mainUid = FirebaseAuth.getInstance().currentUser?.uid
+        val senderRoom = receiverUid + mainUid
 
+        firebaseData.child("chats").child(senderRoom!!).child("message").get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val messageList = ArrayList<Message>()
+                for (snap in task.result.children) {
+                    if (snap.exists()) {
+                            val message = snap.getValue(Message::class.java)
+                        messageList.add(message!!)
 
+                    }
+                }
+                onResult(messageList)
+            }
+        }
     }
-
-
-
-
-
-
 }
 
 

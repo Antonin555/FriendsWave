@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.model.Event
+import com.antonin.friendswave.data.model.Message
 import com.antonin.friendswave.data.model.User
 
 class UserRepo(private val firebase: FirebaseSource) {
@@ -17,6 +18,8 @@ class UserRepo(private val firebase: FirebaseSource) {
     fun logout() = firebase.logout()
 
     fun fetchUsers() = firebase.fetchUsers()
+
+    fun fetchUsersFriends() = firebase.fetchUsersFriend()
 
 //    fun fetchUsersR() = firebase.fetchUsersR()
 
@@ -80,15 +83,28 @@ class UserRepo(private val firebase: FirebaseSource) {
         firebase.addEventUserPrivate(name,isPublic,nbrePersonnes,uid)
 
     fun acceptRequest1(position: Int){
-        firebase.acceptRequestUpdateUser1(position)
-    }
-
-    fun acceptRequest2(key: String, email: String){
-        firebase.acceptRequests(key, email)
+        firebase.acceptRequestUpdateUser(position)
     }
 
     fun refuseRequest(position: Int){
         firebase.refuseRequest(position)
+    }
+
+    fun fetchDiscussion(receiverUid: String):LiveData<List<Message>>{
+
+
+        val messageList = MutableLiveData<List<Message>>()
+
+        firebase.fetchDiscussion(receiverUid) { message ->
+            messageList.postValue(message)
+        }
+
+        return messageList
+
+    }
+
+    fun addMessagetoDatabase(messageEnvoye: String, receiverUid: String){
+        firebase.addMessagetoDatabase(messageEnvoye, receiverUid)
     }
 
 

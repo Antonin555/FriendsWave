@@ -19,6 +19,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
+        android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
         android:background="@drawable/custom_shape">
 
         <ImageView

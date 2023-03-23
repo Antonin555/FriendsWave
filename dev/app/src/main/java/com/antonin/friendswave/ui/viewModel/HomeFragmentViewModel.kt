@@ -13,6 +13,8 @@ import com.antonin.friendswave.ui.contact.AddContactActivity
 class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
 
+
+
     private val _user = MutableLiveData<User>()
     var user_live: LiveData<User> = _user
 
@@ -36,6 +38,10 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
         repository.fetchUsers()
     }
 
+    fun fetchUsersFriends() {
+        repository.fetchUsersFriends()
+    }
+
     fun goToAddContact(view: View){
 
         // .also permet d'eviter de déclarer une variable :
@@ -43,5 +49,6 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
             view.context.startActivity(it)
         }
     }
+
 
 }
