@@ -29,7 +29,7 @@ class ChatActivity : AppCompatActivity(), KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
-        var pos   = intent.getIntExtra("position", 0)
+
         val reveiverUid = intent.getStringExtra("uid")
 
         var binding : ActivityChatBinding = DataBindingUtil.setContentView(this, R.layout.activity_chat)
@@ -43,6 +43,7 @@ class ChatActivity : AppCompatActivity(), KodeinAware {
         binding.viewmodel = viewModel
 
         val layoutManager = LinearLayoutManager(this)
+        binding.lifecycleOwner = this
 
         binding.chatRecyclerView.layoutManager = layoutManager
 

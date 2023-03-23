@@ -2,13 +2,19 @@ package com.antonin.friendswave.ui.viewModel
 
 import android.content.Intent
 import android.view.View
+import android.widget.AdapterView
 import android.widget.CompoundButton
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.repository.UserRepo
-import com.antonin.friendswave.ui.event.*
+import com.antonin.friendswave.ui.event.AddEventActivity
+import com.antonin.friendswave.ui.event.EventsInscritsActivity
+import com.antonin.friendswave.ui.event.InterfaceEvent
+import com.antonin.friendswave.ui.event.MesEventsActivity
+import com.antonin.friendswave.ui.fragment.EventFragment
+import com.antonin.friendswave.ui.home.HomeActivity
 
 
 class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
@@ -24,6 +30,11 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     var longitude : String?  =""
     var date: String? = ""
     var horaire: String? = ""
+    var day: Int? = 0
+    var month: Int? = 0
+    var year:Int? = 0
+    var hour:Int? = 0
+    var minute: Int? = 0
 
 
     val user by lazy {
@@ -34,6 +45,9 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     private val _eventData = MutableLiveData<Event>()
     val eventData: LiveData<Event> = _eventData
+
+    private val _eventList = MutableLiveData<List<Event>>()
+    val eventList: LiveData<List<Event>> = _eventList
 
     fun fetchDataEvent(position: Int) {
         repository.getEventData(position).observeForever { event ->
@@ -56,11 +70,14 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
         }
     }
 
-    fun addEventUser() {
+    fun addEventUser(view: View) {
         if(isPublic == true) {
-            repository.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!, user!!.uid)
+            repository.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!)
         }else {
-            repository.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid)
+            repository.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid, categorie!!,date!!, horaire!!)
+        }
+        Intent(view.context, HomeActivity::class.java).also {
+            view.context.startActivity(it)
         }
     }
 
@@ -69,15 +86,22 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
         isPublic = isChecked
     }
 
-
-
+    // pour recuperer la valeur de la categorie dans le spinner :
+    fun onSelectItem(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+       categorie = parent!!.adapter.getItem(pos).toString()
+    }
 
     // ViewModel pour MyEvent :
 
 
+    fun changeDate(year: Int, month: Int, day: Int) {
+        date = day.toString() + "/" + (month + 1).toString() + "/"+ year.toString()
+    }
 
-    private val _eventList = MutableLiveData<List<Event>>()
-    val eventList: LiveData<List<Event>> = _eventList
+    fun changeHour(hour:Int, minute:Int) {
+
+        horaire = hour.toString() + ":" + minute.toString()
+    }
 
 
     fun fetchEventsPublic1() {

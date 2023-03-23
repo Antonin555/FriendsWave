@@ -1,11 +1,6 @@
 package com.antonin.friendswave.data.firebase
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.util.Log
-import android.view.View
-import android.widget.Toast
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.Message
@@ -30,7 +25,7 @@ class FirebaseSource {
         FirebaseAuth.getInstance()
     }
     val firebaseData : DatabaseReference = FirebaseDatabase.getInstance().getReference()
-    var mainUid = FirebaseAuth.getInstance().currentUser?.uid
+    val mainUid = FirebaseAuth.getInstance().currentUser?.uid
 
     fun currentUser() = firebaseAuth.currentUser
 
@@ -85,12 +80,18 @@ class FirebaseSource {
 
 
     fun fetchUsers(){
-        firebaseData.child("user/").addValueEventListener(object : ValueEventListener {
+
+
+        firebaseData.child("user").child(mainUid!!).child("friendList").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 ContactFragment.contactList.clear()
                 for (postSnapshot in snapshot.children){
-                    val user = postSnapshot.getValue(User::class.java)
-                    ContactFragment.contactList.add(user!!)
+                    val friendId = postSnapshot.key.toString() // Récupère l'ID de l'ami
+                    val friendEmail = postSnapshot.value.toString() // Récupère l'e-mail de l'ami
+//                    val friendEmail = friendSnapshot.child("email").value
+//                    val friendName = friendSnapshot.child("name").value
+                    val user = User(friendId, friendEmail) // Crée une instance de User
+                    ContactFragment.contactList.add(user)
                 }
 
             }
@@ -129,31 +130,40 @@ class FirebaseSource {
 
 
     /// RECUPERER QUE LA FRIEND LIST : A ESSAYER ////
-    fun fetchUsersFriend(){
+    fun fetchUsersFriend() {
         var mainUser: User = User()
-        firebaseData.child("user").child(mainUid!!).addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    mainUser = snapshot.getValue(User::class.java)!!
-                    firebaseData.child("user").addValueEventListener(object : ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            ContactFragment.contactList.clear()
-                            for (postSnapshot in snapshot.children) {
-                                val currentUser = postSnapshot.getValue(User::class.java)
-                                if (mainUser.friendList!!.containsKey(currentUser?.uid)) {
-                                    if (currentUser?.uid != mainUid) { //patch de merde
-                                        ContactFragment.contactList.add(currentUser!!)
+        firebaseData.child("user").child(mainUid!!)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        mainUser = snapshot.getValue(User::class.java)!!
+                        firebaseData.child("user")
+                            .addValueEventListener(object : ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    ContactFragment.contactList.clear()
+                                    for (postSnapshot in snapshot.children) {
+                                        val currentUser = postSnapshot.getValue(User::class.java)
+                                        if (mainUser.friendList!!.containsKey(currentUser?.uid)) {
+                                            if (currentUser?.uid != mainUid) { //patch de merde
+                                                ContactFragment.contactList.add(currentUser!!)
+                                            }
+                                        }
                                     }
                                 }
-                            }
-                        }
 
-                        override fun onCancelled(error: DatabaseError) {
-                            TODO("Not yet implemented")
-                        }
-                    })
+                                override fun onCancelled(error: DatabaseError) {
+                                    TODO("Not yet implemented")
+                                }
+                            })
 
+                    }
                 }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+    }
 //    var ref = FirebaseDatabase.getInstance().getReference().child("user").child(mainUid!!).child("friendList")
 //    var query : Query = ref.orderByChild("email")
 //    query.addListenerForSingleValueEvent(object:  ValueEventListener {
@@ -288,23 +298,23 @@ class FirebaseSource {
 
 
 
-    fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid : String) {
+    fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid : String, category:String, date:String, horaire:String) {
         val database = Firebase.database
         val myRef = database.getReference("event")
-        myRef.child("eventPublic/").push().setValue(Event(name,isPublic,nbrePersonnes, uid))
+        myRef.child("eventPublic/").push().setValue(Event(name,isPublic,nbrePersonnes, uid,category, date, horaire))
 
     }
 
-    fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid: String) {
+    fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid: String, category:String, date:String, horaire:String) {
         val database = Firebase.database
         val myRef = database.getReference("event")
-        myRef.child("eventPrivate/").push().setValue(Event(name,isPublic,nbrePersonnes, uid))
+        myRef.child("eventPrivate/").push().setValue(Event(name,isPublic,nbrePersonnes, uid, category, date, horaire))
 
     }
 
 
     fun acceptRequestUpdateUser(position: Int){
-        mainUid = FirebaseAuth.getInstance().currentUser?.uid
+        val mainUid = FirebaseAuth.getInstance().currentUser?.uid
         var key: String?
         var email: String?
 
@@ -332,7 +342,7 @@ class FirebaseSource {
 
     fun refuseRequest(position: Int){
 
-        mainUid = FirebaseAuth.getInstance().currentUser?.uid
+        val mainUid = FirebaseAuth.getInstance().currentUser?.uid
         var key: String?
 
         val userRef = FirebaseDatabase.getInstance().getReference("user").child(mainUid!!)
@@ -358,7 +368,7 @@ class FirebaseSource {
     }
 
     fun addMessagetoDatabase(messageEnvoye: String, receiverUid: String){
-        mainUid = FirebaseAuth.getInstance().currentUser?.uid
+        val mainUid = FirebaseAuth.getInstance().currentUser?.uid
         val messageObject = Message(messageEnvoye, mainUid)
         val senderRoom = receiverUid + mainUid
         val receiverRoom = mainUid + receiverUid
@@ -372,7 +382,7 @@ class FirebaseSource {
 
     fun fetchDiscussion(receiverUid: String, onResult: (List<Message>) -> Unit){
 
-        mainUid = FirebaseAuth.getInstance().currentUser?.uid
+        val mainUid = FirebaseAuth.getInstance().currentUser?.uid
         val senderRoom = receiverUid + mainUid
 
         firebaseData.child("chats").child(senderRoom!!).child("message").get().addOnCompleteListener { task ->
@@ -390,5 +400,4 @@ class FirebaseSource {
         }
     }
 }
-
 
