@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.antonin.friendswave.data.model.Event
+import com.antonin.friendswave.data.model.Friends
 import com.antonin.friendswave.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.antonin.friendswave.outils.startHomeActivity
@@ -84,12 +85,18 @@ class FirebaseSource {
 
 
     fun fetchUsers(){
-        firebaseData.child("user/").addValueEventListener(object : ValueEventListener {
+
+
+        firebaseData.child("user").child(mainUid!!).child("friendList").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 ContactFragment.contactList.clear()
                 for (postSnapshot in snapshot.children){
-                    val user = postSnapshot.getValue(User::class.java)
-                    ContactFragment.contactList.add(user!!)
+                    val friendId = postSnapshot.key.toString() // Récupère l'ID de l'ami
+                    val friendEmail = postSnapshot.value.toString() // Récupère l'e-mail de l'ami
+//                    val friendEmail = friendSnapshot.child("email").value
+//                    val friendName = friendSnapshot.child("name").value
+                    val user = User(friendId, friendEmail) // Crée une instance de User
+                    ContactFragment.contactList.add(user)
                 }
 
             }

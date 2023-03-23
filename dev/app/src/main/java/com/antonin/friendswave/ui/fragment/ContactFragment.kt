@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.data.firebase.FirebaseSource
+import com.antonin.friendswave.data.model.Friends
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentContactBinding
