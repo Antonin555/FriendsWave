@@ -1,25 +1,13 @@
 package com.antonin.friendswave.data.firebase
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.util.Log
-import android.view.View
-import android.widget.Toast
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.antonin.friendswave.data.model.Event
-import com.antonin.friendswave.data.model.Friends
 import com.antonin.friendswave.data.model.User
 import com.google.firebase.auth.FirebaseAuth
-import com.antonin.friendswave.outils.startHomeActivity
-import com.antonin.friendswave.ui.event.MesEventsActivity
 import com.antonin.friendswave.ui.fragment.ContactFragment
-import com.antonin.friendswave.ui.fragment.EventFragment
-import com.antonin.friendswave.ui.fragment.NotifsFragment
-import com.antonin.friendswave.ui.fragment.HomeFragment
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.snapshots
 import com.google.firebase.ktx.Firebase
 import io.reactivex.Completable
 
