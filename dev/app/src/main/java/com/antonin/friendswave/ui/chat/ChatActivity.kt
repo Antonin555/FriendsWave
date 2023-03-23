@@ -8,8 +8,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
+import com.antonin.friendswave.adapter.MessageAdapter
 import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.model.Message
+import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityChatBinding
 import com.antonin.friendswave.ui.viewModel.ChatVMFactory
@@ -21,10 +23,14 @@ import org.kodein.di.generic.instance
 
 class ChatActivity : AppCompatActivity(), KodeinAware {
 
+    var messageList:ArrayList<Message> = ArrayList()
+//    private lateinit var messageAdapter: MessageAdapter
     override val kodein : Kodein by kodein()
     private val factory : ChatVMFactory by instance()
     private var viewModel : ChatViewModel = ChatViewModel(repository = UserRepo(firebase = FirebaseSource()))
-    private var adapter1 : ListGeneriqueAdapter<Message> = ListGeneriqueAdapter<Message>(R.layout.recycler_message) //a changer pour un comportement different pour les messages send/received
+//    private var adapter1 : ListGeneriqueAdapter<Message> = ListGeneriqueAdapter<Message>(R.layout.recycler_message) //a changer pour un comportement different pour les messages send/received
+    private  lateinit var messageAdapter : MessageAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,12 +52,26 @@ class ChatActivity : AppCompatActivity(), KodeinAware {
         binding.lifecycleOwner = this
 
         binding.chatRecyclerView.layoutManager = layoutManager
+        binding.lifecycleOwner = this
 
-        binding.chatRecyclerView.adapter = adapter1
 
-        viewModel.messageList.observe(this, Observer { eventList ->
-            adapter1.addItems(eventList)
+
+//        binding.chatRecyclerView.adapter = adapter1
+
+        viewModel.messageList.observe(this, Observer { messageList ->
+
+            messageAdapter = MessageAdapter(this, messageList)
+            binding.chatRecyclerView.adapter = messageAdapter
+            messageAdapter.addItems(messageList)
+
+//            adapter1.addItems(eventList)
         })
 
+
+
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 }
