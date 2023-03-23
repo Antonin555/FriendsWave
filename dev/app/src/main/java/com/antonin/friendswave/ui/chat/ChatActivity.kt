@@ -64,6 +64,7 @@ class ChatActivity : AppCompatActivity(), KodeinAware {
             binding.chatRecyclerView.adapter = messageAdapter
             messageAdapter.addItems(messageList)
 
+
 //            adapter1.addItems(eventList)
         })
 

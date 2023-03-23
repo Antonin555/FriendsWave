@@ -34,14 +34,16 @@ class AddEventActivity : AppCompatActivity(), KodeinAware, OnMapReadyCallback,
         setContentView(R.layout.activity_add_event)
 
 
-        val binding: ActivityAddEventBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_event)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_event)
         viewModel = ViewModelProviders.of(this, factory).get(EventFragmentViewModel::class.java)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
         binding.editTextTime.setIs24HourView(true)
-
+        binding.mapView2.onCreate(savedInstanceState)
         loc = GoogleLocation()
         loc.getLocation(applicationContext, binding.mapView2, requireActivity = Activity())
+
+
     }
 
     override fun onPause() {

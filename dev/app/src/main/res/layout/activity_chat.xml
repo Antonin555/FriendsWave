@@ -48,7 +48,6 @@
                         android:background="@drawable/custom_shape"
                         android:hint="Type a message"
                         android:text="@={viewmodel.messageEnvoye}"
-                        android:onTextChanged="@{() -> viewmodel.remiseAZero()}"
                         android:paddingLeft="10dp"></EditText>
 
                     <ImageView

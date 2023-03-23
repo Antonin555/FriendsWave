@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+
+    <data>
+        <variable name="viewmodel"
+            type="com.antonin.friendswave.ui.viewModel.EventFragmentViewModel"/>
+
+    </data>
+
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -285,7 +297,9 @@
                     android:id="@+id/spinnerLangues"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="3" />
+                    android:layout_weight="3"
+                    android:entries="@array/list_langues"
+                    android:onItemSelected="@{viewmodel::onSelectItem}"/>
 
 
             </LinearLayout>
@@ -309,7 +323,9 @@
                     android:id="@+id/spinnerEtudes"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="3" />
+                    android:layout_weight="3"
+                    android:entries="@array/list_etudes"
+                    android:onItemSelected="@{viewmodel::onSelectItem}"/>
 
             </LinearLayout>
         </LinearLayout>
@@ -349,3 +365,4 @@
 
 
 </ScrollView>
+</layout>
