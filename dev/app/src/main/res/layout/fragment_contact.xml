@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="50dp"
-        tools:context=".ui.fragment.ContactFragment">
+        tools:context=".ui.fragmentMain.ContactFragment">
 
         <!-- TODO: Update blank fragment layout -->
         <FrameLayout
@@ -36,6 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.3"
+                    android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:text="@string/titre_fragment_contact"
                     android:textSize="24sp" />

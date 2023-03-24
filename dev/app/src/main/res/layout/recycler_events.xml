@@ -34,26 +34,31 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
+                android:fontFamily="@font/roboto_mono"
                 android:text="@string/add_event_name" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.6"
+                android:fontFamily="@font/roboto_mono"
                 android:text="@{item.name}" />
 
             <TextView
                 android:id="@+id/event_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:text="@string/add_event_date" />
+                android:layout_weight="0.3"
+                android:fontFamily="@font/roboto_mono"
+                android:text="@string/add_event_date"
+                android:textColor="#E57373" />
 
             <TextView
                 android:id="@+id/textView17"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.6"
+                android:fontFamily="@font/roboto_mono"
                 android:text="@{item.date}" />
 
         </LinearLayout>
@@ -70,28 +75,33 @@
                 android:id="@+id/event_categorie"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.4"
-                android:text="@string/add_event_categorie" />
+                android:layout_weight="0.5"
+                android:fontFamily="@font/roboto_mono"
+                android:text="@string/add_event_categorie"
+                android:textColor="#7986CB" />
 
             <TextView
                 android:id="@+id/textView19"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.6"
+                android:fontFamily="@font/roboto_mono"
                 android:text="@{item.categorie}" />
 
             <TextView
                 android:id="@+id/event_nbre_personnes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
-                android:text="@string/add_event_nbre_personnes" />
+                android:layout_weight="0.4"
+                android:fontFamily="@font/roboto_mono"
+                android:text="@string/detail_event_inscrit" />
 
             <TextView
                 android:id="@+id/textView22"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"
+                android:fontFamily="@font/roboto_mono"
                 android:text="@{`` + item.nbrePersonnes}" />
         </LinearLayout>
 

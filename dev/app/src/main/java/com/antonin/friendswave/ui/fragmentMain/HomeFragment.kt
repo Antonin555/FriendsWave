@@ -1,4 +1,4 @@
-package com.antonin.friendswave.ui.fragment
+package com.antonin.friendswave.ui.fragmentMain
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,15 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil.inflate
-import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.asFlow
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
-import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.data.firebase.FirebaseSource
-import com.antonin.friendswave.data.model.Event
-import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentHomeBinding
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory

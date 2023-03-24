@@ -16,15 +16,15 @@
         android:orientation="vertical">
 
 
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
+            android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/activity_event_confirm"
-            android:textSize="26sp"/>
+            android:textSize="26sp" />
 
         <View
             android:id="@+id/view12"
@@ -44,9 +44,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
+            android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/activity_event_pending"
-            android:textSize="26sp"/>
+            android:textSize="26sp" />
 
 
         <View

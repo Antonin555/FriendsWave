@@ -5,7 +5,7 @@
     <data>
         <variable
             name="item"
-            type="com.antonin.friendswave.data.model.User" />
+            type="com.antonin.friendswave.data.model.Event" />
     </data>
 
     <LinearLayout
@@ -33,6 +33,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
+                android:fontFamily="@font/roboto_mono"
                 android:text="@string/add_event_name" />
 
             <TextView
@@ -40,6 +41,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.6"
+                android:fontFamily="@font/roboto_mono"
                 android:text="@{item.name}" />
 
             <Button
@@ -48,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="5dp"
+                android:fontFamily="@font/roboto_mono"
                 android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
                 android:text="@string/recycler_delete"></Button>
         </LinearLayout>

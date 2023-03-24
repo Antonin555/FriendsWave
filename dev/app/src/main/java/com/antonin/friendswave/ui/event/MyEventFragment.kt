@@ -38,7 +38,7 @@ class MyEventFragment : Fragment(), KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
-        viewModel.fetchEventsPublic2()
+        viewModel.fetchEventsPrivateUser()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

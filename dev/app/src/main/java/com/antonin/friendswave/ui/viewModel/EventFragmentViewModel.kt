@@ -4,13 +4,15 @@ import android.content.Intent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.CompoundButton
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.ui.event.*
-import com.antonin.friendswave.ui.home.HomeActivity
+import com.antonin.friendswave.ui.home.ManageHomeActivity
+import java.time.Duration
 
 
 class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
@@ -69,7 +71,9 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
         }else {
             repository.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid, categorie!!,date!!, horaire!!)
         }
-        Intent(view.context, HomeActivity::class.java).also {
+        Toast.makeText(view.context,"Evenement en cours de publication", Toast.LENGTH_LONG).show()
+
+        Intent(view.context, ManageHomeActivity::class.java).also {
             view.context.startActivity(it)
         }
     }
@@ -103,8 +107,8 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
         }
     }
 
-    fun fetchEventsPublic2() {
-        repository.fetchEventsPublic2().observeForever{ event ->
+    fun fetchEventsPrivateUser() {
+        repository.fetchEventsPrivateUser().observeForever{ event ->
             _eventList.value = event
         }
 

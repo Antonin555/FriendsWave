@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="#F6EDED"
-            android:fontFamily="sans-serif"
+            android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="Photo"
             android:textColor="#000000"
@@ -93,6 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="#F6EDED"
+            android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="Presentation"
             android:textSize="24sp" />
@@ -111,6 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:fontFamily="@font/roboto_mono"
             android:gravity="top|left"
             android:hint="Write a description..."
             android:inputType="textMultiLine"
@@ -126,6 +128,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="#F6EDED"
+            android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="Informations"
             android:textSize="24sp" />
@@ -156,6 +159,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:text="Prenom : "
                     android:textSize="18sp" />
@@ -165,7 +169,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    />
+                    android:fontFamily="@font/roboto_mono" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="0dp"
@@ -188,6 +192,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:text="Nom : "
                     android:textSize="18sp" />
@@ -197,7 +202,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    />
+                    android:fontFamily="@font/roboto_mono" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="0dp"
@@ -222,6 +227,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:text="Age : "
                     android:textSize="18sp" />
@@ -232,6 +238,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:ems="10"
+                    android:fontFamily="@font/roboto_mono"
                     android:inputType="number" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -265,7 +272,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    />
+                    android:fontFamily="@font/roboto_mono" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="0dp"
@@ -289,6 +296,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:text="Langues : "
                     android:textSize="18sp" />
@@ -315,6 +323,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:text="Études : "
                     android:textSize="18sp" />
@@ -336,6 +345,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="#F6EDED"
+            android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="Centres Interêts"
             android:textSize="20sp" />
@@ -359,6 +369,7 @@
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_gravity="center"
+            android:fontFamily="@font/roboto_mono"
             android:text="Save" />
 
     </LinearLayout>

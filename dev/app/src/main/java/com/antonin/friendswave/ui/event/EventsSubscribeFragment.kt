@@ -30,13 +30,14 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
     private val factory : EventFragmentVMFactory by instance()
     private lateinit var binding : FragmentEventsSubscribeBinding
     private var viewModel: EventFragmentViewModel = EventFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
-    private var adapter1 : ListGeneriqueAdapter<Event> = ListGeneriqueAdapter(R.layout.recycler_events)
+    private var adapter1 : ListGeneriqueAdapter<Event> = ListGeneriqueAdapter(R.layout.recycler_my_event_inscrits)
+    private var adapter2 : ListGeneriqueAdapter<Event> = ListGeneriqueAdapter(R.layout.recycler_my_event_pending_participants)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
-        viewModel.fetchEventsPublic2()
+        viewModel.fetchEventsPrivateUser()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -59,7 +60,7 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
         binding.recyclerMyEventInscrits.adapter = adapter1
 
         binding.recyclerPendingParticipants.layoutManager = layoutManager1
-        binding.recyclerPendingParticipants.adapter = adapter1
+        binding.recyclerPendingParticipants.adapter = adapter2
 
 
         viewModel.eventList.observe(this, Observer { eventList ->

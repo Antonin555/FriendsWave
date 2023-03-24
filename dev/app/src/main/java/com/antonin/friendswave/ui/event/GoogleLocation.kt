@@ -7,7 +7,7 @@ import android.location.Location
 import android.location.LocationManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.antonin.friendswave.ui.fragment.EventFragment
+import com.antonin.friendswave.ui.fragmentMain.EventFragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory

@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="50dp"
-        tools:context=".ui.fragment.HomeFragment">
+        tools:context=".ui.fragmentMain.HomeFragment">
 
         <!-- TODO: Update blank fragment layout -->
         <FrameLayout
@@ -76,6 +76,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:fontFamily="@font/roboto_mono"
                                 android:text="@string/friends_fragment_home" />
 
                             <TextView
@@ -90,6 +91,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:fontFamily="@font/roboto_mono"
                                 android:text="TextView" />
                         </LinearLayout>
 
@@ -104,6 +106,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:fontFamily="@font/roboto_mono"
                                 android:text="@string/rating_fragment_home" />
 
                             <TextView
@@ -118,6 +121,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:fontFamily="@font/roboto_mono"
                                 android:text="TextView" />
                         </LinearLayout>
 
@@ -130,6 +134,7 @@
                     android:layout_height="0dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:text="@string/suggests_fragment_home"
                     android:textSize="20sp" />

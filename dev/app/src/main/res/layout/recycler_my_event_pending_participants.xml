@@ -5,7 +5,7 @@
     <data>
         <variable
             name="item"
-            type="com.antonin.friendswave.data.model.User" />
+            type="com.antonin.friendswave.data.model.Event" />
     </data>
 
     <LinearLayout

@@ -3,10 +3,10 @@ package com.antonin.friendswave.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.antonin.friendswave.ui.fragment.ContactFragment
-import com.antonin.friendswave.ui.fragment.EventFragment
-import com.antonin.friendswave.ui.fragment.HomeFragment
-import com.antonin.friendswave.ui.fragment.NotifsFragment
+import com.antonin.friendswave.ui.fragmentMain.ContactFragment
+import com.antonin.friendswave.ui.fragmentMain.EventFragment
+import com.antonin.friendswave.ui.fragmentMain.HomeFragment
+import com.antonin.friendswave.ui.fragmentMain.NotifsFragment
 
 class AdapterFragment(fa: FragmentActivity) : FragmentStateAdapter(fa) {
     override fun getItemCount(): Int = 4

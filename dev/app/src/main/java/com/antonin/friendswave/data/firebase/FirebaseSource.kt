@@ -6,7 +6,7 @@ import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.Message
 import com.antonin.friendswave.data.model.User
 import com.google.firebase.auth.FirebaseAuth
-import com.antonin.friendswave.ui.fragment.ContactFragment
+import com.antonin.friendswave.ui.fragmentMain.ContactFragment
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -296,7 +296,7 @@ class FirebaseSource {
 
         // va chercher juste les evenements de l'utilisateur dans la partie Privée
 
-        fun fetchEventsPublic2(onResult: (List<Event>) -> Unit) {
+        fun fetchEventsPrivateUser(onResult: (List<Event>) -> Unit) {
             firebaseData.child("event/eventPrivate").child(mainUid!!).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val eventsList = ArrayList<Event>()

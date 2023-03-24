@@ -1,4 +1,4 @@
-package com.antonin.friendswave.ui.fragment
+package com.antonin.friendswave.ui.fragmentMain
 
 import android.content.Intent
 import android.location.Location

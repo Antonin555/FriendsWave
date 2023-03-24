@@ -27,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="258dp"
+            android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/add_event_title"
             android:textSize="34sp" />
@@ -48,6 +49,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:text="@string/add_event_name"
                     android:textSize="24sp" />
@@ -68,6 +70,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_weight="4"
                     android:ems="10"
+                    android:fontFamily="@font/roboto_mono"
                     android:hint="@string/add_event_hint_name"
                     android:inputType="textPersonName"
                     android:text="@={viewmodel.name}" />
@@ -92,6 +95,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/roboto_mono"
                         android:gravity="center"
                         android:text="@{viewmodel.isChecked() ? @string/add_event_public : @string/add_event_private}"
                         android:textSize="16sp" />
@@ -120,6 +124,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:fontFamily="@font/roboto_mono"
                         android:text="@string/detail_event_duration" />
 
                     <EditText
@@ -144,6 +149,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:fontFamily="@font/roboto_mono"
                         android:text="@string/add_event_nbre_personnes"
                         android:textSize="16sp" />
 
@@ -163,6 +169,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/roboto_mono"
                     android:text="@string/add_event_categorie"
                     android:textSize="16sp" />
 
@@ -187,6 +194,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:text="@string/add_event_photo"
                     android:textSize="20sp" />
@@ -236,6 +244,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:text="@string/add_event_description"
                     android:textSize="20sp" />
@@ -245,6 +254,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:ems="10"
+                    android:fontFamily="@font/roboto_mono"
                     android:gravity="top|left"
                     android:hint="@string/add_event_hint_name"
                     android:inputType="textMultiLine"
@@ -265,6 +275,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_weight="4"
+                    android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:text="@string/add_event_lieu"
                     android:textSize="20sp" />
@@ -282,6 +293,7 @@
                         android:layout_marginBottom="10dp"
                         android:layout_weight="3"
                         android:ems="10"
+                        android:fontFamily="@font/roboto_mono"
                         android:hint="lieu"
                         android:inputType="textPersonName" />
 
@@ -290,6 +302,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:fontFamily="@font/roboto_mono"
                         android:text="Button" />
                 </LinearLayout>
 
@@ -313,6 +326,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_weight="4"
+                    android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:text="@string/add_event_date"
                     android:textSize="20sp" />
@@ -346,6 +360,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_weight="4"
+                    android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:text="@string/add_event_heure"
                     android:textSize="20sp" />

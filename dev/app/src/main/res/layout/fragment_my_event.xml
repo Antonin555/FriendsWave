@@ -18,12 +18,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="26sp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
+            android:fontFamily="@font/roboto_mono"
+            android:gravity="center"
             android:text="@string/add_event_private"
-            android:gravity="center">
-        </TextView>
+            android:textSize="26sp"></TextView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_my_event_private"
@@ -35,12 +35,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="26sp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
+            android:fontFamily="@font/roboto_mono"
+            android:gravity="center"
             android:text="@string/add_event_public"
-            android:gravity="center">
-        </TextView>
+            android:textSize="26sp"></TextView>
 
 
         <androidx.recyclerview.widget.RecyclerView

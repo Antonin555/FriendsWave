@@ -14,10 +14,9 @@ import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.antonin.friendswave.outils.startEditProfilActivity
 
 
-class HomeActivity : AppCompatActivity() {
+class ManageHomeActivity : AppCompatActivity() {
 
 
     private lateinit var tabLayout : TabLayout
@@ -81,7 +80,7 @@ class HomeActivity : AppCompatActivity() {
 
 
         if(item.itemId == R.id.edit_profil) {
-            val intent = Intent(this@HomeActivity, EditProfilActivity::class.java)
+            val intent = Intent(this@ManageHomeActivity, EditProfilActivity::class.java)
             startActivity(intent)
 
         }

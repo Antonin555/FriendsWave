@@ -33,12 +33,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
+                android:fontFamily="@font/roboto_mono"
                 android:text="@string/add_event_name" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.6"
+                android:fontFamily="@font/roboto_mono"
                 android:text="@{item.name}" />
 
             <Button
@@ -47,11 +49,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:backgroundTint="#7986CB"
-                android:text="ACCEPT"
                 android:background="@drawable/btn_accept"
+                android:backgroundTint="#7986CB"
+                android:fontFamily="@font/roboto_mono"
                 android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
-                ></Button>
+                android:text="ACCEPT"></Button>
 
             <Button
                 android:id="@+id/btn_delete"
@@ -59,11 +61,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="5dp"
-                android:backgroundTint="#7986CB"
-                android:text="DECLINE"
                 android:background="@drawable/btn_accept"
+                android:backgroundTint="#7986CB"
+                android:fontFamily="@font/roboto_mono"
                 android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
-                ></Button>
+                android:text="DECLINE"></Button>
         </LinearLayout>
 
 

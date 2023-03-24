@@ -53,11 +53,11 @@ class UserRepo(private val firebase: FirebaseSource) {
 
 //    fun fetchEventsPublic5() = firebase.fetchEventsPublic2()
 
-    fun fetchEventsPublic2() :LiveData<List<Event>> {
+    fun fetchEventsPrivateUser() :LiveData<List<Event>> {
 
         val eventList = MutableLiveData<List<Event>>()
 
-        firebase.fetchEventsPublic2() { event ->
+        firebase.fetchEventsPrivateUser() { event ->
             eventList.postValue(event)
         }
 
