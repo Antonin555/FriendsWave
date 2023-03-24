@@ -1,14 +1,11 @@
 package com.antonin.friendswave.ui.viewModel
 
 import android.view.View
-import android.widget.EditText
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.Message
 import com.antonin.friendswave.data.repository.UserRepo
-import com.google.firebase.database.R
 
 
 class ChatViewModel(private val repository: UserRepo): ViewModel()  {
@@ -33,7 +30,7 @@ class ChatViewModel(private val repository: UserRepo): ViewModel()  {
         }
     }
 
-    fun remiseAZero(){
-        messageEnvoye = ""
-    }
+//    fun remiseAZero(){
+//        messageEnvoye = ""
+//    }
 }

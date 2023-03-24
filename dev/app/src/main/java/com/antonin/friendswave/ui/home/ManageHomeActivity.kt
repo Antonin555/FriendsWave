@@ -46,10 +46,10 @@ class ManageHomeActivity : AppCompatActivity() {
 
         adapterFragment = AdapterFragment(this)
         viewPager.adapter = adapterFragment
-        tabLayout.getTabAt(0)!!.orCreateBadge.backgroundColor;
+        tabLayout.getTabAt(0)!!.orCreateBadge.backgroundColor
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                viewPager!!.currentItem = tab!!.position
+                viewPager.currentItem = tab!!.position
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {

@@ -38,7 +38,7 @@ class HomeFragment : Fragment(), KodeinAware {
         viewModel.fetchUserData()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
         return binding.root
     }

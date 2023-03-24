@@ -52,7 +52,7 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
         viewModel.interfaceEvent = this
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_event, container, false)
         binding.viewmodel = viewModel
@@ -81,7 +81,7 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
 
                 val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
                 toast.show()
-                var intent : Intent = Intent(context, DetailEventActivity::class.java )
+                val intent = Intent(context, DetailEventActivity::class.java )
                 intent.putExtra("position", position)
                 startActivity(intent)
             }

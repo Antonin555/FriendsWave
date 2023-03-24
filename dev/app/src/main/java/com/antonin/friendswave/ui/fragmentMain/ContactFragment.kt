@@ -38,7 +38,7 @@ class ContactFragment : Fragment(), KodeinAware {
         viewModel.fetchUsersFriends()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_contact, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
@@ -59,7 +59,7 @@ class ContactFragment : Fragment(), KodeinAware {
             override fun onClick(view: View, position: Int) {
                 val userChoisi = contactList[position]
 
-                var intent = Intent(context, ChatActivity::class.java)
+                val intent = Intent(context, ChatActivity::class.java)
                 intent.putExtra("position", position)
                 intent.putExtra("name", userChoisi.name)
                 intent.putExtra("uid", userChoisi.uid)

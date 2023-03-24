@@ -7,11 +7,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
-import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.adapter.MessageAdapter
 import com.antonin.friendswave.data.firebase.FirebaseSource
-import com.antonin.friendswave.data.model.Message
-import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityChatBinding
 import com.antonin.friendswave.ui.viewModel.ChatVMFactory
@@ -23,7 +20,7 @@ import org.kodein.di.generic.instance
 
 class ChatActivity : AppCompatActivity(), KodeinAware {
 
-    var messageList:ArrayList<Message> = ArrayList()
+//    var messageList:ArrayList<Message> = ArrayList()
 //    private lateinit var messageAdapter: MessageAdapter
     override val kodein : Kodein by kodein()
     private val factory : ChatVMFactory by instance()
@@ -38,7 +35,7 @@ class ChatActivity : AppCompatActivity(), KodeinAware {
 
         val reveiverUid = intent.getStringExtra("uid")
 
-        var binding : ActivityChatBinding = DataBindingUtil.setContentView(this, R.layout.activity_chat)
+        val binding : ActivityChatBinding = DataBindingUtil.setContentView(this, R.layout.activity_chat)
         viewModel = ViewModelProviders.of(this,factory).get(ChatViewModel::class.java)
 
         //set receiverUID
@@ -72,7 +69,5 @@ class ChatActivity : AppCompatActivity(), KodeinAware {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
+
 }

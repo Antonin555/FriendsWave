@@ -12,7 +12,7 @@ import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.ui.event.*
 import com.antonin.friendswave.ui.home.ManageHomeActivity
-import java.time.Duration
+
 
 
 class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {

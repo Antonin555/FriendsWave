@@ -1,7 +1,6 @@
 package com.antonin.friendswave.data.firebase
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.Message
 import com.antonin.friendswave.data.model.User
@@ -90,30 +89,30 @@ class FirebaseSource {
     }
 
 
-    fun getEventUserData(position: Int,onResult: (Event?) -> Unit) {
-        val eventLiveData = MutableLiveData<Event>()
-        firebaseData.child("event/eventPublic").addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var i = 0
-                for(snap in snapshot.children){
-                    if(position == i){
-                        val data = snap.getValue(Event::class.java)!!
-                        onResult(data)
-                    }
-                    i+=1
-
-                }
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("FirebaseHelper", "Error fetching data", error.toException())
-                onResult(null)
-            }
-        })
-
-
-    }
+//    fun getEventUserData(position: Int,onResult: (Event?) -> Unit) {
+//
+//        firebaseData.child("event/eventPublic").addListenerForSingleValueEvent(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                var i = 0
+//                for(snap in snapshot.children){
+//                    if(position == i){
+//                        val data = snap.getValue(Event::class.java)!!
+//                        onResult(data)
+//                    }
+//                    i+=1
+//
+//                }
+//
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                Log.e("FirebaseHelper", "Error fetching data", error.toException())
+//                onResult(null)
+//            }
+//        })
+//
+//
+//    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -127,7 +126,7 @@ class FirebaseSource {
 
 
     fun getEventData(position: Int,onResult: (Event?) -> Unit) {
-        val eventLiveData = MutableLiveData<Event>()
+
         firebaseData.child("event/eventPublic").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var i = 0
@@ -155,7 +154,7 @@ class FirebaseSource {
 
     /// RECUPERER QUE LA FRIEND LIST : A ESSAYER ////
     fun fetchUsersFriend(){
-        var mainUser: User = User()
+        var mainUser = User()
         firebaseData.child("user").child(mainUid!!)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -216,16 +215,16 @@ class FirebaseSource {
                 for (postSnapshot in snapshot.children) {
                     val currentUser = postSnapshot.getValue(User::class.java)
                     if (email == currentUser?.email) {
-                        emailDB = currentUser?.email!!
+                        emailDB = currentUser.email!!
                         //a voir si c'est la meilleur maniere de gerer les friend request
-                        firebaseData.child("user").child(currentUser?.uid!!).child("friendRequest").child(firebaseAuth.currentUser?.uid!!).setValue(firebaseAuth.currentUser?.email)
+                        firebaseData.child("user").child(currentUser.uid!!).child("friendRequest").child(firebaseAuth.currentUser?.uid!!).setValue(firebaseAuth.currentUser?.email)
 //                        firebaseData.child("user").child(currentUser?.uid!!).child("request/").push().setValue(firebaseAuth.currentUser?.email)
                         return
                     }
                 }
-                if (emailDB == null) {
-                    //envoyer une demande via email
-                }
+//                if (emailDB == null) {
+//                    //envoyer une demande via email
+//                }
             }
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
@@ -237,7 +236,7 @@ class FirebaseSource {
 
     fun fetchUsersRequest(requestList: ArrayList<User>){
 
-        var mainUser: User = User()
+        var mainUser = User()
         firebaseData.child("user").child(mainUid!!).addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
@@ -303,15 +302,13 @@ class FirebaseSource {
                     for (snap in task.result.children) {
                         if (snap.exists()) {
                             val event = snap.getValue(Event::class.java)
-                            if(event!!.admin == mainUid!!)
-                                eventsList.add(event!!)
+                            if(event!!.admin == mainUid)
+                                eventsList.add(event)
 
                         }
                     }
 
                     onResult(eventsList)
-
-                } else {
 
                 }
             }
@@ -326,9 +323,9 @@ class FirebaseSource {
                 var i = 0
                 for (snap in snapshot.children) {
                     val event = snap.getValue(Event::class.java)
-                    if (snap.exists() && event!!.admin == mainUid!!) {
+                    if (snap.exists() && event!!.admin == mainUid) {
                         if(position == i){
-                            onResult(event!!)
+                            onResult(event)
                         }
                     }
                     i+=1
@@ -367,12 +364,12 @@ class FirebaseSource {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val mainUser = dataSnapshot.getValue(User::class.java)
                 println(mainUser)
-                key = mainUser!!.friendRequest!!.keys?.elementAt(position)
+                key = mainUser!!.friendRequest!!.keys.elementAt(position)
                 email = mainUser.friendRequest!!.get(key)
                 mainUser.friendRequest!!.remove(key)
                 mainUser.friendList!!.put(key.toString(), email.toString())
-                firebaseData.child("user").child(mainUid!!).setValue(mainUser)
-                firebaseData.child("user").child(key!!).child("friendList").child(mainUid!!).setValue(mainUser.email)
+                firebaseData.child("user").child(mainUid).setValue(mainUser)
+                firebaseData.child("user").child(key!!).child("friendList").child(mainUid).setValue(mainUser.email)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -394,12 +391,12 @@ class FirebaseSource {
                 val mainUser = dataSnapshot.getValue(User::class.java)
                 println(mainUser)
                 println(mainUser!!.friendRequest!!.isNotEmpty())
-                if(mainUser!!.friendRequest!!.isNotEmpty()){
-                    key = mainUser!!.friendRequest!!.keys?.elementAt(position)
+                if(mainUser.friendRequest!!.isNotEmpty()){
+                    key = mainUser.friendRequest!!.keys.elementAt(position)
                     mainUser.friendRequest!!.remove(key)
                     mainUser.friendRequest!!.remove(mainUid)
                     println(mainUser)
-                    firebaseData.child("user").child(mainUid!!).setValue(mainUser)
+                    firebaseData.child("user").child(mainUid).setValue(mainUser)
                 }
 
             }
@@ -415,9 +412,9 @@ class FirebaseSource {
         val senderRoom = receiverUid + mainUid
         val receiverRoom = mainUid + receiverUid
 
-        firebaseData.child("chats").child(senderRoom!!).child("message").push()
+        firebaseData.child("chats").child(senderRoom).child("message").push()
             .setValue(messageObject).addOnSuccessListener {
-                firebaseData.child("chats").child(receiverRoom!!).child("message").push()
+                firebaseData.child("chats").child(receiverRoom).child("message").push()
                     .setValue(messageObject)
             }
     }
@@ -426,7 +423,7 @@ class FirebaseSource {
 
         val senderRoom = receiverUid + mainUid
 
-        firebaseData.child("chats").child(senderRoom!!).child("message").get().addOnCompleteListener { task ->
+        firebaseData.child("chats").child(senderRoom).child("message").get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val messageList = ArrayList<Message>()
                 for (snap in task.result.children) {

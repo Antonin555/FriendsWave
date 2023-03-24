@@ -25,7 +25,7 @@ import org.kodein.di.generic.instance
 
 class NotifsFragment : Fragment(), KodeinAware {
 
-    var requestList:ArrayList<User> = ArrayList()
+    private var requestList:ArrayList<User> = ArrayList()
 
     override val kodein : Kodein by kodein()
     private val factory : NotifFragmentVMFactory by instance()
@@ -39,7 +39,7 @@ class NotifsFragment : Fragment(), KodeinAware {
         viewModel.fetchUsersRequest(requestList)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_notifs, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(NotifFragmentViewModel::class.java)

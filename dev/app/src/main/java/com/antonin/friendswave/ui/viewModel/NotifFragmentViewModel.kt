@@ -1,7 +1,6 @@
 package com.antonin.friendswave.ui.viewModel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+
 import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo

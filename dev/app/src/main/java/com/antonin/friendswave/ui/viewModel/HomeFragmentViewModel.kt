@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.R
-import com.antonin.friendswave.R.*
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.outils.startLoginActivity
@@ -38,9 +37,9 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
         view.context.startLoginActivity() // va chercher les fonctions utiles pour les Intent
     }
 
-    fun fetchUsers() {
-        repository.fetchUsers()
-    }
+//    fun fetchUsers() {
+//        repository.fetchUsers()
+//    }
 
     fun fetchUsersFriends() {
         repository.fetchUsersFriends()
@@ -60,7 +59,7 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
             etudes = parent!!.adapter.getItem(pos).toString()
         }
-        if (view!!.id == R.id.spinnerLangues) {
+        if (view.id == R.id.spinnerLangues) {
 
             langue = parent!!.adapter.getItem(pos).toString()
         }
