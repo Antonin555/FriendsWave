@@ -2,6 +2,7 @@ package com.antonin.friendswave.ui.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.antonin.friendswave.R
 
 class ProfilActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

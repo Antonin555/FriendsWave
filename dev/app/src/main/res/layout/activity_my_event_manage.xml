@@ -58,7 +58,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="@{viewmodel.eventDataUser.name}" />
 
             <Button
                 android:id="@+id/button9"
@@ -85,7 +85,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="@{viewmodel.eventDataUser.date}" />
 
             <Button
                 android:id="@+id/button8"
@@ -112,7 +112,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="@{viewmodel.eventDataUser.heure}" />
 
             <Button
                 android:id="@+id/button10"
@@ -139,7 +139,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="@{viewmodel.eventDataUser.duree.toString()}" />
 
             <Button
                 android:id="@+id/button11"
@@ -166,7 +166,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="@{viewmodel.eventDataUser.nbrePersonnes.toString()}" />
 
             <Button
                 android:id="@+id/button12"

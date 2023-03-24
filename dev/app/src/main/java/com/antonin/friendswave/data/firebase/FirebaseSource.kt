@@ -1,25 +1,14 @@
 package com.antonin.friendswave.data.firebase
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.util.Log
-import android.view.View
-import android.widget.Toast
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.Message
 import com.antonin.friendswave.data.model.User
 import com.google.firebase.auth.FirebaseAuth
-import com.antonin.friendswave.outils.startHomeActivity
-import com.antonin.friendswave.ui.event.MesEventsActivity
 import com.antonin.friendswave.ui.fragment.ContactFragment
-import com.antonin.friendswave.ui.fragment.EventFragment
-import com.antonin.friendswave.ui.fragment.NotifsFragment
-import com.antonin.friendswave.ui.fragment.HomeFragment
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.snapshots
 import com.google.firebase.ktx.Firebase
 import io.reactivex.Completable
 
@@ -99,6 +88,42 @@ class FirebaseSource {
             }
         })
     }
+
+
+    fun getEventUserData(position: Int,onResult: (Event?) -> Unit) {
+        val eventLiveData = MutableLiveData<Event>()
+        firebaseData.child("event/eventPublic").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var i = 0
+                for(snap in snapshot.children){
+                    if(position == i){
+                        val data = snap.getValue(Event::class.java)!!
+                        onResult(data)
+                    }
+                    i+=1
+
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("FirebaseHelper", "Error fetching data", error.toException())
+                onResult(null)
+            }
+        })
+
+
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     fun getEventData(position: Int,onResult: (Event?) -> Unit) {
@@ -272,7 +297,7 @@ class FirebaseSource {
         // va chercher juste les evenements de l'utilisateur dans la partie Privée
 
         fun fetchEventsPublic2(onResult: (List<Event>) -> Unit) {
-            firebaseData.child("event/eventPrivate").get().addOnCompleteListener { task ->
+            firebaseData.child("event/eventPrivate").child(mainUid!!).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val eventsList = ArrayList<Event>()
                     for (snap in task.result.children) {
@@ -292,11 +317,31 @@ class FirebaseSource {
             }
         }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    fun fetchEventUser(position: Int,onResult: (Event) -> Unit) {
+        firebaseData.child("event/eventPrivate").child(mainUid!!).addValueEventListener(object :ValueEventListener {
 
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var i = 0
+                for (snap in snapshot.children) {
+                    val event = snap.getValue(Event::class.java)
+                    if (snap.exists() && event!!.admin == mainUid!!) {
+                        if(position == i){
+                            onResult(event!!)
+                        }
+                    }
+                    i+=1
+                }
+            }
 
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid : String, category:String, date : String, horaire:String) {
         val database = Firebase.database
@@ -308,7 +353,7 @@ class FirebaseSource {
     fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid: String, category:String, date : String, horaire:String) {
         val database = Firebase.database
         val myRef = database.getReference("event")
-        myRef.child("eventPrivate/").push().setValue(Event(name,isPublic,nbrePersonnes, uid, category, date, horaire))
+        myRef.child("eventPrivate/" + mainUid!!).push().setValue(Event(name,isPublic,nbrePersonnes, uid, category, date, horaire))
 
     }
 

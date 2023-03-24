@@ -16,7 +16,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class GoogleLocation () {
+class GoogleLocation  {
 
 
     private val locationPermissionCode = 2

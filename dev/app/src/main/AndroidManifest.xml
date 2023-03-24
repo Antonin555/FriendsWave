@@ -24,6 +24,14 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".ui.event.ManagerFragmentEvent"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
             android:name=".ui.chat.ChatActivity"
             android:exported="false">
             <meta-data
@@ -32,20 +40,6 @@
         </activity>
         <activity
             android:name=".ui.event.MyEventManageActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".ui.event.EventsInscritsActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".ui.event.MesEventsActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

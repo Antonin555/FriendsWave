@@ -9,11 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.repository.UserRepo
-import com.antonin.friendswave.ui.event.AddEventActivity
-import com.antonin.friendswave.ui.event.EventsInscritsActivity
-import com.antonin.friendswave.ui.event.InterfaceEvent
-import com.antonin.friendswave.ui.event.MesEventsActivity
-import com.antonin.friendswave.ui.fragment.EventFragment
+import com.antonin.friendswave.ui.event.*
 import com.antonin.friendswave.ui.home.HomeActivity
 
 
@@ -46,6 +42,10 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     private val _eventData = MutableLiveData<Event>()
     val eventData: LiveData<Event> = _eventData
 
+
+    private val _eventDataUser = MutableLiveData<Event>()
+    val eventDataUser: LiveData<Event> = _eventDataUser
+
     private val _eventList = MutableLiveData<List<Event>>()
     val eventList: LiveData<List<Event>> = _eventList
 
@@ -62,13 +62,6 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
         }
     }
 
-
-    fun goToEventsInscrits(view: View){
-        // .also permet d'eviter de déclarer une variable :
-        Intent(view.context, EventsInscritsActivity::class.java).also {
-            view.context.startActivity(it)
-        }
-    }
 
     fun addEventUser(view: View) {
         if(isPublic == true) {
@@ -117,9 +110,16 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     }
 
+    fun fetchEventUser(pos: Int) {
+        repository.fetchEventUser(pos).observeForever{ event ->
+            _eventDataUser.value = event
+        }
+
+    }
+
 
     fun gotoMesEventsActivity(view: View) {
-        Intent(view.context, MesEventsActivity::class.java).also {
+        Intent(view.context, ManagerFragmentEvent::class.java).also {
             view.context.startActivity(it)
         }
     }
