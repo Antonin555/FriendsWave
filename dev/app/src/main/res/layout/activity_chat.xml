@@ -48,8 +48,8 @@
                         android:background="@drawable/custom_shape"
                         android:fontFamily="@font/roboto_mono"
                         android:hint="Type a message"
-                        android:paddingLeft="10dp"
-                        android:text="@={viewmodel.messageEnvoye}"></EditText>
+                        android:text="@={viewmodel.messageEnvoye}"
+                        android:paddingLeft="10dp"></EditText>
 
                     <ImageView
                         android:id="@+id/sentButton"

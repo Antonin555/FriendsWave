@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.model.Event
-import com.antonin.friendswave.data.model.Message
+import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.model.User
 
 class UserRepo(private val firebase: FirebaseSource) {
@@ -102,17 +102,22 @@ class UserRepo(private val firebase: FirebaseSource) {
         firebase.refuseRequest(position)
     }
 
-    fun fetchDiscussion(receiverUid: String):LiveData<List<Message>>{
-
-
-        val messageList = MutableLiveData<List<Message>>()
+    fun fetchDiscussion(receiverUid: String):LiveData<List<Messages>>{
+        val messageList = MutableLiveData<List<Messages>>()
 
         firebase.fetchDiscussion(receiverUid) { message ->
             messageList.postValue(message)
         }
-
         return messageList
+    }
 
+    fun fetchfetchEmail():LiveData<List<String>>{
+        val emailList = MutableLiveData<List<String>>()
+
+        firebase.fetchEmail() { message ->
+            emailList.postValue(message)
+        }
+        return emailList
     }
 
     fun addMessagetoDatabase(messageEnvoye: String, receiverUid: String){

@@ -1,16 +1,19 @@
 package com.antonin.friendswave.ui.viewModel
 
 import android.view.View
+import android.widget.EditText
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.antonin.friendswave.data.model.Message
+import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.repository.UserRepo
+import com.google.firebase.database.R
 
 
 class ChatViewModel(private val repository: UserRepo): ViewModel()  {
     var messageEnvoye: String? = ""
     var receiverUid: String? = ""
+    val message = MutableLiveData<String>()
 
     fun addMessagetoDatabase(view: View){
         println(view)
@@ -19,18 +22,17 @@ class ChatViewModel(private val repository: UserRepo): ViewModel()  {
 
         }
         messageEnvoye = ""
+        message.value = ""
+        fetchDiscussion()
     }
 
-    private val _messageList = MutableLiveData<List<Message>>()
-    val messageList: LiveData<List<Message>> = _messageList
+    private val _messageList = MutableLiveData<List<Messages>>()
+    val messageList: LiveData<List<Messages>> = _messageList
 
-    fun fetchDiscussion(){
+    fun fetchDiscussion() {
         repository.fetchDiscussion(receiverUid!!).observeForever{ message ->
             _messageList.value = message
         }
     }
 
-//    fun remiseAZero(){
-//        messageEnvoye = ""
-//    }
 }

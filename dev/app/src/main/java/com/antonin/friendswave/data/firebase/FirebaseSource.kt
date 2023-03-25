@@ -2,7 +2,7 @@ package com.antonin.friendswave.data.firebase
 
 import android.util.Log
 import com.antonin.friendswave.data.model.Event
-import com.antonin.friendswave.data.model.Message
+import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.antonin.friendswave.ui.fragmentMain.ContactFragment
@@ -154,12 +154,11 @@ class FirebaseSource {
 
     /// RECUPERER QUE LA FRIEND LIST : A ESSAYER ////
     fun fetchUsersFriend(){
-        var mainUser = User()
         firebaseData.child("user").child(mainUid!!)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        mainUser = snapshot.getValue(User::class.java)!!
+                        var mainUser = snapshot.getValue(User::class.java)!!
                         firebaseData.child("user")
                             .addValueEventListener(object : ValueEventListener {
                                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -408,7 +407,7 @@ class FirebaseSource {
     }
 
     fun addMessagetoDatabase(messageEnvoye: String, receiverUid: String){
-        val messageObject = Message(messageEnvoye, mainUid)
+        val messageObject = Messages(messageEnvoye, mainUid)
         val senderRoom = receiverUid + mainUid
         val receiverRoom = mainUid + receiverUid
 
@@ -419,16 +418,16 @@ class FirebaseSource {
             }
     }
 
-    fun fetchDiscussion(receiverUid: String, onResult: (List<Message>) -> Unit){
+    fun fetchDiscussion(receiverUid: String, onResult:(List<Messages>) -> Unit){
 
         val senderRoom = receiverUid + mainUid
 
         firebaseData.child("chats").child(senderRoom).child("message").get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                val messageList = ArrayList<Message>()
+                val messageList = ArrayList<Messages>()
                 for (snap in task.result.children) {
                     if (snap.exists()) {
-                            val message = snap.getValue(Message::class.java)
+                        val message = snap.getValue(Messages::class.java)
                         messageList.add(message!!)
 
                     }
@@ -436,6 +435,22 @@ class FirebaseSource {
                 onResult(messageList)
             }
         }
+    }
+
+    fun fetchEmail(onResult: (List<String>) -> Unit){
+        firebaseData.child("user/").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val emailList = ArrayList<String>()
+                for (postSnapshot in snapshot.children){
+                    val user = postSnapshot.getValue(User::class.java)
+                    emailList.add(user!!.email.toString())
+                }
+                onResult(emailList)
+            }
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
     }
 }
 

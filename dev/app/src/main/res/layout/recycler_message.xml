@@ -9,7 +9,7 @@
 
         <variable
             name="item"
-            type="com.antonin.friendswave.data.model.Message" />
+            type="com.antonin.friendswave.data.model.Messages" />
     </data>
 
     <LinearLayout

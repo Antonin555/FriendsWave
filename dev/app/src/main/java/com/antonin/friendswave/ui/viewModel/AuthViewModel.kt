@@ -2,6 +2,7 @@ package com.antonin.friendswave.ui.viewModel
 
 import android.content.Intent
 import android.view.View
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 import com.antonin.friendswave.data.repository.UserRepo
@@ -17,6 +18,7 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
     var name: String? = null
     var email: String? = null
     var password: String? = null
+    val toastMessage = MutableLiveData<String>()
 
     private val disposables = CompositeDisposable()
     var interfaceAuth : InterfaceAuth? = null
@@ -32,7 +34,6 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
         Intent(view.context, SignupActivity::class.java).also {
             view.context.startActivity(it)
         }
-
 
     }
 
@@ -50,6 +51,7 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
 
         //validating email and password
         if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
+            toastMessage.value = "Mauvais courriel ou mot de passe"
             interfaceAuth?.onFailure("Mauvais courriel ou mot de passe")
             return
         }

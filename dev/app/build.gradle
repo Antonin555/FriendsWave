@@ -11,6 +11,11 @@ plugins {
 android {
     namespace 'com.antonin.friendswave'
     compileSdk 33
+    //pour envoyer des mails
+    packagingOptions {
+        exclude 'META-INF/NOTICE.md'
+        exclude 'META-INF/LICENSE.md'
+    }
 
     defaultConfig {
         applicationId "com.antonin.friendswave"
@@ -106,7 +111,10 @@ dependencies {
     // TextDrawable
 //    implementation "com.amulyakhare:com.amulyakhare.textdrawable:1.0.1"
 
-
+    //pour envoyer un mail
+    implementation 'com.sun.mail:android-mail:1.6.7'
+    implementation 'com.sun.mail:android-activation:1.6.7'
+//    implementation 'com.sun.mail:javax.mail:1.5.5'
 
 
 }

@@ -7,7 +7,7 @@
 
 
     <data>
-        <variable name="view"
+        <variable name="viewmodel"
             type="com.antonin.friendswave.ui.viewModel.ContactViewModel"/>
 
     </data>
@@ -26,14 +26,13 @@
             android:layout_width="match_parent"
             android:layout_height="58dp"
             android:layout_marginLeft="28dp"
-
-            android:layout_marginTop="178dp"
             android:layout_marginRight="28dp"
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:paddingLeft="13dp"
             android:text="Faites une nouvelle demande d'ami(e)"
             android:textSize="19sp"
+            android:layout_marginTop="178dp"
             android:textStyle="bold"></TextView>
 
         <EditText
@@ -43,12 +42,12 @@
             android:layout_below="@+id/info"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="18dp"
-            android:layout_marginRight="28dp"
             android:background="@drawable/custom_shape"
             android:fontFamily="@font/roboto_mono"
             android:hint="Email"
             android:paddingLeft="13dp"
-            android:text="@={view.email}"></EditText>
+            android:layout_marginRight="28dp"
+            android:text="@={viewmodel.email}"></EditText>
 
         <Button
             android:id="@+id/btnSend"
@@ -59,9 +58,10 @@
             android:layout_marginTop="18dp"
             android:backgroundTint="#7986CB"
             android:fontFamily="@font/roboto_mono"
-            android:onClick="@{() -> view.addFriendRequestToUser()}"
+            android:onClick="@{() -> viewmodel.addFriendRequestToUser()}"
             android:text="Send"
-            android:textColor="@color/white"
-            android:textSize="20sp"></Button>
+            android:textSize="20sp"
+            android:textColor="@color/white">
+        </Button>
     </RelativeLayout>
 </layout>

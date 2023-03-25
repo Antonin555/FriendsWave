@@ -7,17 +7,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.antonin.friendswave.R
-import com.antonin.friendswave.data.model.Message
+import com.antonin.friendswave.data.model.Messages
 import com.google.firebase.auth.FirebaseAuth
 
 
 
-class MessageAdapter(val context: Context, val messageList: List<Message>):
+class MessageAdapter(val context: Context, val messageList: List<Messages>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     val ITEM_RECEIVE = 1
     val ITEM_SENT = 2
-    private val items = mutableListOf<Message>()
+    private val items = mutableListOf<Messages>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
@@ -33,7 +33,7 @@ class MessageAdapter(val context: Context, val messageList: List<Message>):
 
     }
 
-    fun addItems(items: List<Message>) {
+    fun addItems(items: List<Messages>) {
         this.items.clear()
         this.items.addAll(items)
         notifyDataSetChanged()
