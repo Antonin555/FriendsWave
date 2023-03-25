@@ -34,6 +34,7 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
+        binding.position = pos
         viewModel.fetchEventUser(pos)
     }
 }

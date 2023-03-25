@@ -1,6 +1,5 @@
 package com.antonin.friendswave.data.firebase
-
-import android.util.Log
+import androidx.compose.runtime.key
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.model.User
@@ -142,7 +141,7 @@ class FirebaseSource {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.e("FirebaseHelper", "Error fetching data", error.toException())
+//                Log.e("FirebaseHelper", "Error fetching data", error.toException())
                 onResult(null)
             }
         })
@@ -204,6 +203,64 @@ class FirebaseSource {
 //        }
 //    })
 
+
+    fun sendAnInvitationPrivateEvent(email: String,position: Int) {
+
+        val firebaseUser = firebaseData.child("user")
+
+        val firebaseEvent = firebaseData.child("event/eventPrivate").child(mainUid!!)
+
+        firebaseUser.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (postSnapshot in snapshot.children) {
+                    val currentUser = postSnapshot.getValue(User::class.java)
+                    if (email == currentUser?.email) {
+                        firebaseUser.child(currentUser.uid!!).child("EventsRequestPrivate").child(mainUid!!).setValue(currentUser()!!.email)
+
+                    }
+
+//                    firebaseEvent.addValueEventListener( object : ValueEventListener {
+//                override fun onDataChange(eventSnapshot: DataSnapshot) {
+//                    var i = 0
+//                    for (event in eventSnapshot.children) {
+//                        if(position == i){
+//                           firebaseEvent.child().child("AttendeesParticipants").child(currentUser!!.uid.toString()).setValue(true)
+////                            attendeesParticipantsRef.child(currentUser!!.uid.toString()).setValue()
+////                            event.child("AttendeesParticipants").child(currentUser!!.email.toString())
+//                        }
+//                        i +=1
+//
+//                    }
+//                }
+//                                    override fun onCancelled(databaseError: DatabaseError) {
+//                                        // Gérer l'erreur
+//                                    }
+//                                })
+
+
+                }
+            }
+
+
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    // Gérer l'erreur
+                }
+            })
+
+
+    }
+
+
+
+
+
+    ///////////////////////////////////////////////////////////////////////
+
+
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -231,6 +288,8 @@ class FirebaseSource {
 
         })
     }
+
+
 
 
     fun fetchUsersRequest(requestList: ArrayList<User>){
@@ -265,6 +324,38 @@ class FirebaseSource {
 
     }
 
+
+//    fun fetchEventsRequest(eventList: ArrayList<Event>){
+//
+//        var mainUser = User()
+//        firebaseData.child("event/eventPrivate").child(mainUid!!).addValueEventListener(object: ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                if (snapshot.exists()) {
+//                    mainUser = snapshot.getValue(User::class.java)!!
+//                    firebaseData.child("user").addValueEventListener(object: ValueEventListener {
+//                        override fun onDataChange(snapshot: DataSnapshot) {
+//                            requestList.clear()
+//                            for (postSnapshot in snapshot.children){
+//                                val currentUser = postSnapshot.getValue(User::class.java)
+//                                if(mainUser.friendRequest!!.containsKey(currentUser?.uid)){
+//                                    if(currentUser?.uid != mainUid){
+//                                        requestList.add(currentUser!!)
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        override fun onCancelled(error: DatabaseError) {
+//                            TODO("Not yet implemented")
+//                        }
+//                    })
+//                }
+//            }
+//            override fun onCancelled(error: DatabaseError) {
+//                TODO("Not yet implemented")
+//            }
+//        })
+//
+//    }
 
 
 
@@ -341,15 +432,16 @@ class FirebaseSource {
 
     fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid : String, category:String, date : String, horaire:String) {
         val database = Firebase.database
-        val myRef = database.getReference("event")
-        myRef.child("eventPublic/").push().setValue(Event(name,isPublic,nbrePersonnes, uid, category, date, horaire))
+//        val myRef = database.getReference("event")
+        val myRef = database.getReference("event/eventPublic" + mainUid!!).push()
+        myRef.setValue(Event(myRef.key,name,isPublic,nbrePersonnes, uid, category, date, horaire))
 
     }
 
     fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid: String, category:String, date : String, horaire:String) {
         val database = Firebase.database
-        val myRef = database.getReference("event")
-        myRef.child("eventPrivate/" + mainUid!!).push().setValue(Event(name,isPublic,nbrePersonnes, uid, category, date, horaire))
+        val myRef = database.getReference("event/eventPrivate/" + mainUid!!).push()
+        myRef.setValue(Event(myRef.key, name,isPublic,nbrePersonnes, uid, category, date, horaire))
 
     }
 

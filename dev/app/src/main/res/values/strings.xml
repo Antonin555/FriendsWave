@@ -41,7 +41,13 @@
     <string name="activity_manage_my_event_pending_participants">participants en attente :</string>
     <string name="activity_manage_my_event_manage">gestion :</string>
 
+    <string name="fragment_notifs_demande_de_suivi">demande de suivi</string>
+    <string name="fragment_notifs_demande_events">demande events</string>
+
     <string name="recycler_delete">supprimer</string>
+
+
+
 
 
     <string name="api_key_google_map">AIzaSyDDvmYhowxWZi-TRhLBK1bduYexZAHhaQ8</string>

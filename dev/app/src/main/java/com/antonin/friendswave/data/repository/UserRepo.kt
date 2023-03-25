@@ -77,6 +77,10 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     fun addFriendRequestToUser(email: String) = firebase.addFriendRequestToUser(email)
 
+
+
+    fun sendAnInvitationPrivateEvent(email: String, position: Int) = firebase.sendAnInvitationPrivateEvent(email,position)
+
     fun getUserData(): LiveData<User> {
         val userLiveData = MutableLiveData<User>()
 

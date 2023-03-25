@@ -34,6 +34,8 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     var hour:Int? = 0
     var minute: Int? = 0
 
+    var email: String? = null
+
 
     val user by lazy {
         repository.currentUser()
@@ -120,6 +122,17 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
         }
 
     }
+
+    fun sendAnInvitationPrivateEvent(pos: Int){
+
+        if (email.isNullOrEmpty()) {
+            return
+        }
+
+        repository.sendAnInvitationPrivateEvent(email!!, pos!!)
+
+    }
+
 
 
     fun gotoMesEventsActivity(view: View) {

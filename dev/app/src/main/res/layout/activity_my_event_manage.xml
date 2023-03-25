@@ -8,7 +8,10 @@
 
     <data>
         <variable name="viewmodel"
-            type="com.antonin.friendswave.ui.viewModel.EventFragmentViewModel"/>
+            type="com.antonin.friendswave.ui.viewModel.EventFragmentViewModel" />
+
+        <variable name="position"
+        type="Integer"/>
 
     </data>
     <ScrollView
@@ -30,7 +33,7 @@
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/add_event_title"
-            android:textSize="28sp"></TextView>
+            android:textSize="28sp"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -40,7 +43,7 @@
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/add_event_description"
-            android:textSize="26sp"></TextView>
+            android:textSize="26sp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -209,14 +212,15 @@
             android:ems="10"
             android:fontFamily="@font/roboto_mono"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:text="@={viewmodel.email}" />
 
         <Button
             android:id="@+id/button7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_mono"
-            android:text="Button" />
+            android:text="Button"
+            android:onClick="@{() -> viewmodel.sendAnInvitationPrivateEvent(position)}"/>
 
         <TextView
             android:id="@+id/textView41"

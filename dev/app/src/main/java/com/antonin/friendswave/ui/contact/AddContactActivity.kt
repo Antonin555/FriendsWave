@@ -1,5 +1,6 @@
 package com.antonin.friendswave.ui.contact
 
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -12,11 +13,14 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class AddContactActivity() : AppCompatActivity(), KodeinAware {
+
+class AddContactActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein : Kodein by kodein()
     private lateinit var viewModel: ContactViewModel
     private val factory : ContactViewModelFactory by instance()
+    //d'ou sort cette variable
+//    private lateinit var binding: AddContactBinding
 
     private lateinit var binding: ActivityAddContactBinding
 
@@ -24,11 +28,10 @@ class AddContactActivity() : AppCompatActivity(), KodeinAware {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_contact)
 
-        binding= DataBindingUtil.setContentView(this, R.layout.activity_add_contact)
+        val binding: ActivityAddContactBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_contact)
         viewModel = ViewModelProviders.of(this, factory).get(ContactViewModel::class.java)
-        val view = binding.root
         binding.viewmodel = viewModel
-        binding.lifecycleOwner = this
+
     }
 
     override fun onResume() {
@@ -47,7 +50,6 @@ class AddContactActivity() : AppCompatActivity(), KodeinAware {
 //        return binding.root
 //    }
 
-    companion object {
-        var email: String? = ""
-    }
+
+
 }

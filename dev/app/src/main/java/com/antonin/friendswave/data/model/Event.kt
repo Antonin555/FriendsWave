@@ -4,6 +4,7 @@ import com.antonin.friendswave.adapter.ListItemViewModel
 
 data class Event(
 
+    var key : String? = "",
     var name: String? = "",
     var isPublic : Boolean? = true,
     var nbrePersonnes : Int? = 0,

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.data.firebase.FirebaseSource
+import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentNotifsBinding
@@ -26,10 +27,12 @@ import org.kodein.di.generic.instance
 class NotifsFragment : Fragment(), KodeinAware {
 
     private var requestList:ArrayList<User> = ArrayList()
+    private var eventList:ArrayList<Event> = ArrayList()
 
     override val kodein : Kodein by kodein()
     private val factory : NotifFragmentVMFactory by instance()
     private lateinit var adapter1 : ListGeneriqueAdapter<User>
+    private lateinit var adapter2 : ListGeneriqueAdapter<Event>
     private var viewModel: NotifFragmentViewModel = NotifFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
     private lateinit var binding : FragmentNotifsBinding
 
@@ -55,6 +58,10 @@ class NotifsFragment : Fragment(), KodeinAware {
         binding.recyclerFragmentNotif.layoutManager = layoutManager
         binding.recyclerFragmentNotif.adapter = adapter1
         adapter1.addItems(requestList)
+
+        binding.recyclerFragmentNotifEvents.layoutManager = layoutManager
+        binding.recyclerFragmentNotifEvents.adapter = adapter2
+        adapter2.addItems(eventList)
 
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{

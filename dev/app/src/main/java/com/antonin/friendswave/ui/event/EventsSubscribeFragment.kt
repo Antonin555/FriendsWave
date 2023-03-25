@@ -67,6 +67,10 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
             adapter1.addItems(eventList)
         })
 
+        viewModel.eventList.observe(this, Observer { eventList ->
+            adapter2.addItems(eventList)
+        })
+
     }
 
 
