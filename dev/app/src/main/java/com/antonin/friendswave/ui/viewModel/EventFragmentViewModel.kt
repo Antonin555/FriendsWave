@@ -135,6 +135,8 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
 
 
+
+
     fun gotoMesEventsActivity(view: View) {
         Intent(view.context, ManagerFragmentEvent::class.java).also {
             view.context.startActivity(it)

@@ -25,6 +25,8 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     fun fetchUsersRequest(requestList: ArrayList<User>) = firebase.fetchUsersRequest(requestList)
 
+    fun fetchInvitationEvents(eventList:ArrayList<Event>) = firebase.fetchInvitationEvents(eventList)
+
 //    fun fetchEventsPublic() = firebase.fetchEventsPublic()
 
 

@@ -243,11 +243,7 @@ class FirebaseSource {
                     var i = 0
                     for (childSnapshot in dataSnapshot.children) {
                         if(position == i){
-
                             eventId = childSnapshot.key
-                            println("ID de l'événement : $eventId")
-
-                            // Ajouter la demande d'invitation dans le nœud de l'événement
                             firebaseData.child("event/eventPrivate").child(mainUid).child(eventId!!).child("invitations").push().child(eventId!!).setValue(email)
                         }
                         i++
@@ -269,10 +265,7 @@ class FirebaseSource {
                         user = childSnapshot.getValue(User::class.java)
                         if(user!!.email == email){
                             val userId = childSnapshot.key
-                            println("ID de l'utilisateur : $userId")
-
-                            // Ajouter la demande d'invitation dans le nœud de l'utilisateur
-                            firebaseData.child("user/").child(userId!!).child("invitations/").push().child(eventId!!).setValue(true)
+                            firebaseData.child("user/").child(userId!!).child("invitations/").push().child(eventId!!).setValue(mainUid!!)
                         }
 
                     }
@@ -297,7 +290,67 @@ class FirebaseSource {
 
     ///////////////////////////////////////////////////////////////////////
 
+    fun fetchInvitationEvents(eventList:ArrayList<Event>){
 
+
+        var event : Event? = Event()
+        var eventId: Any? = ""
+        var eventValue: Any? = ""
+
+
+
+        firebaseData.child("user").child(mainUid!!).child("invitations").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    val user = dataSnapshot.getValue(User::class.java)
+
+                    for (childSnapshot in dataSnapshot.children) {
+                        eventId = childSnapshot.key
+                        val eventIdWithPrefix = childSnapshot.value.toString()
+                        eventValue = eventIdWithPrefix.split("=","}")[1]
+
+                        println("ID de l'événement : $eventValue")
+
+
+                            // Ajouter la demande d'invitation dans le nœud de l'événement
+                            //firebaseData.child("event/eventPrivate").child(mainUid).child(eventId!!).child("invitations").push().child(eventId!!).setValue(email)
+                        }
+
+                    }
+                 else {
+                    println("Aucun événement trouvé avec ce nom")
+                }
+            }
+
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                println("Erreur lors de la récupération de l'ID de l'événement : ${databaseError.message}")
+            }
+        })
+
+        firebaseData.child("event/eventPrivate").child(eventValue!!.toString()).child(eventId!!.toString()).child("invitations").equalTo(currentUser()!!.email).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                eventList.clear()
+                if (dataSnapshot.exists()) {
+                    for (childSnapshot in dataSnapshot.children) {
+                        event = childSnapshot.getValue(Event::class.java)
+
+                        eventList.add(event!!)
+
+
+                    }
+                } else {
+                    println("Aucun utilisateur trouvé avec cette adresse e-mail")
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                println("Erreur lors de la récupération de l'ID de l'utilisateur : ${databaseError.message}")
+            }
+        })
+
+
+    }
 
 
 

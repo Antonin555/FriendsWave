@@ -40,6 +40,7 @@ class NotifsFragment : Fragment(), KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.fetchUsersRequest(requestList)
+        viewModel.fetchEventsInvitation(eventList)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -54,12 +55,14 @@ class NotifsFragment : Fragment(), KodeinAware {
         super.onResume()
 
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
+        adapter2 = ListGeneriqueAdapter(R.layout.recycler_events)
         val layoutManager = LinearLayoutManager(context)
+        val layoutManager2 = LinearLayoutManager(context)
         binding.recyclerFragmentNotif.layoutManager = layoutManager
         binding.recyclerFragmentNotif.adapter = adapter1
         adapter1.addItems(requestList)
 
-        binding.recyclerFragmentNotifEvents.layoutManager = layoutManager
+        binding.recyclerFragmentNotifEvents.layoutManager = layoutManager2
         binding.recyclerFragmentNotifEvents.adapter = adapter2
         adapter2.addItems(eventList)
 

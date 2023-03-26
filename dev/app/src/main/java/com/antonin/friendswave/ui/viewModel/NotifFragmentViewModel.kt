@@ -2,6 +2,7 @@ package com.antonin.friendswave.ui.viewModel
 
 
 import androidx.lifecycle.ViewModel
+import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 
@@ -36,6 +37,11 @@ class NotifFragmentViewModel (private val repository: UserRepo): ViewModel() {
 
     fun refuseRequest(position: Int){
         repository.refuseRequest(position)
+    }
+
+
+    fun fetchEventsInvitation(eventList:ArrayList<Event>) {
+        repository.fetchInvitationEvents(eventList)
     }
 
 //    //disposing the disposables
