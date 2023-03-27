@@ -25,18 +25,18 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     fun fetchUsersRequest(requestList: ArrayList<User>) = firebase.fetchUsersRequest(requestList)
 
-    fun fetchInvitationEvents() :LiveData<List<Event>> {
+//    fun fetchInvitationEvents() :LiveData<List<Event>> {
+//
+//        val eventList = MutableLiveData<List<Event>>()
+//
+//        firebase.fetchInvitationEvents { event ->
+//            eventList.postValue(event)
+//        }
+//
+//        return eventList
+//    }
 
-        val eventList = MutableLiveData<List<Event>>()
-
-        firebase.fetchInvitationEvents { event ->
-            eventList.postValue(event)
-        }
-
-        return eventList
-    }
-
-//    fun fetchEventsRequest(eventList:ArrayList<Event>) = firebase.fetchEventsRequest(eventList)
+    fun fetchInvitationEvents(eventList:ArrayList<Event>) = firebase.fetchInvitationEvents(eventList)
 
 
     fun fetchEventsPublic1() :LiveData<List<Event>> {

@@ -1,5 +1,4 @@
 package com.antonin.friendswave.data.firebase
-import androidx.compose.runtime.key
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.model.User
@@ -158,7 +157,7 @@ class FirebaseSource {
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        var mainUser = snapshot.getValue(User::class.java)!!
+                        val mainUser = snapshot.getValue(User::class.java)!!
                         firebaseData.child("user")
                             .addValueEventListener(object : ValueEventListener {
                                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -220,11 +219,7 @@ class FirebaseSource {
 
     fun sendAnInvitationPrivateEvent(email: String,position: Int) {
 
-
-
-        var user : User? = User()
-        var event : Event? = Event()
-        var eventId : String? = ""
+        var eventId : String?
 
         firebaseData.child("event/eventPrivate").child(mainUid!!).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -298,51 +293,31 @@ class FirebaseSource {
 
 
 
-    fun fetchInvitationEvents(onResult: (List<Event>) -> Unit) {
+    fun fetchInvitationEvents(eventList:ArrayList<Event>) {
 
-        val eventList = mutableListOf<Event>()
+        
         var eventId: Any? = ""
-        var eventValue: Any? = ""
-        var eventIdList = HashMap<String,String>()
+        var eventValue: Any?
+        val eventIdList = HashMap<String,String>()
 
-        val mainUser = User()
+
         firebaseData.child("user").child(mainUid!!).child("invitations").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 if (dataSnapshot.exists()) {
 //                    val user = dataSnapshot.getValue(User::class.java)
                     for (data in dataSnapshot.children){
-                        eventId = dataSnapshot.key
-                        val eventIdWithPrefix = dataSnapshot.value.toString()
-                        eventValue = eventIdWithPrefix.split("=","}", "{")[1]
+                        eventValue = data.value.toString()
+                        eventId = data.key.toString()
+
+//                        eventValue = eventIdWithPrefix.split("=","}", "{")[1]
                         eventIdList.put(eventId.toString(),eventValue.toString())
 
                     }
                     print(eventIdList)
-//                    val eventId = dataSnapshot.key
-//                    val eventIdWithPrefix = dataSnapshot.value.toString()
-//                    val eventValue = eventIdWithPrefix.split("=","}")[1]
+//                    addEventsToRecycler(eventIdList,eventList)
+                    testEventsToRecycler(eventIdList,eventList)
 
-                    firebaseData.child("event/eventPrivate").addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                            for (childSnapshot in dataSnapshot.children) {
-                                if(eventIdList.containsKey(eventId.toString())){
-
-                                    var event = childSnapshot.getValue(Event::class.java)!!
-                                    eventList.add(event)
-                                }
-
-
-                            }
-
-                            onResult(eventList)
-                        }
-
-                        override fun onCancelled(error: DatabaseError) {
-                            // Gérer l'erreur ici
-                        }
-                    })
                 } else {
 //                    onResult(eventList)
                 }
@@ -352,57 +327,68 @@ class FirebaseSource {
                 // Gérer l'erreur ici
             }
         })
-    }
+
+
+        }
 
     ///////////////////////////////////////////////////////////////////////
 
-//    fun fetchInvitationEvents(onResult: (Event) -> Unit){
-//
-//
-//        var event : Event? = Event()
-//        var eventId: Any? = ""
-//        var eventValue: Any? = ""
-//
-//        var user:User? = User()
-////
-//        var mainUser = User()
-//        firebaseData.child("user").child(mainUid!!).child("invitations").addListenerForSingleValueEvent(object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//
-//                if (dataSnapshot.exists()) {
-//                    user = dataSnapshot.getValue(User::class.java)
-//
-//                    eventId = dataSnapshot.key
-//                    val eventIdWithPrefix = dataSnapshot.value.toString()
-//                    eventValue = eventIdWithPrefix.split("=","}")[1]
-//
-//                    println("ID de l'événement : $eventValue")
-//                }
-//
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//        })
-//
-//        firebaseData.child("event/eventPrivate").child(eventValue!!.toString()).child(eventId!!.toString()).addListenerForSingleValueEvent(object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//
-//                for (childSnapshot in dataSnapshot.children) {
-//                    event = dataSnapshot.getValue(Event::class.java)
-////                            eventList.add(event!!)
-//
-//                }
-//                onResult(event!!)
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//        })
-//
-//    }
+
+
+    fun testEventsToRecycler(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>){
+        for(i in eventIdList){
+            firebaseData.child("event/eventPrivate").child(i.value.toString()).get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+
+                    for (snap in task.result.children) {
+                        if (snap.exists()) {
+                            val event = snap.getValue(Event::class.java)
+                            if(i.key == snap.key){
+                                eventList.add(event!!)
+
+                            }
+
+
+                        }
+                    }
+
+
+
+
+//                    adapter1.addItems(eventsList)
+                } else {
+                    // Handle error
+                }
+            }
+        }
+        }
+
+
+    fun addEventsToRecycler(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>){
+
+        for(i in eventIdList){
+            firebaseData.child("event/eventPrivate").child(i.value).addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                    for (childSnapshot in dataSnapshot.children) {
+                        val event = childSnapshot.getValue(Event::class.java)!!
+                        if(eventIdList.containsKey(i.key)){
+                            eventList.add(event)
+
+                        }
+
+
+                    }
+
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    // Gérer l'erreur ici
+                }
+            })
+
+    }
+    }
+
 
 
 
@@ -659,6 +645,7 @@ class FirebaseSource {
             }
         })
     }
+
 }
 
 

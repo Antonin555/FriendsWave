@@ -45,15 +45,15 @@ class NotifFragmentViewModel (private val repository: UserRepo): ViewModel() {
         repository.refuseRequest(position)
     }
 
-    fun fetchEventsInvitation() {
-        repository.fetchInvitationEvents().observeForever { event ->
-            _eventList.value = event
-        }
-    }
-//    fun fetchEventsRequest(eventList:ArrayList<Event>) {
-//
-//        repository.fetchEventsRequest(eventList)
+//    fun fetchEventsInvitation() {
+//        repository.fetchInvitationEvents().observeForever { event ->
+//            _eventList.value = event
+//        }
 //    }
+    fun fetchEventsInvitation(eventList:ArrayList<Event>) {
+
+        repository.fetchInvitationEvents(eventList)
+    }
 
 //    //disposing the disposables
 //    override fun onCleared() {

@@ -44,7 +44,7 @@ class NotifsFragment : Fragment(), KodeinAware {
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
         adapter2 = ListGeneriqueAdapter(R.layout.recycler_events)
         viewModel.fetchUsersRequest(requestList)
-        viewModel.fetchEventsInvitation()
+        viewModel.fetchEventsInvitation(_eventList)
 
 
     }
@@ -73,12 +73,13 @@ class NotifsFragment : Fragment(), KodeinAware {
 
         binding.recyclerFragmentNotifEvents.layoutManager = layoutManager2
         binding.recyclerFragmentNotifEvents.adapter = adapter2
+        adapter2.addItems(_eventList)
 
-        viewModel.eventList.observe(this, Observer { eventList ->
-            adapter2.addItems(eventList)
-
-
-        })
+//        viewModel.eventList.observe(this, Observer { eventList ->
+//            adapter2.addItems(eventList)
+//
+//
+//        })
 
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
