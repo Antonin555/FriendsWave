@@ -1,12 +1,18 @@
 package com.antonin.friendswave.ui.viewModel
 
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 
 class NotifFragmentViewModel (private val repository: UserRepo): ViewModel() {
+
+
+    private val _eventList = MutableLiveData <List<Event>>()
+    val eventList: LiveData<List<Event>> = _eventList
 
 //    private val disposables = CompositeDisposable()
 
@@ -39,10 +45,15 @@ class NotifFragmentViewModel (private val repository: UserRepo): ViewModel() {
         repository.refuseRequest(position)
     }
 
-
-    fun fetchEventsInvitation(eventList:ArrayList<Event>) {
-        repository.fetchInvitationEvents(eventList)
+    fun fetchEventsInvitation() {
+        repository.fetchInvitationEvents().observeForever { event ->
+            _eventList.value = event
+        }
     }
+//    fun fetchEventsRequest(eventList:ArrayList<Event>) {
+//
+//        repository.fetchEventsRequest(eventList)
+//    }
 
 //    //disposing the disposables
 //    override fun onCleared() {

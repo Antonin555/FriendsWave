@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
@@ -27,7 +28,7 @@ import org.kodein.di.generic.instance
 class NotifsFragment : Fragment(), KodeinAware {
 
     private var requestList:ArrayList<User> = ArrayList()
-    private var eventList:ArrayList<Event> = ArrayList()
+    private var _eventList:ArrayList<Event> = ArrayList()
 
     override val kodein : Kodein by kodein()
     private val factory : NotifFragmentVMFactory by instance()
@@ -39,8 +40,13 @@ class NotifsFragment : Fragment(), KodeinAware {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
+        adapter2 = ListGeneriqueAdapter(R.layout.recycler_events)
         viewModel.fetchUsersRequest(requestList)
-        viewModel.fetchEventsInvitation(eventList)
+        viewModel.fetchEventsInvitation()
+
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -48,14 +54,17 @@ class NotifsFragment : Fragment(), KodeinAware {
         binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_notifs, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(NotifFragmentViewModel::class.java)
         binding.viewmodel = viewModel
+        binding.lifecycleOwner = this
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
 
-        adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
-        adapter2 = ListGeneriqueAdapter(R.layout.recycler_events)
+
+
+
+
         val layoutManager = LinearLayoutManager(context)
         val layoutManager2 = LinearLayoutManager(context)
         binding.recyclerFragmentNotif.layoutManager = layoutManager
@@ -64,7 +73,12 @@ class NotifsFragment : Fragment(), KodeinAware {
 
         binding.recyclerFragmentNotifEvents.layoutManager = layoutManager2
         binding.recyclerFragmentNotifEvents.adapter = adapter2
-        adapter2.addItems(eventList)
+
+        viewModel.eventList.observe(this, Observer { eventList ->
+            adapter2.addItems(eventList)
+
+
+        })
 
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
