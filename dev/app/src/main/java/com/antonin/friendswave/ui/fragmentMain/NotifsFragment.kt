@@ -42,10 +42,9 @@ class NotifsFragment : Fragment(), KodeinAware {
         super.onCreate(savedInstanceState)
 
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
-        adapter2 = ListGeneriqueAdapter(R.layout.recycler_events)
+        adapter2 = ListGeneriqueAdapter(R.layout.recycler_invite_events)
         viewModel.fetchUsersRequest(requestList)
         viewModel.fetchEventsInvitation(_eventList)
-
 
     }
 
@@ -61,10 +60,6 @@ class NotifsFragment : Fragment(), KodeinAware {
     override fun onResume() {
         super.onResume()
 
-
-
-
-
         val layoutManager = LinearLayoutManager(context)
         val layoutManager2 = LinearLayoutManager(context)
         binding.recyclerFragmentNotif.layoutManager = layoutManager
@@ -74,13 +69,6 @@ class NotifsFragment : Fragment(), KodeinAware {
         binding.recyclerFragmentNotifEvents.layoutManager = layoutManager2
         binding.recyclerFragmentNotifEvents.adapter = adapter2
         adapter2.addItems(_eventList)
-
-//        viewModel.eventList.observe(this, Observer { eventList ->
-//            adapter2.addItems(eventList)
-//
-//
-//        })
-
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
