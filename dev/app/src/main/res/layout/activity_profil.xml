@@ -6,6 +6,7 @@
 
     <data>
 
+
         <variable name="item" type="com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel" />
     </data>
 
@@ -59,15 +60,15 @@
                         <TextView
                             android:id="@+id/nameUser"
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="@{item.user_live.name}"
+                            android:text="@{item.user_liveProfil.name}"
                             android:textSize="24sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:orientation="horizontal">
 
@@ -84,7 +85,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="@{item.user_live.friends.toString()}" />
+                                android:text="@{item.user_liveProfil.friends.toString()}" />
 
                             <TextView
                                 android:id="@+id/textView7"
@@ -97,7 +98,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:orientation="horizontal">
 
@@ -114,7 +115,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="@{item.user_live.rating.toString()}" />
+                                android:text="@{item.user_liveProfil.rating.toString()}" />
                             <!--                            android:text="@{String.valueOf(item.rating)}"-->
                             <TextView
                                 android:id="@+id/textView2"
@@ -253,22 +254,40 @@
                 <TextView
                     android:id="@+id/textView51"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="100dp"
                     android:inputType="textMultiLine"
                     android:text="TextView" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/floatingActionButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="50dp"
-                    android:clickable="true"
-                    app:srcCompat="@android:drawable/ic_delete" />
+               <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                   <com.google.android.material.floatingactionbutton.FloatingActionButton
+                       android:id="@+id/floatingActionButton"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="right"
+                       android:layout_marginLeft="50dp"
+                       android:layout_marginRight="100dp"
+                       android:clickable="true"
+                       android:onClick='@{()-> item.addOrDelete() }'
+                       app:srcCompat="@android:drawable/ic_delete" />
+
+                   <com.google.android.material.floatingactionbutton.FloatingActionButton
+                       android:id="@+id/floatingActionButton2"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginLeft="100dp"
+                       android:layout_weight="0"
+                       android:clickable="true"
+                       android:onClick='@{(v)-> item.signaler(v)}'
+                       app:srcCompat="@android:drawable/ic_dialog_alert"/>
+
+               </LinearLayout>
 
 
             </LinearLayout>
-
 
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

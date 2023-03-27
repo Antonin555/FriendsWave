@@ -85,12 +85,15 @@ class UserRepo(private val firebase: FirebaseSource) {
         return eventLiveData
     }
 
-
     fun addFriendRequestToUser(email: String) = firebase.addFriendRequestToUser(email)
 
 
 
     fun sendAnInvitationPrivateEvent(email: String, position: Int) = firebase.sendAnInvitationPrivateEvent(email,position)
+
+    fun addFriendRequestToUserByUid(uid: String?) = firebase.addFriendRequestToUserByUid(uid)
+
+    fun removeFriend(uid: String?) = firebase.removeFriend(uid)
 
     fun getUserData(): LiveData<User> {
         val userLiveData = MutableLiveData<User>()
@@ -100,7 +103,26 @@ class UserRepo(private val firebase: FirebaseSource) {
         }
 
         return userLiveData
+    }
 
+    fun getUserProfilData(profilUid: String?): LiveData<User> {
+        val userLiveData = MutableLiveData<User>()
+
+        firebase.getUserProfilData(profilUid) { user ->
+            userLiveData.postValue(user)
+        }
+
+        return userLiveData
+    }
+
+    fun verifAmitier(profilUid: String?): LiveData<Boolean> {
+        val amiLiveData = MutableLiveData<Boolean>()
+
+        firebase.verifAmitier(profilUid) { ami ->
+            amiLiveData.postValue(ami)
+        }
+
+        return amiLiveData
     }
 
     fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid: String, category:String, date : String, horaire:String) =

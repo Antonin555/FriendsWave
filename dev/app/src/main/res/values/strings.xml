@@ -2,9 +2,12 @@
     <string name="app_name">Friends Wave</string>
     <!-- TODO: Remove or change this placeholder text -->
 
-    <string name="titre_fragment_contact">CONTACT</string>
+    <string name="titre_fragment_contact">LISTE DAMIS</string>
     <string name="titre_fragment_home">HOME</string>
     <string name="titre_fragment_event">EVENTS</string>
+    <string name="titre_signalement_activity">SIGNALEMENT</string>
+    <string name="description_signalement_activity">DESCRIPTION</string>
+    <string name="warning_signalement_activity">ATTENTION VOUS ETES SUR LE POINT DE SIGNALER UN UTILISATEUR</string>
     <string name="suggests_fragment_home">SUGGESTIONS </string>
     <string name="rating_fragment_home">rating : </string>
     <string name="friends_fragment_home">friends : </string>
@@ -45,9 +48,6 @@
     <string name="fragment_notifs_demande_events">demande events</string>
 
     <string name="recycler_delete">supprimer</string>
-
-
-
 
 
     <string name="api_key_google_map">AIzaSyDDvmYhowxWZi-TRhLBK1bduYexZAHhaQ8</string>

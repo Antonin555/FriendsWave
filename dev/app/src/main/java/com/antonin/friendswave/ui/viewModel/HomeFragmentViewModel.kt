@@ -16,15 +16,48 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
     var etudes : String? = ""
     var langue :String? = ""
-
+    var profilUid: String? = ""
 
     private val _user = MutableLiveData<User>()
     var user_live: LiveData<User> = _user
+
+    private val _userProfil = MutableLiveData<User>()
+    var user_liveProfil: LiveData<User> = _userProfil
+
+    private val _ami = MutableLiveData<Boolean>()
+    var ami_live: LiveData<Boolean> = _ami
 
     fun fetchUserData() {
         repository.getUserData().observeForever { user ->
             _user.value = user
         }
+    }
+
+    fun fetchUserProfilData(profilUid: String?) {
+        repository.getUserProfilData(profilUid).observeForever { user ->
+            _userProfil.value = user
+        }
+    }
+
+    fun verifAmitier(profilUid: String?){
+        repository.verifAmitier(profilUid).observeForever { ami ->
+            _ami.value = ami
+        }
+    }
+
+    fun addOrDelete(){
+        if(ami_live.value == true){
+            repository.removeFriend(profilUid)
+        }
+        else if (ami_live.value == false){
+            repository.addFriendRequestToUserByUid(profilUid)
+        }
+
+        verifAmitier(profilUid)
+    }
+
+    fun signaler(view: View){
+//        Intent(view.context, )
     }
 
     val user by lazy {

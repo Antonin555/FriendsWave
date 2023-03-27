@@ -56,7 +56,6 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
                 binding.setVariable(BR.item, itemViewModel)
                 binding.executePendingBindings()
             }
-
         }
 
         interface OnListItemViewClickListener{

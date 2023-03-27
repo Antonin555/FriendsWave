@@ -18,14 +18,10 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class ManageHomeActivity : AppCompatActivity() {
 
-
     private lateinit var tabLayout : TabLayout
     private lateinit var viewPager : ViewPager2
-
     private lateinit var adapterFragment : AdapterFragment
-
     private lateinit var viewModel : HomeFragmentViewModel
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +35,6 @@ class ManageHomeActivity : AppCompatActivity() {
             "Contact",
             "Notifs"
         )
-
 
         tabLayout = findViewById(R.id.tabLayout)
         viewPager = findViewById(R.id.viewPager)
@@ -61,10 +56,7 @@ class ManageHomeActivity : AppCompatActivity() {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabLayoutArray[position]
         }.attach()
-
     }
-
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
@@ -78,11 +70,9 @@ class ManageHomeActivity : AppCompatActivity() {
             return true
         }
 
-
         if(item.itemId == R.id.edit_profil) {
             val intent = Intent(this@ManageHomeActivity, EditProfilActivity::class.java)
             startActivity(intent)
-
         }
 
         return true

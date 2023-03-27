@@ -16,6 +16,7 @@ import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentContactBinding
 import com.antonin.friendswave.ui.chat.ChatActivity
+import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import org.kodein.di.Kodein
@@ -39,12 +40,10 @@ class ContactFragment : Fragment(), KodeinAware {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
         binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_contact, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
         binding.viewmodel = viewModel
         return binding.root
-
     }
 
     override fun onResume() {
@@ -58,13 +57,21 @@ class ContactFragment : Fragment(), KodeinAware {
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
                 val userChoisi = contactList[position]
+                if(view.id == R.id.nomProfile){
+                    val intent = Intent(context, ChatActivity::class.java)
+//                    intent.putExtra("position", position)
+//                    intent.putExtra("name", userChoisi.name)
+                    intent.putExtra("uid", userChoisi.uid)
+                    startActivity(intent)
+                }
+                if(view.id == R.id.imageProfil){
+                    val intent = Intent(context, ProfilActivity::class.java)
+                    intent.putExtra("uid", userChoisi.uid)
+                    startActivity(intent)
+                }
 
-                val intent = Intent(context, ChatActivity::class.java)
-                intent.putExtra("position", position)
-                intent.putExtra("name", userChoisi.name)
-                intent.putExtra("uid", userChoisi.uid)
 
-                startActivity(intent)
+
             }
         })
     }

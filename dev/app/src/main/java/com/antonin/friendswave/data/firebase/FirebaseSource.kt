@@ -1,4 +1,5 @@
 package com.antonin.friendswave.data.firebase
+import androidx.compose.runtime.key
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.model.User
@@ -34,6 +35,59 @@ class FirebaseSource {
         }
     }
 
+    fun getUserData(onResult: (User?) -> Unit) {
+        firebaseData.child("user").child(FirebaseAuth.getInstance().currentUser!!.uid)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val user = dataSnapshot.getValue(User::class.java)
+                    onResult(user)
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+
+                    onResult(null)
+                }
+            })
+    }
+
+    fun getUserProfilData(profilUid: String?, onResult: (User?) -> Unit){
+        //passer le uid du user
+        firebaseData.child("user").child(profilUid!!)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val user = dataSnapshot.getValue(User::class.java)
+                    onResult(user)
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+
+                    onResult(null)
+                }
+            })
+
+    }
+
+    fun verifAmitier(profilUid: String?, onResult: (Boolean?) -> Unit){
+        firebaseData.child("user").child(mainUid!!)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        var mainUser = snapshot.getValue(User::class.java)!!
+                        if (mainUser.friendList!!.containsKey(profilUid)) {
+                            val ami = true
+                            onResult(ami)
+                        }
+                        else{
+                            val ami = false
+                            onResult(ami)
+                        }
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    onResult(null)
+                }
+            })
+    }
 
     fun addUserToDatabase(name: String, email: String, uid: String ){
         firebaseData.child("user").child(uid).setValue(User(name,email,uid))
@@ -54,20 +108,6 @@ class FirebaseSource {
         }
     }
 
-    fun getUserData(onResult: (User?) -> Unit) {
-        firebaseData.child("user").child(FirebaseAuth.getInstance().currentUser!!.uid)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val user = dataSnapshot.getValue(User::class.java)
-                    onResult(user)
-                }
-
-                override fun onCancelled(databaseError: DatabaseError) {
-
-                    onResult(null)
-                }
-            })
-    }
 
     fun fetchUsers(){
         firebaseData.child("user/").addValueEventListener(object : ValueEventListener {
@@ -113,11 +153,77 @@ class FirebaseSource {
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+    /// RECUPERER QUE LA FRIEND LIST : A ESSAYER ////
+    fun fetchUsersFriend(){
+        firebaseData.child("user").child(mainUid!!)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        var mainUser = snapshot.getValue(User::class.java)!!
+                        firebaseData.child("user")
+                            .addValueEventListener(object : ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    ContactFragment.contactList.clear()
+                                    for (postSnapshot in snapshot.children) {
+                                        val currentUser = postSnapshot.getValue(User::class.java)
+                                        if (mainUser.friendList!!.containsKey(currentUser?.uid)) {
+                                            if (currentUser?.uid != mainUid) { //patch de merde
+                                                ContactFragment.contactList.add(currentUser!!)
+                                            }
+                                        }
+                                    }
+                                }
 
+                                override fun onCancelled(error: DatabaseError) {
+                                    TODO("Not yet implemented")
+                                }
+                            })
+
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+    }
+
+//    var ref = FirebaseDatabase.getInstance().getReference().child("user").child(mainUid!!).child("friendList")
+//    var query : Query = ref.orderByChild("email")
+//    query.addListenerForSingleValueEvent(object:  ValueEventListener {
+//
+//        override fun onDataChange(snapshot: DataSnapshot) {
+//            for (userSnapshot in snapshot.getChildren()) {
+//            Map<String, Object> userMap = (Map<String, Object>) userSnapshot.getValue();
+//            Map<String, String> friendList = (Map<String, String>) userMap.get("friendList");
+//
+//        }
+//        }
+//
+//        override fun onCancelled(error: DatabaseError) {
+//            // gestion de l'erreur
+//        }
+//    })
 
     //////////////////////// EVENTS  REQUETES /////////////////////////////////////////////////////
 
     /////////////////////////////////////////////////////////////////////////////////////////////
+
+// Récupérer l'ID de l'événement en fonction de son nom
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // Envoyer une demande d'invitaion pour un event Privée :
@@ -140,8 +246,11 @@ class FirebaseSource {
                         }
                         i++
                     }
+                } else {
+                    println("Aucun événement trouvé avec ce nom")
                 }
             }
+
             override fun onCancelled(databaseError: DatabaseError) {
                 println("Erreur lors de la récupération de l'ID de l'événement : ${databaseError.message}")
             }
@@ -292,49 +401,6 @@ class FirebaseSource {
 
     }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-/////////////////// REQUETES AJOUT D'AMIS ////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-    /// RECUPERER QUE LA FRIEND LIST : A ESSAYER ////
-    fun fetchUsersFriend(){
-        firebaseData.child("user").child(mainUid!!)
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                        val mainUser = snapshot.getValue(User::class.java)!!
-                        firebaseData.child("user")
-                            .addValueEventListener(object : ValueEventListener {
-                                override fun onDataChange(snapshot: DataSnapshot) {
-                                    ContactFragment.contactList.clear()
-                                    for (postSnapshot in snapshot.children) {
-                                        val currentUser = postSnapshot.getValue(User::class.java)
-                                        if (mainUser.friendList!!.containsKey(currentUser?.uid)) {
-                                            if (currentUser?.uid != mainUid) { //patch de merde
-                                                ContactFragment.contactList.add(currentUser!!)
-                                            }
-                                        }
-                                    }
-                                }
-
-                                override fun onCancelled(error: DatabaseError) {
-                                    TODO("Not yet implemented")
-                                }
-                            })
-
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-            })
-    }
 
     fun addFriendRequestToUser(email: String) {
         firebaseData.child("user").addValueEventListener(object : ValueEventListener {
@@ -358,6 +424,57 @@ class FirebaseSource {
                 TODO("Not yet implemented")
             }
 
+        })
+    }
+
+    fun addFriendRequestToUserByUid(uid: String?) {
+        firebaseData.child("user").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (postSnapshot in snapshot.children) {
+                    val currentUser = postSnapshot.getValue(User::class.java)
+                    if (uid == currentUser?.uid) {
+                        //a voir si c'est la meilleur maniere de gerer les friend request
+                        firebaseData.child("user").child(currentUser?.uid!!).child("friendRequest").child(firebaseAuth.currentUser?.uid!!).setValue(firebaseAuth.currentUser?.email)
+//                        firebaseData.child("user").child(currentUser?.uid!!).child("request/").push().setValue(firebaseAuth.currentUser?.email)
+                        return
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    fun removeFriend(uid: String?){
+        firebaseData.child("user").child(mainUid!!).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    val currentUser = dataSnapshot.getValue(User::class.java)
+                    currentUser?.friendList?.remove(uid)
+                    firebaseData.child("user").child(mainUid).setValue(currentUser)
+                    firebaseData.child("user").child(uid!!).addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                val currentUser2 = dataSnapshot.getValue(User::class.java)
+                                currentUser2?.friendList?.remove(mainUid)
+                                firebaseData.child("user").child(uid).setValue(currentUser2)
+                            }
+
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+                    })
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
         })
     }
 
@@ -396,15 +513,6 @@ class FirebaseSource {
 
     }
 
-
-
-
-
-
-
-
-
-
     fun acceptRequestUpdateUser(position: Int){
         var key: String?
         var email: String?
@@ -432,7 +540,6 @@ class FirebaseSource {
 
 
     fun refuseRequest(position: Int){
-
         var key: String?
 
         val userRef = FirebaseDatabase.getInstance().getReference("user").child(mainUid!!)
@@ -503,7 +610,6 @@ class FirebaseSource {
             }
         })
     }
-
 }
 
 
