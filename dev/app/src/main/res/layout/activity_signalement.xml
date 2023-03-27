@@ -6,7 +6,7 @@
     >
 
     <data>
-        <variable name="viewmodel"
+        <variable name="view"
             type="com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel"/>
     </data>
 
@@ -72,6 +72,9 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/custom_shape"
             android:inputType="textMultiLine"
+            android:gravity="top"
+            android:padding="10dp"
+            android:text="@={view.messSignalement}"
             >
         </EditText>
 
@@ -79,6 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Envoyer"
+            android:onClick="@{() -> view.sendSignalement()}"
             android:layout_gravity="center">
 
         </Button>

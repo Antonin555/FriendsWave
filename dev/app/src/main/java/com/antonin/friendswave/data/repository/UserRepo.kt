@@ -17,13 +17,29 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     fun logout() = firebase.logout()
 
-    fun fetchUsers() = firebase.fetchUsers()
+//    fun fetchUsers() = firebase.fetchUsers()
 
-    fun fetchUsersFriends() = firebase.fetchUsersFriend()
+    fun fetchUsersFriends():LiveData<List<User>> {
+        val emailUserList = MutableLiveData<List<User>>()
+
+        firebase.fetchUsersFriend() { user ->
+            emailUserList.postValue(user)
+        }
+        return emailUserList
+    }
 
 //    fun fetchUsersR() = firebase.fetchUsersR()
 
-    fun fetchUsersRequest(requestList: ArrayList<User>) = firebase.fetchUsersRequest(requestList)
+    fun fetchUsersRequest():LiveData<List<User>> {
+        val notifUserList = MutableLiveData<List<User>>()
+
+        firebase.fetchUsersRequest() { notifUser ->
+            notifUserList.postValue(notifUser)
+        }
+        return notifUserList
+    }
+
+
 
 //    fun fetchInvitationEvents() :LiveData<List<Event>> {
 //
@@ -95,6 +111,8 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     fun removeFriend(uid: String?) = firebase.removeFriend(uid)
 
+    fun sendSignalement(uid: String?, messSignalement: String?)  = firebase.sendSignalement(uid,  messSignalement)
+
     fun getUserData(): LiveData<User> {
         val userLiveData = MutableLiveData<User>()
 
@@ -131,12 +149,12 @@ class UserRepo(private val firebase: FirebaseSource) {
     fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid:String,category:String, date : String, horaire:String) =
         firebase.addEventUserPrivate(name,isPublic,nbrePersonnes,uid, category, date, horaire)
 
-    fun acceptRequest1(position: Int){
-        firebase.acceptRequestUpdateUser(position)
+    fun acceptRequest1(userNotif: User?){
+        firebase.acceptRequestUpdateUser(userNotif)
     }
 
-    fun refuseRequest(position: Int){
-        firebase.refuseRequest(position)
+    fun refuseRequest(userNotif: User?){
+        firebase.refuseRequest(userNotif)
     }
 
     fun fetchDiscussion(receiverUid: String):LiveData<List<Messages>>{

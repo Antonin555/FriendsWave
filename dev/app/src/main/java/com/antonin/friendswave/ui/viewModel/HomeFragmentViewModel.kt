@@ -11,12 +11,14 @@ import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.outils.startLoginActivity
 import com.antonin.friendswave.ui.contact.AddContactActivity
+import com.antonin.friendswave.ui.home.SignalementActivity
 
 class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
     var etudes : String? = ""
     var langue :String? = ""
     var profilUid: String? = ""
+    var messSignalement: String? = ""
 
     private val _user = MutableLiveData<User>()
     var user_live: LiveData<User> = _user
@@ -26,6 +28,9 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
     private val _ami = MutableLiveData<Boolean>()
     var ami_live: LiveData<Boolean> = _ami
+
+    private val _emailUserList = MutableLiveData<List<User>>()
+    val emailUserList: LiveData<List<User>> = _emailUserList
 
     fun fetchUserData() {
         repository.getUserData().observeForever { user ->
@@ -57,7 +62,17 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
     }
 
     fun signaler(view: View){
-//        Intent(view.context, )
+        Intent(view.context, SignalementActivity::class.java).also{
+            it.putExtra("uid", profilUid)
+            view.context.startActivity(it)
+        }
+    }
+
+    fun sendSignalement(){
+        if (!messSignalement.equals("")){
+            repository.sendSignalement(profilUid, messSignalement)
+        }
+
     }
 
     val user by lazy {
@@ -75,7 +90,9 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 //    }
 
     fun fetchUsersFriends() {
-        repository.fetchUsersFriends()
+        repository.fetchUsersFriends().observeForever{ user ->
+            _emailUserList.value = user
+        }
     }
 
     fun goToAddContact(view: View){

@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -27,7 +26,6 @@ import org.kodein.di.generic.instance
 
 class NotifsFragment : Fragment(), KodeinAware {
 
-    private var requestList:ArrayList<User> = ArrayList()
     private var _eventList:ArrayList<Event> = ArrayList()
 
     override val kodein : Kodein by kodein()
@@ -43,9 +41,8 @@ class NotifsFragment : Fragment(), KodeinAware {
 
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
         adapter2 = ListGeneriqueAdapter(R.layout.recycler_invite_events)
-        viewModel.fetchUsersRequest(requestList)
-        viewModel.fetchEventsInvitation(_eventList)
 
+        viewModel.fetchEventsInvitation(_eventList)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -64,7 +61,12 @@ class NotifsFragment : Fragment(), KodeinAware {
         val layoutManager2 = LinearLayoutManager(context)
         binding.recyclerFragmentNotif.layoutManager = layoutManager
         binding.recyclerFragmentNotif.adapter = adapter1
-        adapter1.addItems(requestList)
+
+        viewModel.fetchUsersRequest()
+
+        binding.viewmodel!!.friendNotifList.observe(this, Observer { notifUserList ->
+            adapter1.addItems(notifUserList)
+        })
 
         binding.recyclerFragmentNotifEvents.layoutManager = layoutManager2
         binding.recyclerFragmentNotifEvents.adapter = adapter2
@@ -75,16 +77,18 @@ class NotifsFragment : Fragment(), KodeinAware {
                 println(view.id)
                 println(R.id.btn_delete)
                 if (view.id == R.id.btn_accept){
-                    viewModel.acceptRequest(position)
-                    val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
-                    toast.show()
+                    var userNotif = viewModel.friendNotifList.value?.get(position)
+                    viewModel.acceptRequest(userNotif)
+//                    val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
+//                    toast.show()
 
                 }
 
                 else if (view.id == R.id.btn_delete){
-                    viewModel.refuseRequest(position)
-                    val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
-                    toast.show()
+                    var userNotif = viewModel.friendNotifList.value?.get(position)
+                    viewModel.refuseRequest(userNotif)
+//                    val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
+//                    toast.show()
 
                 }
             }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
@@ -19,6 +20,7 @@ import com.antonin.friendswave.ui.chat.ChatActivity
 import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -36,7 +38,7 @@ class ContactFragment : Fragment(), KodeinAware {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.fetchUsersFriends()
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -52,32 +54,36 @@ class ContactFragment : Fragment(), KodeinAware {
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerFragmentContact.layoutManager = layoutManager
         binding.recyclerFragmentContact.adapter = adapter1
-        adapter1.addItems(contactList)
+//        adapter1.addItems(contactList)
+        binding.viewmodel!!.fetchUsersFriends()
+
+
+        binding.viewmodel!!.emailUserList.observe(this, Observer { userList ->
+            adapter1.addItems(userList)
+        })
+
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
-                val userChoisi = contactList[position]
+                val userChoisi = binding.viewmodel!!.emailUserList.value?.get(position)
                 if(view.id == R.id.nomProfile){
                     val intent = Intent(context, ChatActivity::class.java)
 //                    intent.putExtra("position", position)
 //                    intent.putExtra("name", userChoisi.name)
-                    intent.putExtra("uid", userChoisi.uid)
+                    intent.putExtra("uid", userChoisi?.uid)
                     startActivity(intent)
                 }
                 if(view.id == R.id.imageProfil){
                     val intent = Intent(context, ProfilActivity::class.java)
-                    intent.putExtra("uid", userChoisi.uid)
+                    intent.putExtra("uid", userChoisi?.uid)
                     startActivity(intent)
                 }
-
-
-
             }
         })
     }
-
-    companion object {
-        var contactList:ArrayList<User> = ArrayList()
-    }
+//
+//    companion object {
+//        var contactList:ArrayList<User> = ArrayList()
+//    }
 
 }
