@@ -1,5 +1,4 @@
 package com.antonin.friendswave.data.firebase
-import androidx.compose.runtime.key
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.model.User
@@ -7,7 +6,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.antonin.friendswave.ui.fragmentMain.ContactFragment
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import io.reactivex.Completable
 
@@ -22,7 +20,11 @@ class FirebaseSource {
 
     fun currentUser() = firebaseAuth.currentUser
 
-    fun logout() = firebaseAuth.signOut()
+    fun logout() {
+        firebaseAuth.signOut()
+        FirebaseDatabase.getInstance().purgeOutstandingWrites()
+        FirebaseDatabase.getInstance().goOffline()
+    }
 
     fun login(email: String, password: String) = Completable.create { emitter ->
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
@@ -72,7 +74,7 @@ class FirebaseSource {
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        var mainUser = snapshot.getValue(User::class.java)!!
+                        val mainUser = snapshot.getValue(User::class.java)!!
                         if (mainUser.friendList!!.containsKey(profilUid)) {
                             val ami = true
                             onResult(ami)
@@ -159,7 +161,7 @@ class FirebaseSource {
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        var mainUser = snapshot.getValue(User::class.java)!!
+                        val mainUser = snapshot.getValue(User::class.java)!!
                         firebaseData.child("user")
                             .addValueEventListener(object : ValueEventListener {
                                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -290,7 +292,7 @@ class FirebaseSource {
 
     fun fetchInvitationEvents(eventList:ArrayList<Event>) {
 
-        var eventId: Any? = ""
+        var eventId: Any?
         var eventValue: Any?
         val eventIdList = HashMap<String,String>()
 
