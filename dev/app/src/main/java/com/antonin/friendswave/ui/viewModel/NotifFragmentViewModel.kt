@@ -52,6 +52,16 @@ class NotifFragmentViewModel (private val repository: UserRepo): ViewModel() {
         repository.refuseRequest(userNotif)
     }
 
+
+
+    fun refuseInvitationEvent(position: Int){
+        repository.refuseInvitationEvent(position)
+    }
+
+    fun acceptInvitationEvent(position: Int){
+        repository.refuseInvitationEvent(position)
+    }
+
 //    fun fetchEventsInvitation() {
 //        repository.fetchInvitationEvents().observeForever { event ->
 //            _eventList.value = event

@@ -30,7 +30,8 @@ data class User (
     var rating: Double? =0.0,
     var friends : Int? = 1,
     var friendRequest: HashMap<String, String>? = HashMap(),
-    var friendList: HashMap<String, String>? = HashMap()
-//    var eventList: ArrayList<Event>? = ArrayList()
+    var friendList: HashMap<String, String>? = HashMap(),
+    var eventInvitationList: HashMap<String,String>? = HashMap(),
+    var eventConfirmationList: HashMap<String,String>? = HashMap()
 
     ): ListItemViewModel()

@@ -94,5 +94,26 @@ class NotifsFragment : Fragment(), KodeinAware {
             }
 
         })
+
+
+
+        adapter2.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
+            override fun onClick(view: View, position: Int) {
+                if (view.id == R.id.btn_accept){
+                    viewModel.acceptInvitationEvent(position)
+//                    val toast = Toast.makeText(context, "Event confirmé !", Toast.LENGTH_SHORT)
+//                    toast.show()
+
+                }
+
+                else if (view.id == R.id.btn_delete){
+                    viewModel.refuseInvitationEvent(position)
+//                    val toast = Toast.makeText(context, "Une prochaine fois peut être ...", Toast.LENGTH_SHORT)
+//                    toast.show()
+
+                }
+            }
+
+        })
     }
 }

@@ -33,7 +33,7 @@ class UserRepo(private val firebase: FirebaseSource) {
     fun fetchUsersRequest():LiveData<List<User>> {
         val notifUserList = MutableLiveData<List<User>>()
 
-        firebase.fetchUsersRequest() { notifUser ->
+        firebase.fetchUsersRequest { notifUser ->
             notifUserList.postValue(notifUser)
         }
         return notifUserList
@@ -155,6 +155,14 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     fun refuseRequest(userNotif: User?){
         firebase.refuseRequest(userNotif)
+    }
+
+    fun refuseInvitationEvent(position: Int){
+        firebase.refuseInvitationEvent(position)
+    }
+
+    fun acceptInvitationEvent(position:Int){
+        firebase.acceptInvitationEvent(position)
     }
 
     fun fetchDiscussion(receiverUid: String):LiveData<List<Messages>>{
