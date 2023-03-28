@@ -353,7 +353,8 @@ class FirebaseSource {
                         eventIdList.put(eventId.toString(),eventValue.toString())
 
                     }
-                    addEventsPrivateToRecycler(eventIdList,eventList, onResult)
+                    addEventsPrivateToRecyclerNotif(eventIdList,eventList, onResult)
+                    addEventsPublicToRecyclerNotif(eventIdList,eventList, onResult)
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -361,7 +362,7 @@ class FirebaseSource {
         })
     }
 
-    fun addEventsPrivateToRecycler(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
+    fun addEventsPrivateToRecyclerNotif(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
         for(i in eventIdList){
             firebaseData.child("event/eventPrivate").child(i.value).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -378,6 +379,25 @@ class FirebaseSource {
             }
         }
     }
+
+    fun addEventsPublicToRecyclerNotif(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
+        for(i in eventIdList){
+            firebaseData.child("event/eventPublic").child(i.key).get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (snap in task.result.children) {
+                        if (snap.exists()) {
+                            val event = snap.getValue(Event::class.java)
+                            if(i.key == snap.key){
+                                eventList.add(event!!)
+                            }
+                        }
+                    }
+                    onResult(eventList)
+                }
+            }
+        }
+    }
+
 
     fun fetchEventsPublic1(onResult: (List<Event>) -> Unit){
 
