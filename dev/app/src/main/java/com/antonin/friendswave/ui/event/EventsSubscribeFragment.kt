@@ -38,6 +38,7 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
         viewModel.fetchEventsPrivateUser()
+        viewModel.fetchConfirmationEvents()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -63,7 +64,7 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
         binding.recyclerPendingParticipants.adapter = adapter2
 
 
-        viewModel.eventList.observe(this, Observer { eventList ->
+        viewModel.eventListConfirm.observe(this, Observer { eventList ->
             adapter1.addItems(eventList)
         })
 

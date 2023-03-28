@@ -28,6 +28,16 @@ class UserRepo(private val firebase: FirebaseSource) {
         return emailUserList
     }
 
+    fun fetchConfirmationEvents():LiveData<List<Event>> {
+
+        val eventListConfirm = MutableLiveData<List<Event>>()
+
+        firebase.fetchConfirmationEvents { event ->
+            eventListConfirm.postValue(event)
+        }
+        return eventListConfirm
+    }
+
 //    fun fetchUsersR() = firebase.fetchUsersR()
 
     fun fetchUsersRequest():LiveData<List<User>> {
