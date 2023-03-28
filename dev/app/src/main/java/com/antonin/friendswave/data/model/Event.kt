@@ -17,6 +17,6 @@ data class Event(
     var longitude : String = "",
     var duree: Int? = 0,
     var listInscrits : HashMap<String, String> = HashMap(),
-    var listAttente : HashMap<String, String> = HashMap(),
+    var invitations : HashMap<String, String> = HashMap(),
 
 ):ListItemViewModel()

@@ -41,6 +41,13 @@ class NotifFragmentViewModel (private val repository: UserRepo): ViewModel() {
 
     }
 
+//    fun fetchEventsInvitationByKey(){
+//
+//        repository.fetchEventsInvitationByKey().observeForever { event->
+//            _eventList.value = event
+//        }
+//    }
+
     //pour les notifs p-e faire un NotifFragementViewModel
     fun acceptRequest(userNotif: User?){
         repository.acceptRequest1(userNotif)
@@ -54,27 +61,24 @@ class NotifFragmentViewModel (private val repository: UserRepo): ViewModel() {
 
 
 
-    fun refuseInvitationEvent(position: Int){
-        repository.refuseInvitationEvent(position)
+    fun refuseInvitationEvent(event:Event?){
+        repository.refuseInvitationEvent(event)
     }
 
-    fun acceptInvitationEvent(position: Int){
-        repository.refuseInvitationEvent(position)
+    fun acceptInvitationEvent(event:Event?){
+        repository.acceptInvitationEvent(event)
     }
 
-//    fun fetchEventsInvitation() {
-//        repository.fetchInvitationEvents().observeForever { event ->
-//            _eventList.value = event
-//        }
+    fun fetchEventsInvitation() {
+        repository.fetchInvitationEvents().observeForever { event ->
+            _eventList.value = event
+        }
+    }
+
+//    fun fetchEventsInvitation(eventList:ArrayList<Event>) {
+//
+//        repository.fetchInvitationEvents(eventList)
 //    }
-    fun fetchEventsInvitation(eventList:ArrayList<Event>) {
 
-        repository.fetchInvitationEvents(eventList)
-    }
 
-//    //disposing the disposables
-//    override fun onCleared() {
-//        super.onCleared()
-//        disposables.dispose()
-//    }
 }

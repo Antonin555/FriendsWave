@@ -26,7 +26,7 @@ import org.kodein.di.generic.instance
 
 class NotifsFragment : Fragment(), KodeinAware {
 
-    private var _eventList:ArrayList<Event> = ArrayList()
+
 
     override val kodein : Kodein by kodein()
     private val factory : NotifFragmentVMFactory by instance()
@@ -42,7 +42,7 @@ class NotifsFragment : Fragment(), KodeinAware {
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
         adapter2 = ListGeneriqueAdapter(R.layout.recycler_invite_events)
 
-        viewModel.fetchEventsInvitation(_eventList)
+//        viewModel.fetchEventsInvitation(_eventList)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -68,9 +68,15 @@ class NotifsFragment : Fragment(), KodeinAware {
             adapter1.addItems(notifUserList)
         })
 
+
+
         binding.recyclerFragmentNotifEvents.layoutManager = layoutManager2
         binding.recyclerFragmentNotifEvents.adapter = adapter2
-        adapter2.addItems(_eventList)
+        viewModel.fetchEventsInvitation()
+
+        binding.viewmodel!!.eventList.observe(this,Observer { eventList ->
+            adapter2.addItems(eventList)
+        })
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
@@ -79,16 +85,12 @@ class NotifsFragment : Fragment(), KodeinAware {
                 if (view.id == R.id.btn_accept){
                     var userNotif = viewModel.friendNotifList.value?.get(position)
                     viewModel.acceptRequest(userNotif)
-//                    val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
-//                    toast.show()
 
                 }
 
-                else if (view.id == R.id.btn_delete){
+                if (view.id == R.id.btn_delete){
                     var userNotif = viewModel.friendNotifList.value?.get(position)
                     viewModel.refuseRequest(userNotif)
-//                    val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
-//                    toast.show()
 
                 }
             }
@@ -100,16 +102,14 @@ class NotifsFragment : Fragment(), KodeinAware {
         adapter2.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
                 if (view.id == R.id.btn_accept){
-                    viewModel.acceptInvitationEvent(position)
-//                    val toast = Toast.makeText(context, "Event confirmé !", Toast.LENGTH_SHORT)
-//                    toast.show()
+                    val eventKey = viewModel.eventList.value?.get(position)
+                    viewModel.acceptInvitationEvent(eventKey)
 
                 }
 
-                else if (view.id == R.id.btn_delete){
-                    viewModel.refuseInvitationEvent(position)
-//                    val toast = Toast.makeText(context, "Une prochaine fois peut être ...", Toast.LENGTH_SHORT)
-//                    toast.show()
+                if (view.id == R.id.btn_delete){
+                    val eventKey = viewModel.eventList.value?.get(position)
+                    viewModel.refuseInvitationEvent(eventKey)
 
                 }
             }

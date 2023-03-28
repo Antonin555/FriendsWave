@@ -41,6 +41,20 @@ class UserRepo(private val firebase: FirebaseSource) {
 
 
 
+//    fun fetchEventsInvitationByKey():LiveData<List<Event>>{
+//
+//        val eventListByKey = MutableLiveData<List<Event>>()
+//
+//        firebase.fetchEventsInvitationByKey { event ->
+//            eventListByKey.postValue(event)
+//        }
+//
+//        return eventListByKey
+//
+//    }
+
+
+
 //    fun fetchInvitationEvents() :LiveData<List<Event>> {
 //
 //        val eventList = MutableLiveData<List<Event>>()
@@ -52,7 +66,16 @@ class UserRepo(private val firebase: FirebaseSource) {
 //        return eventList
 //    }
 
-    fun fetchInvitationEvents(eventList:ArrayList<Event>) = firebase.fetchInvitationEvents(eventList)
+    fun fetchInvitationEvents() :LiveData<List<Event>> {
+
+        val eventList = MutableLiveData<List<Event>>()
+
+        firebase.fetchInvitationEvents { event ->
+            eventList.postValue(event)
+        }
+
+        return eventList
+    }
 
 
     fun fetchEventsPublic1() :LiveData<List<Event>> {
@@ -157,12 +180,12 @@ class UserRepo(private val firebase: FirebaseSource) {
         firebase.refuseRequest(userNotif)
     }
 
-    fun refuseInvitationEvent(position: Int){
-        firebase.refuseInvitationEvent(position)
+    fun refuseInvitationEvent(event:Event?){
+        firebase.refuseInvitationEvent(event)
     }
 
-    fun acceptInvitationEvent(position:Int){
-        firebase.acceptInvitationEvent(position)
+    fun acceptInvitationEvent(event: Event?){
+        firebase.acceptInvitationEvent(event)
     }
 
     fun fetchDiscussion(receiverUid: String):LiveData<List<Messages>>{

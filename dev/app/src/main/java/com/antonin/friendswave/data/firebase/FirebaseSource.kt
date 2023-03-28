@@ -318,102 +318,32 @@ class FirebaseSource {
         })
     }
 
-    fun acceptInvitationEvent(position: Int){
+    fun acceptInvitationEvent(event: Event?){
 
-//        var eventId : String?
-//
-//        firebaseData.child("event/eventPrivate").child(mainUid!!).addListenerForSingleValueEvent(object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//                    var i = 0
-//                    for (childSnapshot in dataSnapshot.children) {
-//                        if(position == i){
-//                            eventId = childSnapshot.key
-//                            firebaseData.child("event/eventPrivate").child(mainUid).child(eventId!!)
-//                                .child("invitations").child(email.hashCode().toString())
-//                                .setValue(email)
-//                            addInvitationToUser(eventId.toString(),email)
-//                        }
-//                        i++
-//                    }
-//                } else {
-//                    println("Aucun événement trouvé avec ce nom")
-//                }
-//            }
-//
-//            override fun onCancelled(databaseError: DatabaseError) {
-//                println("Erreur lors de la récupération de l'ID de l'événement : ${databaseError.message}")
-//            }
-//        })
-
+        val queryEventPrivate = firebaseData.child("event/eventPrivate").child(event!!.admin).child(event.key!!)
+        val queryAcceptEventUser = firebaseData.child("user").child(mainUid!!)
+        queryEventPrivate.child("InvitationConfirmes").child(currentUser()!!.email.hashCode().toString()).setValue(currentUser()!!.email.toString())
+        queryEventPrivate.child("invitations").child(currentUser()!!.email.hashCode().toString()).removeValue()
+        queryAcceptEventUser.child("invitations").child(event.key!!).removeValue()
+        queryAcceptEventUser.child("InvitationConfirmes").child(event.key!!).setValue(event.admin!!)
 
     }
 
+    fun refuseInvitationEvent(event: Event?){
 
-//    fun addAcceptInvitationToEvent(eventId:String, position: Int){
-//
-//
-//        var key: String?
-//        var email: String?
-//
-//        val userRef = firebaseData.child("user").child(mainUid!!).child("invitations")
-//        userRef.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                val mainUser = dataSnapshot.getValue(User::class.java)
-//                println(mainUser)
-//                key = mainUser!!.eventInvitationList!!.keys.elementAt(position)
-//                email = mainUser.eventInvitationList!!.get(key)
-//                mainUser.eventInvitationList!!.remove(key)
-//                mainUser.eventConfirmationList!!.put(key.toString(), email.toString())
-//                firebaseData.child("user").child(mainUid).setValue(mainUser)
-////                firebaseData.child("user").child(key!!).child("EventsConfirm").child(mainUid).setValue(mainUser.email)
-//            }
-//
-//            override fun onCancelled(databaseError: DatabaseError) {
-//                // Gérer les erreurs éventuelles ici
-//            }
-//        })
-//
-//        firebaseData.child("user").addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//                    for (childSnapshot in dataSnapshot.children) {
-//                        val user = childSnapshot.getValue(User::class.java)
-//                        if(user!!.email == email){
-//                            val userId = childSnapshot.key
-//                            val childUpdates = HashMap<String, Any>()
-//                            childUpdates["/user/$userId/invitations/$eventId"] = mainUid!!
-//
-//                            firebaseData.updateChildren(childUpdates).addOnSuccessListener {
-//
-//                            }.addOnFailureListener {
-//                                // Une erreur s'est produite lors de l'ajout de la nouvelle invitation
-//                            }
-//
-//                        }else {
-//                            println("Aucun utilisateur trouvé avec cette adresse e-mail")
-//                        }
-//                    }
-//                }
-//            }
-//            override fun onCancelled(error: DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//        })
-//    }
-
-
-    fun refuseInvitationEvent(position: Int){
-
+        val queryEventPrivate = firebaseData.child("event/eventPrivate").child(event!!.admin).child(event.key!!)
+        val queryAcceptEventUser = firebaseData.child("user").child(mainUid!!)
+        queryEventPrivate.child("invitations").child(currentUser()!!.email.hashCode().toString()).removeValue()
+        queryAcceptEventUser.child("invitations").child(event.key!!).removeValue()
 
     }
 
-    fun fetchInvitationEvents(eventList:ArrayList<Event>) {
+    fun fetchInvitationEvents( onResult: (List<Event>) -> Unit) {
 
         var eventId: Any?
         var eventValue: Any?
         val eventIdList = HashMap<String,String>()
-
+        var eventList: ArrayList<Event> = ArrayList()
         firebaseData.child("user").child(mainUid!!).child("invitations").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -423,7 +353,7 @@ class FirebaseSource {
                         eventIdList.put(eventId.toString(),eventValue.toString())
 
                     }
-                    addEventsToRecycler(eventIdList,eventList)
+                    addEventsPrivateToRecycler(eventIdList,eventList, onResult)
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -431,11 +361,10 @@ class FirebaseSource {
         })
     }
 
-    fun addEventsToRecycler(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>){
+    fun addEventsPrivateToRecycler(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
         for(i in eventIdList){
-            firebaseData.child("event/eventPrivate").child(i.value.toString()).get().addOnCompleteListener { task ->
+            firebaseData.child("event/eventPrivate").child(i.value).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-
                     for (snap in task.result.children) {
                         if (snap.exists()) {
                             val event = snap.getValue(Event::class.java)
@@ -444,6 +373,7 @@ class FirebaseSource {
                             }
                         }
                     }
+                    onResult(eventList)
                 }
             }
         }
@@ -636,6 +566,8 @@ class FirebaseSource {
         })
 
     }
+
+
 
     fun acceptRequestUpdateUser(userNotif: User?){
 
