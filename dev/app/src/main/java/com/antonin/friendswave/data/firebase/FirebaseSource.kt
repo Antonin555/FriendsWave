@@ -500,17 +500,17 @@ class FirebaseSource {
     }
 
 
-    fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid : String, category:String, date : String, horaire:String) {
+    fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid : String, category:String, date : String, horaire:String, adress:String) {
         val database = Firebase.database
         val myRef = database.getReference("event/eventPublic/").push()
-        myRef.setValue(Event(myRef.key,name,isPublic,nbrePersonnes, uid, category, date, horaire))
+        myRef.setValue(Event(myRef.key,name,isPublic,nbrePersonnes, uid, category, date, horaire, adress))
 
     }
 
-    fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid: String, category:String, date : String, horaire:String) {
+    fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid: String, category:String, date : String, horaire:String, adress:String) {
         val database = Firebase.database
         val myRef = database.getReference("event/eventPrivate/" + mainUid!!).push()
-        myRef.setValue(Event(myRef.key, name,isPublic,nbrePersonnes, uid, category, date, horaire))
+        myRef.setValue(Event(myRef.key, name,isPublic,nbrePersonnes, uid, category, date, horaire, adress))
 
     }
 

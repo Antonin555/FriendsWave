@@ -287,21 +287,16 @@
                     android:text="@string/add_event_lieu"
                     android:textSize="20sp" />
 
-                <LinearLayout
+
+                <Button
+                    android:id="@+id/searchCities"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:fontFamily="@font/roboto_mono"
+                    android:text="Button" />
 
 
-                    <Button
-                        android:id="@+id/searchCities"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/roboto_mono"
-                        android:text="Button" />
-
-                </LinearLayout>
 
                 <TextView
                     android:id="@+id/editCities"
@@ -309,6 +304,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="3"
                     android:ems="10"
+                    android:text="@={viewmodel.adress}"
                     android:fontFamily="@font/roboto_mono" />
 
                 <View

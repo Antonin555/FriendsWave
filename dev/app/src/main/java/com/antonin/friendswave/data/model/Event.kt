@@ -12,6 +12,7 @@ data class Event(
     var categorie : String? = "",
     var date: String? = "",
     var heure: String? = "",
+    var adress:String? = "",
     var description : String? = "",
     var lattitude : String = "",
     var longitude : String = "",

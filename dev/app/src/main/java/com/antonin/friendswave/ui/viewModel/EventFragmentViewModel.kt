@@ -24,6 +24,7 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     var photo: String? = null
     var nbrePersonnes : Int? = 0
     var categorie: String? = ""
+    var adress: String? = ""
     var lattitude: String? = ""
     var longitude : String?  =""
     var date: String? = ""
@@ -75,9 +76,9 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     fun addEventUser(view: View) {
         if(isPublic == true) {
-            repository.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!)
+            repository.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!, adress!!)
         }else {
-            repository.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid, categorie!!,date!!, horaire!!)
+            repository.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid, categorie!!,date!!, horaire!!, adress!!)
         }
         Toast.makeText(view.context,"Evenement en cours de publication", Toast.LENGTH_LONG).show()
 
@@ -98,14 +99,42 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     // ViewModel pour MyEvent :
 
-
     fun changeDate(year: Int, month: Int, day: Int) {
-        date = day.toString() + "/" + (month + 1).toString() + "/"+ year.toString()
+
+        var dayString : String = ""
+        var monthString : String = ""
+
+        if(day < 10) {
+            dayString = "0" + day.toString()
+        } else
+            dayString = day.toString()
+
+        if(month < 10) {
+            monthString = "0"+(month + 1).toString()
+        } else
+            monthString = (month+1).toString()
+
+        date = dayString + "/" + monthString + "/"+ year.toString()
+
     }
 
     fun changeHour(hour:Int, minute:Int) {
 
-        horaire = hour.toString() + ":" + minute.toString()
+        var hourString : String = ""
+        var minuteString : String = ""
+
+        if(hour < 10 || minute < 10){
+
+            hourString = "0" + hour.toString()
+            minuteString = "0" + minute.toString()
+
+        }else {
+
+            hourString = hour.toString()
+            minuteString = minute.toString()
+        }
+
+        horaire = hourString + ":" + minuteString
     }
 
 

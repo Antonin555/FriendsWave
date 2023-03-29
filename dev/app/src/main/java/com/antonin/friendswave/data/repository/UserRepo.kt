@@ -188,11 +188,11 @@ class UserRepo(private val firebase: FirebaseSource) {
         return amiLiveData
     }
 
-    fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid: String, category:String, date : String, horaire:String) =
-        firebase.addEventUserPublic(name,isPublic,nbrePersonnes, uid, category, date, horaire)
+    fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid: String, category:String, date : String, horaire:String, adress:String) =
+        firebase.addEventUserPublic(name,isPublic,nbrePersonnes, uid, category, date, horaire, adress)
 
-    fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid:String,category:String, date : String, horaire:String) =
-        firebase.addEventUserPrivate(name,isPublic,nbrePersonnes,uid, category, date, horaire)
+    fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid:String,category:String, date : String, horaire:String, adress:String) =
+        firebase.addEventUserPrivate(name,isPublic,nbrePersonnes,uid, category, date, horaire, adress)
 
     fun acceptRequest1(userNotif: User?){
         firebase.acceptRequestUpdateUser(userNotif)
