@@ -90,7 +90,7 @@ class FirebaseSource {
             })
     }
 
-    fun addUserToDatabase(name: String, email: String, uid: String ){
+    fun  addUserToDatabase(name: String, email: String, uid: String ){
         firebaseData.child("user").child(uid).setValue(User(name,email,uid))
     }
 
@@ -266,7 +266,7 @@ class FirebaseSource {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     var i = 0
-                    for (childSnapshot in dataSnapshot.children) {
+                    for (childSnapshot in dataSnapshot.children)  {
                         if(position == i){
                             eventId = childSnapshot.key
                             firebaseData.child("event/eventPrivate").child(mainUid).child(eventId!!)
@@ -325,7 +325,7 @@ class FirebaseSource {
         var eventId: Any?
         var eventValue: Any?
         val eventIdList = HashMap<String,String>()
-        var eventList: ArrayList<Event> = ArrayList()
+        val eventList: ArrayList<Event> = ArrayList()
         firebaseData.child("user").child(mainUid!!).child("invitations").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -349,7 +349,7 @@ class FirebaseSource {
         var eventId: Any?
         var eventValue: Any?
         val eventIdList = HashMap<String,String>()
-        var eventList: ArrayList<Event> = ArrayList()
+        val eventList: ArrayList<Event> = ArrayList()
         firebaseData.child("user").child(mainUid!!).child("InvitationConfirmes").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -411,7 +411,7 @@ class FirebaseSource {
         queryEventPrivate.child("InvitationConfirmes").child(currentUser()!!.email.hashCode().toString()).setValue(currentUser()!!.email.toString())
         queryEventPrivate.child("invitations").child(currentUser()!!.email.hashCode().toString()).removeValue()
         queryAcceptEventUser.child("invitations").child(event.key!!).removeValue()
-        queryAcceptEventUser.child("InvitationConfirmes").child(event.key!!).setValue(event.admin!!)
+        queryAcceptEventUser.child("InvitationConfirmes").child(event.key!!).setValue(event.admin)
 
     }
 
@@ -445,6 +445,23 @@ class FirebaseSource {
 
     fun fetchEventsPrivateUser(onResult: (List<Event>) -> Unit) {
         firebaseData.child("event/eventPrivate").child(mainUid!!).get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val eventsList = ArrayList<Event>()
+                for (snap in task.result.children) {
+                    if (snap.exists()) {
+                        val event = snap.getValue(Event::class.java)
+                        if(event!!.admin == mainUid)
+                            eventsList.add(event)
+                    }
+                }
+                onResult(eventsList)
+            }
+        }
+    }
+
+
+    fun fetchEventsPublicUser(onResult: (List<Event>) -> Unit) {
+        firebaseData.child("event/eventPublic").get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val eventsList = ArrayList<Event>()
                 for (snap in task.result.children) {
@@ -582,11 +599,11 @@ class FirebaseSource {
 
     fun fetchUsersRequest(onResult: (List<User>) -> Unit){
 
-        var mainUser = User()
+
         firebaseData.child("user").child(mainUid!!).addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    mainUser = snapshot.getValue(User::class.java)!!
+                    val mainUser = snapshot.getValue(User::class.java)!!
                     firebaseData.child("user").addValueEventListener(object: ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             val userList = ArrayList<User>()
@@ -623,7 +640,7 @@ class FirebaseSource {
                 val mainUser = dataSnapshot.getValue(User::class.java)
                 println(mainUser)
                 mainUser?.friendRequest!!.remove(userNotif?.uid)
-                mainUser.friendList!!.put(userNotif?.uid!!, userNotif?.email!!)
+                mainUser.friendList!!.put(userNotif?.uid!!, userNotif.email!!)
                 firebaseData.child("user").child(mainUid).setValue(mainUser)
                 //pe prob ici
                 firebaseData.child("user").child(userNotif.uid!!).child("friendList").child(mainUid).setValue(mainUser.email)

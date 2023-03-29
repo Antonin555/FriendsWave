@@ -33,7 +33,7 @@
             android:text="Faites une nouvelle demande d'ami(e)"
             android:textSize="19sp"
             android:layout_marginTop="178dp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/edt_email"
@@ -47,7 +47,7 @@
             android:hint="Email"
             android:paddingLeft="13dp"
             android:layout_marginRight="28dp"
-            android:text="@={viewmodel.email}"></EditText>
+            android:text="@={viewmodel.email}"/>
 
         <Button
             android:id="@+id/btnSend"

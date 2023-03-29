@@ -30,6 +30,7 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_event_manage)
         val pos   = intent.getIntExtra("position", 0)
+        val pos1   = intent.getIntExtra("position", 0)
         var binding : ActivityMyEventManageBinding = DataBindingUtil.setContentView(this, R.layout.activity_my_event_manage)
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
         binding.viewmodel = viewModel

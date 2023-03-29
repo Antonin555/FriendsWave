@@ -292,29 +292,24 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/editTextTextPersonName2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_weight="3"
-                        android:ems="10"
-                        android:fontFamily="@font/roboto_mono"
-                        android:hint="lieu"
-                        android:inputType="textPersonName" />
-
-
-
 
                     <Button
-                        android:id="@+id/button6"
+                        android:id="@+id/searchCities"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:fontFamily="@font/roboto_mono"
                         android:text="Button" />
+
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/editCities"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:ems="10"
+                    android:fontFamily="@font/roboto_mono" />
 
                 <View
                     android:id="@+id/view6"
