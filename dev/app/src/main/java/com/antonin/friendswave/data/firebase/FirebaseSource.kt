@@ -1,4 +1,5 @@
 package com.antonin.friendswave.data.firebase
+import android.annotation.SuppressLint
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.model.User
@@ -386,11 +387,47 @@ class FirebaseSource {
         }
     }
 
+    // POUR MY EVENT : RECHERCHE DES PARTICIPANTS INVITATIONS PRIVATE :
 
-    fun fetchGuestDetailEvent(userList:HashMap<String, String>, onResult: (List<User>) -> Unit){
+    @SuppressLint("SuspiciousIndentation")
+    fun fetchGuestDetailEvent(key:String?, onResult: (List<User>) -> Unit){
+
+        var listGuest : ArrayList<String> = ArrayList()
+
+            firebaseData.child("event/eventPrivate").child(mainUid!!).child(key!!)
+                .child("invitations").addValueEventListener( object :ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for(data in dataSnapshot.children){
+                            listGuest.add(data!!.value.toString())
+                        }
+                        searchGuest(listGuest, onResult)
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
+    }
 
 
+    fun searchGuest(listGuest:ArrayList<String>, onResult: (List<User>) -> Unit){
 
+            firebaseData.child("user/").addValueEventListener( object :ValueEventListener {
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var userList:ArrayList<User> = ArrayList()
+                    for(data in snapshot.children){
+                        val user = data.getValue(User::class.java)
+                        if(listGuest.contains(user!!.email)){
+                            userList.add(user)
+                        }
+                    }
+                    onResult(userList)
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
     }
 
     fun addEventsPublicToRecyclerNotif(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){

@@ -29,14 +29,14 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
     private val factory : EventFragmentVMFactory by instance()
     private val factory2 : ContactViewModelFactory by instance()
     private var viewModel: EventFragmentViewModel = EventFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
-    private var adapter1 : ListGeneriqueAdapter<Event> = ListGeneriqueAdapter<Event>(R.layout.recycler_events)
-    private var adapter2 : ListGeneriqueAdapter<Event> = ListGeneriqueAdapter<Event>(R.layout.recycler_events)
+    private var adapter1 : ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
+    private var adapter2 : ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_event_manage)
-
+        val key = intent.getStringExtra("clef")
         val pos   = intent.getIntExtra("position", 0)
         val pos1   = intent.getIntExtra("pos",0)
 
@@ -50,6 +50,8 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
         viewModel.fetchDetailEventPublicUser(pos1)
 
+        viewModel.fetchGuestDetailEvent(key)
+
 
         val layoutManager = LinearLayoutManager(this)
         val layoutManager1 = LinearLayoutManager(this)
@@ -60,6 +62,10 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         binding.recyclerPendingParticipants.layoutManager = layoutManager1
         binding.recyclerPendingParticipants.adapter = adapter2
 
+
+        viewModel.guestList.observe(this, Observer { guestList ->
+            adapter1.addItems(guestList)
+        })
 
 
     }

@@ -53,7 +53,7 @@
                 android:backgroundTint="#7986CB"
                 android:fontFamily="@font/roboto_mono"
                 android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
-                android:text="ACCEPT"></Button>
+                android:text="ACCEPT"/>
 
             <Button
                 android:id="@+id/btn_delete"
@@ -65,7 +65,7 @@
                 android:backgroundTint="#7986CB"
                 android:fontFamily="@font/roboto_mono"
                 android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
-                android:text="DECLINE"></Button>
+                android:text="DECLINE"/>
         </LinearLayout>
 
 

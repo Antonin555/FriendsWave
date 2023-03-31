@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.model.Event
+import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.ui.event.*
 import com.antonin.friendswave.ui.home.ManageHomeActivity
@@ -45,6 +46,10 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     val user by lazy {
         repository.currentUser()
     }
+
+    private val _guestList = MutableLiveData<List<User>>()
+    val guestList: LiveData<List<User>> = _guestList
+
 
     var  interfaceEvent: InterfaceEvent? = null
 
@@ -154,6 +159,13 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
         horaire = hourString + ":" + minuteString
     }
 
+    fun fetchGuestDetailEvent(key:String?){
+        repository.fetchGuestDetailEvent(key).observeForever{ event ->
+            _guestList.value = event
+        }
+
+
+    }
 
     fun fetchEventsPublic1() {
         repository.fetchEventsPublic1().observeForever{ event ->
