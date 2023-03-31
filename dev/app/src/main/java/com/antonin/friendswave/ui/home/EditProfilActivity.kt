@@ -47,8 +47,6 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
             getResult.launch(img)
 
         }
-//        val bit: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, img?.toUri())
-//        viewModel.getImageUriFromBitmap(applicationContext, drawable!!.toBitmap(200,200))
 
 
 
@@ -62,7 +60,6 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
 
                 img_uri = it?.data?.data!!
                 binding.imgPreview.setImageURI(img_uri)
-//                setImageURI(img_uri)
 
             }
         }

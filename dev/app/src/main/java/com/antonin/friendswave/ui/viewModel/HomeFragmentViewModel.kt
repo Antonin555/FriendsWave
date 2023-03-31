@@ -123,13 +123,7 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
 
 
-    fun getImageUriFromBitmap(context: Context?, bitmap: Bitmap): Uri {
-        val bytes = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,bytes)
-        val path = MediaStore.Images.Media.insertImage(context!!.contentResolver,bitmap,"File",null)
-        return Uri.parse(path.toString())
 
-    }
 
 
 }

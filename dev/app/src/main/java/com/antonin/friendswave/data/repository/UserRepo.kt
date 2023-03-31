@@ -17,8 +17,6 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     fun logout() = firebase.logout()
 
-//    fun fetchUsers() = firebase.fetchUsers()
-
     fun fetchUsersFriends():LiveData<List<User>> {
         val emailUserList = MutableLiveData<List<User>>()
 
@@ -38,7 +36,6 @@ class UserRepo(private val firebase: FirebaseSource) {
         return eventListConfirm
     }
 
-//    fun fetchUsersR() = firebase.fetchUsersR()
 
     fun fetchUsersRequest():LiveData<List<User>> {
         val notifUserList = MutableLiveData<List<User>>()
@@ -48,33 +45,6 @@ class UserRepo(private val firebase: FirebaseSource) {
         }
         return notifUserList
     }
-
-
-
-//    fun fetchEventsInvitationByKey():LiveData<List<Event>>{
-//
-//        val eventListByKey = MutableLiveData<List<Event>>()
-//
-//        firebase.fetchEventsInvitationByKey { event ->
-//            eventListByKey.postValue(event)
-//        }
-//
-//        return eventListByKey
-//
-//    }
-
-
-
-//    fun fetchInvitationEvents() :LiveData<List<Event>> {
-//
-//        val eventList = MutableLiveData<List<Event>>()
-//
-//        firebase.fetchInvitationEvents { event ->
-//            eventList.postValue(event)
-//        }
-//
-//        return eventList
-//    }
 
     fun fetchInvitationEvents() :LiveData<List<Event>> {
 

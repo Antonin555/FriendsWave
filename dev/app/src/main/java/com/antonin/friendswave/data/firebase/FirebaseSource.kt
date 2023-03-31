@@ -386,6 +386,13 @@ class FirebaseSource {
         }
     }
 
+
+    fun fetchGuestDetailEvent(userList:HashMap<String, String>, onResult: (List<User>) -> Unit){
+
+
+
+    }
+
     fun addEventsPublicToRecyclerNotif(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
         for(i in eventIdList){
             firebaseData.child("event/eventPublic").child(i.key).get().addOnCompleteListener { task ->
@@ -523,9 +530,10 @@ class FirebaseSource {
     }
 
 
+
     fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid : String, category:String, date : String, horaire:String, adress:String) {
         val database = Firebase.database
-        val myRef = database.getReference("event/eventPublic/"  + mainUid!!).push()
+        val myRef = database.getReference("event/eventPublic/").push()
         myRef.setValue(Event(myRef.key,name,isPublic,nbrePersonnes, uid, category, date, horaire, adress))
 
     }

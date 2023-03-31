@@ -9,7 +9,8 @@
     <data>
         <variable name="viewmodel"
             type="com.antonin.friendswave.ui.viewModel.EventFragmentViewModel" />
-
+        <variable name="viewmodelContact"
+            type="com.antonin.friendswave.ui.viewModel.ContactViewModel" />
         <variable name="position"
         type="Integer"/>
 
@@ -246,7 +247,7 @@
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/activity_manage_my_event_pending_participants"
-            android:textSize="26sp"></TextView>
+            android:textSize="26sp"/>
 
 
         <androidx.recyclerview.widget.RecyclerView
