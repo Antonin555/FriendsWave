@@ -1,10 +1,12 @@
 package com.antonin.friendswave.ui.event
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -70,6 +72,20 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
 
         viewModel.eventList.observe(this, Observer { eventList ->
             adapter2.addItems(eventList)
+        })
+
+
+
+        adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
+            override fun onClick(view: View, position: Int) {
+
+                val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
+                toast.show()
+
+                val intent = Intent(context,ChatGroupActivity::class.java)
+                intent.putExtra("position", position)
+                startActivity(intent)
+            }
         })
 
     }
