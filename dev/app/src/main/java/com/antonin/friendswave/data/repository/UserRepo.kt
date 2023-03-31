@@ -136,6 +136,16 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     }
 
+    fun fetchDetailEventPublicUser(position: Int): LiveData <Event>{
+
+        val eventPublic = MutableLiveData<Event>()
+
+        firebase.fetchDetailEventPublicUser(position){event ->
+             eventPublic.postValue(event)
+        }
+        return eventPublic
+    }
+
     fun getEventData(position: Int) : LiveData<Event> {
         val eventLiveData = MutableLiveData<Event>()
 

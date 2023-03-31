@@ -1,6 +1,10 @@
 package com.antonin.friendswave.ui.viewModel
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
+import android.provider.MediaStore
 import android.view.View
 import android.widget.AdapterView
 import androidx.lifecycle.LiveData
@@ -12,6 +16,7 @@ import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.outils.startLoginActivity
 import com.antonin.friendswave.ui.contact.AddContactActivity
 import com.antonin.friendswave.ui.home.SignalementActivity
+import java.io.ByteArrayOutputStream
 
 class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
@@ -31,6 +36,10 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
     private val _emailUserList = MutableLiveData<List<User>>()
     val emailUserList: LiveData<List<User>> = _emailUserList
+
+    val user by lazy {
+        repository.currentUser()
+    }
 
     fun fetchUserData() {
         repository.getUserData().observeForever { user ->
@@ -75,10 +84,6 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
     }
 
-    val user by lazy {
-        repository.currentUser()
-    }
-
 
     fun logout(view: View){
         repository.logout()
@@ -113,6 +118,16 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
             langue = parent!!.adapter.getItem(pos).toString()
         }
+
+    }
+
+
+
+    fun getImageUriFromBitmap(context: Context?, bitmap: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,bytes)
+        val path = MediaStore.Images.Media.insertImage(context!!.contentResolver,bitmap,"File",null)
+        return Uri.parse(path.toString())
 
     }
 

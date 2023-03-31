@@ -9,7 +9,7 @@
 
     <data>
         <variable name="viewmodel"
-            type="com.antonin.friendswave.ui.viewModel.EventFragmentViewModel"/>
+            type="com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel"/>
 
     </data>
 
@@ -85,7 +85,8 @@
                 android:layout_width="44dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginBottom="10dp"
+                />
         </LinearLayout>
 
         <TextView

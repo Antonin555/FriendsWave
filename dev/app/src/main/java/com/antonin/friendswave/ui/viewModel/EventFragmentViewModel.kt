@@ -12,7 +12,8 @@ import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.ui.event.*
 import com.antonin.friendswave.ui.home.ManageHomeActivity
-
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
@@ -37,6 +38,9 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     var email: String? = null
 
+    val formatter = SimpleDateFormat("dd/MM/yyyy")
+    var dateFormat  = Date()
+//    val currentDate = formatter.parse(dateFormat.toString())
 
     val user by lazy {
         repository.currentUser()
@@ -50,6 +54,10 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     private val _eventDataUser = MutableLiveData<Event>()
     val eventDataUser: LiveData<Event> = _eventDataUser
+
+
+    private val _eventPublicUser = MutableLiveData<Event>()
+    val eventPublicUser: LiveData<Event> = _eventPublicUser
 
     private val _eventList = MutableLiveData<List<Event>>()
     val eventList: LiveData<List<Event>> = _eventList
@@ -116,6 +124,15 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
         date = dayString + "/" + monthString + "/"+ year.toString()
 
+        val dateEvent : Date = formatter.parse(date)
+
+//        if(dateEvent.before(currentDate)){
+//
+//            println("Impossible de revenir dans le passé")
+//
+//        }
+        date = dateEvent.toString()
+
     }
 
     fun changeHour(hour:Int, minute:Int) {
@@ -171,7 +188,13 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
         repository.fetchEventUser(pos).observeForever{ event ->
             _eventDataUser.value = event
         }
+    }
 
+
+    fun fetchDetailEventPublicUser(pos: Int) {
+        repository.fetchDetailEventPublicUser(pos).observeForever{ event ->
+            _eventPublicUser.value = event
+        }
     }
 
     fun sendAnInvitationPrivateEvent(pos: Int){

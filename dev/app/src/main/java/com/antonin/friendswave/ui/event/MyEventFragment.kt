@@ -86,8 +86,11 @@ class MyEventFragment : Fragment(), KodeinAware {
 
         adapter2.setOnListItemViewClickListener(object:ListGeneriqueAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
+
+                val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
+                toast.show()
                 val intent  = Intent(context,MyEventManageActivity::class.java)
-                intent.putExtra("position", position)
+                intent.putExtra("pos", position)
                 startActivity(intent)
             }
 

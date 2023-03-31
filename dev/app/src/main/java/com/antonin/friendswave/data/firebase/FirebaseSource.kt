@@ -350,7 +350,7 @@ class FirebaseSource {
         var eventValue: Any?
         val eventIdList = HashMap<String,String>()
         val eventList: ArrayList<Event> = ArrayList()
-        firebaseData.child("user").child(mainUid!!).child("InvitationConfirmes").addListenerForSingleValueEvent(object : ValueEventListener {
+        firebaseData.child("user").child(mainUid!!).child("eventConfirmationList").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (data in dataSnapshot.children){
@@ -408,10 +408,10 @@ class FirebaseSource {
 
         val queryEventPrivate = firebaseData.child("event/eventPrivate").child(event!!.admin).child(event.key!!)
         val queryAcceptEventUser = firebaseData.child("user").child(mainUid!!)
-        queryEventPrivate.child("InvitationConfirmes").child(currentUser()!!.email.hashCode().toString()).setValue(currentUser()!!.email.toString())
+        queryEventPrivate.child("listInscrits").child(currentUser()!!.email.hashCode().toString()).setValue(currentUser()!!.email.toString())
         queryEventPrivate.child("invitations").child(currentUser()!!.email.hashCode().toString()).removeValue()
         queryAcceptEventUser.child("invitations").child(event.key!!).removeValue()
-        queryAcceptEventUser.child("InvitationConfirmes").child(event.key!!).setValue(event.admin)
+        queryAcceptEventUser.child("listInscrits").child(event.key!!).setValue(event.admin)
 
     }
 
@@ -500,9 +500,32 @@ class FirebaseSource {
     }
 
 
+
+    fun fetchDetailEventPublicUser(position: Int,onResult: (Event) -> Unit) {
+        firebaseData.child("event/eventPublic").addValueEventListener(object :ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                for (snap in snapshot.children) {
+
+                    val event = snap.getValue(Event::class.java)
+
+                    if (snap.exists() && event!!.admin == mainUid) {
+                        onResult(event)
+
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+
     fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid : String, category:String, date : String, horaire:String, adress:String) {
         val database = Firebase.database
-        val myRef = database.getReference("event/eventPublic/").push()
+        val myRef = database.getReference("event/eventPublic/"  + mainUid!!).push()
         myRef.setValue(Event(myRef.key,name,isPublic,nbrePersonnes, uid, category, date, horaire, adress))
 
     }
@@ -571,6 +594,7 @@ class FirebaseSource {
                                 val currentUser2 = dataSnapshot.getValue(User::class.java)
                                 currentUser2?.friendList?.remove(mainUid)
                                 firebaseData.child("user").child(uid).setValue(currentUser2)
+
                             }
 
                         }

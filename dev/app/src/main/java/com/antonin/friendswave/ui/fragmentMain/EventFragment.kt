@@ -44,6 +44,7 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
     private lateinit var loc : GoogleLocation
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -101,11 +102,6 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
     override fun checkContent() {
         println("checkkkkkkkkkkkkkkkkkkkk innnnnnnnnnnnnnnnnnnnnnnntent")
 
-    }
-
-
-    companion object {
-        lateinit var mMap: GoogleMap
     }
 
 

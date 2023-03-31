@@ -84,15 +84,15 @@ class AddEventActivity : AppCompatActivity(), KodeinAware, OnMapReadyCallback,
     override fun onLocationChanged(p0: Location) {
         TODO("Not yet implemented")
     }
-
+    // methode de Google dans la doc:
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             when (resultCode) {
                 Activity.RESULT_OK -> {
                     data?.let {
                         val place = Autocomplete.getPlaceFromIntent(data)
-                        Log.i(TAG, "Place: ${place.name}, ${place.id}, ${place.latLng.toString()}")
                         binding.editCities.text = place.name.toString()
+
 
                     }
                 }
