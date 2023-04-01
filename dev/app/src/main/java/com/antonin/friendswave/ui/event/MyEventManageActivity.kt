@@ -36,7 +36,8 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_event_manage)
-        val key = intent.getStringExtra("clef")
+        val keyPrivate = intent.getStringExtra("clefPrivate")
+        val keyPublic = intent.getStringExtra("clefPublic")
         val pos   = intent.getIntExtra("position", 0)
         val pos1   = intent.getIntExtra("pos",0)
 
@@ -47,24 +48,25 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         binding.position = pos
 
         viewModel.fetchEventUser(pos)
-
         viewModel.fetchDetailEventPublicUser(pos1)
-
-        viewModel.fetchGuestDetailEvent(key)
-
+        viewModel.fetchGuestDetailEvent(keyPrivate)
+        viewModel.fetchGuestDetailEventPublic(keyPublic)
 
         val layoutManager = LinearLayoutManager(this)
         val layoutManager1 = LinearLayoutManager(this)
 
         binding.recyclerMyEventInscrits.layoutManager = layoutManager
         binding.recyclerMyEventInscrits.adapter = adapter1
-
         binding.recyclerPendingParticipants.layoutManager = layoutManager1
         binding.recyclerPendingParticipants.adapter = adapter2
 
 
         viewModel.guestList.observe(this, Observer { guestList ->
             adapter1.addItems(guestList)
+        })
+
+        viewModel.guestListPublic.observe(this,Observer{ guestList ->
+            adapter2.addItems(guestList)
         })
 
 

@@ -68,7 +68,7 @@ class AddEventActivity : AppCompatActivity(), KodeinAware, OnMapReadyCallback,
 
             val fields = listOf(Place.Field.ID, Place.Field.NAME)
 
-            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
+            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).setTypeFilter(TypeFilter.CITIES).build(this)
             startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
 
 

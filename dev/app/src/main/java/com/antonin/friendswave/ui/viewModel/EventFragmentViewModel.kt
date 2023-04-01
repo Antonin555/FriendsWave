@@ -50,6 +50,8 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     private val _guestList = MutableLiveData<List<User>>()
     val guestList: LiveData<List<User>> = _guestList
 
+    private val _guestListPublic = MutableLiveData<List<User>>()
+    val guestListPublic: LiveData<List<User>> = _guestListPublic
 
     var  interfaceEvent: InterfaceEvent? = null
 
@@ -164,6 +166,12 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
             _guestList.value = event
         }
 
+    }
+
+    fun fetchGuestDetailEventPublic(key:String?){
+        repository.fetchGuestDetailEventPublic(key).observeForever{ event->
+            _guestListPublic.value = event
+        }
 
     }
 

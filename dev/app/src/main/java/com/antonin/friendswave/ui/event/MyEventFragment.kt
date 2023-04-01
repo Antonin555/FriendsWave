@@ -71,26 +71,21 @@ class MyEventFragment : Fragment(), KodeinAware {
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
-               var eventKey = viewModel.eventList.value!!.get(position).key.toString()
-                val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
-                toast.show()
+               var eventKeyPrivate = viewModel.eventList.value!!.get(position).key.toString()
 
                 val intent = Intent(context,MyEventManageActivity::class.java)
-                intent.putExtra("clef", eventKey)
+                intent.putExtra("clefPrivate", eventKeyPrivate)
                 intent.putExtra("position", position)
                 startActivity(intent)
-//                var intent : Intent = Intent(applicationContext, DetailEventActivity::class.java )
-//                intent.putExtra("position", position)
-//                startActivity(intent)
+
             }
         })
 
         adapter2.setOnListItemViewClickListener(object:ListGeneriqueAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
-
-                val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
-                toast.show()
+                var eventKeyPublic = viewModel.eventListPublicUser.value!!.get(position).key.toString()
                 val intent  = Intent(context,MyEventManageActivity::class.java)
+                intent.putExtra("clefPublic", eventKeyPublic)
                 intent.putExtra("pos", position)
                 startActivity(intent)
             }

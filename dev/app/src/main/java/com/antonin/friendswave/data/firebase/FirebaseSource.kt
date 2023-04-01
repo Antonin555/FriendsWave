@@ -430,6 +430,31 @@ class FirebaseSource {
             })
     }
 
+
+
+    // POUR MY EVENT : RECHERCHE DES PARTICIPANTS INVITATIONS PUBLICS : ///////////////////////////////////////////////////////////////////////////////////////
+
+    @SuppressLint("SuspiciousIndentation")
+    fun fetchGuestDetailEventPublic(key:String?, onResult: (List<User>) -> Unit){
+
+        var listGuest : ArrayList<String> = ArrayList()
+
+        firebaseData.child("event/eventPublic").child(key!!)
+            .child("invitations").addValueEventListener( object :ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for(data in dataSnapshot.children){
+                            listGuest.add(data!!.value.toString())
+                        }
+                        searchGuest(listGuest, onResult)
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
+    }
+
+
     fun addEventsPublicToRecyclerNotif(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
         for(i in eventIdList){
             firebaseData.child("event/eventPublic").child(i.key).get().addOnCompleteListener { task ->
