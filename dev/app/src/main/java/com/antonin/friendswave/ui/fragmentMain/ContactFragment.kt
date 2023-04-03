@@ -62,8 +62,6 @@ class ContactFragment : Fragment(), KodeinAware {
                 val userChoisi = binding.viewmodel!!.emailUserList.value?.get(position)
                 if(view.id == R.id.nomProfile){
                     val intent = Intent(context, ChatActivity::class.java)
-//                    intent.putExtra("position", position)
-//                    intent.putExtra("name", userChoisi.name)
                     intent.putExtra("uid", userChoisi?.uid)
                     startActivity(intent)
                 }

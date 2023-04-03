@@ -5,11 +5,11 @@ import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 
 class SearchCategory: InterfaceSearch {
 
-    override fun sortedEvent(str: String, event: List<Event>) : List<Event> {
+    override fun sortedEvent(str: String, event: List<Event>?): List<Event> {
 
         var tempListEvent : ArrayList<Event> = ArrayList()
 
-        for(data in event) {
+        for(data in event!!) {
 
             if(data.categorie == str) {
                 tempListEvent.add(data)
@@ -20,19 +20,37 @@ class SearchCategory: InterfaceSearch {
 
 }
 
-//class SearchByName : InterfaceSearch {
-//
-//    override fun sortedEvent(str: String, event: List<Event>): List<Event> {
-//
-//    }
-//
-//}
-//
-//class SearchByCities : InterfaceSearch {
-//
-//    override fun sortedEvent(str: String, event: List<Event>): List<Event> {
-//        TODO("Not yet implemented")
-//    }
+class SearchByName : InterfaceSearch {
+
+    override fun sortedEvent(str: String, event: List<Event>?): List<Event> {
+        var tempListEvent : ArrayList<Event> = ArrayList()
+
+        for(data in event!!) {
+
+            if(data.name == str) {
+                tempListEvent.add(data)
+            }
+        }
+        return tempListEvent
+    }
+
+}
+
+class SearchByCities : InterfaceSearch {
+
+    override fun sortedEvent(str: String, event: List<Event>?): List<Event> {
+
+        var tempListEvent : ArrayList<Event> = ArrayList()
+
+        for(data in event!!) {
+
+            if(data.adress == str) {
+                tempListEvent.add(data)
+            }
+        }
+        return tempListEvent
+    }
+    }
 
 
 //}

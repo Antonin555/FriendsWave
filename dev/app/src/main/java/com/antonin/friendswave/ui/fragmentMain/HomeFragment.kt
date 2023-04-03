@@ -15,6 +15,8 @@ import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentHomeBinding
+import com.antonin.friendswave.strategy.SearchByCities
+import com.antonin.friendswave.strategy.SearchByName
 import com.antonin.friendswave.strategy.SearchCategory
 import com.antonin.friendswave.strategy.Strategy
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
@@ -33,7 +35,7 @@ class HomeFragment : Fragment(), KodeinAware {
     private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter1 : ListGeneriqueAdapter<Event>
-    private lateinit var searchStrategy : Strategy
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
@@ -45,33 +47,55 @@ class HomeFragment : Fragment(), KodeinAware {
 
     override fun onResume() {
         super.onResume()
+
+        var tempList : List<Event>
+        val searchCategory = SearchCategory()
+        val searchByCities = SearchByCities()
+        val searchByName = SearchByName()
+        var searchStrategy : Strategy
+
+
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_events)
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerFragmentHome.layoutManager = layoutManager
         binding.recyclerFragmentHome.adapter = adapter1
 
+        viewModel.fetchStrategieEvent()
         viewModel.fetchUserData()
 
+
+
+
         binding.btnCategory.setOnClickListener{
-            var type = "Mars"
-            viewModel.fetchStrategieEvent()
-            val searchCategory = SearchCategory()
-            searchStrategy = Strategy(searchCategory)
-            var tempList : List<Event>
-            var tempList2 : ArrayList<List<Event>> = ArrayList<List<Event>>()
+//            var type = "Mars"
+            var searchStrategy = Strategy(searchCategory)
+            tempList = viewModel.strategyByCategory()
+            adapter1.addItems(tempList)
+
+        }
+
+        binding.btnCities.setOnClickListener{
+            var city = "Montréal"
+            searchStrategy = Strategy(searchByCities)
 
             viewModel!!.CategorieEventList.observe(this, Observer { eventList ->
-//                adapter1.addItems(eventList)
-                tempList = searchStrategy.searchByCategory(type, eventList)
-
+                tempList = searchStrategy.searchByCategory(city, eventList )
                 adapter1.addItems(tempList)
-
             })
 
         }
+
+
+
+
+        // btn : if view.id == R.id.btn_search
+        //
     }
 
 }
+
+
+
 
 
 

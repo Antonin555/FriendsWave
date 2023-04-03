@@ -46,7 +46,8 @@
                         <ImageView
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:background="@color/purple_700" />
+                            android:background="@color/purple_700"
+                            android:contentDescription="@string/add_event_description"/>
 
                     </androidx.cardview.widget.CardView>
 

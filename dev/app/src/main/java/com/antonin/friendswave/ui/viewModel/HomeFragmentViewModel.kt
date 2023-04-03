@@ -1,10 +1,6 @@
 package com.antonin.friendswave.ui.viewModel
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.net.Uri
-import android.provider.MediaStore
 import android.view.View
 import android.widget.AdapterView
 import androidx.lifecycle.LiveData
@@ -15,9 +11,13 @@ import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.outils.startLoginActivity
+import com.antonin.friendswave.strategy.SearchByCities
+import com.antonin.friendswave.strategy.SearchByName
+import com.antonin.friendswave.strategy.SearchCategory
+import com.antonin.friendswave.strategy.Strategy
 import com.antonin.friendswave.ui.contact.AddContactActivity
 import com.antonin.friendswave.ui.home.SignalementActivity
-import java.io.ByteArrayOutputStream
+
 
 class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
@@ -25,6 +25,12 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
     var langue :String? = ""
     var profilUid: String? = ""
     var messSignalement: String? = ""
+
+    val searchCategory = SearchCategory()
+    val searchByCities = SearchByCities()
+    val searchByName = SearchByName()
+    private lateinit var searchStrategy : Strategy
+
 
     private val _user = MutableLiveData<User>()
     var user_live: LiveData<User> = _user
@@ -136,6 +142,15 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
     }
 
 
+    fun strategyByCategory() : List<Event> {
+
+        var tempList : List<Event>?
+        var type = "Mars"
+        searchStrategy = Strategy(searchCategory)
+        tempList = searchStrategy.searchByCategory(type, CategorieEventList.value)
+
+        return tempList
+    }
 
 
 
