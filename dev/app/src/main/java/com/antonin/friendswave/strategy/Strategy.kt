@@ -1,19 +1,19 @@
 package com.antonin.friendswave.strategy
 
+import com.antonin.friendswave.data.model.Event
+
 class Strategy(private var interfaceSearch: InterfaceSearch) {
 
-
-    fun searchByCategory() {
-
-        interfaceSearch.sortedEvent()
+    fun searchByCategory(str:String, list: List<Event>) : List<Event> {
+        return interfaceSearch.sortedEvent(str, list)
     }
 
-    fun searchByName(){
+//    fun searchByName(str:String, list:List<Event>){
+//        interfaceSearch.sortedEvent(str, list)
+//    }
+//
+//    fun searchByCities(str:String, list:List<Event>){
+//        interfaceSearch.sortedEvent(str, list)
+//    }
 
-        interfaceSearch.sortedEvent()
-    }
-
-    fun searchByCities(){
-        interfaceSearch.sortedEvent()
-    }
 }

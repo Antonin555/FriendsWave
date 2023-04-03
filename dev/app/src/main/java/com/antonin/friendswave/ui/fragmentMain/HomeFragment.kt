@@ -13,7 +13,6 @@ import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.model.Event
-import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentHomeBinding
 import com.antonin.friendswave.strategy.SearchCategory
@@ -55,12 +54,18 @@ class HomeFragment : Fragment(), KodeinAware {
 
         binding.btnCategory.setOnClickListener{
             var type = "Mars"
-            viewModel.fetchStrategieEvent(type)
+            viewModel.fetchStrategieEvent()
             val searchCategory = SearchCategory()
             searchStrategy = Strategy(searchCategory)
-            searchStrategy.searchByCategory()
+            var tempList : List<Event>
+            var tempList2 : ArrayList<List<Event>> = ArrayList<List<Event>>()
+
             viewModel!!.CategorieEventList.observe(this, Observer { eventList ->
-                adapter1.addItems(eventList)
+//                adapter1.addItems(eventList)
+                tempList = searchStrategy.searchByCategory(type, eventList)
+
+                adapter1.addItems(tempList)
+
             })
 
         }

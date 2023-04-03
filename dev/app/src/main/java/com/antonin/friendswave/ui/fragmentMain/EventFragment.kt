@@ -19,8 +19,6 @@ import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentEventBinding
-import com.antonin.friendswave.strategy.InterfaceSearch
-import com.antonin.friendswave.strategy.SearchCategory
 import com.antonin.friendswave.ui.event.DetailEventActivity
 import com.antonin.friendswave.ui.event.GoogleLocation
 import com.antonin.friendswave.ui.event.InterfaceEvent

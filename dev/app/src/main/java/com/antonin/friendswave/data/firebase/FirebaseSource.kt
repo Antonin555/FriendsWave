@@ -818,15 +818,15 @@ class FirebaseSource {
 
     //////////////////////////////////////////Strategie
 
-    fun fetchStrategieEvent(category: String, onResult: (List<Event>) -> Unit){
+    fun fetchStrategieEvent(onResult: (List<Event>) -> Unit){
         firebaseData.child("event/eventPublic").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val eventList = ArrayList<Event>()
                 for (postSnapshot in snapshot.children){
                     val event = postSnapshot.getValue(Event::class.java)
-                    if(event!!.categorie == category){
-                        eventList.add(event)
-                    }
+
+                    eventList.add(event!!)
+
                 }
                 onResult(eventList)
             }

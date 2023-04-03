@@ -8,12 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.data.firebase.FirebaseSource
-import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityMyEventManageBinding
-import com.antonin.friendswave.ui.viewModel.ContactViewModel
-import com.antonin.friendswave.ui.viewModel.ContactViewModelFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import org.kodein.di.Kodein

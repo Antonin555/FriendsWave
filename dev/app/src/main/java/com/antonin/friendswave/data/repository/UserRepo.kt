@@ -229,9 +229,9 @@ class UserRepo(private val firebase: FirebaseSource) {
     }
 
     ///////////////////////////////////Strategie
-    fun fetchStrategieEvent(category: String):LiveData<List<Event>>{
+    fun fetchStrategieEvent():LiveData<List<Event>>{
         val eventList = MutableLiveData<List<Event>>()
-        firebase.fetchStrategieEvent(category) { event ->
+        firebase.fetchStrategieEvent { event ->
             eventList.postValue(event)
         }
         return eventList

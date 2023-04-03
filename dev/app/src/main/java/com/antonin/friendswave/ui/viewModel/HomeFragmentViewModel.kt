@@ -127,9 +127,9 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
     ////////////////////////////////////////////////  Strategie
 
-    fun fetchStrategieEvent(categorie: String){
+    fun fetchStrategieEvent(){
 
-        repository.fetchStrategieEvent(categorie).observeForever{ event ->
+        repository.fetchStrategieEvent().observeForever{ event ->
             _CategorieEventList.value = event
         }
 

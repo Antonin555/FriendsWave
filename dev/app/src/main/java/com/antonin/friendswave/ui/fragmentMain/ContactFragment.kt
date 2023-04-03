@@ -20,7 +20,6 @@ import com.antonin.friendswave.ui.chat.ChatActivity
 import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein

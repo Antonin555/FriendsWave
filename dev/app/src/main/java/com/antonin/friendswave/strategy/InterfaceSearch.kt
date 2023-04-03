@@ -4,5 +4,5 @@ import com.antonin.friendswave.data.model.Event
 
 interface InterfaceSearch {
 
-    fun sortedEvent()
+    fun sortedEvent(str : String, event: List<Event>): List<Event>
 }
