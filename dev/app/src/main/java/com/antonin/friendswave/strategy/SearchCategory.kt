@@ -4,9 +4,29 @@ import com.antonin.friendswave.data.model.Event
 
 class SearchCategory: InterfaceSearch {
 
+    override fun sortedEvent() {
 
-    override fun sortedEvent(algo: String,event: List<Event>) {
-        TODO("Not yet implemented")
+    }
+
+
+}
+
+class SearchByName : InterfaceSearch {
+
+
+    override fun sortedEvent() {
+        println("hello NAME")
+    }
+
+
+}
+
+
+class SearchByCities : InterfaceSearch {
+
+
+    override fun sortedEvent() {
+        println("hello CITIES")
     }
 
 

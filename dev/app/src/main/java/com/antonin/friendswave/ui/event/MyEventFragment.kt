@@ -84,6 +84,7 @@ class MyEventFragment : Fragment(), KodeinAware {
         adapter2.setOnListItemViewClickListener(object:ListGeneriqueAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
                 var eventKeyPublic = viewModel.eventListPublicUser.value!!.get(position).key.toString()
+                println("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + eventKeyPublic)
                 val intent  = Intent(context,MyEventManageActivity::class.java)
                 intent.putExtra("clefPublic", eventKeyPublic)
                 intent.putExtra("pos", position)

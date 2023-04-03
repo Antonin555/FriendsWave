@@ -127,14 +127,9 @@ class UserRepo(private val firebase: FirebaseSource) {
     }
 
 
-    fun fetchDetailEventPublicUser(position: Int): LiveData <Event>{
+    fun fetchDetailEventPublicUser(key:String?){
 
-        val eventPublic = MutableLiveData<Event>()
-
-        firebase.fetchDetailEventPublicUser(position){event ->
-             eventPublic.postValue(event)
-        }
-        return eventPublic
+        firebase.fetchDetailEventPublicUser(key)
     }
 
     fun getEventData(position: Int) : LiveData<Event> {
@@ -233,5 +228,14 @@ class UserRepo(private val firebase: FirebaseSource) {
         firebase.addMessagetoDatabase(messageEnvoye, receiverUid)
     }
 
+    ///////////////////////////////////Strategie
+    fun fetchStrategieEvent(category: String):LiveData<List<Event>>{
+        val eventList = MutableLiveData<List<Event>>()
+        firebase.fetchStrategieEvent(category) { event ->
+            eventList.postValue(event)
+        }
+        return eventList
+
+    }
 
 }

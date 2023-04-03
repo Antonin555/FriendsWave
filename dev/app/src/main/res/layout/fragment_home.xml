@@ -17,6 +17,7 @@
         tools:context=".ui.fragmentMain.HomeFragment">
 
         <!-- TODO: Update blank fragment layout -->
+
         <FrameLayout
             android:id="@+id/map_frame"
             android:layout_width="match_parent"
@@ -139,6 +140,30 @@
                     android:text="@string/suggests_fragment_home"
                     android:textSize="20sp" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Button" />
+
+                    <Button
+                        android:id="@+id/btn_cities"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Button" />
+
+                    <Button
+                        android:id="@+id/btn_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Button" />
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -146,8 +171,12 @@
                 android:id="@+id/recyclerFragmentHome"
                 android:layout_width="match_parent"
                 android:layout_height="234dp"
-                android:layout_gravity="center" />
+                android:layout_gravity="center" >
+
+            </androidx.recyclerview.widget.RecyclerView>
+
         </FrameLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -27,7 +27,6 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein : Kodein by kodein()
     private val factory : EventFragmentVMFactory by instance()
-    private val factory2 : ContactViewModelFactory by instance()
     private var viewModel: EventFragmentViewModel = EventFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
     private var adapter1 : ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
     private var adapter2 : ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
@@ -39,7 +38,6 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         val keyPrivate = intent.getStringExtra("clefPrivate")
         val keyPublic = intent.getStringExtra("clefPublic")
         val pos   = intent.getIntExtra("position", 0)
-        val pos1   = intent.getIntExtra("pos",0)
 
         var binding : ActivityMyEventManageBinding = DataBindingUtil.setContentView(this, R.layout.activity_my_event_manage)
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
@@ -47,10 +45,17 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         binding.lifecycleOwner = this
         binding.position = pos
 
-        viewModel.fetchEventUser(pos)
-        viewModel.fetchDetailEventPublicUser(pos1)
-        viewModel.fetchGuestDetailEvent(keyPrivate)
-        viewModel.fetchGuestDetailEventPublic(keyPublic)
+
+        if(keyPublic != null ){
+            viewModel.fetchDetailEventPublicUser(keyPublic)
+            viewModel.fetchGuestDetailEventPublic(keyPublic)
+
+        }
+        if(keyPrivate != null) {
+            viewModel.fetchEventUser(pos)
+            viewModel.fetchGuestDetailEvent(keyPrivate)
+        }
+
 
         val layoutManager = LinearLayoutManager(this)
         val layoutManager1 = LinearLayoutManager(this)
@@ -68,6 +73,7 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         viewModel.guestListPublic.observe(this,Observer{ guestList ->
             adapter2.addItems(guestList)
         })
+
 
 
     }

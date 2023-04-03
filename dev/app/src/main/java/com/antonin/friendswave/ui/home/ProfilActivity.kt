@@ -11,7 +11,7 @@ import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityProfilBinding
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -32,7 +32,7 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
         val profilUid = intent.getStringExtra("uid")
         binding= DataBindingUtil.setContentView(this, R.layout.activity_profil)
         viewModel = ViewModelProviders.of(this, factory).get(HomeFragmentViewModel::class.java)
-        val view = binding.root
+
         binding.item = viewModel
         binding.lifecycleOwner = this
         binding.item?.profilUid = profilUid
@@ -42,20 +42,19 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
 
         viewModel.ami_live.observe(this, Observer { message ->
             if(viewModel.ami_live?.value == true){
-                val fab = findViewById<FloatingActionButton>(R.id.floatingActionButton)
+
+
                 val addIcon = resources.getDrawable(android.R.drawable.ic_delete)
-                fab.setImageDrawable(addIcon)
+                binding.floatingActionButton.setImageDrawable(addIcon)
             }
             if(viewModel.ami_live?.value == false){
-                val fab = findViewById<FloatingActionButton>(R.id.floatingActionButton)
+
                 val addIcon = resources.getDrawable(android.R.drawable.ic_input_add)
-                fab.setImageDrawable(addIcon)
+                binding.floatingActionButton.setImageDrawable(addIcon)
             }
         })
 
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
+
 }

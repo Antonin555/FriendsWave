@@ -63,8 +63,8 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     val eventDataUser: LiveData<Event> = _eventDataUser
 
 
-    private val _eventPublicUser = MutableLiveData<Event>()
-    val eventPublicUser: LiveData<Event> = _eventPublicUser
+//    private val _eventPublicUser = MutableLiveData<Event>()
+//    val eventPublicUser: LiveData<Event> = _eventPublicUser
 
     private val _eventList = MutableLiveData<List<Event>>()
     val eventList: LiveData<List<Event>> = _eventList
@@ -147,16 +147,8 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
         var hourString : String = ""
         var minuteString : String = ""
 
-        if(hour < 10 || minute < 10){
-
-            hourString = "0" + hour.toString()
-            minuteString = "0" + minute.toString()
-
-        }else {
-
-            hourString = hour.toString()
-            minuteString = minute.toString()
-        }
+        if(hour < 10 || minute < 10) hourString = "0" + hour.toString()
+        if(minute < 10) minuteString = "0" + minute.toString()
 
         horaire = hourString + ":" + minuteString
     }
@@ -211,10 +203,8 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     }
 
 
-    fun fetchDetailEventPublicUser(pos: Int) {
-        repository.fetchDetailEventPublicUser(pos).observeForever{ event ->
-            _eventPublicUser.value = event
-        }
+    fun fetchDetailEventPublicUser(key:String?) {
+        repository.fetchDetailEventPublicUser(key)
     }
 
     fun sendAnInvitationPrivateEvent(pos: Int){
