@@ -109,7 +109,7 @@
 
 
         <EditText
-            android:id="@+id/textArea_information"
+            android:id="@+id/textAreaInformation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -122,6 +122,7 @@
             android:scrollbarStyle="insideInset"
             android:scrollbars="vertical"
             android:scrollHorizontally="false"
+            android:text="@={viewmodel.user_live.desciption}"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
@@ -170,6 +171,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
+                    android:text="@={viewmodel.user_live.name}"
                     android:fontFamily="@font/roboto_mono" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -203,6 +205,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
+                    android:text="@={viewmodel.user_live.familyName}"
                     android:fontFamily="@font/roboto_mono" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -240,6 +243,7 @@
                     android:layout_weight="3"
                     android:ems="10"
                     android:fontFamily="@font/roboto_mono"
+                    android:text="@={``+viewmodel.user_live.age}"
                     android:inputType="number" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -273,6 +277,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
+                    android:text="@={viewmodel.user_live.lieu}"
                     android:fontFamily="@font/roboto_mono" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -335,7 +340,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:entries="@array/list_etudes"
-                    android:onItemSelected="@{viewmodel::onSelectItem}"/>
+                    android:onItemSelected="@{viewmodel::onSelectItem2}" />
 
             </LinearLayout>
         </LinearLayout>
@@ -363,7 +368,13 @@
             android:id="@+id/gridView"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:numColumns="3" />
+            android:choiceMode="multipleChoice"
+            android:background="@drawable/selector_grid_item"
+            android:numColumns="3"
+            android:verticalSpacing="16dp"
+            android:stretchMode="columnWidth"
+            android:gravity="center"
+            />
 
         <Button
             android:id="@+id/textView15"
@@ -371,6 +382,8 @@
             android:layout_height="35dp"
             android:layout_gravity="center"
             android:fontFamily="@font/roboto_mono"
+            android:layout_margin="10dp"
+            android:onClick="@{() -> viewmodel.editProfil()}"
             android:text="Save" />
 
     </LinearLayout>

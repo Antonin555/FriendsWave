@@ -164,6 +164,17 @@ class UserRepo(private val firebase: FirebaseSource) {
         return userLiveData
     }
 
+    fun fetchInteret(): LiveData<List<String>?> {
+        val interetLiveData = MutableLiveData<List<String>?>()
+
+        firebase.fetchInteret { interet ->
+            interetLiveData.postValue(interet)
+        }
+
+        return interetLiveData
+    }
+    fun editProfil(user_live: User?) = firebase.editProfil(user_live)
+
     fun getUserProfilData(profilUid: String?): LiveData<User> {
         val userLiveData = MutableLiveData<User>()
 

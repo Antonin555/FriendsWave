@@ -68,8 +68,6 @@ class NotifsFragment : Fragment(), KodeinAware {
             adapter1.addItems(notifUserList)
         })
 
-
-
         binding.recyclerFragmentNotifEvents.layoutManager = layoutManager2
         binding.recyclerFragmentNotifEvents.adapter = adapter2
         viewModel.fetchEventsInvitation()
@@ -85,13 +83,11 @@ class NotifsFragment : Fragment(), KodeinAware {
                 if (view.id == R.id.btn_accept){
                     var userNotif = viewModel.friendNotifList.value?.get(position)
                     viewModel.acceptRequest(userNotif)
-
                 }
 
-                if (view.id == R.id.btn_delete){
+                else if (view.id == R.id.btn_delete){
                     var userNotif = viewModel.friendNotifList.value?.get(position)
                     viewModel.refuseRequest(userNotif)
-
                 }
             }
 

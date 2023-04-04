@@ -21,8 +21,6 @@ import com.antonin.friendswave.ui.home.SignalementActivity
 
 class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
-    var etudes : String? = ""
-    var langue :String? = ""
     var profilUid: String? = ""
     var messSignalement: String? = ""
 
@@ -34,6 +32,9 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
     private val _user = MutableLiveData<User>()
     var user_live: LiveData<User> = _user
+
+    var etudes : String? = ""
+    var langue :String? = ""
 
     private val _userProfil = MutableLiveData<User>()
     var user_liveProfil: LiveData<User> = _userProfil
@@ -51,10 +52,23 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
         repository.currentUser()
     }
 
+    private val _interetList = MutableLiveData<List<String>>()
+    val interetList: LiveData<List<String>> = _interetList
+
     fun fetchUserData() {
         repository.getUserData().observeForever { user ->
             _user.value = user
         }
+    }
+
+    fun fetchInteret(){
+        repository.fetchInteret().observeForever{ interet ->
+            _interetList.value = interet
+        }
+    }
+
+    fun editProfil(){
+        repository.editProfil(user_live.value)
     }
 
     fun fetchUserProfilData(profilUid: String?) {
@@ -94,7 +108,6 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
     }
 
-
     fun logout(view: View){
         repository.logout()
         view.context.startLoginActivity() // va chercher les fonctions utiles pour les Intent
@@ -119,15 +132,18 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
     }
 
     fun onSelectItem(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-
-        if (view!!.id == R.id.spinnerEtudes) {
-
-            etudes = parent!!.adapter.getItem(pos).toString()
+        langue = parent!!.adapter.getItem(pos).toString()
+        if (user_live.value != null){
+            user_live.value!!.langue = langue
         }
-        if (view.id == R.id.spinnerLangues) {
+    }
 
-            langue = parent!!.adapter.getItem(pos).toString()
+    fun onSelectItem2(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+        etudes = parent!!.adapter.getItem(pos).toString()
+        if (user_live.value != null) {
+            user_live.value!!.etude = etudes
         }
+    }
 
     }
 

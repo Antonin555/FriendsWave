@@ -52,8 +52,28 @@ class FirebaseSource {
             })
     }
 
+    fun fetchInteret(onResult: (List<String>?) -> Unit) {
+        firebaseData.child("interet")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val interetList = ArrayList<String>()
+                    for(snap in snapshot.children){
+                        val interet = snap.getValue(String::class.java)!!
+                        interetList.add(interet)
+                    }
+                    onResult(interetList)
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    onResult(null)
+                }
+            })
+    }
+
+    fun editProfil(user_live: User?) {
+        firebaseData.child("user").child(mainUid!!).setValue(user_live)
+    }
+
     fun getUserProfilData(profilUid: String?, onResult: (User?) -> Unit){
-        //passer le uid du user
         firebaseData.child("user").child(profilUid!!)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -66,7 +86,6 @@ class FirebaseSource {
                     onResult(null)
                 }
             })
-
     }
 
     fun verifAmitier(profilUid: String?, onResult: (Boolean?) -> Unit){
@@ -95,7 +114,6 @@ class FirebaseSource {
         firebaseData.child("user").child(uid).setValue(User(name,email,uid))
     }
 
-
     fun register(name: String, email: String, password: String) = Completable.create { emitter ->
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             addUserToDatabase(name,email, firebaseAuth.currentUser?.uid!!)
@@ -110,24 +128,6 @@ class FirebaseSource {
         }
     }
 
-
-//    fun fetchUsers(){
-//        firebaseData.child("user/").addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                ContactFragment.contactList.clear()
-//                for (postSnapshot in snapshot.children){
-//                    val user = postSnapshot.getValue(User::class.java)
-//                    ContactFragment.contactList.add(user!!)
-//                }
-//
-//            }
-//            override fun onCancelled(error: DatabaseError) {
-//
-//            }
-//        })
-//    }
-
-
     fun getEventData(position: Int,onResult: (Event?) -> Unit) {
 
         firebaseData.child("event/eventPublic").addListenerForSingleValueEvent(object : ValueEventListener {
@@ -139,9 +139,7 @@ class FirebaseSource {
                         onResult(data)
                     }
                     i+=1
-
                 }
-
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -149,46 +147,7 @@ class FirebaseSource {
                 onResult(null)
             }
         })
-
-
     }
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    /// RECUPERER QUE LA FRIEND LIST : A ESSAYER ////
-//    fun fetchUsersFriend(){
-//        firebaseData.child("user").child(mainUid!!)
-//            .addValueEventListener(object : ValueEventListener {
-//                override fun onDataChange(snapshot: DataSnapshot) {
-//                    if (snapshot.exists()) {
-//                        var mainUser = snapshot.getValue(User::class.java)!!
-//                        firebaseData.child("user")
-//                            .addValueEventListener(object : ValueEventListener {
-//                                override fun onDataChange(snapshot: DataSnapshot) {
-//                                    ContactFragment.contactList.clear()
-//                                    for (postSnapshot in snapshot.children) {
-//                                        val currentUser = postSnapshot.getValue(User::class.java)
-//                                        if (mainUser.friendList!!.containsKey(currentUser?.uid)) {
-//                                            if (currentUser?.uid != mainUid) { //patch de merde
-//                                                ContactFragment.contactList.add(currentUser!!)
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//
-//                                override fun onCancelled(error: DatabaseError) {
-//                                    TODO("Not yet implemented")
-//                                }
-//                            })
-//
-//                    }
-//                }
-//
-//                override fun onCancelled(error: DatabaseError) {
-//                    TODO("Not yet implemented")
-//                }
-//            })
-//    }
 
     fun fetchUsersFriend(onResult: (List<User>) -> Unit){
         val userList = ArrayList<User>()
@@ -219,45 +178,7 @@ class FirebaseSource {
             })
     }
 
-//    var ref = FirebaseDatabase.getInstance().getReference().child("user").child(mainUid!!).child("friendList")
-//    var query : Query = ref.orderByChild("email")
-//    query.addListenerForSingleValueEvent(object:  ValueEventListener {
-//
-//        override fun onDataChange(snapshot: DataSnapshot) {
-//            for (userSnapshot in snapshot.getChildren()) {
-//            Map<String, Object> userMap = (Map<String, Object>) userSnapshot.getValue();
-//            Map<String, String> friendList = (Map<String, String>) userMap.get("friendList");
-//
-//        }
-//        }
-//
-//        override fun onCancelled(error: DatabaseError) {
-//            // gestion de l'erreur
-//        }
-//    })
-
     //////////////////////// EVENTS  REQUETES /////////////////////////////////////////////////////
-
-    /////////////////////////////////////////////////////////////////////////////////////////////
-
-// Récupérer l'ID de l'événement en fonction de son nom
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // Envoyer une demande d'invitaion pour un event Privée :
 
     fun sendAnInvitationPrivateEvent(email: String,position: Int) {
 

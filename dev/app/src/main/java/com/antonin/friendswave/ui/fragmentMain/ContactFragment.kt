@@ -73,9 +73,5 @@ class ContactFragment : Fragment(), KodeinAware {
             }
         })
     }
-//
-//    companion object {
-//        var contactList:ArrayList<User> = ArrayList()
-//    }
 
 }
