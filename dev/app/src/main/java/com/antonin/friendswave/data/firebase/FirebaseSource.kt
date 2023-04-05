@@ -412,7 +412,7 @@ class FirebaseSource {
         queryEventPrivate.child("listInscrits").child(currentUser()!!.email.hashCode().toString()).setValue(currentUser()!!.email.toString())
         queryEventPrivate.child("invitations").child(currentUser()!!.email.hashCode().toString()).removeValue()
         queryAcceptEventUser.child("invitations").child(event.key!!).removeValue()
-        queryAcceptEventUser.child("listInscrits").child(event.key!!).setValue(event.admin)
+        queryAcceptEventUser.child("eventConfirmationList").child(event.key!!).setValue(event.admin)
 
     }
 
@@ -502,11 +502,12 @@ class FirebaseSource {
 
 
 
-    fun fetchDetailEventPublicUser(key: String?) {
+    fun fetchDetailEventPublicUser(key: String?, onResult: (Event?) -> Unit) {
 
         firebaseData.child("event/eventPublic/").child(key!!).addListenerForSingleValueEvent(object :ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                snapshot.getValue(Event::class.java)
+                val event = snapshot.getValue(Event::class.java)
+                onResult(event!!)
             }
 
             override fun onCancelled(error: DatabaseError) {

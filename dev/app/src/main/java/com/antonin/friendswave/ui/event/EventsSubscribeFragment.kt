@@ -38,13 +38,13 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
         viewModel.fetchEventsPrivateUser()
         viewModel.fetchConfirmationEvents()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        // Inflate the layout for this fragment
 
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_events_subscribe, container, false)
         binding.viewmodel = viewModel
@@ -56,7 +56,6 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
     override fun onResume() {
         super.onResume()
 
-
         val layoutManager = LinearLayoutManager(context)
         val layoutManager1 = LinearLayoutManager(context)
         binding.recyclerMyEventInscrits.layoutManager = layoutManager
@@ -64,7 +63,6 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
 
         binding.recyclerPendingParticipants.layoutManager = layoutManager1
         binding.recyclerPendingParticipants.adapter = adapter2
-
 
         viewModel.eventListConfirm.observe(this, Observer { eventList ->
             adapter1.addItems(eventList)
@@ -75,20 +73,20 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
         })
 
 
-
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
 
                 val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
                 toast.show()
 
-                val intent = Intent(context,ChatGroupActivity::class.java)
-                intent.putExtra("position", position)
-                startActivity(intent)
+//                val intent = Intent(context,ChatGroupActivity::class.java)
+//
+//                intent.putExtra("position", position)
+//                startActivity(intent)
+
             }
         })
 
     }
-
 
 }

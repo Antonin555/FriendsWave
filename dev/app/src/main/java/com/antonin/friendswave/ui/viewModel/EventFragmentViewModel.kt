@@ -40,7 +40,6 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     var email: String? = null
 
     val formatter = SimpleDateFormat("dd/MM/yyyy")
-    var dateFormat  = Date()
 //    val currentDate = formatter.parse(dateFormat.toString())
 
     val user by lazy {
@@ -57,6 +56,9 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     private val _eventData = MutableLiveData<Event>()
     val eventData: LiveData<Event> = _eventData
+
+    private val _eventPublicUser = MutableLiveData<Event>()
+    val eventPublicUser: LiveData<Event> = _eventPublicUser
 
 
     private val _eventDataUser = MutableLiveData<Event>()
@@ -204,8 +206,13 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
 
     fun fetchDetailEventPublicUser(key:String?) {
-        repository.fetchDetailEventPublicUser(key)
+        repository.fetchDetailEventPublicUser(key).observeForever{ event->
+            _eventDataUser.value = event
+
+        }
     }
+
+
 
     fun sendAnInvitationPrivateEvent(pos: Int){
 

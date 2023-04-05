@@ -23,7 +23,7 @@
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/add_event_private"
-            android:textSize="26sp"></TextView>
+            android:textSize="26sp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_my_event_private"
@@ -40,7 +40,7 @@
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/add_event_public"
-            android:textSize="26sp"></TextView>
+            android:textSize="26sp"/>
 
 
         <androidx.recyclerview.widget.RecyclerView

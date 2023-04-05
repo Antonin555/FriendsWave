@@ -1,10 +1,24 @@
 package com.antonin.friendswave.ui.fragmentMain
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
+import androidx.core.view.children
+import androidx.core.view.isEmpty
+import androidx.core.view.isNotEmpty
+import androidx.databinding.DataBindingUtil.bind
 import androidx.databinding.DataBindingUtil.inflate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,6 +29,7 @@ import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentHomeBinding
+import com.antonin.friendswave.generated.callback.OnClickListener
 import com.antonin.friendswave.strategy.SearchByCities
 import com.antonin.friendswave.strategy.SearchByName
 import com.antonin.friendswave.strategy.SearchCategory
@@ -38,22 +53,36 @@ class HomeFragment : Fragment(), KodeinAware {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+
+        permissionNotifs()
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
         binding.lifecycleOwner = this
         binding.item = viewModel
+
+
         return binding.root
+
+
     }
 
     override fun onResume() {
         super.onResume()
 
-        var tempList : List<Event>
+        if(binding.recyclerFragmentHome.isEmpty()) {
+
+            binding.chatlogo.visibility = View.VISIBLE
+        }
+
+        if(binding.recyclerFragmentHome.isNotEmpty()) {
+            binding.chatlogo.visibility = View.GONE
+        }
+
+        var tempList : ArrayList<Event> = ArrayList()
         val searchCategory = SearchCategory()
         val searchByCities = SearchByCities()
         val searchByName = SearchByName()
         var searchStrategy : Strategy
-
 
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_events)
         val layoutManager = LinearLayoutManager(context)
@@ -65,34 +94,76 @@ class HomeFragment : Fragment(), KodeinAware {
 
 
 
+//        viewModel.user_live.observe(this, Observer {
+//            binding.imgProfil.setImageURI(it.img?.toUri())
+//        })
+
+
 
         binding.btnCategory.setOnClickListener{
-//            var type = "Mars"
-            var searchStrategy = Strategy(searchCategory)
-            tempList = viewModel.strategyByCategory()
-            adapter1.addItems(tempList)
+            println("hHhhhhhhhhhhhhhhhhhhhhhhhhhhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+            var type = "Mars"
+            searchStrategy = Strategy(searchCategory)
+            strategyEvent(searchStrategy,type)
 
-        }
+            binding.chatlogo.visibility = View.GONE
 
-        binding.btnCities.setOnClickListener{
-            var city = "Montréal"
-            searchStrategy = Strategy(searchByCities)
-
-            viewModel!!.CategorieEventList.observe(this, Observer { eventList ->
-                tempList = searchStrategy.searchByCategory(city, eventList )
-                adapter1.addItems(tempList)
-            })
 
         }
 
 
 
 
-        // btn : if view.id == R.id.btn_search
-        //
     }
 
+    fun strategyEvent(strategy: Strategy, str:String) {
+        var tempList : ArrayList<Event> =  ArrayList()
+        viewModel.CategorieEventList.observe(this, Observer { eventList ->
+            tempList = strategy.search(str, eventList) as ArrayList<Event>
+            adapter1.addItems(tempList)
+        })
+
+    }
+
+
+    fun permissionNotifs() {
+        // Declare the launcher at the top of your Activity/Fragment:
+         val requestPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                // FCM SDK (and your app) can post notifications.
+            } else {
+                // TODO: Inform user that that your app will not show notifications.
+            }
+        }
+
+        fun askNotificationPermission() {
+            // This is only necessary for API level >= 33 (TIRAMISU)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) ==
+                    PackageManager.PERMISSION_GRANTED
+                ) {
+                    // FCM SDK (and your app) can post notifications.
+                } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                    // TODO: display an educational UI explaining to the user the features that will be enabled
+                    //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
+                    //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
+                    //       If the user selects "No thanks," allow the user to continue without notifications.
+                } else {
+                    // Directly ask for the permission
+                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+            }
+        }
+    }
+
+
 }
+
+
+
+
 
 
 

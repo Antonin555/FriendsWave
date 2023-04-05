@@ -44,10 +44,12 @@
                         app:cardCornerRadius="100dp">
 
                         <ImageView
+                            android:id="@+id/img_profil"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:background="@color/purple_700"
-                            android:contentDescription="@string/add_event_description"/>
+                            android:contentDescription="@string/add_event_description"
+                            />
 
                     </androidx.cardview.widget.CardView>
 
@@ -142,6 +144,7 @@
                     android:textSize="20sp" />
 
                 <LinearLayout
+                    android:id="@+id/linearStrategy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -175,6 +178,13 @@
                 android:layout_gravity="center" >
 
             </androidx.recyclerview.widget.RecyclerView>
+
+            <ImageView
+                android:id="@+id/chatlogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:background="@drawable/chatlogo" />
 
         </FrameLayout>
 

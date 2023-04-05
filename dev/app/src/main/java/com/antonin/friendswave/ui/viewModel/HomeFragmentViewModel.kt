@@ -145,7 +145,7 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
         }
     }
 
-    }
+
 
     ////////////////////////////////////////////////  Strategie
 
@@ -158,15 +158,15 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
     }
 
 
-    fun strategyByCategory() : List<Event> {
-
-        var tempList : List<Event>?
-        var type = "Mars"
-        searchStrategy = Strategy(searchCategory)
-        tempList = searchStrategy.searchByCategory(type, CategorieEventList.value)
-
-        return tempList
-    }
+//    fun strategyByCategory() : List<Event> {
+//
+//        var tempList : List<Event>?
+//        var type = "Mars"
+//        searchStrategy = Strategy(searchCategory)
+//        tempList = searchStrategy.searchByCategory(type, CategorieEventList.value)
+//
+//        return tempList
+//    }
 
 
 

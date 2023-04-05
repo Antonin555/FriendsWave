@@ -55,11 +55,8 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
         afficheInteret()
 
         binding.btnLoad.setOnClickListener {
-
             val img = Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-
             getResult.launch(img)
-
         }
     }
 
@@ -68,9 +65,10 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 
             if (it.resultCode == Activity.RESULT_OK) {
-
                 img_uri = it?.data?.data!!
                 binding.imgPreview.setImageURI(img_uri)
+
+                viewModel.user_live.value!!.img = img_uri.toString()
 
             }
         }

@@ -4,16 +4,8 @@ import com.antonin.friendswave.data.model.Event
 
 class Strategy(private var interfaceSearch: InterfaceSearch) {
 
-    fun searchByCategory(str:String, list: List<Event>?) : List<Event> {
+    fun search(str:String, list: List<Event>?) : List<Event> {
         return interfaceSearch.sortedEvent(str, list)
-    }
-
-    fun searchByName(str:String, list:List<Event>?): List<Event>{
-       return interfaceSearch.sortedEvent(str, list)
-    }
-
-    fun searchByCities(str:String, list:List<Event>?) : List<Event> {
-    return interfaceSearch.sortedEvent(str, list)
     }
 
 }

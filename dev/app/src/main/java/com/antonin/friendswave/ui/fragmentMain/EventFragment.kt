@@ -19,6 +19,10 @@ import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentEventBinding
+import com.antonin.friendswave.strategy.SearchByCities
+import com.antonin.friendswave.strategy.SearchByName
+import com.antonin.friendswave.strategy.SearchCategory
+import com.antonin.friendswave.strategy.Strategy
 import com.antonin.friendswave.ui.event.DetailEventActivity
 import com.antonin.friendswave.ui.event.GoogleLocation
 import com.antonin.friendswave.ui.event.InterfaceEvent
@@ -73,9 +77,26 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
             adapter1.addItems(eventList)
         })
 
+
+        var tempList : ArrayList<Event> = ArrayList()
+        val searchCategory = SearchCategory()
+        val searchByCities = SearchByCities()
+        val searchByName = SearchByName()
+        var searchStrategy : Strategy
+
+
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerFragmentEvent.layoutManager = layoutManager
         binding.recyclerFragmentEvent.adapter = adapter1
+
+
+        binding.btnCat.setOnClickListener{
+
+            var type = "Mars"
+            searchStrategy = Strategy(searchCategory)
+            strategyEvent(searchStrategy,type)
+
+        }
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
@@ -88,6 +109,15 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
             }
         })
 
+
+    }
+
+    fun strategyEvent(strategy: Strategy, str:String) {
+        var tempList : ArrayList<Event> =  ArrayList()
+        viewModel.eventList.observe(this, Observer { eventList ->
+            tempList = strategy.search(str, eventList) as ArrayList<Event>
+            adapter1.addItems(tempList)
+        })
 
     }
 
