@@ -1,6 +1,7 @@
 package com.antonin.friendswave.ui.fragmentMain
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
@@ -36,6 +37,8 @@ import com.antonin.friendswave.strategy.SearchCategory
 import com.antonin.friendswave.strategy.Strategy
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import org.kodein.di.Kodein
 
 import org.kodein.di.KodeinAware
@@ -50,7 +53,7 @@ class HomeFragment : Fragment(), KodeinAware {
     private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter1 : ListGeneriqueAdapter<Event>
-
+    private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
@@ -59,8 +62,6 @@ class HomeFragment : Fragment(), KodeinAware {
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
         binding.lifecycleOwner = this
         binding.item = viewModel
-
-
         return binding.root
 
 
@@ -93,10 +94,17 @@ class HomeFragment : Fragment(), KodeinAware {
         viewModel.fetchUserData()
 
 
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_PERMISSION_READ_EXTERNAL_STORAGE)
+        }
 
-//        viewModel.user_live.observe(this, Observer {
-//            binding.imgProfil.setImageURI(it.img?.toUri())
-//        })
+        viewModel.user_live.observe(this, Observer { it ->
+            Glide.with(binding.imgProfil.context)
+                .load(it.img)
+                .apply(RequestOptions().override(100, 100))
+                .centerCrop()
+                .into(binding.imgProfil)
+        })
 
 
 
@@ -114,6 +122,18 @@ class HomeFragment : Fragment(), KodeinAware {
 
 
 
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == REQUEST_PERMISSION_READ_EXTERNAL_STORAGE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // La permission a été accordée, vous pouvez maintenant accéder au fournisseur de documents de médias Android.
+            } else {
+                // La permission a été refusée, vous devez gérer le cas où l'utilisateur refuse la permission.
+            }
+        }
     }
 
     fun strategyEvent(strategy: Strategy, str:String) {
