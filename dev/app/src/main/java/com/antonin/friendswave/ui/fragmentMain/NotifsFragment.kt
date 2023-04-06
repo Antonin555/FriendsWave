@@ -32,6 +32,7 @@ class NotifsFragment : Fragment(), KodeinAware {
     private val factory : NotifFragmentVMFactory by instance()
     private lateinit var adapter1 : ListGeneriqueAdapter<User>
     private lateinit var adapter2 : ListGeneriqueAdapter<Event>
+    private lateinit var adapter3 : ListGeneriqueAdapter<User>
     private var viewModel: NotifFragmentViewModel = NotifFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
     private lateinit var binding : FragmentNotifsBinding
 
@@ -41,9 +42,11 @@ class NotifsFragment : Fragment(), KodeinAware {
 
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
         adapter2 = ListGeneriqueAdapter(R.layout.recycler_invite_events)
+        adapter3 = ListGeneriqueAdapter(R.layout.recycler_contact)
 
 //        viewModel.fetchEventsInvitation(_eventList)
     }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
@@ -51,29 +54,37 @@ class NotifsFragment : Fragment(), KodeinAware {
         viewModel = ViewModelProviders.of(this,factory).get(NotifFragmentViewModel::class.java)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
+        val layoutManager = LinearLayoutManager(context)
+        val layoutManager2 = LinearLayoutManager(context)
+        val layoutManager3 = LinearLayoutManager(context)
+        binding.recyclerFragmentNotif.layoutManager = layoutManager
+        binding.recyclerFragmentNotif.adapter = adapter1
+        binding.recyclerFragmentNotifEvents.layoutManager = layoutManager2
+        binding.recyclerFragmentNotifEvents.adapter = adapter2
+        binding.recyclerRequestEvent.layoutManager = layoutManager3
+        binding.recyclerRequestEvent.adapter = adapter3
+        viewModel.fetchDemandeInscriptionEventPublic()
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
 
-        val layoutManager = LinearLayoutManager(context)
-        val layoutManager2 = LinearLayoutManager(context)
-        binding.recyclerFragmentNotif.layoutManager = layoutManager
-        binding.recyclerFragmentNotif.adapter = adapter1
+
 
         viewModel.fetchUsersRequest()
-
-        binding.viewmodel!!.friendNotifList.observe(this, Observer { notifUserList ->
+        viewModel.friendNotifList.observe(this, Observer { notifUserList ->
             adapter1.addItems(notifUserList)
         })
 
-        binding.recyclerFragmentNotifEvents.layoutManager = layoutManager2
-        binding.recyclerFragmentNotifEvents.adapter = adapter2
         viewModel.fetchEventsInvitation()
-
-        binding.viewmodel!!.eventList.observe(this,Observer { eventList ->
+        viewModel.eventList.observe(this,Observer { eventList ->
             adapter2.addItems(eventList)
+        })
+
+
+        viewModel.requestListEvent.observe(this, Observer { userList ->
+            adapter3.addItems(userList)
         })
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{

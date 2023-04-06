@@ -185,7 +185,8 @@ class FirebaseSource {
     fun sendRequestToParticipatePublicEvent(idEvent:String, adminEvent: String){
 
         firebaseData.child("event/eventPublic").child(idEvent).child("pendingRequestEventPublic").child(currentUser()!!.email.hashCode().toString()).setValue(currentUser()!!.email)
-        firebaseData.child("user/"+mainUid!!).child("PendingRequestEventPublic").child(idEvent).setValue(adminEvent)
+        firebaseData.child("user/"+mainUid!!).child("pendingRequestEventPublic").child(idEvent).setValue(adminEvent)
+        firebaseData.child("user").child(adminEvent).child("pendingRequestEventPublic").child(mainUid).setValue(currentUser()!!.email)
 
     }
 
@@ -197,7 +198,7 @@ class FirebaseSource {
         var eventValue: Any?
         val eventIdList = HashMap<String,String>()
         val eventList: ArrayList<Event> = ArrayList()
-        firebaseData.child("user").child(mainUid!!).child("PendingRequestEventPublic").addListenerForSingleValueEvent(object : ValueEventListener {
+        firebaseData.child("user").child(mainUid!!).child("pendingRequestEventPublic").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (data in dataSnapshot.children){
@@ -304,7 +305,30 @@ class FirebaseSource {
         })
     }
 
+// POUR ENVOYER DES NOTIFS de demande de participation  A L'USER QUI A FAIT UN EVENT
+    fun fetchDemandeInscriptionEventPublic( onResult: (List<User>) -> Unit) {
 
+        var eventId: Any?
+        var eventValue: Any?
+        val eventIdList = HashMap<String,String>()
+        val userList: ArrayList<User> = ArrayList()
+        firebaseData.child("user").child(mainUid!!).child("pendingRequestEventPublic").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (data in dataSnapshot.children){
+                        eventValue = data.value.toString()
+                        eventId = data.key.toString()
+                        eventIdList.put(eventId.toString(),eventValue.toString())
+
+                    }
+                    addEventsPublicToNotifsRequest(eventIdList,userList, onResult)
+//                    addEventsPublicToRecyclerNotif(eventIdList,eventList, onResult)
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
 
     fun fetchInvitationEvents( onResult: (List<Event>) -> Unit) {
 
@@ -468,6 +492,27 @@ class FirebaseSource {
             }
         }
     }
+
+    fun addEventsPublicToNotifsRequest(eventIdList:HashMap<String,String>, userList:ArrayList<User>, onResult: (List<User>) -> Unit){
+        for(i in eventIdList){
+            firebaseData.child("user/").child(i.key).addListenerForSingleValueEvent(object :ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if(snapshot.exists()){
+
+                        val event = snapshot.getValue(User::class.java)
+                        userList.add(event!!)
+
+                    }
+
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+        }
+        onResult(userList)
+    }
+
 
     fun acceptInvitationEvent(event: Event?){
 

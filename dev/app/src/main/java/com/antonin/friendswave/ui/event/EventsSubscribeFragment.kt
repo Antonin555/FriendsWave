@@ -42,6 +42,7 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
         viewModel.fetchConfirmationEvents()
         viewModel.getAllEventsPendingRequestPublic()
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

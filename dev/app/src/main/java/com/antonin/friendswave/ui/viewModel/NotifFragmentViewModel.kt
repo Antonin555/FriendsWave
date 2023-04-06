@@ -18,6 +18,8 @@ class NotifFragmentViewModel (private val repository: UserRepo): ViewModel() {
     val friendNotifList: LiveData<List<User>> = _friendNotifList
 
 
+    private val _requestListEvent = MutableLiveData<List<User>>()
+    val requestListEvent : LiveData<List<User>> = _requestListEvent
 //    private val disposables = CompositeDisposable()
 
 //    private val _user = MutableLiveData<User>()
@@ -72,6 +74,14 @@ class NotifFragmentViewModel (private val repository: UserRepo): ViewModel() {
     fun fetchEventsInvitation() {
         repository.fetchInvitationEvents().observeForever { event ->
             _eventList.value = event
+        }
+    }
+
+    fun  fetchDemandeInscriptionEventPublic(){
+
+        repository.fetchDemandeInscriptionEventPublic().observeForever { user->
+            _requestListEvent.value = user
+
         }
     }
 

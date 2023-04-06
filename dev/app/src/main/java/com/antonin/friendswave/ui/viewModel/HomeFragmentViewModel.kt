@@ -5,8 +5,8 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import com.antonin.friendswave.R
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
@@ -46,12 +46,18 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
     private val _emailUserList = MutableLiveData<List<User>>()
     val emailUserList: LiveData<List<User>> = _emailUserList
 
-    private val _CategorieEventList = MutableLiveData<List<Event>>()
-    val CategorieEventList: LiveData<List<Event>> = _CategorieEventList
+    private val _categorieEventList = MutableLiveData<List<Event>>()
+    val categorieEventList: LiveData<List<Event>> = _categorieEventList
+
+
+
+
 
     val user by lazy {
         repository.currentUser()
     }
+
+
 
     private val _interetList = MutableLiveData<List<String>>()
     val interetList: LiveData<List<String>> = _interetList
@@ -162,7 +168,7 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
     fun fetchStrategieEvent(){
 
         repository.fetchStrategieEvent().observeForever{ event ->
-            _CategorieEventList.value = event
+            _categorieEventList.value = event
         }
 
     }

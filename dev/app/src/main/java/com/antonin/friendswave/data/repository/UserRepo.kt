@@ -140,6 +140,16 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     }
 
+    fun fetchDemandeInscriptionEventPublic():LiveData<List<User>>{
+
+        val requestEvent = MutableLiveData<List<User>>()
+        firebase.fetchDemandeInscriptionEventPublic { user ->
+            requestEvent.postValue(user)
+        }
+        return requestEvent
+
+    }
+
     fun getEventData(position: Int) : LiveData<Event> {
         val eventLiveData = MutableLiveData<Event>()
 

@@ -39,6 +39,7 @@ class ContactFragment : Fragment(), KodeinAware {
         binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_contact, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
         binding.viewmodel = viewModel
+        viewModel.fetchUsersFriends()
         return binding.root
     }
 
@@ -49,10 +50,10 @@ class ContactFragment : Fragment(), KodeinAware {
         binding.recyclerFragmentContact.layoutManager = layoutManager
         binding.recyclerFragmentContact.adapter = adapter1
 //        adapter1.addItems(contactList)
-        binding.viewmodel!!.fetchUsersFriends()
 
 
-        binding.viewmodel!!.emailUserList.observe(this, Observer { userList ->
+
+        viewModel.emailUserList.observe(this, Observer { userList ->
             adapter1.addItems(userList)
         })
 

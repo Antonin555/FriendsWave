@@ -1,13 +1,9 @@
 package com.antonin.friendswave.ui.fragmentMain
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,11 +11,8 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
-import androidx.core.view.children
 import androidx.core.view.isEmpty
 import androidx.core.view.isNotEmpty
-import androidx.databinding.DataBindingUtil.bind
 import androidx.databinding.DataBindingUtil.inflate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -30,7 +23,6 @@ import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentHomeBinding
-import com.antonin.friendswave.generated.callback.OnClickListener
 import com.antonin.friendswave.strategy.SearchByCities
 import com.antonin.friendswave.strategy.SearchByName
 import com.antonin.friendswave.strategy.SearchCategory
@@ -136,7 +128,7 @@ class HomeFragment : Fragment(), KodeinAware {
 
     fun strategyEvent(strategy: Strategy, str:String) {
         var tempList : ArrayList<Event> =  ArrayList()
-        viewModel.CategorieEventList.observe(this, Observer { eventList ->
+        viewModel.categorieEventList.observe(this, Observer { eventList ->
             tempList = strategy.search(str, eventList) as ArrayList<Event>
             adapter1.addItems(tempList)
         })
