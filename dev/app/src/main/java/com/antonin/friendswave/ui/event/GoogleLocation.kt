@@ -3,6 +3,8 @@ package com.antonin.friendswave.ui.event
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import androidx.core.app.ActivityCompat
@@ -16,6 +18,7 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import java.io.IOException
 
 class GoogleLocation  {
 

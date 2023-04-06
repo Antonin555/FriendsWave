@@ -11,6 +11,8 @@ import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityProfilBinding
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -37,9 +39,12 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
         binding.lifecycleOwner = this
         binding.item?.profilUid = profilUid
         //a changer puisque le UId est dispo dasn le viewModel
-        binding.item?.fetchUserProfilData(profilUid)
-//        viewModel.fetchUserProfilData(profilUid)
+//        binding.item?.fetchUserProfilData(profilUid)
+        viewModel.fetchUserProfilData(profilUid)
         binding.item?.verifAmitier(profilUid)
+        viewModel.fetchUserData()
+
+
 
         viewModel.ami_live.observe(this, Observer { message ->
             if(viewModel.ami_live?.value == true){
@@ -55,7 +60,28 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
             }
         })
 
+
+        viewModel.user_liveProfil.observe(this, Observer { it ->
+            Glide.with(binding.imgProfil.context)
+                .load(it.img)
+                .apply(RequestOptions().override(100, 100))
+                .centerCrop()
+                .into(binding.imgProfil)
+        })
+
     }
+// Essai pour recup photo , ne fonctionne pas dans le onCreate ou dans le onResume
+//    override fun onResume() {
+//        super.onResume()
+//        viewModel.user_liveProfil.observe(this, Observer { it ->
+//            Glide.with(binding.imgProfil.context)
+//                .load(it.img)
+//                .apply(RequestOptions().override(100, 100))
+//                .centerCrop()
+//                .into(binding.imgProfil)
+//        })
+//
+//    }
 
 
 }

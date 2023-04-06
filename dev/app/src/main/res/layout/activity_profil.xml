@@ -44,9 +44,10 @@
                         app:cardCornerRadius="100dp">
 
                         <ImageView
+                            android:id="@+id/imgProfil"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:background="#7986CB" />
+                             />
 
                     </androidx.cardview.widget.CardView>
 

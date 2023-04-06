@@ -228,20 +228,14 @@ class FirebaseSource {
                             val event = snap.getValue(Event::class.java)
                             eventList.add(event!!)
                         }
-
-
-
                     }
                     onResult(eventList)
                 }
                 override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-
         })
-
-            }
-//        onResult(eventList)
+        }
     }
 
 
@@ -588,10 +582,11 @@ class FirebaseSource {
 
 
 
-    fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid : String, category:String, date : String, horaire:String, adress:String) {
+    fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid : String, category:String, date : String, horaire:String, adress:String, description:String,
+    latitude:String,longitude:String) {
         val database = Firebase.database
         val myRef = database.getReference("event/eventPublic/").push()
-        myRef.setValue(Event(myRef.key,name,isPublic,nbrePersonnes, uid, category, date, horaire, adress))
+        myRef.setValue(Event(myRef.key,name,isPublic,nbrePersonnes, uid, category, date, horaire, adress, description,latitude,longitude))
 
     }
 

@@ -7,6 +7,8 @@ package com.antonin.friendswave.ui.event
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.os.Bundle
@@ -34,6 +36,7 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -46,6 +49,8 @@ class AddEventActivity : AppCompatActivity(), KodeinAware, OnMapReadyCallback,
     private lateinit var binding :ActivityAddEventBinding
     private lateinit var viewModel: EventFragmentViewModel
     private val AUTOCOMPLETE_REQUEST_CODE = 1
+    var addressList: List<Address>? = null
+    lateinit var address : Address
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,16 +67,13 @@ class AddEventActivity : AppCompatActivity(), KodeinAware, OnMapReadyCallback,
         if (!Places.isInitialized()) {
             Places.initialize(applicationContext, apiKey)
         }
-//
+
 
         binding.searchCities.setOnClickListener{
 
             val fields = listOf(Place.Field.ID, Place.Field.NAME)
-
             val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).setTypeFilter(TypeFilter.CITIES).build(this)
             startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
-
-
 
         }
 
@@ -92,8 +94,17 @@ class AddEventActivity : AppCompatActivity(), KodeinAware, OnMapReadyCallback,
                     data?.let {
                         val place = Autocomplete.getPlaceFromIntent(data)
                         binding.editCities.text = place.name.toString()
+                        val geoCoder = Geocoder(this)
+                        try {
+                            addressList = geoCoder.getFromLocationName(place.name.toString(), 1)
 
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        }
 
+                        address = addressList!![0]
+//                        viewModel.longitude = address.longitude.toString()
+//                        viewModel.lattitude = address.latitude.toString()
                     }
                 }
                 AutocompleteActivity.RESULT_ERROR -> {
@@ -107,6 +118,7 @@ class AddEventActivity : AppCompatActivity(), KodeinAware, OnMapReadyCallback,
                     // The user canceled the operation.
                 }
             }
+
             return
         }
         super.onActivityResult(requestCode, resultCode, data)

@@ -103,7 +103,7 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     fun addEventUser(view: View) {
         if(isPublic == true) {
-            repository.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!, adress!!)
+            repository.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!, adress!!,description!!, lattitude!!, longitude!!)
         }else {
             repository.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid, categorie!!,date!!, horaire!!, adress!!)
         }
