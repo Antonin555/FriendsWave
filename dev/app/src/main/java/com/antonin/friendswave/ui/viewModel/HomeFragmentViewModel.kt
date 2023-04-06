@@ -16,6 +16,7 @@ import com.antonin.friendswave.strategy.SearchByName
 import com.antonin.friendswave.strategy.SearchCategory
 import com.antonin.friendswave.strategy.Strategy
 import com.antonin.friendswave.ui.contact.AddContactActivity
+import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.home.SignalementActivity
 
 
@@ -129,6 +130,15 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
         Intent(view.context, AddContactActivity::class.java).also {
             view.context.startActivity(it)
         }
+    }
+
+    fun goToYourProfil(view: View){
+
+        // .also permet d'eviter de déclarer une variable :
+        var intent = Intent(view.context, ProfilActivity::class.java)
+        intent.putExtra("uid", profilUid)
+        view.context.startActivity(intent)
+
     }
 
     fun onSelectItem(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {

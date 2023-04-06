@@ -38,6 +38,7 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
         binding.item?.profilUid = profilUid
         //a changer puisque le UId est dispo dasn le viewModel
         binding.item?.fetchUserProfilData(profilUid)
+//        viewModel.fetchUserProfilData(profilUid)
         binding.item?.verifAmitier(profilUid)
 
         viewModel.ami_live.observe(this, Observer { message ->

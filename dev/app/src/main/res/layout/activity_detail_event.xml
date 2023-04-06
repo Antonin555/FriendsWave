@@ -9,7 +9,10 @@
     <data>
         <variable name="event"
             type="com.antonin.friendswave.ui.viewModel.EventFragmentViewModel"/>
-
+        <variable name="idEvent"
+            type="String"/>
+        <variable name="adminEvent"
+            type="String"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -257,7 +260,8 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:fontFamily="@font/roboto_mono"
-                    android:text="@string/detail_event_inscription" />
+                    android:text="@string/detail_event_inscription"
+                    android:onClick="@{(v)-> event.sendRequestToParticipatePublicEvent(idEvent,adminEvent)}"/>
             </LinearLayout>
         </ScrollView>
 

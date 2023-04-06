@@ -127,7 +127,7 @@ class FirebaseSource {
 
         }
     }
-
+    // GET EVENT DATA DETAIL PUBLIC PAGE EVENT FRAGMENT MAIN :
     fun getEventData(position: Int,onResult: (Event?) -> Unit) {
 
         firebaseData.child("event/eventPublic").addListenerForSingleValueEvent(object : ValueEventListener {
@@ -179,6 +179,76 @@ class FirebaseSource {
     }
 
     //////////////////////// EVENTS  REQUETES /////////////////////////////////////////////////////
+
+
+    // 1/ L'UTILISATEUR ENVOIE UNE DEMANDE AUPRES D'UN EVENT PUBLIC :
+    fun sendRequestToParticipatePublicEvent(idEvent:String, adminEvent: String){
+
+        firebaseData.child("event/eventPublic").child(idEvent).child("pendingRequestEventPublic").child(currentUser()!!.email.hashCode().toString()).setValue(currentUser()!!.email)
+        firebaseData.child("user/"+mainUid!!).child("PendingRequestEventPublic").child(idEvent).setValue(adminEvent)
+
+    }
+
+    // 2/ chercher les events de l'utilisateur en attente et les mettre dans le recycler :
+
+    fun getAllEventsPendingRequestPublic(onResult: (List<Event>) -> Unit){
+
+        var eventId: Any?
+        var eventValue: Any?
+        val eventIdList = HashMap<String,String>()
+        val eventList: ArrayList<Event> = ArrayList()
+        firebaseData.child("user").child(mainUid!!).child("PendingRequestEventPublic").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (data in dataSnapshot.children){
+                        eventValue = data.value.toString()
+                        eventId = data.key.toString()
+                        eventIdList.put(eventId.toString(),eventValue.toString())
+
+                    }
+                    addPendingEventsToRecyclerNotif(eventIdList,eventList, onResult)
+//                    addEventsPublicToRecyclerNotif(eventIdList,eventList, onResult)
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
+
+    // 3/ METTRE A JOUR LE RECYCLER DES EVENTS EN ATTENTE POUR L'UTILISATEUR :
+    fun addPendingEventsToRecyclerNotif(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
+
+        for(i in eventIdList){
+            firebaseData.child("event/eventPublic").addValueEventListener(object :ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                    for (snap in snapshot.children) {
+
+                        if(eventIdList.containsKey(snap.key)){
+                            val event = snap.getValue(Event::class.java)
+                            eventList.add(event!!)
+                        }
+
+
+
+                    }
+                    onResult(eventList)
+                }
+                override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+            }
+//        onResult(eventList)
+    }
+
+
+
+
+    ////////////////////////////////////////////////////////////////////////
+
 
     fun sendAnInvitationPrivateEvent(email: String,position: Int) {
 
@@ -272,7 +342,7 @@ class FirebaseSource {
         var eventValue: Any?
         val eventIdList = HashMap<String,String>()
         val eventList: ArrayList<Event> = ArrayList()
-        firebaseData.child("user").child(mainUid!!).child("eventConfirmationList").addListenerForSingleValueEvent(object : ValueEventListener {
+        firebaseData.child("user").child(mainUid!!).child("listInscrits").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (data in dataSnapshot.children){
@@ -283,6 +353,7 @@ class FirebaseSource {
                     }
 //                    addEventsPrivateToRecyclerConfirm(eventIdList,eventList, onResult)
                     addEventsPrivateToRecyclerNotif(eventIdList,eventList, onResult)
+                    addEventsPublicToRecyclerNotif(eventIdList,eventList,onResult)
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -313,7 +384,6 @@ class FirebaseSource {
 
     // list des invitations pour event PRIVATE
     // list des confirmés pour PUBLIC
-    // AVOIR LE DETAIL DE L'EVENT public qu'on a crée
 
     // POUR MY EVENT : RECHERCHE DES PARTICIPANTS INVITATIONS PRIVATE :
 

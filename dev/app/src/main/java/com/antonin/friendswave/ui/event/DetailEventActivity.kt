@@ -23,10 +23,14 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_event)
         val pos   = intent.getIntExtra("position", 0)
-
+        val idEvent = intent.getStringExtra("idEvent")
+        val adminEvent = intent.getStringExtra("adminEvent")
         val binding: ActivityDetailEventBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail_event)
         viewModel = ViewModelProviders.of(this, factory).get(EventFragmentViewModel::class.java)
         binding.event = viewModel
+        binding.idEvent = idEvent
+        binding.adminEvent = adminEvent
+
         binding.lifecycleOwner = this
         viewModel.fetchDataEvent(pos)
 

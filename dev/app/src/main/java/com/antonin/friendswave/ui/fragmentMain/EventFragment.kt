@@ -100,11 +100,15 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
-
+                val idEvent = viewModel.eventList.value!!.get(position).key
+                val adminEvent = viewModel.eventList.value!!.get(position).admin
+                println("PLEEEEEEEEEEEEEEEEEEEEASSSSSSSSSSSSSE : "+ idEvent)
                 val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
                 toast.show()
                 val intent = Intent(context, DetailEventActivity::class.java )
                 intent.putExtra("position", position)
+                intent.putExtra("idEvent", idEvent)
+                intent.putExtra("adminEvent", adminEvent)
                 startActivity(intent)
             }
         })

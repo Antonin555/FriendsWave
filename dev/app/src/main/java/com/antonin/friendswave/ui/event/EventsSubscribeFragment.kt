@@ -40,8 +40,8 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
         super.onCreate(savedInstanceState)
 
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
-        viewModel.fetchEventsPrivateUser()
         viewModel.fetchConfirmationEvents()
+        viewModel.getAllEventsPendingRequestPublic()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -68,10 +68,9 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
             adapter1.addItems(eventList)
         })
 
-        viewModel.eventList.observe(this, Observer { eventList ->
+        viewModel.eventPendingPublic.observe(this,Observer{ eventList ->
             adapter2.addItems(eventList)
         })
-
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {

@@ -64,14 +64,12 @@ class HomeFragment : Fragment(), KodeinAware {
         binding.item = viewModel
         return binding.root
 
-
     }
 
     override fun onResume() {
         super.onResume()
 
         if(binding.recyclerFragmentHome.isEmpty()) {
-
             binding.chatlogo.visibility = View.VISIBLE
         }
 

@@ -65,6 +65,9 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     val eventDataUser: LiveData<Event> = _eventDataUser
 
 
+    private val _eventPendingPublic = MutableLiveData<List<Event>>()
+    val eventPendingPublic: LiveData<List<Event>> = _eventPendingPublic
+
 //    private val _eventPublicUser = MutableLiveData<Event>()
 //    val eventPublicUser: LiveData<Event> = _eventPublicUser
 
@@ -88,6 +91,13 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
         Intent(view.context, AddEventActivity::class.java).also {
             view.context.startActivity(it)
         }
+    }
+
+    fun sendRequestToParticipatePublicEvent(idEvent:String, adminEvent:String){
+
+        repository.sendRequestToParticipatePublicEvent(idEvent,adminEvent)
+
+
     }
 
 
@@ -160,6 +170,13 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
             _guestList.value = event
         }
 
+    }
+
+    fun getAllEventsPendingRequestPublic(){
+
+        repository.getAllEventsPendingRequestPublic().observeForever{ event ->
+            _eventPendingPublic.value= event
+        }
     }
 
     fun fetchGuestDetailEventPublic(key:String?){

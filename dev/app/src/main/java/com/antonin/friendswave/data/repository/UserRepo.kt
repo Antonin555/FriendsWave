@@ -181,6 +181,27 @@ class UserRepo(private val firebase: FirebaseSource) {
 
         return interetLiveData
     }
+
+
+    fun getAllEventsPendingRequestPublic() : LiveData<List<Event>>{
+
+        val pendingEvents = MutableLiveData<List<Event>>()
+
+        firebase.getAllEventsPendingRequestPublic { event ->
+            pendingEvents.postValue(event)
+        }
+        return pendingEvents
+    }
+
+
+    fun sendRequestToParticipatePublicEvent(idEvent:String, adminEvent:String){
+
+        firebase.sendRequestToParticipatePublicEvent(idEvent,adminEvent)
+
+
+    }
+
+
     fun editProfil(user_live: User?) = firebase.editProfil(user_live)
 
     fun getUserProfilData(profilUid: String?): LiveData<User> {
