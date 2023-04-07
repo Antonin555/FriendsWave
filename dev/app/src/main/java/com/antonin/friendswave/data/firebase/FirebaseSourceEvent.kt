@@ -1,4 +1,7 @@
 package com.antonin.friendswave.data.firebase
 
-class FirebaseSourceEvent {
+class FirebaseSourceEvent : FirebaseSource() {
+
+
+
 }

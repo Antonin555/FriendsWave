@@ -257,6 +257,11 @@ class UserRepo(private val firebase: FirebaseSource) {
         firebase.acceptInvitationEvent(event)
     }
 
+    fun acceptRequestEvent(user:User?){
+
+        firebase.acceptRequestEvent(user)
+    }
+
     fun fetchDiscussion(receiverUid: String):LiveData<List<Messages>>{
         val messageList = MutableLiveData<List<Messages>>()
 

@@ -39,12 +39,13 @@ class ContactFragment : Fragment(), KodeinAware {
         binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_contact, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
         binding.viewmodel = viewModel
-        viewModel.fetchUsersFriends()
+
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
+        viewModel.fetchUsersFriends()
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_contact)
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerFragmentContact.layoutManager = layoutManager

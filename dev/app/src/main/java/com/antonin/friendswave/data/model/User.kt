@@ -21,6 +21,9 @@ data class User (
     var friendList: HashMap<String, String>? = HashMap(),
     var invitations: HashMap<String,String>? = HashMap(),
     var eventConfirmationList: HashMap<String,String>? = HashMap(),
+    var hostPendingRequestEventPublic: HashMap<String,String>? = HashMap(),
+    var pendingRequestEventPublic: HashMap<String,String>? = HashMap(),
+    var ConfirmHostRequestEventPublic: HashMap<String,String>? = HashMap(),
     var nbre_event : Int? =0,
     var img:String?  = ""
 

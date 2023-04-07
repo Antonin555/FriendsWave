@@ -42,7 +42,7 @@ class NotifsFragment : Fragment(), KodeinAware {
 
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
         adapter2 = ListGeneriqueAdapter(R.layout.recycler_invite_events)
-        adapter3 = ListGeneriqueAdapter(R.layout.recycler_contact)
+        adapter3 = ListGeneriqueAdapter(R.layout.recycler_demande_inscription)
 
 //        viewModel.fetchEventsInvitation(_eventList)
     }
@@ -64,6 +64,8 @@ class NotifsFragment : Fragment(), KodeinAware {
         binding.recyclerRequestEvent.layoutManager = layoutManager3
         binding.recyclerRequestEvent.adapter = adapter3
         viewModel.fetchDemandeInscriptionEventPublic()
+
+
         return binding.root
     }
 
@@ -80,6 +82,7 @@ class NotifsFragment : Fragment(), KodeinAware {
         viewModel.fetchEventsInvitation()
         viewModel.eventList.observe(this,Observer { eventList ->
             adapter2.addItems(eventList)
+
         })
 
 
@@ -89,8 +92,6 @@ class NotifsFragment : Fragment(), KodeinAware {
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
-                println(view.id)
-                println(R.id.btn_delete)
                 if (view.id == R.id.btn_accept){
                     var userNotif = viewModel.friendNotifList.value?.get(position)
                     viewModel.acceptRequest(userNotif)
@@ -103,7 +104,6 @@ class NotifsFragment : Fragment(), KodeinAware {
             }
 
         })
-
 
 
         adapter2.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
@@ -122,5 +122,25 @@ class NotifsFragment : Fragment(), KodeinAware {
             }
 
         })
+
+
+        adapter3.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
+            override fun onClick(view: View, position: Int) {
+                if (view.id == R.id.btn_accept){
+                    val eventKey = viewModel.requestListEvent.value?.get(position)!!
+                    viewModel.acceptRequestEvent(eventKey!!)
+
+                }
+
+                if (view.id == R.id.btn_delete){
+                    val eventKey = viewModel.eventList.value?.get(position)
+                    viewModel.refuseInvitationEvent(eventKey)
+
+                }
+            }
+
+        })
+
+
     }
 }
