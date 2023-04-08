@@ -1,11 +1,17 @@
 package com.antonin.friendswave.ui.fragmentMain
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import androidx.core.view.isEmpty
 import androidx.core.view.isNotEmpty
 import androidx.databinding.DataBindingUtil
@@ -35,6 +41,7 @@ class ContactFragment : Fragment(), KodeinAware {
     private lateinit var adapter1 : ListGeneriqueAdapter<User>
     private var viewModel: HomeFragmentViewModel  = HomeFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
     private lateinit var binding: FragmentContactBinding
+    private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_contact, container, false)
@@ -45,6 +52,10 @@ class ContactFragment : Fragment(), KodeinAware {
 
     override fun onResume() {
         super.onResume()
+
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_PERMISSION_READ_EXTERNAL_STORAGE)
+        }
         viewModel.fetchUsersFriends()
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_contact)
         val layoutManager = LinearLayoutManager(context)
@@ -61,6 +72,8 @@ class ContactFragment : Fragment(), KodeinAware {
             }else
                 binding.recoContact.visibility = View.INVISIBLE
         })
+
+
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {

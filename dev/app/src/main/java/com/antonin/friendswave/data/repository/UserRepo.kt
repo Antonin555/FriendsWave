@@ -225,6 +225,8 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     fun editProfil(user_live: User?) = firebase.editProfil(user_live)
 
+    fun editEvent(event:Event?)= firebase.editEvent(event)
+
     fun getUserProfilData(profilUid: String?): LiveData<User> {
         val userLiveData = MutableLiveData<User>()
 

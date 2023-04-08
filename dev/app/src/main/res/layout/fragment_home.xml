@@ -42,7 +42,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         app:cardCornerRadius="100dp"
-                        android:onClick="@{(v) -> item.goToYourProfil(v)}">
+                        >
 
                         <ImageView
                             android:id="@+id/img_profil"

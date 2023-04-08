@@ -73,6 +73,14 @@ open class FirebaseSource {
         firebaseData.child("user").child(mainUid!!).setValue(user_live)
     }
 
+    fun editEvent(event:Event?){
+        if(event!!.isPublic == true){
+            firebaseData.child("event/eventPublic").child(event.key.toString()).setValue(event)
+        }else{
+            firebaseData.child("event/eventPrivate").child(mainUid!!).child(event.key.toString()).setValue(event)
+        }
+    }
+
     fun getUserProfilData(profilUid: String?, onResult: (User?) -> Unit){
         firebaseData.child("user").child(profilUid!!)
             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -403,7 +411,7 @@ open class FirebaseSource {
                 for (snap in task.result.children) {
                     if (snap.exists()) {
                         val event = snap.getValue(Event::class.java)
-                        if(i.key == snap.key){
+                        if(event!!.key == snap.key){
                             eventList.add(event!!)
                         }
                     }
@@ -538,8 +546,8 @@ open class FirebaseSource {
                         for (data in snapshot.children){
                             val user = data.getValue(User::class.java)
                             if(user!!.pendingRequestEventPublic!!.containsKey(mainUid!!)){
-                                if(eventIdList.containsKey(user!!.pendingRequestEventPublic!!.getValue(mainUid!!))){
-                                    userList.add(user!!)
+                                if(eventIdList.containsKey(user.pendingRequestEventPublic!!.getValue(mainUid))){
+                                    userList.add(user)
                                 }
                             }
                         }
@@ -556,10 +564,10 @@ open class FirebaseSource {
 
     fun acceptRequestEvent(user:User?){
         var hashmail :String = user!!.email.hashCode().toString()
-        var idEvent:String = user!!.pendingRequestEventPublic!!.get(mainUid!!).toString()
+        var idEvent:String = user.pendingRequestEventPublic!!.get(mainUid!!).toString()
 //        user!!.pendingRequestEventPublic!!.get(user.email.hashCode().toString()).toString()
         val queryEventPublic = firebaseData.child("event/eventPublic").child(idEvent)
-        val queryAcceptHostEventUser = firebaseData.child("user").child(mainUid!!)
+        val queryAcceptHostEventUser = firebaseData.child("user").child(mainUid)
         val queryAcceptGuestEventUser = firebaseData.child("user").child(user.uid.toString())
 
         queryEventPublic.child("pendingRequestEventPublic").child(user.email.hashCode().toString()).removeValue()

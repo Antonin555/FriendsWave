@@ -55,11 +55,6 @@ class HomeFragment : Fragment(), KodeinAware {
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
         binding.lifecycleOwner = this
         binding.item = viewModel
-
-
-
-
-
         return binding.root
 
     }

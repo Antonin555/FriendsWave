@@ -32,9 +32,7 @@
                 android:id="@+id/imageProfil"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:background="#7986CB"
-                android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
-                />
+                android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }' />
 
         </androidx.cardview.widget.CardView>
 

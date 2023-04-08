@@ -265,6 +265,13 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     }
 
 
+    fun editEvent(){
+
+        repository.editEvent(_eventDataUser.value)
+
+
+    }
+
 
 
 }
