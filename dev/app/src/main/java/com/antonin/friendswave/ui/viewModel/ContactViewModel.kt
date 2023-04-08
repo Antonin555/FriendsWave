@@ -5,6 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.data.model.Messages
+import com.antonin.friendswave.data.model.User
+import com.antonin.friendswave.strategy.SearchAgeFriend
+import com.antonin.friendswave.strategy.SearchCityFriend
+import com.antonin.friendswave.strategy.SearchHobbyFriend
+import com.antonin.friendswave.strategy.StrategyFriend
 import javax.mail.Transport
 import java.util.*
 import javax.mail.*
@@ -19,6 +24,18 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
 //    val user by lazy {
 //        repository.currentUser()
 //    }
+
+    val searchHobbyFriend = SearchHobbyFriend()
+    val searchCityFriend = SearchCityFriend()
+    val searchAgeFriend = SearchAgeFriend()
+
+    private lateinit var searchFriendStrategy : StrategyFriend
+
+    private val _user = MutableLiveData<User>()
+    var user_live: LiveData<User> = _user
+
+    private val _totalUserList = MutableLiveData<List<User>>()
+    val totalUserList: LiveData<List<User>> = _totalUserList
 
     private val _emailList = MutableLiveData<List<String>>()
     val emailList: LiveData<List<String>> = _emailList
@@ -72,6 +89,23 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
                 e.printStackTrace()
             }
         }).start()
+    }
+
+    fun fetchAllUser(){
+        repository.fetchAllUser().observeForever{ user ->
+            _totalUserList.value = user
+        }
+    }
+
+    fun fetchUserData() {
+        repository.getUserData().observeForever { user ->
+            _user.value = user
+        }
+    }
+
+    fun strategyByAge(): List<User>{
+        searchFriendStrategy = StrategyFriend(searchHobbyFriend)
+        return searchFriendStrategy.search(user_live.value, totalUserList.value)
     }
 
 }

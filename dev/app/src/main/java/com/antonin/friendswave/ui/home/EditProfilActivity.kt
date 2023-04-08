@@ -2,12 +2,14 @@ package com.antonin.friendswave.ui.home
 
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
@@ -24,6 +26,12 @@ import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityEditProfilBinding
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.model.TypeFilter
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -39,6 +47,7 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
     private lateinit var binding: ActivityEditProfilBinding
     private lateinit var adapter: MyGridViewAdapter
     private lateinit var img_uri : Uri
+    private val AUTOCOMPLETE_REQUEST_CODE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +58,14 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
+
+        val apiKey = getString(R.string.api_key_google_map)
+
+        if (!Places.isInitialized()) {
+            Places.initialize(applicationContext, apiKey)
+        }
+
+
         viewModel.fetchUserData()
         viewModel.fetchInteret()
         actualiserSpinner()
@@ -57,6 +74,15 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
         binding.btnLoad.setOnClickListener {
             val img = Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             getResult.launch(img)
+
+        }
+
+        binding.searchCity.setOnClickListener {
+            val fields = listOf(Place.Field.ID, Place.Field.NAME)
+
+            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).setTypeFilter(
+                TypeFilter.CITIES).build(this)
+            startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
         }
     }
 
@@ -103,6 +129,32 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
             binding.gridView.adapter = adapter
         })
 
+    }
+
+    // methode de Google dans la doc:
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            when (resultCode) {
+                Activity.RESULT_OK -> {
+                    data?.let {
+                        val place = Autocomplete.getPlaceFromIntent(data)
+                        binding.editLieu.setText(place.name.toString())
+                    }
+                }
+                AutocompleteActivity.RESULT_ERROR -> {
+                    // TODO: Handle the error.
+                    data?.let {
+                        val status = Autocomplete.getStatusFromIntent(data)
+                        Log.i(ContentValues.TAG, status.statusMessage ?: "")
+                    }
+                }
+                Activity.RESULT_CANCELED -> {
+                    // The user canceled the operation.
+                }
+            }
+            return
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
 }

@@ -4,9 +4,15 @@ package com.antonin.friendswave.ui.contact
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
+import com.antonin.friendswave.adapter.ListGeneriqueAdapter
+import com.antonin.friendswave.data.model.Event
+import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.databinding.ActivityAddContactBinding
+import com.antonin.friendswave.strategy.*
 import com.antonin.friendswave.ui.viewModel.*
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -19,9 +25,7 @@ class AddContactActivity : AppCompatActivity(), KodeinAware {
     override val kodein : Kodein by kodein()
     private lateinit var viewModel: ContactViewModel
     private val factory : ContactViewModelFactory by instance()
-    //d'ou sort cette variable
-//    private lateinit var binding: AddContactBinding
-
+    private lateinit var adapter1 : ListGeneriqueAdapter<User>
     private lateinit var binding: ActivityAddContactBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,8 +41,27 @@ class AddContactActivity : AppCompatActivity(), KodeinAware {
 
     override fun onResume() {
         super.onResume()
-        //pourquoi fetchEmail?
-        binding.viewmodel?.fetchEmail()
+        //pour verifier si la personne est dans l'app
+        viewModel.fetchEmail()
+        //pour les strategies de referencement
+        viewModel.fetchAllUser()
+        viewModel.fetchUserData()
+
+        adapter1 = ListGeneriqueAdapter(R.layout.recycler_contact)
+        val layoutManager2 = LinearLayoutManager(this)
+        binding.recyclerSuggestion.layoutManager = layoutManager2
+        binding.recyclerSuggestion.adapter = adapter1
+
+        val searchHobbyFriend = SearchHobbyFriend()
+        val searchCityFriend = SearchCityFriend()
+        val searchAgeFriend = SearchAgeFriend()
+        var searchStrategyFriend: StrategyFriend
+
+
+        binding.btnHobby.setOnClickListener{
+            searchStrategyFriend = StrategyFriend(searchHobbyFriend)
+            strategyUser(searchStrategyFriend)
+        }
     }
 
 //    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -51,6 +74,14 @@ class AddContactActivity : AppCompatActivity(), KodeinAware {
 //        return binding.root
 //    }
 
+    fun strategyUser(strategy: StrategyFriend) {
+        var tempList : ArrayList<User> =  ArrayList()
+        viewModel.totalUserList.observe(this, Observer { userList ->
+            tempList = strategy.search(viewModel.user_live.value, userList) as ArrayList<User>
+            adapter1.addItems(tempList)
+        })
+
+    }
 
 
 }

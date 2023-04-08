@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
+import com.antonin.friendswave.ui.chat.GroupChatActivity
 import com.antonin.friendswave.ui.event.*
 import com.antonin.friendswave.ui.home.ManageHomeActivity
 import java.text.SimpleDateFormat
@@ -241,8 +242,6 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
         }
     }
 
-
-
     fun sendAnInvitationPrivateEvent(pos: Int){
 
         if (email.isNullOrEmpty()) {
@@ -253,17 +252,17 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     }
 
-
-
-
-
     fun gotoMesEventsActivity(view: View) {
         Intent(view.context, ManagerFragmentEvent::class.java).also {
             view.context.startActivity(it)
         }
     }
 
-
+    fun goToGroupChat(view: View){
+        Intent(view.context, GroupChatActivity::class.java).also {
+            view.context.startActivity(it)
+        }
+    }
 
 
 

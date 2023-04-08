@@ -35,7 +35,7 @@
                     android:id="@+id/recoContact"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.5"
                     android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:text="@string/titre_fragment_contact"
@@ -47,7 +47,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1" />
+                    android:layout_weight="0.8" />
+
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fabAddContact"

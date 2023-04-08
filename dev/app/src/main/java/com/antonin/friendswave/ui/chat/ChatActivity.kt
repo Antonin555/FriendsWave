@@ -23,12 +23,9 @@ import org.kodein.di.generic.instance
 
 class ChatActivity : AppCompatActivity(), KodeinAware {
 
-    var messageList:ArrayList<Messages> = ArrayList()
-//    private lateinit var messageAdapter: MessageAdapter
     override val kodein : Kodein by kodein()
     private val factory : ChatVMFactory by instance()
     private var viewModel : ChatViewModel = ChatViewModel(repository = UserRepo(firebase = FirebaseSource()))
-//    private var adapter1 : ListGeneriqueAdapter<Message> = ListGeneriqueAdapter<Message>(R.layout.recycler_message) //a changer pour un comportement different pour les messages send/received
     private  lateinit var messageAdapter : MessageAdapter
     private lateinit var binding : ActivityChatBinding
 
@@ -37,25 +34,19 @@ class ChatActivity : AppCompatActivity(), KodeinAware {
         setContentView(R.layout.activity_chat)
 
         val reveiverUid = intent.getStringExtra("uid")
-
-
         viewModel = ViewModelProviders.of(this,factory).get(ChatViewModel::class.java)
-        //set receiverUID
         viewModel.receiverUid = reveiverUid
-        //aller chercher la disscution de l'user
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat)
         binding.viewmodel = viewModel
+        binding.lifecycleOwner = this
 
         val layoutManager = LinearLayoutManager(this)
-        binding.lifecycleOwner = this
         binding.chatRecyclerView.layoutManager = layoutManager
 
-//        binding.chatRecyclerView.adapter = adapter1
         viewModel.messageList.observe(this, Observer { messageList ->
             messageAdapter = MessageAdapter(this, messageList)
             messageAdapter.addItems(messageList)
             binding.chatRecyclerView.adapter = messageAdapter
-//            adapter1.addItems(eventList)
         })
 
         viewModel.message.observe(this, Observer { message ->
@@ -68,10 +59,10 @@ class ChatActivity : AppCompatActivity(), KodeinAware {
         super.onResume()
         viewModel.fetchDiscussion()
     }
-
-    fun onSendButtonClick(view: View) {
-        viewModel.addMessagetoDatabase(view)
-        // Réinitialisation du texte de l'EditText
-        binding.messageBox.setText("")
-    }
+//
+//    fun onSendButtonClick(view: View) {
+//        viewModel.addMessagetoDatabase(view)
+//        // Réinitialisation du texte de l'EditText
+//        binding.messageBox.setText("")
+//    }
 }

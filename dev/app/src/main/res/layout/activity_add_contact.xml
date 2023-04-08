@@ -63,5 +63,41 @@
             android:textSize="20sp"
             android:textColor="@color/white">
         </Button>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="408dp">
+
+            <Button
+                android:id="@+id/btn_hobby"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="by Hobby" />
+
+            <Button
+                android:id="@+id/btn_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="by city" />
+
+            <Button
+                android:id="@+id/btn_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="by age" />
+
+
+        </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerSuggestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="0.8"
+                android:layout_alignParentBottom="true"/>
+
     </RelativeLayout>
 </layout>

@@ -11,10 +11,7 @@ import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.outils.startLoginActivity
-import com.antonin.friendswave.strategy.SearchByCities
-import com.antonin.friendswave.strategy.SearchByName
-import com.antonin.friendswave.strategy.SearchCategory
-import com.antonin.friendswave.strategy.Strategy
+import com.antonin.friendswave.strategy.*
 import com.antonin.friendswave.ui.contact.AddContactActivity
 import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.home.SignalementActivity
@@ -49,9 +46,8 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
     private val _categorieEventList = MutableLiveData<List<Event>>()
     val categorieEventList: LiveData<List<Event>> = _categorieEventList
 
-
-
-
+    private val _totalUserList = MutableLiveData<List<User>>()
+    val totalUserList: LiveData<List<User>> = _totalUserList
 
     val user by lazy {
         repository.currentUser()
@@ -171,6 +167,12 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
             _categorieEventList.value = event
         }
 
+    }
+
+    fun fetchAllUser(){
+        repository.fetchAllUser().observeForever{ user ->
+            _totalUserList.value = user
+        }
     }
 
 
