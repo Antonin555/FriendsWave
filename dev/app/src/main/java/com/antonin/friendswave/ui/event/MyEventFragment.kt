@@ -62,16 +62,21 @@ class MyEventFragment : Fragment(), KodeinAware {
 
         viewModel.eventList.observe(this, Observer { eventList ->
             adapter1.addItems(eventList)
+            if(adapter1.itemCount == 0){
+                binding.createYourFirstEvent.visibility = View.VISIBLE
+            }
         })
 
         viewModel.eventListPublicUser.observe(this, Observer { eventList ->
             adapter2.addItems(eventList)
+            if(adapter2.itemCount == 0){
+                binding.createYourFirstEventPublic.visibility = View.VISIBLE
+            }
         })
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
                var eventKeyPrivate = viewModel.eventList.value!!.get(position).key.toString()
-
                 val intent = Intent(context,MyEventManageActivity::class.java)
                 intent.putExtra("clefPrivate", eventKeyPrivate)
                 intent.putExtra("position", position)
@@ -83,17 +88,13 @@ class MyEventFragment : Fragment(), KodeinAware {
         adapter2.setOnListItemViewClickListener(object:ListGeneriqueAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
                 var eventKeyPublic = viewModel.eventListPublicUser.value!!.get(position).key.toString()
-                println("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee " + eventKeyPublic)
                 val intent  = Intent(context,MyEventManageActivity::class.java)
                 intent.putExtra("clefPublic", eventKeyPublic)
                 intent.putExtra("pos", position)
                 startActivity(intent)
             }
 
-
         })
-
-
 
     }
 
