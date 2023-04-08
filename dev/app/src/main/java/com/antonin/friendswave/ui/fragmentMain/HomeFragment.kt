@@ -105,7 +105,6 @@ class HomeFragment : Fragment(), KodeinAware {
 
 
         binding.btnCategory.setOnClickListener{
-            println("hHhhhhhhhhhhhhhhhhhhhhhhhhhhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
             var type = "Mars"
             searchStrategy = Strategy(searchCategory)
             strategyEvent(searchStrategy,type)

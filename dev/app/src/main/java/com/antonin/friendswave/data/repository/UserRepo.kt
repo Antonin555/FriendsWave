@@ -305,4 +305,12 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     }
 
+    fun fetchAllUser():LiveData<List<User>>{
+        val userList = MutableLiveData<List<User>>()
+        firebase.fetchAllUser { user ->
+            userList.postValue(user)
+        }
+        return userList
+    }
+
 }

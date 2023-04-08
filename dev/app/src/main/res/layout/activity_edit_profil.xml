@@ -286,11 +286,13 @@
                     android:fontFamily="@font/roboto_mono" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/searchCity"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginLeft="20dp"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    >
 
                 </com.google.android.material.floatingactionbutton.FloatingActionButton>
 

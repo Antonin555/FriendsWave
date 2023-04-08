@@ -14,6 +14,12 @@ class ChatViewModel(private val repository: UserRepo): ViewModel()  {
     var messageEnvoye: String? = ""
     var receiverUid: String? = ""
     val message = MutableLiveData<String>()
+    //chat
+    private val _messageList = MutableLiveData<List<Messages>>()
+    val messageList: LiveData<List<Messages>> = _messageList
+    //group chat
+    private val _groupMessageList = MutableLiveData<List<Messages>>()
+    val groupMessageList: LiveData<List<Messages>> = _groupMessageList
 
     fun addMessagetoDatabase(view: View){
         println(view)
@@ -25,9 +31,6 @@ class ChatViewModel(private val repository: UserRepo): ViewModel()  {
         message.value = ""
         fetchDiscussion()
     }
-
-    private val _messageList = MutableLiveData<List<Messages>>()
-    val messageList: LiveData<List<Messages>> = _messageList
 
     fun fetchDiscussion() {
         repository.fetchDiscussion(receiverUid!!).observeForever{ message ->

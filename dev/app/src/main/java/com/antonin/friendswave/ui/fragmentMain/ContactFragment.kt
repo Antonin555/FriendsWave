@@ -36,12 +36,10 @@ class ContactFragment : Fragment(), KodeinAware {
     private var viewModel: HomeFragmentViewModel  = HomeFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
     private lateinit var binding: FragmentContactBinding
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_contact, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
         binding.viewmodel = viewModel
-
         return binding.root
     }
 
@@ -53,12 +51,7 @@ class ContactFragment : Fragment(), KodeinAware {
         binding.recyclerFragmentContact.layoutManager = layoutManager
         binding.recyclerFragmentContact.adapter = adapter1
 
-
-//        if(binding.recyclerFragmentContact.isNotEmpty()){
-//
-//            binding.textView60.visibility = View.INVISIBLE
-//        }
-
+        viewModel.fetchUsersFriends()
 
         viewModel.emailUserList.observe(this, Observer { userList ->
             adapter1.addItems(userList)
@@ -68,10 +61,6 @@ class ContactFragment : Fragment(), KodeinAware {
             }else
                 binding.recoContact.visibility = View.INVISIBLE
         })
-
-
-
-
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
@@ -88,8 +77,6 @@ class ContactFragment : Fragment(), KodeinAware {
                 }
             }
         })
-
-
     }
 
 }

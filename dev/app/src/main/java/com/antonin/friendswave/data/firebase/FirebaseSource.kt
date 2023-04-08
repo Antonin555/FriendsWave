@@ -354,23 +354,22 @@ open class FirebaseSource {
     }
 
     fun fetchConfirmationEvents( onResult: (List<Event>) -> Unit) {
-
-        var eventId: Any?
+        var hostId: Any?
         var eventValue: Any?
         val eventIdList = HashMap<String,String>()
         val eventList: ArrayList<Event> = ArrayList()
-        firebaseData.child("user").child(mainUid!!).child("listInscrits").addListenerForSingleValueEvent(object : ValueEventListener {
+        firebaseData.child("user").child(mainUid!!).child("eventConfirmationList").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (data in dataSnapshot.children){
                         eventValue = data.value.toString()
-                        eventId = data.key.toString()
-                        eventIdList.put(eventId.toString(),eventValue.toString())
+                        hostId = data.key.toString()
+                        eventIdList.put(eventValue.toString(),hostId.toString())
 
                     }
 //                    addEventsPrivateToRecyclerConfirm(eventIdList,eventList, onResult)
                     addEventsPrivateToRecyclerNotif(eventIdList,eventList, onResult)
-                    addEventsPublicToRecyclerNotif(eventIdList,eventList,onResult)
+                    addEventsPublicToRecyclerNotif2(eventIdList,eventList,onResult)
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -396,6 +395,24 @@ open class FirebaseSource {
         }
     }
 
+    //Alex 2eme fonction pour ne pas faire result children
+    fun addEventsPublicToRecyclerNotif2(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
+
+        firebaseData.child("event/eventPublic").get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                for (snap in task.result.children) {
+                    if (snap.exists()) {
+                        val event = snap.getValue(Event::class.java)
+                        if(i.key == snap.key){
+                            eventList.add(event!!)
+                        }
+                    }
+                }
+                onResult(eventList)
+            }
+        }
+
+    }
 
     ///  A FAIRE :
 
@@ -830,9 +847,11 @@ open class FirebaseSource {
                 println(mainUser)
                 mainUser?.friendRequest!!.remove(userNotif?.uid)
                 mainUser.friendList!!.put(userNotif?.uid!!, userNotif.email!!)
+                mainUser.friends = mainUser.friends?.plus(1)
                 firebaseData.child("user").child(mainUid).setValue(mainUser)
                 //pe prob ici
                 firebaseData.child("user").child(userNotif.uid!!).child("friendList").child(mainUid).setValue(mainUser.email)
+                firebaseData.child("user").child(userNotif.uid!!).child("friends").setValue(userNotif.friendList?.size?.plus(1))
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -901,6 +920,24 @@ open class FirebaseSource {
                     emailList.add(user!!.email.toString())
                 }
                 onResult(emailList)
+            }
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+    }
+
+    fun fetchAllUser(onResult: (List<User>) -> Unit){
+        firebaseData.child("user").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userList = ArrayList<User>()
+                for (postSnapshot in snapshot.children){
+                    val user = postSnapshot.getValue(User::class.java)
+
+                    userList.add(user!!)
+
+                }
+                onResult(userList)
             }
             override fun onCancelled(error: DatabaseError) {
 
