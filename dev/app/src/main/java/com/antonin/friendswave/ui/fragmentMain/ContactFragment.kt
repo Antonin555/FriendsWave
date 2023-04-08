@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isEmpty
+import androidx.core.view.isNotEmpty
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -50,13 +52,25 @@ class ContactFragment : Fragment(), KodeinAware {
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerFragmentContact.layoutManager = layoutManager
         binding.recyclerFragmentContact.adapter = adapter1
-//        adapter1.addItems(contactList)
 
+
+//        if(binding.recyclerFragmentContact.isNotEmpty()){
+//
+//            binding.textView60.visibility = View.INVISIBLE
+//        }
 
 
         viewModel.emailUserList.observe(this, Observer { userList ->
             adapter1.addItems(userList)
+            if(userList.isEmpty()){
+                binding.recoContact.visibility = View.VISIBLE
+
+            }else
+                binding.recoContact.visibility = View.INVISIBLE
         })
+
+
+
 
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {
@@ -74,6 +88,8 @@ class ContactFragment : Fragment(), KodeinAware {
                 }
             }
         })
+
+
     }
 
 }

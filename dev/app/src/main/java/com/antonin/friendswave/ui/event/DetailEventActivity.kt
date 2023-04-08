@@ -3,8 +3,12 @@ package com.antonin.friendswave.ui.event
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
+import com.antonin.friendswave.adapter.ListGeneriqueAdapter
+import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.databinding.ActivityDetailEventBinding
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
@@ -17,7 +21,7 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
     override val kodein by kodein()
     private lateinit var viewModel: EventFragmentViewModel
     private val factory : EventFragmentVMFactory by instance()
-
+    private var adapter1 : ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +36,17 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
         binding.adminEvent = adminEvent
 
         binding.lifecycleOwner = this
+
+        val layoutManager = LinearLayoutManager(this)
+
+        binding.recyclerConfirmGuest.layoutManager = layoutManager
+        binding.recyclerConfirmGuest.adapter = adapter1
         viewModel.fetchDataEvent(pos)
+        viewModel.fetchGuestConfirmDetailEventPublic(idEvent)
 
-
+        viewModel.confirm_guestListPublic.observe(this, Observer{ confirm_guestList->
+            adapter1.addItems(confirm_guestList)
+        })
     }
 
 

@@ -116,6 +116,17 @@ class UserRepo(private val firebase: FirebaseSource) {
         return guestList
     }
 
+    fun fetchGuestConfirmDetailEventPublic(key: String?):LiveData<List<User>>{
+
+        val confirm_guest_list = MutableLiveData<List<User>>()
+
+        firebase.fetchGuestConfirmDetailEventPublic(key) { user ->
+            confirm_guest_list.postValue(user)
+        }
+
+        return confirm_guest_list
+    }
+
     fun fetchGuestDetailEventPublic(key:String?):LiveData<List<User>>{
 
         val guestList = MutableLiveData<List<User>>()

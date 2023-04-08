@@ -23,6 +23,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -42,6 +46,12 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="#7986CB" />
+
+                <ImageView
+                    android:id="@+id/makefriends"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/chatlogo" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerFragmentNotif"
@@ -63,6 +73,12 @@
                     android:layout_marginBottom="10dp"
                     android:background="#7986CB" />
 
+                <TextView
+                    android:id="@+id/searchEvents"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="HELLLLLLLLLLLLOOOO" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerFragmentNotifEvents"
                     android:layout_width="match_parent"
@@ -82,12 +98,19 @@
                     android:layout_marginBottom="10dp"
                     android:background="#7986CB" />
 
+                <TextView
+                    android:id="@+id/tempInvitations"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="ALLLLLOOOOO" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_request_event"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
             </LinearLayout>
+            </ScrollView>
         </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

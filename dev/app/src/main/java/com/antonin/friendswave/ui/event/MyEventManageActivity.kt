@@ -46,6 +46,7 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         if(keyPublic != null ){
             viewModel.fetchDetailEventPublicUser(keyPublic)
             viewModel.fetchGuestDetailEventPublic(keyPublic)
+            viewModel.fetchGuestConfirmDetailEventPublic(keyPublic)
 
         }
         if(keyPrivate != null) {
@@ -71,6 +72,9 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
             adapter2.addItems(guestList)
         })
 
+        viewModel.confirm_guestListPublic.observe(this,Observer{ confirm_guestList->
+            adapter1.addItems(confirm_guestList)
+        })
 
 
     }

@@ -248,7 +248,8 @@
                         android:text="@{event.eventData.nbrePersonnes.toString()}" />
                 </LinearLayout>
 
-                <ListView
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_confirm_guest"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_marginTop="10dp" />

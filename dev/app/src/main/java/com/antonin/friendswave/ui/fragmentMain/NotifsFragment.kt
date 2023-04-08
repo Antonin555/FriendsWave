@@ -54,6 +54,7 @@ class NotifsFragment : Fragment(), KodeinAware {
         viewModel = ViewModelProviders.of(this,factory).get(NotifFragmentViewModel::class.java)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
+
         val layoutManager = LinearLayoutManager(context)
         val layoutManager2 = LinearLayoutManager(context)
         val layoutManager3 = LinearLayoutManager(context)
@@ -63,6 +64,9 @@ class NotifsFragment : Fragment(), KodeinAware {
         binding.recyclerFragmentNotifEvents.adapter = adapter2
         binding.recyclerRequestEvent.layoutManager = layoutManager3
         binding.recyclerRequestEvent.adapter = adapter3
+
+        viewModel.fetchUsersRequest()
+        viewModel.fetchEventsInvitation()
         viewModel.fetchDemandeInscriptionEventPublic()
 
 
@@ -73,22 +77,24 @@ class NotifsFragment : Fragment(), KodeinAware {
         super.onResume()
 
 
-
-        viewModel.fetchUsersRequest()
         viewModel.friendNotifList.observe(this, Observer { notifUserList ->
             adapter1.addItems(notifUserList)
+            if(adapter1.itemCount ==0 ) {binding.makefriends.visibility = View.VISIBLE}
         })
 
-        viewModel.fetchEventsInvitation()
         viewModel.eventList.observe(this,Observer { eventList ->
             adapter2.addItems(eventList)
-
+            if( adapter2.itemCount ==0){binding.searchEvents.visibility = View.VISIBLE }
         })
-
 
         viewModel.requestListEvent.observe(this, Observer { userList ->
             adapter3.addItems(userList)
+            if( adapter3.itemCount == 0){binding.tempInvitations.visibility =View.VISIBLE}
         })
+
+
+
+
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {

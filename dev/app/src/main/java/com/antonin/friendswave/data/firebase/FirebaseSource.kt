@@ -402,10 +402,15 @@ open class FirebaseSource {
     // list des invitations pour event PRIVATE
     // list des confirmés pour PUBLIC
 
+
+
+    //
+
+
+
     // POUR MY EVENT : RECHERCHE DES PARTICIPANTS INVITATIONS PRIVATE :
 
     @SuppressLint("SuspiciousIndentation")
-
     // PRIVATE EVENT : LIST DES CONFIRMÉS
     fun fetchGuestDetailEvent(key:String?, onResult: (List<User>) -> Unit){
 
@@ -428,6 +433,26 @@ open class FirebaseSource {
 
 
     // POUR MY EVENT : RECHERCHE DES PARTICIPANTS INVITATIONS PUBLICS : ///////////////////////////////////////////////////////////////////////////////////////
+
+    fun fetchGuestConfirmDetailEventPublic(key:String?, onResult: (List<User>) -> Unit){
+
+        val listGuest : ArrayList<String> = ArrayList()
+
+        firebaseData.child("event/eventPublic").child(key!!)
+            .child("listInscrits").addValueEventListener( object :ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for(data in dataSnapshot.children){
+                            listGuest.add(data!!.value.toString())
+                        }
+                        searchGuest(listGuest, onResult)
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
+    }
+
 
     @SuppressLint("SuspiciousIndentation")
     fun fetchGuestDetailEventPublic(key:String?, onResult: (List<User>) -> Unit){
