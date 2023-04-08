@@ -23,6 +23,7 @@ import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentHomeBinding
+import com.antonin.friendswave.outils.AlertDialog
 import com.antonin.friendswave.strategy.SearchByCities
 import com.antonin.friendswave.strategy.SearchByName
 import com.antonin.friendswave.strategy.SearchCategory
@@ -54,6 +55,11 @@ class HomeFragment : Fragment(), KodeinAware {
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
         binding.lifecycleOwner = this
         binding.item = viewModel
+
+
+
+
+
         return binding.root
 
     }
@@ -108,6 +114,8 @@ class HomeFragment : Fragment(), KodeinAware {
 
 
         }
+
+
 
 
 

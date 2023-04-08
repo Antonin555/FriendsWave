@@ -269,14 +269,14 @@
             android:background="#7986CB" />
 
         <Button
-            android:id="@+id/button13"
+            android:id="@+id/btn_essai"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_mono"
             android:text="Button" />
 
         <Button
-            android:id="@+id/button14"
+            android:id="@+id/btn_delete_my_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_mono"

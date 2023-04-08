@@ -1,6 +1,9 @@
 package com.antonin.friendswave.ui.event
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -11,6 +14,7 @@ import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityMyEventManageBinding
+import com.antonin.friendswave.outils.AlertDialog
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import org.kodein.di.Kodein
@@ -76,6 +80,27 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
             adapter1.addItems(confirm_guestList)
         })
 
+        binding.btnDeleteMyEvent.setOnClickListener{
 
+            val alert = AlertDialog(this)
+            alert.showDialog(this,"title", "message", "OK", "Cancel", positiveButtonClickListener, negativeButtonClickListener)
+
+        }
+
+
+    }
+
+    val positiveButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
+        // Code à exécuter si le bouton positif est cliqué
+        if (which == DialogInterface.BUTTON_POSITIVE) {
+            finish()
+        }
+    }
+
+    val negativeButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
+        // Code à exécuter si le bouton négatif est cliqué
+        if (which == DialogInterface.BUTTON_NEGATIVE) {
+            Toast.makeText(this,"ok on touche a rien", Toast.LENGTH_LONG).show()
+        }
     }
 }

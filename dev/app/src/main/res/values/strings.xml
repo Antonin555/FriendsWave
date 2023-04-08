@@ -49,6 +49,9 @@
 
     <string name="recycler_delete">supprimer</string>
 
+    <string name="alert_yes">oui</string>
+    <string name="alert_no">non</string>
+
 
     <string name="api_key_google_map">AIzaSyDDvmYhowxWZi-TRhLBK1bduYexZAHhaQ8</string>
     <string name="id_maps_pereso">cee059bafdb02fa3</string>
