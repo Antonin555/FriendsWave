@@ -30,7 +30,7 @@
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/roboto_mono"
             android:gravity="center_horizontal"
-            android:text="New User Signup"
+            android:text="@string/new_user_signup"
             android:textColor="#000000"
             android:textSize="26sp"
             android:textStyle="bold" />
@@ -61,7 +61,7 @@
                     android:drawableLeft="@color/design_default_color_primary"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/roboto_mono"
-                    android:hint="name"
+                    android:hint="@string/hint_name"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
                     android:text="@={viewmodel.name}" />
@@ -74,7 +74,7 @@
                     android:drawableLeft="@color/design_default_color_primary"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/roboto_mono"
-                    android:hint="email"
+                    android:hint="@string/hint_mail"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
                     android:text="@={viewmodel.email}" />
@@ -86,7 +86,7 @@
                     android:drawableLeft="@color/black"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/roboto_mono"
-                    android:hint="password"
+                    android:hint="@string/password"
                     android:inputType="textPassword"
                     android:singleLine="true"
                     android:text="@={viewmodel.password}" />
@@ -99,7 +99,7 @@
                     android:layout_margin="22dp"
                     android:background="#d67601"
                     android:onClick="@{() -> viewmodel.signup()}"
-                    android:text="Sign Up"
+                    android:text="@string/signup"
                     android:textAllCaps="false"
                     android:textColor="#fff"
                     android:textSize="18sp" />
@@ -111,7 +111,7 @@
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/roboto_mono"
                     android:onClick="@{(v) -> viewmodel.goToLogin(v)}"
-                    android:text="login"
+                    android:text="@string/login"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 

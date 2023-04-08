@@ -81,7 +81,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Envoyer"
+            android:text="@string/send"
             android:onClick="@{() -> view.sendSignalement()}"
             android:layout_gravity="center">
 

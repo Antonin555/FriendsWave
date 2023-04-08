@@ -19,6 +19,7 @@
     <string name="add_event_categorie">Catégorie : </string>
     <string name="add_event_photo">Photo : </string>
     <string name="add_event_hint_name">nom event</string>
+    <string name="add_event_hint_mail">entrez un courriel valide</string>
     <string name="add_event_lieu">Lieu : </string>
     <string name="add_event_date">Date : </string>
     <string name="add_event_heure">Heure : </string>
@@ -26,15 +27,29 @@
     <string name="add_event_nbre_personnes">Nombre de personnes : </string>
     <string name="add_event_btn_publier">publier </string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="photo">Photo</string>
+    <string name="prensentation">presentation</string>
+    <string name="hint_prensentation">ecrivez une presentation</string>
+    <string name="hint_name">votre nom</string>
+    <string name="hint_mail">votre mail</string>
+    <string name="prenom">prenom</string>
+    <string name="langues">langues</string>
+    <string name="centres_interets">centres d&apos;interets</string>
+    <string name="courriel">e-mail</string>
+    <string name="login">LOGIN</string>
+    <string name="signup">sign up</string>
+    <string name="password">password</string>
+    <string name="register">register</string>
+    <string name="new_user_signup">New User Signup</string>
+    <string name="chat_group">Chat Group</string>
 
     <string name="detail_event_nbre_inscrit">nombre inscrits : </string>
     <string name="detail_event_inscrit">Inscrits : </string>
     <string name="detail_event_inscription">inscrivez vous</string>
     <string name="detail_event_infos">Infos :</string>
     <string name="detail_event_duration">Durée :</string>
-
-
+    <string name="age">age</string>
+    <string name="send">envoyer</string>
     <string name="activity_event_inscrit">events inscrits</string>
     <string name="activity_event_perso">mes events</string>
     <string name="activity_event_confirm">events confirmés</string>
@@ -48,10 +63,10 @@
     <string name="fragment_notifs_demande_events">demande events</string>
 
     <string name="recycler_delete">supprimer</string>
-
+    <string name="add_contact">Faites une nouvelle demande d&apos;ami(e)"</string>
     <string name="alert_yes">oui</string>
     <string name="alert_no">non</string>
-
+    <string name="save">sauvegarder</string>
 
     <string name="api_key_google_map">AIzaSyDDvmYhowxWZi-TRhLBK1bduYexZAHhaQ8</string>
     <string name="id_maps_pereso">cee059bafdb02fa3</string>

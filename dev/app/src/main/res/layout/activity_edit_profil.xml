@@ -44,7 +44,7 @@
             android:background="#F6EDED"
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
-            android:text="Photo"
+            android:text="@string/photo"
             android:textColor="#000000"
             android:textSize="24sp" />
 
@@ -96,7 +96,7 @@
             android:background="#F6EDED"
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
-            android:text="Presentation"
+            android:text="@string/prensentation"
             android:textSize="24sp" />
 
         <View
@@ -115,7 +115,7 @@
             android:background="@null"
             android:fontFamily="@font/roboto_mono"
             android:gravity="top|start"
-            android:hint="Write a description..."
+            android:hint="@string/hint_prensentation"
             android:inputType="textMultiLine"
             android:lines="8"
             android:overScrollMode="always"
@@ -132,7 +132,7 @@
             android:background="#F6EDED"
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
-            android:text="Informations"
+            android:text="@string/detail_event_infos"
             android:textSize="24sp" />
 
         <View
@@ -163,7 +163,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
-                    android:text="Prenom : "
+                    android:text="@string/prenom"
                     android:textSize="18sp" />
 
                 <EditText
@@ -172,14 +172,16 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:text="@={viewmodel.user_live.name}"
-                    android:fontFamily="@font/roboto_mono" />
+                    android:fontFamily="@font/roboto_mono"
+                    android:importantForAutofill="no" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1">
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
+                    tools:ignore="RtlHardcoded">
 
                 </com.google.android.material.floatingactionbutton.FloatingActionButton>
             </LinearLayout>
@@ -197,7 +199,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
-                    android:text="Nom : "
+                    android:text="@string/add_event_name"
                     android:textSize="18sp" />
 
                 <EditText
@@ -206,14 +208,16 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:text="@={viewmodel.user_live.familyName}"
-                    android:fontFamily="@font/roboto_mono" />
+                    android:fontFamily="@font/roboto_mono"
+                    android:importantForAutofill="no" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginLeft="20dp"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    tools:ignore="RtlHardcoded">
 
                 </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
@@ -233,7 +237,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
-                    android:text="Age : "
+                    android:text="@string/age"
                     android:textSize="18sp" />
 
                 <EditText
@@ -244,7 +248,8 @@
                     android:ems="10"
                     android:fontFamily="@font/roboto_mono"
                     android:text="@={``+viewmodel.user_live.age}"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    tools:ignore="Autofill" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="0dp"
@@ -269,7 +274,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Lieu : "
+                    android:text="@string/add_event_lieu"
                     android:textSize="18sp" />
 
                 <EditText
@@ -304,7 +309,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
-                    android:text="Langues : "
+                    android:text="@string/langues"
                     android:textSize="18sp" />
 
                 <Spinner
@@ -353,7 +358,7 @@
             android:background="#F6EDED"
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
-            android:text="Centres Interêts"
+            android:text="@string/centres_interets"
             android:textSize="20sp" />
 
         <View
@@ -384,7 +389,7 @@
             android:fontFamily="@font/roboto_mono"
             android:layout_margin="10dp"
             android:onClick="@{() -> viewmodel.editProfil()}"
-            android:text="Save" />
+            android:text="@string/save" />
 
     </LinearLayout>
 

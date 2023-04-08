@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
 
@@ -22,7 +21,8 @@
             android:id="@+id/loginLayout"
             android:layout_centerInParent="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            tools:ignore="UselessParent">
 
 
 
@@ -41,7 +41,7 @@
                     android:layout_weight="0.3"
                     android:fontFamily="@font/roboto_mono"
                     android:gravity="center_horizontal"
-                    android:text="Account Login"
+                    android:text="@string/login"
                     android:textColor="#7986CB"
                     android:textSize="34sp"
                     android:textStyle="bold" />
@@ -57,7 +57,7 @@
                     android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:labelFor="@id/text_email"
-                    android:text="email"
+                    android:text="@string/courriel"
                     android:textColor="@color/purple_200"
                     android:textStyle="bold" />
 
@@ -71,11 +71,12 @@
                     android:drawableLeft="@color/cardview_shadow_start_color"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/roboto_mono"
-                    android:hint="john@gmail.com"
+                    android:hint="@string/add_event_hint_mail"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
                     android:text="@={view.email}"
-                    android:textColorHint="#F06292" />
+                    android:textColorHint="#F06292"
+                    tools:ignore="Autofill" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -87,7 +88,7 @@
                     android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:labelFor="@id/edit_text_password"
-                    android:text="password"
+                    android:text="@string/password"
                     android:textColor="@color/purple_200"
                     android:textStyle="bold" />
 
@@ -101,11 +102,13 @@
                     android:drawableLeft="@color/design_default_color_primary"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/roboto_mono"
-                    android:hint="Password"
+                    android:hint="@string/password"
                     android:inputType="textPassword"
                     android:singleLine="true"
                     android:text="@={view.password}"
-                    android:textColorHint="#F06292" />
+                    android:textColorHint="#F06292"
+                    android:importantForAutofill="no"
+                    tools:ignore="LabelFor" />
 
 
                 <Button
@@ -117,7 +120,7 @@
                     android:backgroundTint="#7986CB"
                     android:fontFamily="@font/roboto_mono"
                     android:onClick="@{() -> view.login()}"
-                    android:text="Log in"
+                    android:text="@string/login"
                     android:textAllCaps="false"
                     android:textColor="#fff"
                     android:textSize="18sp" />
@@ -132,7 +135,7 @@
                     android:backgroundTint="#7986CB"
                     android:fontFamily="@font/roboto_mono"
                     android:onClick="@{(v) -> view.goToSignup(v)}"
-                    android:text="Register"
+                    android:text="@string/register"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                     android:textColor="#FFFFFF" />

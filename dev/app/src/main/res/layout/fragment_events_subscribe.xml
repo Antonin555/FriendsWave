@@ -30,7 +30,7 @@
             android:id="@+id/btn_chat_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="chat group" />
+            android:text="@string/chat_group" />
 
         <View
             android:id="@+id/view12"
