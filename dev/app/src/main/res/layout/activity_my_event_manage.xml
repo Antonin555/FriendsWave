@@ -103,7 +103,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:fontFamily="@font/roboto_mono"
-                android:text="@={viewmodel.eventDataUser.name}" />
+                android:text="@={viewmodel.eventDataUser.adress}" />
 
             <ImageView
                 android:id="@+id/stylo1"

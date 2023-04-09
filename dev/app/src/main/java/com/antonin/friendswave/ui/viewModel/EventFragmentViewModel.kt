@@ -40,7 +40,7 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     var email: String? = null
 
-    val formatter = SimpleDateFormat("dd/MM/yyyy")
+
 //    val currentDate = formatter.parse(dateFormat.toString())
 
     val user by lazy {
@@ -100,17 +100,22 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     fun sendRequestToParticipatePublicEvent(idEvent:String, adminEvent:String){
 
-        repository.sendRequestToParticipatePublicEvent(idEvent,adminEvent)
+        // Si user est different de l'admin de l'event, il peut faire une demande :
 
+        if(adminEvent != user!!.uid){
+
+            repository.sendRequestToParticipatePublicEvent(idEvent,adminEvent)
+        }
 
     }
 
 
     fun addEventUser(view: View) {
         if(isPublic == true) {
-            repository.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!, adress!!,description!!, lattitude!!, longitude!!)
+            repository.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!, adress!!,description!!,
+            longitude!!,lattitude!!)
         }else {
-            repository.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid, categorie!!,date!!, horaire!!, adress!!)
+            repository.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid, categorie!!,date!!, horaire!!, adress!!, description!!, longitude!!,lattitude!!)
         }
         Toast.makeText(view.context,"Evenement en cours de publication", Toast.LENGTH_LONG).show()
 
@@ -133,6 +138,7 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     fun changeDate(year: Int, month: Int, day: Int) {
 
+
         var dayString : String = ""
         var monthString : String = ""
 
@@ -146,16 +152,16 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
         } else
             monthString = (month+1).toString()
 
-        date = dayString + "/" + monthString + "/"+ year.toString()
+        date = dayString + "/"+monthString +"/"+ year.toString()
 
-        val dateEvent : Date = formatter.parse(date)
+
 
 //        if(dateEvent.before(currentDate)){
 //
 //            println("Impossible de revenir dans le passé")
 //
 //        }
-        date = dateEvent.toString()
+
 
     }
 
@@ -164,7 +170,7 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
         var hourString : String = ""
         var minuteString : String = ""
 
-        if(hour < 10 || minute < 10) hourString = "0" + hour.toString()
+        if(hour < 10) hourString = "0" + hour.toString()
         if(minute < 10) minuteString = "0" + minute.toString()
 
         horaire = hourString + ":" + minuteString
@@ -265,15 +271,24 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     }
 
 
+    // Est ce mieux de faire la verif si Public ou PRive ici ou daans Firebase Source ???
     fun editEvent(){
 
-        repository.editEvent(_eventDataUser.value)
+        val patternDate = Regex("\\d{2}-\\d{2}-\\d{4}")
+        if(_eventDataUser.value!!.date!!.matches(patternDate)){
 
+            repository.editEvent(_eventDataUser.value)
+        }
 
+    }
+
+    fun  deleteEvent() {
+        repository.deleteEvent(_eventDataUser.value)
     }
 
 
 
 }
+
 
 

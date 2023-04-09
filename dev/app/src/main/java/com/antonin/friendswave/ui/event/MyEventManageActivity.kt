@@ -93,6 +93,8 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
     val positiveButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
         // Code à exécuter si le bouton positif est cliqué
         if (which == DialogInterface.BUTTON_POSITIVE) {
+
+            viewModel.deleteEvent()
             finish()
         }
     }

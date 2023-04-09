@@ -103,9 +103,14 @@ class AddEventActivity : AppCompatActivity(), KodeinAware, OnMapReadyCallback,
                         }
 
                         address = addressList!![0]
+
+
 //                        viewModel.longitude = address.longitude.toString()
 //                        viewModel.lattitude = address.latitude.toString()
                     }
+
+                    viewModel.longitude = address.longitude.toString()
+                    viewModel.lattitude = address.latitude.toString()
                 }
                 AutocompleteActivity.RESULT_ERROR -> {
                     // TODO: Handle the error.

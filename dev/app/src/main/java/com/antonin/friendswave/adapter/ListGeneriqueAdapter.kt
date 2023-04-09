@@ -46,6 +46,8 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
             itemViewModel.adapterPosition = position
             onListItemViewClickListener?.let { itemViewModel.onListItemViewClickListener = it }
             holder.bind(itemViewModel)
+
+
         }
 
 
@@ -55,6 +57,7 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
             fun bind(itemViewModel: T) {
                 binding.setVariable(BR.item, itemViewModel)
                 binding.executePendingBindings()
+
             }
         }
 

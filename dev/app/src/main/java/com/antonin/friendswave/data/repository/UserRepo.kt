@@ -227,6 +227,8 @@ class UserRepo(private val firebase: FirebaseSource) {
 
     fun editEvent(event:Event?)= firebase.editEvent(event)
 
+    fun deleteEvent(event:Event?) = firebase.deleteEvent(event)
+
     fun getUserProfilData(profilUid: String?): LiveData<User> {
         val userLiveData = MutableLiveData<User>()
 
@@ -248,11 +250,12 @@ class UserRepo(private val firebase: FirebaseSource) {
     }
 
     fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid: String, category:String, date : String, horaire:String, adress:String,
-                           description:String,latitude:String,longitude:String) =
-        firebase.addEventUserPublic(name,isPublic,nbrePersonnes, uid, category, date, horaire, adress,description, latitude,longitude)
+                           description:String, longitude:String, latitude:String) =
+        firebase.addEventUserPublic(name,isPublic,nbrePersonnes, uid, category, date, horaire, adress,description, longitude,latitude)
 
-    fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid:String,category:String, date : String, horaire:String, adress:String) =
-        firebase.addEventUserPrivate(name,isPublic,nbrePersonnes,uid, category, date, horaire, adress)
+    fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid:String,category:String, date : String, horaire:String, adress:String,
+    description: String, longitude:String, latitude:String) =
+        firebase.addEventUserPrivate(name,isPublic,nbrePersonnes,uid, category, date, horaire, adress, description, longitude, latitude)
 
     fun acceptRequest1(userNotif: User?){
         firebase.acceptRequestUpdateUser(userNotif)
@@ -273,6 +276,11 @@ class UserRepo(private val firebase: FirebaseSource) {
     fun acceptRequestEvent(user:User?){
 
         firebase.acceptRequestEvent(user)
+    }
+
+    fun declineRequestEvent(user:User?){
+
+        firebase.declineRequestEvent(user)
     }
 
     fun fetchDiscussion(receiverUid: String):LiveData<List<Messages>>{

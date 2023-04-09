@@ -139,8 +139,8 @@ class NotifsFragment : Fragment(), KodeinAware {
                 }
 
                 if (view.id == R.id.btn_delete){
-                    val eventKey = viewModel.eventList.value?.get(position)
-                    viewModel.refuseInvitationEvent(eventKey)
+                    val eventKey = viewModel.requestListEvent.value?.get(position)
+                    viewModel.declineRequestEvent(eventKey)
 
                 }
             }

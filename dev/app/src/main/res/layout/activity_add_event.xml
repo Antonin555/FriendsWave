@@ -258,6 +258,7 @@
                     android:fontFamily="@font/roboto_mono"
                     android:gravity="top|left"
                     android:hint="@string/add_event_hint_name"
+                    android:text="@={viewmodel.description}"
                     android:inputType="textMultiLine"
                     android:lines="10" />
 

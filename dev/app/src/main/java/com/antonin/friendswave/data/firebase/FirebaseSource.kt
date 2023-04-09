@@ -81,6 +81,17 @@ open class FirebaseSource {
         }
     }
 
+    fun deleteEvent(event:Event?){
+        if(event!!.isPublic == true){
+            firebaseData.child("event/eventPublic").child(event.key.toString()).removeValue()
+        }
+        else{
+        firebaseData.child("event/eventPrivate").child(mainUid!!).child(event.key.toString()).removeValue()
+        }
+        firebaseData.child("chatsGroup").child(mainUid!!+ event.key.toString()).removeValue()
+
+    }
+
     fun getUserProfilData(profilUid: String?, onResult: (User?) -> Unit){
         firebaseData.child("user").child(profilUid!!)
             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -585,15 +596,15 @@ open class FirebaseSource {
 
 
     fun declineRequestEvent(user:User?){
-
-        val queryEventPublic = firebaseData.child("event/eventPublic").child(user!!.pendingRequestEventPublic!!.keys.toString())
+        var idEvent:String = user!!.pendingRequestEventPublic!!.get(mainUid!!).toString()
+        val queryEventPublic = firebaseData.child("event/eventPublic").child(idEvent)
         val queryAcceptHostEventUser = firebaseData.child("user").child(mainUid!!)
         val queryAcceptGuestEventUser = firebaseData.child("user").child(user.uid.toString())
 
         queryEventPublic.child("pendingRequestEventPublic").child(user.email.hashCode().toString()).removeValue()
-        queryAcceptHostEventUser.child("hostPendingRequestEventPublic").child(user.pendingRequestEventPublic!!.keys.toString()).removeValue()
+        queryAcceptHostEventUser.child("hostPendingRequestEventPublic").child(idEvent).removeValue()
 
-        queryAcceptGuestEventUser.child("pendingRequestEventPublic").child(user.pendingRequestEventPublic!!.keys.toString()).removeValue()
+        queryAcceptGuestEventUser.child("pendingRequestEventPublic").child(idEvent).removeValue()
 
 
     }
@@ -712,18 +723,26 @@ open class FirebaseSource {
 
 
 
-    fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid : String, category:String, date : String, horaire:String, adress:String, description:String,
-    latitude:String,longitude:String) {
+    fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid : String,
+                           category:String, date : String, horaire:String, adress:String,
+                           description:String, longitude:String,latitude:String )
+
+    {
         val database = Firebase.database
         val myRef = database.getReference("event/eventPublic/").push()
-        myRef.setValue(Event(myRef.key,name,isPublic,nbrePersonnes, uid, category, date, horaire, adress, description,latitude,longitude))
+        myRef.setValue(Event(myRef.key,name,isPublic,nbrePersonnes, uid, category, date, horaire,
+            adress, description, longitude, latitude))
 
     }
 
-    fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid: String, category:String, date : String, horaire:String, adress:String) {
+    fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid: String,
+                            category:String, date : String, horaire:String, adress:String,
+                            description: String,longitude:String,latitude:String)
+    {
         val database = Firebase.database
-        val myRef = database.getReference("event/eventPrivate/" + mainUid!!).push()
-        myRef.setValue(Event(myRef.key, name,isPublic,nbrePersonnes, uid, category, date, horaire, adress))
+        val myRef = database.getReference ("event/eventPrivate/" + mainUid!!).push()
+        myRef.setValue(Event(myRef.key, name,isPublic,nbrePersonnes, uid, category, date, horaire,
+            adress,description, longitude, latitude))
 
     }
 
