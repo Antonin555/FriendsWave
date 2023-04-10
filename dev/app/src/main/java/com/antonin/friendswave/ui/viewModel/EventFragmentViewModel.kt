@@ -1,6 +1,7 @@
 package com.antonin.friendswave.ui.viewModel
 
 import android.content.Intent
+import android.os.Build
 import android.view.View
 import android.widget.AdapterView
 import android.widget.CompoundButton
@@ -15,6 +16,7 @@ import com.antonin.friendswave.ui.chat.GroupChatActivity
 import com.antonin.friendswave.ui.event.*
 import com.antonin.friendswave.ui.home.ManageHomeActivity
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -274,7 +276,9 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     // Est ce mieux de faire la verif si Public ou PRive ici ou daans Firebase Source ???
     fun editEvent(){
 
-        val patternDate = Regex("\\d{2}-\\d{2}-\\d{4}")
+
+
+        val patternDate = Regex("\\d{2}/\\d{2}/\\d{4}")
         if(_eventDataUser.value!!.date!!.matches(patternDate)){
 
             repository.editEvent(_eventDataUser.value)

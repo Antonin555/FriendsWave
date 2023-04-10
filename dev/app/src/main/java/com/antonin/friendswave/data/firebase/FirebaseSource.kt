@@ -20,7 +20,7 @@ open class FirebaseSource {
 
     fun currentUser() = firebaseAuth.currentUser
 
-    fun logout() {
+    open fun logout() {
         firebaseAuth.signOut()
         FirebaseDatabase.getInstance().purgeOutstandingWrites()
         FirebaseDatabase.getInstance().goOffline()

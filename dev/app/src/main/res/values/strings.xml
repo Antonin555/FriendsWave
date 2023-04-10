@@ -42,6 +42,8 @@
     <string name="register">register</string>
     <string name="new_user_signup">New User Signup</string>
     <string name="chat_group">Chat Group</string>
+    <string name="add_event">ajouter un event</string>
+    <string name="add_friend">ajouter un contact</string>
 
     <string name="detail_event_nbre_inscrit">nombre inscrits : </string>
     <string name="detail_event_inscrit">Inscrits : </string>
