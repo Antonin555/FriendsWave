@@ -285,6 +285,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_mono"
             android:text="@string/send"
+            android:layout_marginTop="10dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:onClick="@{() -> viewmodel.sendAnInvitationPrivateEvent(position)}"/>
@@ -324,15 +325,6 @@
             android:layout_height="250dp"
             android:layout_gravity="center" />
 
-
-
-        <View
-            android:id="@+id/view14"
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="#7986CB" />
 
         <LinearLayout
             android:layout_width="match_parent"
