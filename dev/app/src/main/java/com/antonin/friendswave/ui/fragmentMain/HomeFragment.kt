@@ -1,9 +1,11 @@
 package com.antonin.friendswave.ui.fragmentMain
 
 import android.Manifest
+import android.content.ContentValues.TAG
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +21,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
+import com.antonin.friendswave.data.firebase.FirebaseNotificationsService
 import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.repository.UserRepo
@@ -32,6 +35,7 @@ import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.messaging.FirebaseMessaging
 import org.kodein.di.Kodein
 
 import org.kodein.di.KodeinAware
@@ -47,6 +51,7 @@ class HomeFragment : Fragment(), KodeinAware {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter1 : ListGeneriqueAdapter<Event>
     private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 1
+    private lateinit var firebaseMessaging: FirebaseMessaging
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
@@ -55,6 +60,8 @@ class HomeFragment : Fragment(), KodeinAware {
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
         binding.lifecycleOwner = this
         binding.item = viewModel
+        firebaseMessaging = FirebaseMessaging.getInstance()
+
         return binding.root
 
     }
@@ -62,6 +69,16 @@ class HomeFragment : Fragment(), KodeinAware {
     override fun onResume() {
         super.onResume()
 
+        FirebaseMessaging.getInstance().subscribeToTopic("allUsers")
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Abonnement réussi
+                    Log.d(TAG, "Abonnement au topic de notification réussi")
+                } else {
+                    // Échec de l'abonnement
+                    Log.e(TAG, "Échec de l'abonnement au topic de notification", task.exception)
+                }
+            }
         if(binding.recyclerFragmentHome.isEmpty()) {
             binding.chatlogo.visibility = View.VISIBLE
         }
@@ -109,7 +126,17 @@ class HomeFragment : Fragment(), KodeinAware {
 
         }
 
-
+//        FirebaseMessaging.getInstance().token
+//            .addOnCompleteListener { task ->
+//                if (!task.isSuccessful) {
+//                    Log.w(TAG, "Échec de la récupération du token du dispositif.", task.exception)
+//                    return@addOnCompleteListener
+//                }
+//
+//                // Le token du dispositif
+//                val token = task.result
+//                Log.d(TAG, "Token du dispositif : $token")
+//            }
 
 
 

@@ -8,4 +8,11 @@ class Strategy(private var interfaceSearch: InterfaceSearch) {
         return interfaceSearch.sortedEvent(str, list)
     }
 
+    fun searchEventAroundMe(str: String, events: List<Event>?, userLatitude: String,
+                            userLongitude: String, radius: Int): List<Event>{
+
+        return interfaceSearch.sortedEventAroundMe(str,events,userLatitude,userLongitude,radius)
+
+    }
+
 }

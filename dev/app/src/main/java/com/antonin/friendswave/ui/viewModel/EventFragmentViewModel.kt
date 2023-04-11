@@ -173,7 +173,9 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
         var minuteString : String = ""
 
         if(hour < 10) hourString = "0" + hour.toString()
+        else hourString = hour.toString()
         if(minute < 10) minuteString = "0" + minute.toString()
+        else minuteString = minute.toString()
 
         horaire = hourString + ":" + minuteString
     }

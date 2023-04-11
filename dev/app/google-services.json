@@ -43,5 +43,8 @@
       }
     }
   ],
-  "configuration_version": "1"
+  "configuration_version": "1",
+   "firebase_url": "https://friendswave-8e396.firebaseio.com",
+  "gcm_defaultSenderId": "760151737046",
+  "google_app_id": "1:760151737046:android:6539195088d32887663f77"
 }

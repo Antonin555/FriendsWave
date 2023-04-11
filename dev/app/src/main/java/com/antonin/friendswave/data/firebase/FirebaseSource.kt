@@ -167,7 +167,7 @@ open class FirebaseSource {
             }
         })
     }
-
+    ////                            A REVOIR FAIT PLANTER L'APP A LA PREMIERE CONNEXION -------------> //////////////////////////////////////////
     fun fetchUsersFriend(onResult: (List<User>) -> Unit){
         val userList = ArrayList<User>()
         firebaseData.child("user").child(mainUid!!)
@@ -422,7 +422,7 @@ open class FirebaseSource {
                 for (snap in task.result.children) {
                     if (snap.exists()) {
                         val event = snap.getValue(Event::class.java)
-                        if(event!!.key == snap.key){
+                        if(eventIdList.containsKey(event!!.key.toString())){
                             eventList.add(event!!)
                         }
                     }

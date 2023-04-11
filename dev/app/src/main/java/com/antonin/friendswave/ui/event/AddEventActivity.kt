@@ -71,8 +71,8 @@ class AddEventActivity : AppCompatActivity(), KodeinAware, OnMapReadyCallback,
 
         binding.searchCities.setOnClickListener{
 
-            val fields = listOf(Place.Field.ID, Place.Field.NAME)
-            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).setTypeFilter(TypeFilter.CITIES).build(this)
+            val fields = listOf(Place.Field.ID, Place.Field.ADDRESS)
+            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
             startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
 
         }
@@ -93,10 +93,10 @@ class AddEventActivity : AppCompatActivity(), KodeinAware, OnMapReadyCallback,
                 Activity.RESULT_OK -> {
                     data?.let {
                         val place = Autocomplete.getPlaceFromIntent(data)
-                        binding.editCities.text = place.name.toString()
+                        binding.editCities.text = place.address.toString()
                         val geoCoder = Geocoder(this)
                         try {
-                            addressList = geoCoder.getFromLocationName(place.name.toString(), 1)
+                            addressList = geoCoder.getFromLocationName(place.address.toString(), 1)
 
                         } catch (e: IOException) {
                             e.printStackTrace()

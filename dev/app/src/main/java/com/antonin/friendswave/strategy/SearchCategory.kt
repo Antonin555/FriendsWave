@@ -5,17 +5,37 @@ import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 
 class SearchCategory: InterfaceSearch {
 
+
     override fun sortedEvent(str: String, event: List<Event>?): List<Event> {
+        TODO("Not yet implemented")
+    }
 
-        var tempListEvent : ArrayList<Event> = ArrayList()
+    override fun sortedEventAroundMe(str: String, events: List<Event>?, userLatitude: String,
+        userLongitude: String, radius: Int): List<Event> {
 
-        for(data in event!!) {
+        val foundEvents = mutableListOf<Event>()
+        val earthRadius = 6371.0 // Rayon moyen de la Terre en kilomètres
 
-            if(data.categorie == str) {
-                tempListEvent.add(data)
+        for (event in events!!) {
+            val eventLatitude = event.lattitude as Double
+            val eventLongitude = event.longitude as Double
+
+            val dLat = Math.toRadians(eventLatitude - userLatitude as Double)
+            val dLon = Math.toRadians(eventLongitude - userLongitude as Double)
+
+            val a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(Math.toRadians(userLatitude)) * Math.cos(Math.toRadians(eventLatitude)) *
+                    Math.sin(dLon / 2) * Math.sin(dLon / 2)
+            val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+
+            val distance = earthRadius * c
+
+            if (distance <= radius) {
+                foundEvents.add(event)
             }
         }
-        return tempListEvent
+
+        return foundEvents
     }
 
 }
@@ -34,6 +54,11 @@ class SearchByName : InterfaceSearch {
         return tempListEvent
     }
 
+    override fun sortedEventAroundMe(str: String, event: List<Event>?, userLatitude: String,
+        userLongitude: String, radius: Int): List<Event> {
+        TODO("Not yet implemented")
+    }
+
 }
 
 class SearchByCities : InterfaceSearch {
@@ -50,7 +75,12 @@ class SearchByCities : InterfaceSearch {
         }
         return tempListEvent
     }
+
+    override fun sortedEventAroundMe(str: String, event: List<Event>?, userLatitude: String,
+        userLongitude: String, radius: Int): List<Event> {
+        TODO("Not yet implemented")
     }
+}
 
 
 //}
