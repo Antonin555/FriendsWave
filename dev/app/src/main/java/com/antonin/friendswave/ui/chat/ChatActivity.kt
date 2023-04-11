@@ -41,7 +41,9 @@ class ChatActivity : AppCompatActivity(), KodeinAware {
         binding.lifecycleOwner = this
 
         val layoutManager = LinearLayoutManager(this)
+        layoutManager.stackFromEnd = true;
         binding.chatRecyclerView.layoutManager = layoutManager
+
 
         viewModel.messageList.observe(this, Observer { messageList ->
             messageAdapter = MessageAdapter(this, messageList)
@@ -57,6 +59,7 @@ class ChatActivity : AppCompatActivity(), KodeinAware {
 
     override fun onResume() {
         super.onResume()
+        viewModel.fetchUserData()
         viewModel.fetchDiscussion()
     }
 //

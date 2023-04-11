@@ -16,5 +16,98 @@
         android:orientation="vertical"
         tools:context=".ui.chat.ChatActivity">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="@{viewmodel.mainEvent.name}"
+                android:textAlignment="center"></TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="@string/activity_group_chat_information"
+                android:textAlignment="center"
+                ></TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="@{viewmodel.mainEvent.adress}"
+                ></TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="@{viewmodel.mainEvent.date}"
+                ></TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="@{viewmodel.mainEvent.heure}"
+                ></TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="@string/activity_group_chat"
+                android:textAlignment="center"
+                ></TextView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="30dp"
+                android:padding="10dp"
+                android:background="@drawable/receive">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/chatRecyclerViewGroup"
+                    android:layout_above="@+id/linearLayout"
+                    android:layout_alignParentTop="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="95">
+
+                    <EditText
+                        android:id="@+id/messageBoxGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="85"
+                        android:background="@drawable/custom_shape"
+                        android:fontFamily="@font/roboto_mono"
+                        android:hint="Type a message"
+                        android:text="@={viewmodel.messageEnvoyeGroup}"
+                        android:paddingLeft="10dp"></EditText>
+
+                    <ImageView
+                        android:id="@+id/sentButtonGroup"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="20"
+                        android:src="@drawable/send"
+                        android:onClick="@{(v) -> viewmodel.addMessageGrouptoDatabase(v)}"
+                        ></ImageView>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
     </RelativeLayout>
 </layout>

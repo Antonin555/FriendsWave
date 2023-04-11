@@ -1,18 +1,22 @@
 package com.antonin.friendswave.ui.viewModel
 
 import android.view.View
-import android.widget.EditText
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.Messages
+import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
-import com.google.firebase.database.R
 
 
 class ChatViewModel(private val repository: UserRepo): ViewModel()  {
     var messageEnvoye: String? = ""
     var receiverUid: String? = ""
+    val messageGroup = MutableLiveData<String>()
+
+    var messageEnvoyeGroup: String? = ""
+    var receiverUidGroup: String? = ""
     val message = MutableLiveData<String>()
     //chat
     private val _messageList = MutableLiveData<List<Messages>>()
@@ -20,11 +24,17 @@ class ChatViewModel(private val repository: UserRepo): ViewModel()  {
     //group chat
     private val _groupMessageList = MutableLiveData<List<Messages>>()
     val groupMessageList: LiveData<List<Messages>> = _groupMessageList
+    //pour l'event du groupChat
+    private val _mainEvent = MutableLiveData<Event>()
+    val mainEvent: LiveData<Event> = _mainEvent
+
+    private val _user = MutableLiveData<User>()
+    var user_live: LiveData<User> = _user
 
     fun addMessagetoDatabase(view: View){
         println(view)
         if(messageEnvoye != null){
-            repository.addMessagetoDatabase(messageEnvoye!!, receiverUid!!)
+            repository.addMessagetoDatabase(messageEnvoye!!, receiverUid!!, user_live.value?.name.toString())
 
         }
         messageEnvoye = ""
@@ -32,10 +42,40 @@ class ChatViewModel(private val repository: UserRepo): ViewModel()  {
         fetchDiscussion()
     }
 
+    fun addMessageGrouptoDatabase(view: View){
+        println(view)
+        if(messageEnvoye != null){
+            repository.addMessageGrouptoDatabase(messageEnvoyeGroup!!, receiverUidGroup!!, user_live.value?.name.toString())
+
+        }
+        messageEnvoyeGroup = ""
+        messageGroup.value = ""
+        fetchDiscussionGroup()
+    }
+
+
     fun fetchDiscussion() {
         repository.fetchDiscussion(receiverUid!!).observeForever{ message ->
             _messageList.value = message
         }
     }
+    //a changer repetission
+    fun fetchDiscussionGroup() {
+        repository.fetchDiscussionGroup(receiverUidGroup!!).observeForever{ message ->
+            _groupMessageList.value = message
+        }
+    }
 
+    fun fetchSpecificEvents(hostId: String, eventKey: String)
+    {
+        repository.fetchSpecificEvents(hostId, eventKey).observeForever{ event ->
+            _mainEvent.value = event
+        }
+    }
+
+    fun fetchUserData() {
+        repository.getUserData().observeForever { user ->
+            _user.value = user
+        }
+    }
 }

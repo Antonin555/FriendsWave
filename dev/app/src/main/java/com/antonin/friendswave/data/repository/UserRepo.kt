@@ -292,6 +292,15 @@ class UserRepo(private val firebase: FirebaseSource) {
         return messageList
     }
 
+    fun fetchDiscussionGroup(receiverUid: String):LiveData<List<Messages>>{
+        val messageList = MutableLiveData<List<Messages>>()
+
+        firebase.fetchDiscussionGroup(receiverUid) { message ->
+            messageList.postValue(message)
+        }
+        return messageList
+    }
+
     fun fetchfetchEmail():LiveData<List<String>>{
         val emailList = MutableLiveData<List<String>>()
 
@@ -301,8 +310,12 @@ class UserRepo(private val firebase: FirebaseSource) {
         return emailList
     }
 
-    fun addMessagetoDatabase(messageEnvoye: String, receiverUid: String){
-        firebase.addMessagetoDatabase(messageEnvoye, receiverUid)
+    fun addMessagetoDatabase(messageEnvoye: String, receiverUid: String, userName: String){
+        firebase.addMessagetoDatabase(messageEnvoye, receiverUid, userName)
+    }
+
+    fun addMessageGrouptoDatabase(messageEnvoye: String, receiverUid: String, userName: String){
+        firebase.addMessageGrouptoDatabase(messageEnvoye, receiverUid, userName)
     }
 
     ///////////////////////////////////Strategie
@@ -321,6 +334,14 @@ class UserRepo(private val firebase: FirebaseSource) {
             userList.postValue(user)
         }
         return userList
+    }
+
+    fun fetchSpecificEvents(hostId: String, eventKey: String):LiveData<Event>{
+        val event = MutableLiveData<Event>()
+        firebase.fetchSpecificEvents(hostId, eventKey) { user ->
+            event.postValue(user)
+        }
+        return event
     }
 
 }

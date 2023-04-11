@@ -390,7 +390,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/roboto_mono"
             android:layout_margin="10dp"
-            android:onClick="@{() -> viewmodel.editProfil()}"
+            android:onClick="@{(v) -> viewmodel.editProfil(v)}"
             android:text="@string/save" />
 
     </LinearLayout>

@@ -17,6 +17,7 @@ import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentEventsSubscribeBinding
+import com.antonin.friendswave.ui.chat.GroupChatActivity
 
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
@@ -24,6 +25,7 @@ import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
+import java.io.Serializable
 
 
 class EventsSubscribeFragment : Fragment(), KodeinAware{
@@ -76,13 +78,11 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
 
-                val toast = Toast.makeText(context, "Hello Javatpoint" + position.toString(), Toast.LENGTH_SHORT)
-                toast.show()
-
-//                val intent = Intent(context,ChatGroupActivity::class.java)
-//
-//                intent.putExtra("position", position)
-//                startActivity(intent)
+                val event = viewModel.eventListConfirm.value?.get(0) as Event
+                val intent = Intent(view.context, GroupChatActivity::class.java)
+                intent.putExtra("eventKey", event.key)
+                intent.putExtra("admin", event.admin)
+                view.context.startActivity(intent)
 
             }
         })
@@ -90,3 +90,5 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
     }
 
 }
+
+

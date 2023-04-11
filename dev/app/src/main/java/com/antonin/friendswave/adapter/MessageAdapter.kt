@@ -46,11 +46,13 @@ class MessageAdapter(val context: Context, val messageList: List<Messages>):
 
             val viewHoler = holder as SentViewHoler
             holder.sentMessage.text = currentMessage.message
+//            holder.sentUid.text = currentMessage.senderName + ":"
         }
         else{
             //do stuff for receive view holder
             val viewHoler = holder as ReceiveViewHoler
             holder.receiveMessage.text = currentMessage.message
+            holder.reveiveUid.text = currentMessage.senderName + ":"
         }
 
     }
@@ -75,11 +77,13 @@ class MessageAdapter(val context: Context, val messageList: List<Messages>):
     class SentViewHoler(itemView: View): RecyclerView.ViewHolder(itemView)
     {
         val sentMessage = itemView.findViewById<TextView>(R.id.txt_sent_message)
+//        val sentUid = itemView.findViewById<TextView>(R.id.txt_sent_uid)
     }
 
     class ReceiveViewHoler(itemView: View): RecyclerView.ViewHolder(itemView)
     {
         val receiveMessage = itemView.findViewById<TextView>(R.id.txt_receive_message)
+        val reveiveUid = itemView.findViewById<TextView>(R.id.txt_receive_uid)
     }
 
 }

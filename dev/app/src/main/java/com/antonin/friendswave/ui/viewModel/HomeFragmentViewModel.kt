@@ -3,6 +3,7 @@ package com.antonin.friendswave.ui.viewModel
 import android.content.Intent
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -10,9 +11,11 @@ import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
+import com.antonin.friendswave.outils.startHomeActivity
 import com.antonin.friendswave.outils.startLoginActivity
 import com.antonin.friendswave.strategy.*
 import com.antonin.friendswave.ui.contact.AddContactActivity
+import com.antonin.friendswave.ui.home.ManageHomeActivity
 import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.home.SignalementActivity
 
@@ -72,6 +75,19 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
     fun editProfil(){
         repository.editProfil(user_live.value)
+    }
+
+    fun editProfil(view: View){
+        repository.editProfil(user_live.value)
+
+        val toast = Toast.makeText(view.context, "Votre profil a bien été modifié!", Toast.LENGTH_SHORT)
+        toast.show()
+
+        Intent(view.context, ManageHomeActivity::class.java).also {
+            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            view.context.startActivity(it)
+        }
+
     }
 
     fun fetchUserProfilData(profilUid: String?) {

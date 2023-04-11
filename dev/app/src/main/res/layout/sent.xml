@@ -16,10 +16,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_mono"
-            android:padding="10dp"
+            android:padding="5dp"
+            android:layout_margin="5dp"
             android:text="This is sent message"
             android:textColor="@color/white"
-            android:textSize="18sp"></TextView>
+            android:textSize="18sp"
+          ></TextView>
 
     </RelativeLayout>
 

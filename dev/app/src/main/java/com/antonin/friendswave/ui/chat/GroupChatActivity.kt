@@ -3,8 +3,11 @@ package com.antonin.friendswave.ui.chat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
+import com.antonin.friendswave.adapter.MessageAdapter
 import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityGroupChatBinding
@@ -21,17 +24,48 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
     private val factory : ChatVMFactory by instance()
     private var viewModel : ChatViewModel = ChatViewModel(repository = UserRepo(firebase = FirebaseSource()))
     private lateinit var binding : ActivityGroupChatBinding
+    var eventKey: String = ""
+    var admin: String = ""
+    private  lateinit var messageAdapter : MessageAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_group_chat)
 
         //Aller chercher l'intent de l'Event
+        eventKey = intent.getStringExtra("eventKey").toString()
+        admin = intent.getStringExtra("admin").toString()
 
         viewModel = ViewModelProviders.of(this,factory).get(ChatViewModel::class.java)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_group_chat)
+        binding.viewmodel = viewModel
         binding.lifecycleOwner = this
+        viewModel.receiverUidGroup = admin + eventKey
 
+        val layoutManager = LinearLayoutManager(this)
+        layoutManager.stackFromEnd = true;
+        binding.chatRecyclerViewGroup.layoutManager = layoutManager
 
+        viewModel.groupMessageList.observe(this, Observer { messageList ->
+            messageAdapter = MessageAdapter(this, messageList)
+            messageAdapter.addItems(messageList)
+            binding.chatRecyclerViewGroup.adapter = messageAdapter
+        })
+
+        viewModel.messageGroup.observe(this, Observer { message ->
+            binding.messageBoxGroup.setText(message)
+        })
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchSpecificEvents(admin, eventKey)
+        viewModel.fetchUserData()
+        viewModel.fetchDiscussionGroup()
+
+//        viewModel.mainEvent.observe(this, Observer {
+//            it
+//        })
     }
 }

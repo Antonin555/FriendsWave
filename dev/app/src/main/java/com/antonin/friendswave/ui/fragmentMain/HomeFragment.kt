@@ -1,6 +1,7 @@
 package com.antonin.friendswave.ui.fragmentMain
 
 import android.Manifest
+import android.content.Intent
 import android.content.ContentValues.TAG
 import android.content.pm.PackageManager
 import android.os.Build
@@ -31,12 +32,14 @@ import com.antonin.friendswave.strategy.SearchByCities
 import com.antonin.friendswave.strategy.SearchByName
 import com.antonin.friendswave.strategy.SearchCategory
 import com.antonin.friendswave.strategy.Strategy
+import com.antonin.friendswave.ui.home.EditProfilActivity
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.messaging.FirebaseMessaging
 import org.kodein.di.Kodein
+
 
 import org.kodein.di.KodeinAware
 
@@ -112,9 +115,8 @@ class HomeFragment : Fragment(), KodeinAware {
                 .apply(RequestOptions().override(100, 100))
                 .centerCrop()
                 .into(binding.imgProfil)
+
         })
-
-
 
         binding.btnCategory.setOnClickListener{
             var type = "Mars"

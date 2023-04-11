@@ -372,6 +372,42 @@ open class FirebaseSource {
         })
     }
 
+
+    fun fetchSpecificEvents( hostId: String, eventValue: String, onResult: (Event) -> Unit) {
+        var hostId = hostId
+        var eventValue = eventValue
+        var event: Event = Event()
+
+        firebaseData.child("event/eventPrivate").child(hostId).get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                for (snap in task.result.children) {
+                    if (snap.exists()) {
+                        if(eventValue == snap.key){
+                            event = snap.getValue(Event::class.java)!!
+                            onResult(event)
+                        }
+                    }
+                }
+
+                firebaseData.child("event/eventPublic").get().addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        for (snap in task.result.children) {
+                            if (snap.exists()) {
+                                if(eventValue == snap.key){
+                                    event = snap.getValue(Event::class.java)!!
+                                    onResult(event)
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
+
+    }
+
     fun fetchConfirmationEvents( onResult: (List<Event>) -> Unit) {
         var hostId: Any?
         var eventValue: Any?
@@ -416,20 +452,22 @@ open class FirebaseSource {
 
     //Alex 2eme fonction pour ne pas faire result children
     fun addEventsPublicToRecyclerNotif2(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
-
-        firebaseData.child("event/eventPublic").get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                for (snap in task.result.children) {
-                    if (snap.exists()) {
-                        val event = snap.getValue(Event::class.java)
-                        if(eventIdList.containsKey(event!!.key.toString())){
-                            eventList.add(event!!)
+        for (i in eventIdList){
+            firebaseData.child("event/eventPublic").get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (snap in task.result.children) {
+                        if (snap.exists()) {
+                            val event = snap.getValue(Event::class.java)
+                            if(i.key == snap.key){
+                                eventList.add(event!!)
+                            }
                         }
                     }
+                    onResult(eventList)
                 }
-                onResult(eventList)
             }
         }
+
 
     }
 
@@ -907,8 +945,8 @@ open class FirebaseSource {
         })
     }
 
-    fun addMessagetoDatabase(messageEnvoye: String, receiverUid: String){
-        val messageObject = Messages(messageEnvoye, mainUid)
+    fun addMessagetoDatabase(messageEnvoye: String, receiverUid: String, userName: String){
+        val messageObject = Messages(messageEnvoye, mainUid, userName)
         val senderRoom = receiverUid + mainUid
         val receiverRoom = mainUid + receiverUid
 
@@ -917,6 +955,14 @@ open class FirebaseSource {
                 firebaseData.child("chats").child(receiverRoom).child("message").push()
                     .setValue(messageObject)
             }
+    }
+
+    fun addMessageGrouptoDatabase(messageEnvoye: String, receiverUid: String, userName: String){
+        val messageObject = Messages(messageEnvoye, mainUid, userName)
+
+        firebaseData.child("chatsGroup").child(receiverUid).child("message").push()
+            .setValue(messageObject)
+
     }
 
     fun fetchDiscussion(receiverUid: String, onResult:(List<Messages>) -> Unit){
@@ -937,6 +983,24 @@ open class FirebaseSource {
             }
         }
     }
+
+    fun fetchDiscussionGroup(receiverUid: String, onResult:(List<Messages>) -> Unit){
+
+        firebaseData.child("chatsGroup").child(receiverUid).child("message").get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val messageList = ArrayList<Messages>()
+                for (snap in task.result.children) {
+                    if (snap.exists()) {
+                        val message = snap.getValue(Messages::class.java)
+                        messageList.add(message!!)
+
+                    }
+                }
+                onResult(messageList)
+            }
+        }
+    }
+
 
     fun fetchEmail(onResult: (List<String>) -> Unit){
         firebaseData.child("user/").addValueEventListener(object : ValueEventListener {
