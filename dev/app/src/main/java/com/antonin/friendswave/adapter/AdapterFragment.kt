@@ -9,8 +9,7 @@ import com.antonin.friendswave.ui.fragmentMain.HomeFragment
 import com.antonin.friendswave.ui.fragmentMain.NotifsFragment
 
 class AdapterFragment(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-    override fun getItemCount(): Int = 4
-
+    override fun getItemCount(): Int = 3
     override fun createFragment(position: Int): Fragment {
         when (position) {
             0 -> {
@@ -22,10 +21,6 @@ class AdapterFragment(fa: FragmentActivity) : FragmentStateAdapter(fa) {
             2 -> {
                 return ContactFragment()
             }
-            3 -> {
-                return NotifsFragment()
-            }
-
         }
         return HomeFragment()
     }

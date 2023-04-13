@@ -2,10 +2,7 @@ package com.antonin.friendswave.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.antonin.friendswave.data.firebase.FirebaseSource
-import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
-import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.model.User
 
@@ -16,6 +13,26 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
     fun login(email: String, password: String) = firebaseUser.login(email, password)
 
     fun register(name : String,email: String, password: String) = firebaseUser.register(name,email, password)
+
+    fun register(
+        name: String,
+        email: String,
+        password: String,
+        familyName: String,
+        nickname: String,
+        city: String,
+        age: Int
+    ) = firebaseUser.register(name,email, password, familyName, nickname, city, age)
+
+    fun fetchAllPseudo():LiveData<List<String>> {
+        val pseudoList = MutableLiveData<List<String>>()
+
+        firebaseUser.fetchAllPseudo(){ pseudo ->
+            pseudoList.postValue(pseudo)
+        }
+
+        return pseudoList
+    }
 
     fun logout() = firebaseUser.logout()
 
@@ -111,7 +128,10 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
         firebaseUser.refuseRequest(userNotif)
     }
 
+    fun declineRequestEvent(user:User?){
 
+        firebaseUser.declineRequestEvent(user)
+    }
 
     fun fetchDiscussion(receiverUid: String):LiveData<List<Messages>>{
         val messageList = MutableLiveData<List<Messages>>()

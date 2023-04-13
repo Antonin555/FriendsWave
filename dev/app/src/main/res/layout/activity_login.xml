@@ -24,8 +24,6 @@
             android:layout_height="wrap_content"
             tools:ignore="UselessParent">
 
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -45,6 +43,8 @@
                     android:textColor="#7986CB"
                     android:textSize="34sp"
                     android:textStyle="bold" />
+
+
 
                 <TextView
                     android:layout_width="match_parent"

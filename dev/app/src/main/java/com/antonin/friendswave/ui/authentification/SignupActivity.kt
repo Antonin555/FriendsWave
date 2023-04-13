@@ -22,9 +22,7 @@ class SignupActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
 
     //    private lateinit var progressbar : ProgressBar
     override val kodein by kodein()
-
     private val factory : AuthViewModelFactory by instance()
-
     private lateinit var viewModel: AuthViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +35,8 @@ class SignupActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
         binding.viewmodel = viewModel
 
         viewModel.interfaceAuth = this
+
+        viewModel.fetchAllPseudo()
 
     }
 

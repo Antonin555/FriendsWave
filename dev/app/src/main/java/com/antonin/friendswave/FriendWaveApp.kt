@@ -2,7 +2,6 @@ package com.antonin.friendswave
 
 import android.app.Application
 
-import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
 import com.antonin.friendswave.data.repository.EventRepo
@@ -23,7 +22,6 @@ class FriendWaveApp : Application(), KodeinAware {
         import(androidXModule(this@FriendWaveApp))
         bind() from singleton {FirebaseSourceUser()}
         bind() from singleton {FirebaseSourceEvent()}
-        bind() from singleton { FirebaseSource() }
         bind() from singleton { UserRepo(instance()) }
         bind() from singleton { EventRepo(instance()) }
         bind() from provider { ContactViewModelFactory(instance()) }

@@ -32,14 +32,15 @@
             android:gravity="center_horizontal"
             android:text="@string/new_user_signup"
             android:textSize="26sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/login_title"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="30dp"
             android:background="#fff"
             android:elevation="4dp"
@@ -50,7 +51,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="30dp">
+                android:paddingTop="20dp">
 
                 <EditText
                     android:id="@+id/text_name"
@@ -64,6 +65,58 @@
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
                     android:text="@={viewmodel.name}" />
+
+                <EditText
+                    android:id="@+id/text_familyName"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:drawableLeft="@color/design_default_color_primary"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/roboto_mono"
+                    android:hint="@string/hint_familyName"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true"
+                    android:text="@={viewmodel.familyName}" />
+
+                <EditText
+                    android:id="@+id/text_pseudo"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:drawableLeft="@color/design_default_color_primary"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/roboto_mono"
+                    android:hint="@string/hint_pseudo"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true"
+                    android:text="@={viewmodel.nickname}" />
+
+                <EditText
+                    android:id="@+id/text_ville"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:drawableLeft="@color/design_default_color_primary"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/roboto_mono"
+                    android:hint="@string/hint_ville"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true"
+                    android:text="@={viewmodel.city}" />
+
+                <EditText
+                    android:id="@+id/text_age"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:drawableLeft="@color/design_default_color_primary"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/roboto_mono"
+                    android:hint="@string/hint_age"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true"
+                    android:text="@={`` + viewmodel.age}" />
 
                 <EditText
                     android:id="@+id/text_email"

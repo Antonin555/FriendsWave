@@ -9,13 +9,14 @@ data class User (
     var email: String? = "",
     var uid: String? = "",
     var familyName : String? = "",
-    var desciption: String? = "",
-    var age: Int = 0,
+    var nickname : String? = "",
     var lieu: String? = "",
+    var age: Int = 0,
+    var desciption: String? = "",
     var langue: String? = "Francais",
     var etude: String? = "Self-Made",
     var rating: Double? =0.0,
-    var friends : Int? = 1,
+    var friends : Int? = 0,
     var interet : ArrayList<String>? = ArrayList(),
     var friendRequest: HashMap<String, String>? = HashMap(),
     var friendList: HashMap<String, String>? = HashMap(),
@@ -26,5 +27,4 @@ data class User (
     var ConfirmHostRequestEventPublic: HashMap<String,String>? = HashMap(),
     var nbre_event : Int? =0,
     var img:String?  = ""
-
     ): ListItemViewModel()
