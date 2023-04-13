@@ -9,7 +9,6 @@ import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.AdapterFragment
-import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
 import com.antonin.friendswave.data.repository.EventRepo
@@ -37,8 +36,7 @@ class ManageHomeActivity : AppCompatActivity() {
         val tabLayoutArray = arrayOf(
             "Home",
             "Events",
-            "Contact",
-            "Notifs"
+            "Contact"
         )
 
         tabLayout = findViewById(R.id.tabLayout)

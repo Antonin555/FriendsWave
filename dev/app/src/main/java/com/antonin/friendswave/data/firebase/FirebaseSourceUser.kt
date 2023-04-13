@@ -68,7 +68,21 @@ class FirebaseSourceUser {
             })
     }
 
+    fun fetchAllPseudo(onResult: (List<String>) -> Unit){
+        val pseudoList = ArrayList<String>()
 
+        firebaseData.child("user").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (postSnapshot in snapshot.children){
+                    val user = postSnapshot.getValue(User::class.java)
+                    pseudoList.add(user?.nickname!!)
+                }
+                onResult(pseudoList)
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
 
     fun editProfil(user_live: User?) {
         firebaseData.child("user").child(mainUid!!).setValue(user_live)
@@ -114,9 +128,60 @@ class FirebaseSourceUser {
         firebaseData.child("user").child(uid).setValue(User(name,email,uid))
     }
 
+    fun  addUserToDatabase(
+        name: String,
+        email: String,
+        uid: String,
+        familyName: String,
+        nickname: String,
+        city: String,
+        age: Int
+    ){
+        firebaseData.child("user").child(uid).setValue(User(name,email,uid, familyName, nickname, city, age))
+    }
+
+    // REFUSER
+
+
+    fun declineRequestEvent(user:User?){
+        var idEvent:String = user!!.pendingRequestEventPublic!!.get(mainUid!!).toString()
+        val queryEventPublic = firebaseData.child("event/eventPublic").child(idEvent)
+        val queryAcceptHostEventUser = firebaseData.child("user").child(mainUid!!)
+        val queryAcceptGuestEventUser = firebaseData.child("user").child(user.uid.toString())
+
+        queryEventPublic.child("pendingRequestEventPublic").child(user.email.hashCode().toString()).removeValue()
+        queryAcceptHostEventUser.child("hostPendingRequestEventPublic").child(idEvent).removeValue()
+
+        queryAcceptGuestEventUser.child("pendingRequestEventPublic").child(idEvent).removeValue()
+
+
+    }
+
     fun register(name: String, email: String, password: String) = Completable.create { emitter ->
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             addUserToDatabase(name,email, firebaseAuth.currentUser?.uid!!)
+            if (!emitter.isDisposed) {
+                if (it.isSuccessful) {
+                    emitter.onComplete()
+                } else {
+                    emitter.onError(it.exception!!)
+                }
+            }
+
+        }
+    }
+
+    fun register(
+        name: String,
+        email: String,
+        password: String,
+        familyName: String,
+        nickname: String,
+        city: String,
+        age: Int
+    ) = Completable.create { emitter ->
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+            addUserToDatabase(name,email, firebaseAuth.currentUser?.uid!!, familyName!!, nickname!!, city!!, age!!)
             if (!emitter.isDisposed) {
                 if (it.isSuccessful) {
                     emitter.onComplete()

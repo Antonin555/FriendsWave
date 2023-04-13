@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
-import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
 import com.antonin.friendswave.data.model.Event
@@ -94,10 +93,6 @@ class NotifsFragment : Fragment(), KodeinAware {
             adapter3.addItems(userList)
             if( adapter3.itemCount == 0){binding.tempInvitations.visibility =View.VISIBLE}
         })
-
-
-
-
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {

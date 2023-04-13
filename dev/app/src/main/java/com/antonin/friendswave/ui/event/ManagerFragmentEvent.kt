@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.AdapterFragmentEvent
-import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
 import com.antonin.friendswave.data.repository.EventRepo

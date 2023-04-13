@@ -2,18 +2,14 @@ package com.antonin.friendswave.ui.chat
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
-import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.adapter.MessageAdapter
-import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
-import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityChatBinding

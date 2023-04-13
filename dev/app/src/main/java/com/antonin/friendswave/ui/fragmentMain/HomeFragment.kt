@@ -1,7 +1,6 @@
 package com.antonin.friendswave.ui.fragmentMain
 
 import android.Manifest
-import android.content.Intent
 import android.content.ContentValues.TAG
 import android.content.pm.PackageManager
 import android.os.Build
@@ -14,8 +13,6 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.isEmpty
-import androidx.core.view.isNotEmpty
 import androidx.databinding.DataBindingUtil.inflate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -23,21 +20,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.data.firebase.FirebaseNotificationsService
-import com.antonin.friendswave.data.firebase.FirebaseSource
 import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.repository.EventRepo
+import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentHomeBinding
-import com.antonin.friendswave.outils.AlertDialog
-import com.antonin.friendswave.strategy.SearchByCities
-import com.antonin.friendswave.strategy.SearchByName
-import com.antonin.friendswave.strategy.SearchCategory
-import com.antonin.friendswave.strategy.Strategy
-import com.antonin.friendswave.ui.home.EditProfilActivity
+import com.antonin.friendswave.databinding.FragmentNotifsBinding
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
+import com.antonin.friendswave.ui.viewModel.NotifFragmentVMFactory
+import com.antonin.friendswave.ui.viewModel.NotifFragmentViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.messaging.FirebaseMessaging
@@ -55,13 +49,37 @@ class HomeFragment : Fragment(), KodeinAware {
     private val factory : HomeFragmentVMFactory by instance()
     private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
         repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
+    private val factory2 : NotifFragmentVMFactory by instance()
+//    private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
+    private var viewModel2: NotifFragmentViewModel = NotifFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
+    repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var adapter1 : ListGeneriqueAdapter<Event>
+    private lateinit var binding2 : FragmentNotifsBinding
+
+    private lateinit var adapter1 : ListGeneriqueAdapter<User>
+    private lateinit var adapter2 : ListGeneriqueAdapter<Event>
+    private lateinit var adapter3 : ListGeneriqueAdapter<User>
+
     private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 1
     private var firebaseMessaging = FirebaseMessaging.getInstance()
     private lateinit var firebaseNotifs : FirebaseNotificationsService
 //    firebaseMessaging = FirebaseMessaging.getInstance()
+//    private lateinit var firebaseMessaging: FirebaseMessaging
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
+        adapter2 = ListGeneriqueAdapter(R.layout.recycler_invite_events)
+        adapter3 = ListGeneriqueAdapter(R.layout.recycler_demande_inscription)
+
+//        viewModel.fetchEventsInvitation(_eventList)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+
+        permissionNotifs()
+
 
         permissionNotifs()
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
@@ -70,12 +88,49 @@ class HomeFragment : Fragment(), KodeinAware {
         binding.item = viewModel
 
 
+        binding2  = inflate(inflater, R.layout.fragment_notifs, container, false)
+        viewModel2 = ViewModelProviders.of(this,factory2).get(NotifFragmentViewModel::class.java)
+        binding.viewmodel = viewModel2
+        binding.lifecycleOwner = this
+
+        val layoutManager = LinearLayoutManager(context)
+        val layoutManager2 = LinearLayoutManager(context)
+        val layoutManager3 = LinearLayoutManager(context)
+        binding.recyclerFragmentNotif.layoutManager = layoutManager
+        binding.recyclerFragmentNotif.adapter = adapter1
+        binding.recyclerFragmentNotifEvents.layoutManager = layoutManager2
+        binding.recyclerFragmentNotifEvents.adapter = adapter2
+        binding.recyclerRequestEvent.layoutManager = layoutManager3
+        binding.recyclerRequestEvent.adapter = adapter3
+
+        firebaseMessaging = FirebaseMessaging.getInstance()
+
+        viewModel2.fetchUsersRequest()
+        viewModel2.fetchEventsInvitation()
+        viewModel2.fetchDemandeInscriptionEventPublic()
+
         return binding.root
 
     }
 
     override fun onResume() {
         super.onResume()
+        viewModel.fetchUserData()
+
+        viewModel2.friendNotifList.observe(this, Observer { notifUserList ->
+            adapter1.addItems(notifUserList)
+            if(adapter1.itemCount ==0 ) {binding.makefriends.visibility = View.VISIBLE}
+        })
+
+        viewModel2.eventList.observe(this,Observer { eventList ->
+            adapter2.addItems(eventList)
+            if( adapter2.itemCount ==0){binding.searchEvents.visibility = View.VISIBLE }
+        })
+
+        viewModel2.requestListEvent.observe(this, Observer { userList ->
+            adapter3.addItems(userList)
+            if( adapter3.itemCount == 0){binding.tempInvitations.visibility =View.VISIBLE}
+        })
 
         firebaseMessaging.subscribeToTopic("new_event_public")
             .addOnCompleteListener { task ->
@@ -88,27 +143,14 @@ class HomeFragment : Fragment(), KodeinAware {
                     Log.e(TAG, "Échec de l'abonnement au topic de notification", task.exception)
                 }
             }
-        if(binding.recyclerFragmentHome.isEmpty()) {
-            binding.chatlogo.visibility = View.VISIBLE
-        }
 
-        if(binding.recyclerFragmentHome.isNotEmpty()) {
-            binding.chatlogo.visibility = View.GONE
-        }
-
-        var tempList : ArrayList<Event> = ArrayList()
-        val searchCategory = SearchCategory()
-        val searchByCities = SearchByCities()
-        val searchByName = SearchByName()
-        var searchStrategy : Strategy
-
-        adapter1 = ListGeneriqueAdapter(R.layout.recycler_events)
-        val layoutManager = LinearLayoutManager(context)
-        binding.recyclerFragmentHome.layoutManager = layoutManager
-        binding.recyclerFragmentHome.adapter = adapter1
-
-        viewModel.fetchStrategieEvent()
-        viewModel.fetchUserData()
+//        adapter1 = ListGeneriqueAdapter(R.layout.recycler_events)
+//        val layoutManager = LinearLayoutManager(context)
+//        binding.recyclerFragmentHome.layoutManager = layoutManager
+//        binding.recyclerFragmentHome.adapter = adapter1
+//
+//        viewModel.fetchStrategieEvent()
+//        viewModel.fetchUserData()
 
 
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -124,15 +166,15 @@ class HomeFragment : Fragment(), KodeinAware {
 
         })
 
-        binding.btnCategory.setOnClickListener{
-            var type = "Mars"
-            searchStrategy = Strategy(searchCategory)
-            strategyEvent(searchStrategy,type)
-
-            binding.chatlogo.visibility = View.GONE
-
-
-        }
+//        binding.btnCategory.setOnClickListener{
+//            var type = "Mars"
+//            searchStrategy = Strategy(searchCategory)
+//            strategyEvent(searchStrategy,type)
+//
+//            binding.chatlogo.visibility = View.GONE
+//
+//
+//        }
 
 //        FirebaseMessaging.getInstance().token
 //            .addOnCompleteListener { task ->
@@ -146,8 +188,56 @@ class HomeFragment : Fragment(), KodeinAware {
 //                Log.d(TAG, "Token du dispositif : $token")
 //            }
 
+        adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
+            override fun onClick(view: View, position: Int) {
+                if (view.id == R.id.btn_accept){
+                    var userNotif = viewModel2.friendNotifList.value?.get(position)
+                    viewModel2.acceptRequest(userNotif)
+                }
+
+                else if (view.id == R.id.btn_delete){
+                    var userNotif = viewModel2.friendNotifList.value?.get(position)
+                    viewModel2.refuseRequest(userNotif)
+                }
+            }
+
+        })
 
 
+        adapter2.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
+            override fun onClick(view: View, position: Int) {
+                if (view.id == R.id.btn_accept){
+                    val eventKey = viewModel2.eventList.value?.get(position)
+                    viewModel2.acceptInvitationEvent(eventKey)
+
+                }
+
+                if (view.id == R.id.btn_delete){
+                    val eventKey = viewModel2.eventList.value?.get(position)
+                    viewModel2.refuseInvitationEvent(eventKey)
+
+                }
+            }
+
+        })
+
+
+        adapter3.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
+            override fun onClick(view: View, position: Int) {
+                if (view.id == R.id.btn_accept){
+                    val eventKey = viewModel2.requestListEvent.value?.get(position)!!
+                    viewModel2.acceptRequestEvent(eventKey!!)
+
+                }
+
+                if (view.id == R.id.btn_delete){
+                    val eventKey = viewModel2.requestListEvent.value?.get(position)
+                    viewModel2.declineRequestEvent(eventKey)
+
+                }
+            }
+
+        })
 
     }
 
@@ -162,16 +252,6 @@ class HomeFragment : Fragment(), KodeinAware {
             }
         }
     }
-
-    fun strategyEvent(strategy: Strategy, str:String) {
-        var tempList : ArrayList<Event> =  ArrayList()
-        viewModel.categorieEventList.observe(this, Observer { eventList ->
-            tempList = strategy.search(str, eventList) as ArrayList<Event>
-            adapter1.addItems(tempList)
-        })
-
-    }
-
 
     fun permissionNotifs() {
         // Declare the launcher at the top of your Activity/Fragment:

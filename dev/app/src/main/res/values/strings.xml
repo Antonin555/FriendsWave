@@ -32,6 +32,10 @@
     <string name="prensentation">presentation</string>
     <string name="hint_prensentation">ecrivez une presentation</string>
     <string name="hint_name">votre nom</string>
+    <string name="hint_familyName">votre nom  de famille</string>
+    <string name="hint_pseudo">votre pseudo</string>
+    <string name="hint_ville">votre ville</string>
+    <string name="hint_age">votre age</string>
     <string name="hint_mail">votre mail</string>
     <string name="prenom">prenom</string>
     <string name="langues">langues</string>
