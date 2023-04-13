@@ -7,6 +7,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.antonin.friendswave.R
 import com.antonin.friendswave.data.firebase.FirebaseSource
+import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
+import com.antonin.friendswave.data.firebase.FirebaseSourceUser
+import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityProfilBinding
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
@@ -24,7 +27,9 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein : Kodein by kodein()
     private val factory : HomeFragmentVMFactory by instance()
-    private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
+    private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
+        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
+    )
     private lateinit var binding: ActivityProfilBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

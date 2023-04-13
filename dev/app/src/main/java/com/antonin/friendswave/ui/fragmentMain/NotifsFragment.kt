@@ -12,8 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.data.firebase.FirebaseSource
+import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
+import com.antonin.friendswave.data.firebase.FirebaseSourceUser
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
+import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentNotifsBinding
 import com.antonin.friendswave.ui.viewModel.NotifFragmentVMFactory
@@ -33,9 +36,9 @@ class NotifsFragment : Fragment(), KodeinAware {
     private lateinit var adapter1 : ListGeneriqueAdapter<User>
     private lateinit var adapter2 : ListGeneriqueAdapter<Event>
     private lateinit var adapter3 : ListGeneriqueAdapter<User>
-    private var viewModel: NotifFragmentViewModel = NotifFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
+    private var viewModel: NotifFragmentViewModel = NotifFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
+        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
     private lateinit var binding : FragmentNotifsBinding
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

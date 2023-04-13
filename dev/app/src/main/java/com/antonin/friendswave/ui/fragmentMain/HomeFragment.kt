@@ -24,7 +24,10 @@ import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.data.firebase.FirebaseNotificationsService
 import com.antonin.friendswave.data.firebase.FirebaseSource
+import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
+import com.antonin.friendswave.data.firebase.FirebaseSourceUser
 import com.antonin.friendswave.data.model.Event
+import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentHomeBinding
 import com.antonin.friendswave.outils.AlertDialog
@@ -50,11 +53,13 @@ class HomeFragment : Fragment(), KodeinAware {
 
     override val kodein : Kodein by kodein()
     private val factory : HomeFragmentVMFactory by instance()
-    private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
+    private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
+        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter1 : ListGeneriqueAdapter<Event>
     private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 1
     private var firebaseMessaging = FirebaseMessaging.getInstance()
+    private lateinit var firebaseNotifs : FirebaseNotificationsService
 //    firebaseMessaging = FirebaseMessaging.getInstance()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 

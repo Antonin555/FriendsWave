@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
+import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.outils.startHomeActivity
 import com.antonin.friendswave.outils.startLoginActivity
@@ -20,7 +21,7 @@ import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.home.SignalementActivity
 
 
-class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
+class HomeFragmentViewModel(private val repository: UserRepo, private val repoEvent:EventRepo):ViewModel() {
 
     var profilUid: String? = ""
     var messSignalement: String? = ""
@@ -179,7 +180,7 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
     fun fetchStrategieEvent(){
 
-        repository.fetchStrategieEvent().observeForever{ event ->
+        repoEvent.fetchStrategieEvent().observeForever{ event ->
             _categorieEventList.value = event
         }
 

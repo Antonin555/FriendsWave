@@ -4,10 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.repository.UserRepo
-import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.model.User
-import com.antonin.friendswave.strategy.SearchAgeFriend
-import com.antonin.friendswave.strategy.SearchCityFriend
+//import com.antonin.friendswave.strategy.SearchAgeFriend
+//import com.antonin.friendswave.strategy.SearchCityFriend
 import com.antonin.friendswave.strategy.SearchHobbyFriend
 import com.antonin.friendswave.strategy.StrategyFriend
 import javax.mail.Transport
@@ -26,8 +25,8 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
 //    }
 
     val searchHobbyFriend = SearchHobbyFriend()
-    val searchCityFriend = SearchCityFriend()
-    val searchAgeFriend = SearchAgeFriend()
+//    val searchCityFriend = SearchCityFriend()
+//    val searchAgeFriend = SearchAgeFriend()
 
     private lateinit var searchFriendStrategy : StrategyFriend
 
@@ -103,9 +102,9 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
         }
     }
 
-    fun strategyByAge(): List<User>{
-        searchFriendStrategy = StrategyFriend(searchHobbyFriend)
-        return searchFriendStrategy.search(user_live.value, totalUserList.value)
-    }
+//    fun strategyByAge(): List<User>{
+//        searchFriendStrategy = StrategyFriend(searchHobbyFriend)
+//        return searchFriendStrategy.search(user_live.value, totalUserList.value)
+//    }
 
 }

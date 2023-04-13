@@ -6,9 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
+import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 
-class NotifFragmentViewModel (private val repository: UserRepo): ViewModel() {
+class NotifFragmentViewModel (private val repository: UserRepo, private val repoEvent:EventRepo): ViewModel() {
 
 
     private val _eventList = MutableLiveData <List<Event>>()
@@ -50,31 +51,31 @@ class NotifFragmentViewModel (private val repository: UserRepo): ViewModel() {
 
 
     fun refuseInvitationEvent(event:Event?){
-        repository.refuseInvitationEvent(event)
+        repoEvent.refuseInvitationEvent(event)
     }
 
     fun acceptInvitationEvent(event:Event?){
-        repository.acceptInvitationEvent(event)
+        repoEvent.acceptInvitationEvent(event)
     }
     fun acceptRequestEvent(user:User?){
 
-        repository.acceptRequestEvent(user)
+        repoEvent.acceptRequestEvent(user)
     }
 
     fun declineRequestEvent(user:User?){
 
-        repository.declineRequestEvent(user)
+        repoEvent.declineRequestEvent(user)
     }
 
     fun fetchEventsInvitation() {
-        repository.fetchInvitationEvents().observeForever { event ->
+        repoEvent.fetchInvitationEvents().observeForever { event ->
             _eventList.value = event
         }
     }
 
     fun  fetchDemandeInscriptionEventPublic(){
 
-        repository.fetchDemandeInscriptionEventPublic().observeForever { user->
+        repoEvent.fetchDemandeInscriptionEventPublic().observeForever { user->
             _requestListEvent.value = user
 
         }

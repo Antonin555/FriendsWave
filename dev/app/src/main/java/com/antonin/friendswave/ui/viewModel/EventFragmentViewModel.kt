@@ -1,7 +1,6 @@
 package com.antonin.friendswave.ui.viewModel
 
 import android.content.Intent
-import android.os.Build
 import android.view.View
 import android.widget.AdapterView
 import android.widget.CompoundButton
@@ -11,16 +10,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
+import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.ui.chat.GroupChatActivity
 import com.antonin.friendswave.ui.event.*
 import com.antonin.friendswave.ui.home.ManageHomeActivity
-import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 
-class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
+class EventFragmentViewModel(private val repository:UserRepo,private val repoEvent:EventRepo):ViewModel() {
 
     var name: String? = null
     var description: String? = null
@@ -42,6 +39,7 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     var email: String? = null
 
+    var keyEvent: String? = ""
 
 //    val currentDate = formatter.parse(dateFormat.toString())
 
@@ -60,22 +58,20 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     var  interfaceEvent: InterfaceEvent? = null
 
-    private val _eventData = MutableLiveData<Event>()
-    val eventData: LiveData<Event> = _eventData
+    private val _eventDataPrivate = MutableLiveData<Event>()
+    val eventDataPrivate: LiveData<Event> = _eventDataPrivate
 
     private val _eventPublicUser = MutableLiveData<Event>()
     val eventPublicUser: LiveData<Event> = _eventPublicUser
 
 
-    private val _eventDataUser = MutableLiveData<Event>()
-    val eventDataUser: LiveData<Event> = _eventDataUser
+    private val _eventDataPublic = MutableLiveData<Event>()
+    val eventDataPublic: LiveData<Event> = _eventDataPublic
 
 
     private val _eventPendingPublic = MutableLiveData<List<Event>>()
     val eventPendingPublic: LiveData<List<Event>> = _eventPendingPublic
 
-//    private val _eventPublicUser = MutableLiveData<Event>()
-//    val eventPublicUser: LiveData<Event> = _eventPublicUser
 
     private val _eventList = MutableLiveData<List<Event>>()
     val eventList: LiveData<List<Event>> = _eventList
@@ -86,10 +82,13 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     private val _eventListConfirm = MutableLiveData<List<Event>>()
     val eventListConfirm: LiveData<List<Event>> = _eventListConfirm
 
+    private val _userListAttentePrivate = MutableLiveData<List<User>>()
+    val userListAttentePrivate: LiveData<List<User>> = _userListAttentePrivate
+
 
     fun fetchDataEvent(position: Int) {
-        repository.getEventData(position).observeForever { event ->
-            _eventData.value = event
+        repoEvent.getEventData(position).observeForever { event ->
+            _eventDataPrivate.value = event
         }
     }
 
@@ -106,7 +105,7 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
         if(adminEvent != user!!.uid){
 
-            repository.sendRequestToParticipatePublicEvent(idEvent,adminEvent)
+            repoEvent.sendRequestToParticipatePublicEvent(idEvent,adminEvent)
         }
 
     }
@@ -114,10 +113,10 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     fun addEventUser(view: View) {
         if(isPublic == true) {
-            repository.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!, adress!!,description!!,
+            repoEvent.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!, adress!!,description!!,
             longitude!!,lattitude!!)
         }else {
-            repository.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid, categorie!!,date!!, horaire!!, adress!!, description!!, longitude!!,lattitude!!)
+            repoEvent.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid, categorie!!,date!!, horaire!!, adress!!, description!!, longitude!!,lattitude!!)
         }
         Toast.makeText(view.context,"Evenement en cours de publication", Toast.LENGTH_LONG).show()
 
@@ -181,15 +180,21 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
     }
 
     fun fetchGuestDetailEvent(key:String?){
-        repository.fetchGuestDetailEvent(key).observeForever{ event ->
+        repoEvent.fetchGuestDetailEvent(key).observeForever{ event ->
             _guestList.value = event
         }
 
     }
 
+    fun fetchGuestAttenteEventPrive(key:String?){
+        repoEvent.fetchGuestAttenteEventPrive(key).observeForever{ event ->
+            _userListAttentePrivate.value = event
+        }
+    }
+
     fun fetchGuestConfirmDetailEventPublic(key: String?){
 
-        repository.fetchGuestConfirmDetailEventPublic(key).observeForever{ user ->
+        repoEvent.fetchGuestConfirmDetailEventPublic(key).observeForever{ user ->
 
             _confirm_guestListPublic.value = user
         }
@@ -197,26 +202,26 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     fun getAllEventsPendingRequestPublic(){
 
-        repository.getAllEventsPendingRequestPublic().observeForever{ event ->
+        repoEvent.getAllEventsPendingRequestPublic().observeForever{ event ->
             _eventPendingPublic.value= event
         }
     }
 
     fun fetchGuestDetailEventPublic(key:String?){
-        repository.fetchGuestDetailEventPublic(key).observeForever{ event->
+        repoEvent.fetchGuestDetailEventPublic(key).observeForever{ event->
             _guestListPublic.value = event
         }
 
     }
 
     fun fetchEventsPublic1() {
-        repository.fetchEventsPublic1().observeForever{ event ->
+        repoEvent.fetchEventsPublic1().observeForever{ event ->
         _eventList.value = event
         }
     }
 
     fun fetchEventsPrivateUser() {
-        repository.fetchEventsPrivateUser().observeForever{ event ->
+        repoEvent.fetchEventsPrivateUser().observeForever{ event ->
             _eventList.value = event
         }
 
@@ -224,7 +229,7 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
 
     fun fetchEventsPublicUser() {
-        repository.fetchEventsPublicUser().observeForever{ event ->
+        repoEvent.fetchEventsPublicUser().observeForever{ event ->
             _eventListPublicUser.value = event
         }
 
@@ -232,35 +237,47 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
     fun fetchConfirmationEvents() {
 
-        repository.fetchConfirmationEvents().observeForever{event ->
+        repoEvent.fetchConfirmationEvents().observeForever{event ->
             _eventListConfirm.value = event
         }
 
     }
 
-    fun fetchEventUser(pos: Int) {
-        repository.fetchEventUser(pos).observeForever{ event ->
-            _eventDataUser.value = event
+    fun fetchEventUserPrivate(pos: Int) {
+        repoEvent.fetchEventUser(pos).observeForever{ event ->
+            _eventDataPublic.value = event
         }
     }
 
 
     fun fetchDetailEventPublicUser(key:String?) {
-        repository.fetchDetailEventPublicUser(key).observeForever{ event->
-            _eventDataUser.value = event
+        repoEvent.fetchDetailEventPublicUser(key).observeForever{ event->
+            _eventDataPublic.value = event
 
         }
     }
 
-    fun sendAnInvitationPrivateEvent(pos: Int){
+    fun sendAnInvitationPrivateEvent(key: String){
 
         if (email.isNullOrEmpty()) {
             return
         }
 
-        repository.sendAnInvitationPrivateEvent(email!!, pos!!)
-
+        if(eventDataPrivate.value?.key == key){
+            repoEvent.sendAnInvitationEvent(email!!, eventDataPrivate.value!!)
+        }
+        if(eventDataPublic.value?.key == key){
+            repoEvent.sendAnInvitationEvent(email!!, eventDataPublic.value!!)
+        }
     }
+
+//    fun fetchParticipantAttente(){
+//
+//        repoEvent.fetchParticipantAttente(keyEvent).observeForever{ user ->
+//            _userListAttente.value = user
+//        }
+//
+//    }
 
     fun gotoMesEventsActivity(view: View) {
         Intent(view.context, ManagerFragmentEvent::class.java).also {
@@ -281,15 +298,15 @@ class EventFragmentViewModel(private val repository:UserRepo):ViewModel() {
 
 
         val patternDate = Regex("\\d{2}/\\d{2}/\\d{4}")
-        if(_eventDataUser.value!!.date!!.matches(patternDate)){
+        if(_eventDataPublic.value!!.date!!.matches(patternDate)){
 
-            repository.editEvent(_eventDataUser.value)
+            repoEvent.editEvent(_eventDataPublic.value)
         }
 
     }
 
     fun  deleteEvent() {
-        repository.deleteEvent(_eventDataUser.value)
+        repoEvent.deleteEvent(_eventDataPublic.value)
     }
 
 

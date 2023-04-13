@@ -2,7 +2,6 @@ package com.antonin.friendswave.ui.event
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -10,8 +9,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
-import com.antonin.friendswave.data.firebase.FirebaseSource
+import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
+import com.antonin.friendswave.data.firebase.FirebaseSourceUser
 import com.antonin.friendswave.data.model.User
+import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityMyEventManageBinding
 import com.antonin.friendswave.outils.AlertDialog
@@ -28,7 +29,8 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein : Kodein by kodein()
     private val factory : EventFragmentVMFactory by instance()
-    private var viewModel: EventFragmentViewModel = EventFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
+    private var viewModel: EventFragmentViewModel = EventFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
+        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
     private var adapter1 : ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
     private var adapter2 : ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
 
@@ -44,18 +46,25 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
-        binding.position = pos
+
 
 
         if(keyPublic != null ){
-            viewModel.fetchDetailEventPublicUser(keyPublic)
-            viewModel.fetchGuestDetailEventPublic(keyPublic)
+            binding.clef = keyPublic
+            viewModel.fetchDetailEventPublicUser(keyPublic) // event public
+            viewModel.fetchGuestDetailEventPublic(keyPublic) // chercher les invitations dans l'event Public
             viewModel.fetchGuestConfirmDetailEventPublic(keyPublic)
+
+            viewModel.keyEvent = keyPublic
+
 
         }
         if(keyPrivate != null) {
-            viewModel.fetchEventUser(pos)
+            binding.clef = keyPrivate
+            viewModel.fetchEventUserPrivate(pos)
             viewModel.fetchGuestDetailEvent(keyPrivate)
+            viewModel.fetchGuestAttenteEventPrive(keyPrivate)
+            viewModel.keyEvent = keyPrivate
         }
 
 
@@ -72,9 +81,6 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
             adapter1.addItems(guestList)
         })
 
-        viewModel.guestListPublic.observe(this,Observer{ guestList ->
-            adapter2.addItems(guestList)
-        })
 
         viewModel.confirm_guestListPublic.observe(this,Observer{ confirm_guestList->
             adapter1.addItems(confirm_guestList)
@@ -86,6 +92,14 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
             alert.showDialog(this,"title", "message", "OK", "Cancel", positiveButtonClickListener, negativeButtonClickListener)
 
         }
+
+        viewModel.guestListPublic.observe(this,Observer{ attente_guestList->
+            adapter2.addItems(attente_guestList)
+        })
+
+        viewModel.userListAttentePrivate.observe(this,Observer{ attente_guestList->
+            adapter2.addItems(attente_guestList)
+        })
 
 
     }
@@ -104,5 +118,10 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         if (which == DialogInterface.BUTTON_NEGATIVE) {
             Toast.makeText(this,"ok on touche a rien", Toast.LENGTH_LONG).show()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+//        viewModel.fetchParticipantAttente()
     }
 }

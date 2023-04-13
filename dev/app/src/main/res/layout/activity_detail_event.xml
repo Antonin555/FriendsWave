@@ -42,7 +42,7 @@
                     android:layout_marginBottom="20dp"
                     android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
-                    android:text="@{event.eventData.name}"
+                    android:text="@{event.eventDataPrivate.name}"
                     android:textSize="34sp" />
 
                 <TextView
@@ -70,7 +70,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/roboto_mono"
-                    android:text="@{event.eventData.duree.toString()}" />
+                    android:text="@{event.eventDataPrivate.duree.toString()}" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -94,7 +94,7 @@
                         android:layout_weight="0.5"
                         android:fontFamily="@font/roboto_mono"
                         android:gravity="center"
-                        android:text="@{event.eventData.categorie.toString()}" />
+                        android:text="@{event.eventDataPrivate.categorie.toString()}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -119,7 +119,7 @@
                         android:layout_weight="0.5"
                         android:fontFamily="@font/roboto_mono"
                         android:gravity="center"
-                        android:text="@{event.eventData.adress.toString()}" />
+                        android:text="@{event.eventDataPrivate.adress.toString()}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -144,7 +144,7 @@
                         android:layout_weight="0.5"
                         android:fontFamily="@font/roboto_mono"
                         android:gravity="center"
-                        android:text="@{event.eventData.date}" />
+                        android:text="@{event.eventDataPrivate.date}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -169,7 +169,7 @@
                         android:layout_weight="0.5"
                         android:fontFamily="@font/roboto_mono"
                         android:gravity="center"
-                        android:text="@{event.eventData.heure}" />
+                        android:text="@{event.eventDataPrivate.heure}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -194,7 +194,7 @@
                         android:layout_weight="0.5"
                         android:fontFamily="@font/roboto_mono"
                         android:gravity="center"
-                        android:text="@{event.eventData.heure}" />
+                        android:text="@{event.eventDataPrivate.heure}" />
 
                 </LinearLayout>
 
@@ -220,7 +220,7 @@
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
                     android:lines="10"
-                    android:text="@{event.eventData.description}" />
+                    android:text="@{event.eventDataPrivate.description}" />
 
                 <TextView
                     android:id="@+id/textView29"
@@ -288,7 +288,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/roboto_mono"
-                        android:text="@{event.eventData.nbrePersonnes.toString()}" />
+                        android:text="@{event.eventDataPrivate.nbrePersonnes.toString()}" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView

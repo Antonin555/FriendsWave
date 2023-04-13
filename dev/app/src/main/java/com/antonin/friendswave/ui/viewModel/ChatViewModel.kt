@@ -7,10 +7,11 @@ import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.model.User
+import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 
 
-class ChatViewModel(private val repository: UserRepo): ViewModel()  {
+class ChatViewModel(private val repository: UserRepo, private val repoEvent: EventRepo): ViewModel()  {
     var messageEnvoye: String? = ""
     var receiverUid: String? = ""
     val messageGroup = MutableLiveData<String>()
@@ -68,7 +69,7 @@ class ChatViewModel(private val repository: UserRepo): ViewModel()  {
 
     fun fetchSpecificEvents(hostId: String, eventKey: String)
     {
-        repository.fetchSpecificEvents(hostId, eventKey).observeForever{ event ->
+        repoEvent.fetchSpecificEvents(hostId, eventKey).observeForever{ event ->
             _mainEvent.value = event
         }
     }

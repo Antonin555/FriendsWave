@@ -6,6 +6,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.AdapterFragmentEvent
 import com.antonin.friendswave.data.firebase.FirebaseSource
+import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
+import com.antonin.friendswave.data.firebase.FirebaseSourceUser
+import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import com.google.android.material.tabs.TabLayout
@@ -26,7 +29,8 @@ class ManagerFragmentEvent : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manager_fragment_event)
 
-        viewModel = EventFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
+        viewModel = EventFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
+            repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
 
         val tabLayoutArray = arrayOf(
             "Mes events",

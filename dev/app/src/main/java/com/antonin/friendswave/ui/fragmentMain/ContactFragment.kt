@@ -22,7 +22,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.data.firebase.FirebaseSource
+import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
+import com.antonin.friendswave.data.firebase.FirebaseSourceUser
 import com.antonin.friendswave.data.model.User
+import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentContactBinding
 import com.antonin.friendswave.ui.chat.ChatActivity
@@ -41,7 +44,9 @@ class ContactFragment : Fragment(), KodeinAware {
     override val kodein : Kodein by kodein()
     private val factory : HomeFragmentVMFactory by instance()
     private lateinit var adapter1 : ListGeneriqueAdapter<User>
-    private var viewModel: HomeFragmentViewModel  = HomeFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
+    private var viewModel: HomeFragmentViewModel  = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
+    repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
+    )
     private lateinit var binding: FragmentContactBinding
     private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 1
 

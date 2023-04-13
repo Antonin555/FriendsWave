@@ -9,8 +9,8 @@
             type="com.antonin.friendswave.ui.viewModel.EventFragmentViewModel" />
         <variable name="viewmodelContact"
             type="com.antonin.friendswave.ui.viewModel.ContactViewModel" />
-        <variable name="position"
-        type="Integer"/>
+        <variable name="clef"
+        type="String"/>
 
     </data>
     <ScrollView
@@ -69,7 +69,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/roboto_mono"
                 android:inputType="text"
-                android:text="@={viewmodel.eventDataUser.name}" />
+                android:text="@={viewmodel.eventDataPublic.name}" />
 
             <ImageView
                 android:id="@+id/stylo6"
@@ -103,7 +103,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:fontFamily="@font/roboto_mono"
-                android:text="@={viewmodel.eventDataUser.adress}" />
+                android:text="@={viewmodel.eventDataPublic.adress}" />
 
             <ImageView
                 android:id="@+id/stylo1"
@@ -139,7 +139,7 @@
                 android:inputType="date"
                 android:fontFamily="@font/roboto_mono"
                 android:tooltipText="format dd/mm/yyyy"
-                android:text="@={viewmodel.eventDataUser.date}" />
+                android:text="@={viewmodel.eventDataPublic.date}" />
 
 
 
@@ -177,7 +177,7 @@
                 android:fontFamily="@font/roboto_mono"
                 android:inputType="datetime"
                 android:tooltipText="format 00:00"
-                android:text="@={viewmodel.eventDataUser.heure}" />
+                android:text="@={viewmodel.eventDataPublic.heure}" />
 
             <ImageView
                 android:id="@+id/stylo3"
@@ -212,7 +212,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/roboto_mono"
                 android:inputType="number"
-                android:text="@={``+viewmodel.eventDataUser.duree}" />
+                android:text="@={``+viewmodel.eventDataPublic.duree}" />
 
             <ImageView
                 android:id="@+id/stylo4"
@@ -246,7 +246,7 @@
                 android:gravity="center"
                 android:layout_weight="0.6"
                 android:fontFamily="@font/roboto_mono"
-                android:text="@{viewmodel.eventDataUser.nbrePersonnes.toString()}" />
+                android:text="@{viewmodel.eventDataPublic.nbrePersonnes.toString()}" />
 
         </LinearLayout>
 
@@ -283,12 +283,12 @@
             android:id="@+id/button7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_mono"
-            android:text="@string/send"
-            android:layout_marginTop="10dp"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/roboto_mono"
             android:gravity="center"
-            android:onClick="@{() -> viewmodel.sendAnInvitationPrivateEvent(position)}"/>
+            android:onClick="@{() -> viewmodel.sendAnInvitationPrivateEvent(clef)}"
+            android:text="@string/send" />
 
         <TextView
             android:id="@+id/textView41"

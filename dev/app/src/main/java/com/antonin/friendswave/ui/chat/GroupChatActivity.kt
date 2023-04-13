@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.MessageAdapter
 import com.antonin.friendswave.data.firebase.FirebaseSource
+import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
+import com.antonin.friendswave.data.firebase.FirebaseSourceUser
+import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityGroupChatBinding
 import com.antonin.friendswave.ui.viewModel.ChatVMFactory
@@ -22,7 +25,9 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
 
     override val kodein : Kodein by kodein()
     private val factory : ChatVMFactory by instance()
-    private var viewModel : ChatViewModel = ChatViewModel(repository = UserRepo(firebase = FirebaseSource()))
+    private var viewModel : ChatViewModel = ChatViewModel(repository = UserRepo(firebaseUser= FirebaseSourceUser()),
+        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
+    )
     private lateinit var binding : ActivityGroupChatBinding
     var eventKey: String = ""
     var admin: String = ""
