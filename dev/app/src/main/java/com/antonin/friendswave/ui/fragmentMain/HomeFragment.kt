@@ -54,8 +54,8 @@ class HomeFragment : Fragment(), KodeinAware {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter1 : ListGeneriqueAdapter<Event>
     private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 1
-    private lateinit var firebaseMessaging: FirebaseMessaging
-
+    private var firebaseMessaging = FirebaseMessaging.getInstance()
+//    firebaseMessaging = FirebaseMessaging.getInstance()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         permissionNotifs()
@@ -63,7 +63,7 @@ class HomeFragment : Fragment(), KodeinAware {
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
         binding.lifecycleOwner = this
         binding.item = viewModel
-        firebaseMessaging = FirebaseMessaging.getInstance()
+
 
         return binding.root
 
@@ -72,10 +72,11 @@ class HomeFragment : Fragment(), KodeinAware {
     override fun onResume() {
         super.onResume()
 
-        FirebaseMessaging.getInstance().subscribeToTopic("allUsers")
+        firebaseMessaging.subscribeToTopic("new_event_public")
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // Abonnement réussi
+
                     Log.d(TAG, "Abonnement au topic de notification réussi")
                 } else {
                     // Échec de l'abonnement

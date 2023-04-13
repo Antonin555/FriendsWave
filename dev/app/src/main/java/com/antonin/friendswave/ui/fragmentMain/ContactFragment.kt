@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.core.view.isEmpty
 import androidx.core.view.isNotEmpty
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -28,6 +29,7 @@ import com.antonin.friendswave.ui.chat.ChatActivity
 import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
+import com.bumptech.glide.Glide
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -56,6 +58,8 @@ class ContactFragment : Fragment(), KodeinAware {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_PERMISSION_READ_EXTERNAL_STORAGE)
         }
+
+
         viewModel.fetchUsersFriends()
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_contact)
         val layoutManager = LinearLayoutManager(context)
@@ -91,5 +95,7 @@ class ContactFragment : Fragment(), KodeinAware {
             }
         })
     }
+
+
 
 }

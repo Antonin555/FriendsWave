@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
 
         <variable name="item"
             type="com.antonin.friendswave.data.model.User" />
+
+        <variable
+            name="imageUrl"
+            type="String" />
     </data>
 
 <LinearLayout
@@ -28,7 +32,7 @@
             android:layout_marginTop="5dp"
             app:cardCornerRadius="100dp">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imageProfil"
                 android:layout_width="60dp"
                 android:layout_height="60dp"

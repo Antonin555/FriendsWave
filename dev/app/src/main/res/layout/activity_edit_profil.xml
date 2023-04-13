@@ -30,7 +30,6 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="77dp"
-            android:background="@color/design_default_color_primary"
             android:fontFamily="sans-serif"
             android:gravity="center"
             android:text=""
@@ -41,7 +40,6 @@
             android:id="@+id/textView20"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:background="#F6EDED"
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/photo"
@@ -50,11 +48,11 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_marginLeft="15dp"
+            android:layout_height="3dp"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"
-            android:background="@color/design_default_color_primary"/>
+            android:layout_marginRight="50dp"
+            android:background="@color/design_default_color_primary" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -93,7 +91,6 @@
             android:id="@+id/textView10"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:background="#F6EDED"
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/prensentation"
@@ -101,17 +98,20 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_marginLeft="15dp"
+            android:layout_height="3dp"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"
-            android:background="@color/design_default_color_primary"/>
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/design_default_color_primary" />
 
 
         <EditText
             android:id="@+id/textAreaInformation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@null"
             android:fontFamily="@font/roboto_mono"
             android:gravity="top|start"
@@ -129,7 +129,6 @@
             android:id="@+id/textView12"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:background="#F6EDED"
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/detail_event_infos"
@@ -137,16 +136,20 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_marginLeft="15dp"
+            android:layout_height="3dp"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"
-            android:background="@color/design_default_color_primary"/>
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/design_default_color_primary" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="300dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -171,19 +174,11 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:text="@={viewmodel.user_live.name}"
                     android:fontFamily="@font/roboto_mono"
-                    android:importantForAutofill="no" />
+                    android:importantForAutofill="no"
+                    android:text="@={viewmodel.user_live.name}" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginStart="20dp"
-                    android:layout_weight="1"
-                    tools:ignore="RtlHardcoded">
 
-                </com.google.android.material.floatingactionbutton.FloatingActionButton>
             </LinearLayout>
 
             <LinearLayout
@@ -207,19 +202,10 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:text="@={viewmodel.user_live.familyName}"
                     android:fontFamily="@font/roboto_mono"
-                    android:importantForAutofill="no" />
+                    android:importantForAutofill="no"
+                    android:text="@={viewmodel.user_live.familyName}" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    tools:ignore="RtlHardcoded">
-
-                </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
             </LinearLayout>
 
@@ -247,18 +233,10 @@
                     android:layout_weight="3"
                     android:ems="10"
                     android:fontFamily="@font/roboto_mono"
-                    android:text="@={``+viewmodel.user_live.age}"
                     android:inputType="number"
+                    android:text="@={``+viewmodel.user_live.age}"
                     tools:ignore="Autofill" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1">
-
-                </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
             </LinearLayout>
 
@@ -281,20 +259,19 @@
                     android:id="@+id/editLieu"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:text="@={viewmodel.user_live.lieu}"
-                    android:fontFamily="@font/roboto_mono" />
+                    android:layout_weight="4"
+                    android:fontFamily="@font/roboto_mono"
+                    android:text="@={viewmodel.user_live.lieu}" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <ImageView
                     android:id="@+id/searchCity"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="right"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
-                    >
+                    android:src="@drawable/map" />
 
-                </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
             </LinearLayout>
 
@@ -320,7 +297,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:entries="@array/list_langues"
-                    android:onItemSelected="@{viewmodel::onSelectItem}"/>
+                    android:onItemSelected="@{viewmodel::onSelectItem}" />
 
 
             </LinearLayout>
@@ -357,7 +334,6 @@
             android:id="@+id/textView14"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:background="#F6EDED"
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/centres_interets"
@@ -365,23 +341,25 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_marginLeft="15dp"
+            android:layout_height="3dp"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"
-            android:background="@color/design_default_color_primary"/>
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/design_default_color_primary" />
 
         <GridView
             android:id="@+id/gridView"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:choiceMode="multipleChoice"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/selector_grid_item"
-            android:numColumns="3"
-            android:verticalSpacing="16dp"
-            android:stretchMode="columnWidth"
+            android:choiceMode="multipleChoice"
             android:gravity="center"
-            />
+            android:numColumns="3"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="16dp" />
 
         <Button
             android:id="@+id/textView15"

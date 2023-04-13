@@ -16,10 +16,7 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
         ListAdapter<T, ListGeneriqueAdapter.GenericViewHolder<T>>(WordsComparator()) {
 
         private val items = mutableListOf<T>()
-        //    private var items = MutableLiveData<T>()
-//    val items: MutableLiveData<T> by lazy {
-//        MutableLiveData<T>()
-//    }
+
         private var inflater: LayoutInflater? = null
         private var onListItemViewClickListener: OnListItemViewClickListener? = null
 

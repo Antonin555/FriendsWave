@@ -21,6 +21,7 @@
     <string name="add_event_hint_name">nom event</string>
     <string name="add_event_hint_mail">entrez un courriel valide</string>
     <string name="add_event_lieu">Lieu : </string>
+    <string name="ville">ville : </string>
     <string name="add_event_date">Date : </string>
     <string name="add_event_heure">Heure : </string>
     <string name="add_event_description">Description : </string>
@@ -50,7 +51,7 @@
     <string name="detail_event_inscription">inscrivez vous</string>
     <string name="detail_event_infos">Infos :</string>
     <string name="detail_event_duration">Durée :</string>
-    <string name="age">age</string>
+    <string name="age">age :</string>
     <string name="send">envoyer</string>
     <string name="activity_event_inscrit">events inscrits</string>
     <string name="activity_event_perso">mes events</string>
@@ -69,6 +70,11 @@
     <string name="alert_yes">oui</string>
     <string name="alert_no">non</string>
     <string name="save">sauvegarder</string>
+    <string name="pseudo">pseudo :</string>
+    <string name="education">education :</string>
+    <string name="langue">langue :</string>
+    <string name="delete_friend">supprimer de votre liste d""amis ?</string>
+    <string name="signal_profil">signaler ?</string>
 
     <string name="api_key_google_map">AIzaSyDDvmYhowxWZi-TRhLBK1bduYexZAHhaQ8</string>
     <string name="id_maps_pereso">cee059bafdb02fa3</string>

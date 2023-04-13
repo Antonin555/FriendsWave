@@ -18,7 +18,8 @@ class FirebaseNotificationsService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-
+        val title = message.notification!!.title
+        val text = message.notification!!.body
         if(message.notification != null) {
             var notification : RemoteMessage.Notification = message.notification!!
             sendNotification(notification.toString());

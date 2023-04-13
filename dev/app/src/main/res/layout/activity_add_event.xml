@@ -43,80 +43,87 @@
                 android:orientation="vertical">
 
 
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:fontFamily="@font/roboto_mono"
-                    android:gravity="center"
-                    android:text="@string/add_event_name"
-                    android:textSize="24sp" />
-
-
                 <View
                     android:id="@+id/view"
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"
+                    android:layout_height="3dp"
+                    android:layout_marginLeft="50dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="#7986CB" />
-
-                <EditText
-                    android:id="@+id/editTextTextPersonName"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="4"
-                    android:ems="10"
-                    android:fontFamily="@font/roboto_mono"
-                    android:hint="@string/add_event_hint_name"
-                    android:inputType="textPersonName"
-                    android:text="@={viewmodel.name}" />
-
-                <View
-                    android:id="@+id/view2"
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="50dp"
                     android:layout_marginBottom="10dp"
                     android:background="#7986CB" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginBottom="20dp"
                     android:layout_weight="3"
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_mono"
+                        android:gravity="center"
+                        android:text="@string/add_event_name"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/editTextTextPersonName"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="3"
+                        android:ems="10"
+                        android:fontFamily="@font/roboto_mono"
+                        android:hint="@string/add_event_hint_name"
+                        android:inputType="textPersonName"
+                        android:text="@={viewmodel.name}" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_weight="3"
+                    android:orientation="horizontal">
+
+                    <Switch
+                        android:id="@+id/switch1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.2"
+                        android:checked="@={viewmodel.isChecked()}"
+                        android:gravity="center"
+                        android:onCheckedChanged="@{viewmodel::executeOnStatusChanged}"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                    <TextView
                         android:id="@+id/textView9"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:fontFamily="@font/roboto_mono"
                         android:gravity="center"
                         android:text="@{viewmodel.isChecked() ? @string/add_event_public : @string/add_event_private}"
                         android:textSize="16sp" />
 
-                    <Switch
-                        android:id="@+id/switch1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:checked="@={viewmodel.isChecked()}"
-                        android:gravity="center"
-                        android:onCheckedChanged="@{viewmodel::executeOnStatusChanged}"
-                        tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginBottom="20dp"
                     android:orientation="horizontal">
 
@@ -124,8 +131,9 @@
                         android:id="@+id/textView18"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight="0.5"
                         android:fontFamily="@font/roboto_mono"
+                        android:gravity="center"
                         android:text="@string/detail_event_duration" />
 
                     <EditText
@@ -140,7 +148,9 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginBottom="20dp"
                     android:layout_weight="3"
                     android:orientation="horizontal">
@@ -151,6 +161,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:fontFamily="@font/roboto_mono"
+                        android:gravity="center"
                         android:text="@string/add_event_nbre_personnes"
                         android:textSize="16sp" />
 
@@ -164,28 +175,40 @@
                         android:text="@={`` + viewmodel.nbrePersonnes}" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/textView10"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:fontFamily="@font/roboto_mono"
-                    android:text="@string/add_event_categorie"
-                    android:textSize="16sp" />
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_weight="3"
+                    android:orientation="horizontal">
 
-                <Spinner
-                    android:id="@+id/spinner2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/list_categorie"
-                    android:onItemSelected="@{viewmodel::onSelectItem}"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_mono"
+                        android:gravity="center"
+                        android:text="@string/add_event_categorie"
+                        android:textSize="16sp" />
+
+                    <Spinner
+                        android:id="@+id/spinner2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:entries="@array/list_categorie"
+                        android:gravity="center"
+                        android:onItemSelected="@{viewmodel::onSelectItem}" />
+                </LinearLayout>
 
                 <View
                     android:id="@+id/view3"
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="3dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
                     android:layout_marginBottom="10dp"
                     android:background="#7986CB" />
 
@@ -234,8 +257,10 @@
                 <View
                     android:id="@+id/view4"
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"
+                    android:layout_height="3dp"
+                    android:layout_marginLeft="50dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginRight="50dp"
                     android:layout_marginBottom="10dp"
                     android:background="#7986CB" />
 
@@ -257,6 +282,8 @@
                     android:ems="10"
                     android:fontFamily="@font/roboto_mono"
                     android:gravity="top|left"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:hint="@string/add_event_hint_name"
                     android:text="@={viewmodel.description}"
                     android:inputType="textMultiLine"
@@ -265,113 +292,124 @@
                 <View
                     android:id="@+id/view5"
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"
+                    android:layout_height="3dp"
+                    android:layout_marginLeft="50dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginRight="50dp"
                     android:layout_marginBottom="10dp"
                     android:background="#7986CB" />
 
-                <TextView
-                    android:id="@+id/textView12"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="4"
-                    android:fontFamily="@font/roboto_mono"
-                    android:gravity="center"
-                    android:text="@string/add_event_lieu"
-                    android:textSize="20sp" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:id="@+id/editCities"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="6"
+                        android:ems="10"
+                        android:fontFamily="@font/roboto_mono"
+                        android:text="@={viewmodel.adress}" />
 
-                <Button
-                    android:id="@+id/searchCities"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="3"
-                    android:fontFamily="@font/roboto_mono"
-                    android:text="Button" />
+                    <ImageView
+                        android:id="@+id/searchCities"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:src="@drawable/map" />
+                </LinearLayout>
 
-
-
-                <TextView
-                    android:id="@+id/editCities"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="3"
-                    android:ems="10"
-                    android:text="@={viewmodel.adress}"
-                    android:fontFamily="@font/roboto_mono" />
 
                 <View
                     android:id="@+id/view6"
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"
+                    android:layout_height="3dp"
+                    android:layout_marginLeft="50dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginRight="50dp"
                     android:layout_marginBottom="10dp"
                     android:background="#7986CB" />
 
-                <TextView
-                    android:id="@+id/textView13"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="4"
-                    android:fontFamily="@font/roboto_mono"
-                    android:gravity="center"
-                    android:text="@string/add_event_date"
-                    android:textSize="20sp" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <DatePicker
-                    android:id="@+id/datePicker"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="10"
-                    android:year="@={viewmodel.year}"
-                    android:month="@={viewmodel.month}"
-                    android:day="@={viewmodel.day}"
-                    android:onDateChanged="@{(v, year, month, day) -> viewmodel.changeDate(year, month, day)}"
-                    android:calendarViewShown="false"
-                    android:datePickerMode="spinner" />
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_mono"
+                        android:gravity="center"
+                        android:text="@string/add_event_date"
+                        android:textSize="20sp" />
 
+                    <DatePicker
+                        android:id="@+id/datePicker"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:calendarViewShown="false"
+                        android:datePickerMode="spinner"
+                        android:day="@={viewmodel.day}"
+                        android:month="@={viewmodel.month}"
+                        android:onDateChanged="@{(v, year, month, day) -> viewmodel.changeDate(year, month, day)}"
+                        android:year="@={viewmodel.year}" />
+                </LinearLayout>
 
 
                 <View
                     android:id="@+id/view7"
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"
+                    android:layout_height="3dp"
+                    android:layout_marginLeft="50dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginRight="50dp"
                     android:layout_marginBottom="10dp"
                     android:background="#7986CB" />
 
-                <TextView
-                    android:id="@+id/textView14"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="4"
-                    android:fontFamily="@font/roboto_mono"
-                    android:gravity="center"
-                    android:text="@string/add_event_heure"
-                    android:textSize="20sp" />
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
 
-                <TimePicker
-                    android:id="@+id/editTextTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="10"
-                    android:hour="@={viewmodel.hour}"
-                    android:minute="@={viewmodel.minute}"
-                    android:onTimeChanged="@{(v, hour, minute) -> viewmodel.changeHour(hour, minute)}"
-                    android:ems="10"
-                    android:timePickerMode="spinner" />
+                    <TextView
+                        android:id="@+id/textView14"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="2"
+                        android:fontFamily="@font/roboto_mono"
+                        android:gravity="center"
+                        android:text="@string/add_event_heure"
+                        android:textSize="20sp" />
 
-                <Button
+                    <TimePicker
+                        android:id="@+id/editTextTime"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="20dp"
+                        android:layout_weight="4"
+                        android:ems="10"
+                        android:hour="@={viewmodel.hour}"
+                        android:minute="@={viewmodel.minute}"
+                        android:onTimeChanged="@{(v, hour, minute) -> viewmodel.changeHour(hour, minute)}"
+                        android:timePickerMode="spinner" />
+                </LinearLayout>
+
+                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:id="@+id/button4"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="center"
+                    android:text="@string/add_event"
                     android:layout_weight="5"
                     android:onClick="@{(v)-> viewmodel.addEventUser(v)}" />
 
