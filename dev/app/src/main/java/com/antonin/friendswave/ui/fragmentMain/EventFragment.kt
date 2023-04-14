@@ -1,6 +1,8 @@
 package com.antonin.friendswave.ui.fragmentMain
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.location.Location
 import android.location.LocationListener
 import android.os.Bundle
@@ -72,6 +74,7 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
     }
 
 
+    @SuppressLint("ResourceType")
     override fun onResume() {
         super.onResume()
         binding.mapView.onResume()

@@ -1,6 +1,7 @@
 package com.antonin.friendswave.adapter
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,7 +44,6 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
             itemViewModel.adapterPosition = position
             onListItemViewClickListener?.let { itemViewModel.onListItemViewClickListener = it }
             holder.bind(itemViewModel)
-
 
         }
 

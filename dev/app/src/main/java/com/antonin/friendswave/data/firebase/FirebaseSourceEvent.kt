@@ -329,43 +329,63 @@ class FirebaseSourceEvent {
     }
 
     fun addEventsPrivateToRecyclerNotif(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
-        for(i in eventIdList){
-            firebaseData.child("event/eventPrivate").child(i.value).get().addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    for (snap in task.result.children) {
-                        if (snap.exists()) {
-                            val event = snap.getValue(Event::class.java)
-                            if(i.key == snap.key){
-                                eventList.add(event!!)
-                            }
+
+            firebaseData.child("event/eventPrivate").addValueEventListener(object :ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+
+                    for (snap in snapshot.children) {
+
+                        val event = snap.getValue(Event::class.java)
+                        if(eventIdList.containsValue(snap.key)){
+                            eventList.add(event!!)
                         }
+
                     }
                     onResult(eventList)
                 }
-            }
-        }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+
+            })
+
+
+
+
+
     }
 
     //Alex 2eme fonction pour ne pas faire result children
     fun addEventsPublicToRecyclerNotif2(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
-        for (i in eventIdList){
-            firebaseData.child("event/eventPublic").get().addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    for (snap in task.result.children) {
-                        if (snap.exists()) {
-                            val event = snap.getValue(Event::class.java)
-                            if(i.key == snap.key){
-                                eventList.add(event!!)
-                            }
+
+            firebaseData.child("event/eventPublic").addValueEventListener(object :ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+
+                    for (snap in snapshot.children) {
+
+                        val event = snap.getValue(Event::class.java)
+                        if(eventIdList.containsValue(snap.key)){
+                            eventList.add(event!!)
                         }
+
                     }
                     onResult(eventList)
                 }
-            }
-        }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
 
 
+            })
     }
+
+
+
 
     ///  A FAIRE :
 
