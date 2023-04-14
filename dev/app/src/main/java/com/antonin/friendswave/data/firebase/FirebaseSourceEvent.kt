@@ -583,9 +583,22 @@ class FirebaseSourceEvent {
     fun acceptInvitationEvent(event: Event?){
 
         val queryEventPrivate = firebaseData.child("event/eventPrivate").child(event!!.admin).child(event.key!!)
+        val queryEventPublic = firebaseData.child("event/eventPublic").child(event!!.key.toString())
         val queryAcceptEventUser = firebaseData.child("user").child(mainUid!!)
-        queryEventPrivate.child("listInscrits").child(currentUser()!!.email.hashCode().toString()).setValue(currentUser()!!.email.toString())
-        queryEventPrivate.child("invitations").child(currentUser()!!.email.hashCode().toString()).removeValue()
+
+        if(event.isPublic == true){
+
+
+            queryEventPublic.child("invitation").child(mainUid!!).removeValue()
+            queryEventPublic.child("listInscrits").child(mainUid).setValue(currentUser()!!.email.toString())
+
+        }else {
+
+            queryEventPrivate.child("listInscrits").child(currentUser()!!.email.hashCode().toString()).setValue(currentUser()!!.email.toString())
+            queryEventPrivate.child("invitation").child(currentUser()!!.email.hashCode().toString()).removeValue()
+
+        }
+
         queryAcceptEventUser.child("invitations").child(event.key!!).removeValue()
         queryAcceptEventUser.child("eventConfirmationList").child(event.key!!).setValue(event.admin)
 
@@ -593,9 +606,19 @@ class FirebaseSourceEvent {
 
     fun refuseInvitationEvent(event: Event?){
 
+        val queryEventPublic = firebaseData.child("event/eventPublic").child(event!!.key.toString())
         val queryEventPrivate = firebaseData.child("event/eventPrivate").child(event!!.admin).child(event.key!!)
         val queryAcceptEventUser = firebaseData.child("user").child(mainUid!!)
-        queryEventPrivate.child("invitations").child(currentUser()!!.email.hashCode().toString()).removeValue()
+
+        if(event.isPublic == true){
+
+            queryEventPublic.child("invitation").child(mainUid).removeValue()
+
+        }else {
+            queryEventPrivate.child("invitation").child(currentUser()!!.email.hashCode().toString()).removeValue()
+
+        }
+
         queryAcceptEventUser.child("invitations").child(event.key!!).removeValue()
 
     }

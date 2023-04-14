@@ -365,7 +365,7 @@
                         android:datePickerMode="spinner"
                         android:day="@={viewmodel.day}"
                         android:month="@={viewmodel.month}"
-                        android:onDateChanged="@{(v, year, month, day) -> viewmodel.changeDate(year, month, day)}"
+                        android:onDateChanged="@{(v, year, month, day) -> viewmodel.changeDate(v,year, month, day)}"
                         android:year="@={viewmodel.year}" />
                 </LinearLayout>
 

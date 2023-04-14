@@ -26,5 +26,15 @@
   ],
   "database": {
     "rules": "database.rules.json"
-  }
+  },
+  
+  "hosting": {
+      "public": "public",
+      "rewrites":[
+        {
+          "source":"/api/send",
+          "function":"api"
+        }
+      ]
+    }
 }
