@@ -50,7 +50,6 @@ class HomeFragment : Fragment(), KodeinAware {
     private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
         repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
     private val factory2 : NotifFragmentVMFactory by instance()
-//    private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebase = FirebaseSource()))
     private var viewModel2: NotifFragmentViewModel = NotifFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
     repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
     private lateinit var binding: FragmentHomeBinding
@@ -63,8 +62,7 @@ class HomeFragment : Fragment(), KodeinAware {
     private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 1
     private var firebaseMessaging = FirebaseMessaging.getInstance()
     private lateinit var firebaseNotifs : FirebaseNotificationsService
-//    firebaseMessaging = FirebaseMessaging.getInstance()
-//    private lateinit var firebaseMessaging: FirebaseMessaging
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

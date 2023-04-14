@@ -15,6 +15,8 @@ import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.ui.chat.GroupChatActivity
 import com.antonin.friendswave.ui.event.*
 import com.antonin.friendswave.ui.home.ManageHomeActivity
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class EventFragmentViewModel(private val repository:UserRepo,private val repoEvent:EventRepo):ViewModel() {
@@ -137,45 +139,28 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     // ViewModel pour MyEvent :
 
-    fun changeDate(year: Int, month: Int, day: Int) {
+    fun changeDate(view: View,year: Int, month: Int, day: Int) {
 
-
-        var dayString : String = ""
-        var monthString : String = ""
-
-        if(day < 10) {
-            dayString = "0" + day.toString()
-        } else
-            dayString = day.toString()
-
-        if(month < 10) {
-            monthString = "0"+(month + 1).toString()
-        } else
-            monthString = (month+1).toString()
+        val dayString =  if (day < 10) "0$day" else day.toString()
+        val monthString = if (month < 10) "0${month + 1}" else "${month + 1}"
 
         date = dayString + "/"+monthString +"/"+ year.toString()
 
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        var strDate: Date? = null
+        strDate = sdf.parse(date)
 
+        if (Date().after(strDate)) {
+            Toast.makeText(view.context,"Impossible de remonter dans le temps",Toast.LENGTH_SHORT).show()
 
-//        if(dateEvent.before(currentDate)){
-//
-//            println("Impossible de revenir dans le passé")
-//
-//        }
-
+        }
 
     }
 
     fun changeHour(hour:Int, minute:Int) {
 
-        var hourString : String = ""
-        var minuteString : String = ""
-
-        if(hour < 10) hourString = "0" + hour.toString()
-        else hourString = hour.toString()
-        if(minute < 10) minuteString = "0" + minute.toString()
-        else minuteString = minute.toString()
-
+        val hourString = if (hour < 10) "0$hour" else hour.toString()
+        val minuteString = if (minute < 10) "0$minute" else minute.toString()
         horaire = hourString + ":" + minuteString
     }
 
