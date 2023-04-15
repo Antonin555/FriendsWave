@@ -1,6 +1,7 @@
 package com.antonin.friendswave.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,8 @@ import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 
 class MyGridViewAdapter(private val context: Context, private val values: List<String>, private val viewModel: HomeFragmentViewModel) : BaseAdapter() {
     private var selectedPositions = mutableListOf<Int>()
+
+
 
     override fun getCount(): Int {
         return values.size
@@ -41,13 +44,22 @@ class MyGridViewAdapter(private val context: Context, private val values: List<S
 
         if (selectedPositions.contains(position)) {
             textView.setBackgroundColor(ContextCompat.getColor(context, R.color.teal_200))
-        } else {
+        }
+        else if(viewModel.user_live.value!!.interet!!.contains(values[position])){
+            textView.setBackgroundColor(ContextCompat.getColor(context, R.color.teal_200))
+            selectedPositions.add(position)
+        }
+        else {
             textView.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
         }
+
 
         textView.setOnClickListener {
             if (selectedPositions.contains(position)) {
                 selectedPositions.remove(position)
+                viewModel.user_live.value!!.interet!!.remove(values[position])
+
+
             } else {
                 selectedPositions.add(position)
                 viewModel.user_live.value!!.interet = getSelectedValues()

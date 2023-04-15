@@ -1,5 +1,7 @@
 package com.antonin.friendswave.ui.viewModel
 
+import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +11,7 @@ import com.antonin.friendswave.data.model.User
 //import com.antonin.friendswave.strategy.SearchCityFriend
 import com.antonin.friendswave.strategy.SearchHobbyFriend
 import com.antonin.friendswave.strategy.StrategyFriend
+import com.antonin.friendswave.ui.authentification.InterfaceAuth
 import javax.mail.Transport
 import java.util.*
 import javax.mail.*
@@ -19,14 +22,14 @@ import javax.mail.Message
 class ContactViewModel(private val repository: UserRepo) : ViewModel() {
 
     var email: String? = null
-
+    var interfaceAuth : InterfaceAuth? = null
 //    val user by lazy {
 //        repository.currentUser()
 //    }
 
-    val searchHobbyFriend = SearchHobbyFriend()
-//    val searchCityFriend = SearchCityFriend()
-//    val searchAgeFriend = SearchAgeFriend()
+//    val searchHobbyFriend = SearchHobbyFriend()
+////    val searchCityFriend = SearchCityFriend()
+////    val searchAgeFriend = SearchAgeFriend()
 
     private lateinit var searchFriendStrategy : StrategyFriend
 
@@ -45,18 +48,30 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
         }
     }
 
-    fun addFriendRequestToUser(){
+    fun addFriendRequestToUser(view: View){
 
         if (email.isNullOrEmpty()) {
             //faire un interface pour indiquer les erreurs
-//            interfaceAuth?.onFailure("Please enter a valid mail and a valid password")
+            interfaceAuth?.onFailure("Please enter a valid mail")
             return
         }
         if (!emailList.value!!.contains(email!!)){
+            interfaceAuth?.onFailure("This email match no account, we are sending an invitation via email")
             //envoyer une demande directement par couriel
             sendEmail("caron.alex18@hotmail.fr")
             return
         }
+        if (user_live.value!!.friendList!!.containsValue(email)){
+            interfaceAuth?.onFailure("Already in your contact")
+            return
+        }
+// verifier qu'une demande na pas deja ete envoye
+//        if(repository.requestAlreadySend(email!!).value!!){
+//            interfaceAuth?.onFailure("Request already sent")
+//            return
+//        }
+
+        Toast.makeText(view.context, "Demande envoyee", Toast.LENGTH_SHORT).show()
         repository.addFriendRequestToUser(email!!)
     }
 

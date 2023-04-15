@@ -3,6 +3,7 @@ package com.antonin.friendswave.ui.contact
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -13,6 +14,7 @@ import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.databinding.ActivityAddContactBinding
 import com.antonin.friendswave.strategy.*
+import com.antonin.friendswave.ui.authentification.InterfaceAuth
 import com.antonin.friendswave.ui.viewModel.*
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -20,7 +22,7 @@ import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
 
-class AddContactActivity : AppCompatActivity(), KodeinAware {
+class AddContactActivity : AppCompatActivity(), KodeinAware, InterfaceAuth {
 
     override val kodein : Kodein by kodein()
     private lateinit var viewModel: ContactViewModel
@@ -36,6 +38,7 @@ class AddContactActivity : AppCompatActivity(), KodeinAware {
         viewModel = ViewModelProviders.of(this, factory).get(ContactViewModel::class.java)
         val view = binding.root
         binding.viewmodel = viewModel
+        viewModel.interfaceAuth = this
         binding.lifecycleOwner = this
     }
 
@@ -91,6 +94,15 @@ class AddContactActivity : AppCompatActivity(), KodeinAware {
             adapter1.addItems(tempList)
         })
 
+    }
+
+    override fun onSuccess() {
+        TODO("Not yet implemented")
+    }
+
+
+    override fun onFailure(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
 

@@ -58,7 +58,13 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
     fun addFriendRequestToUser(email: String) = firebaseUser.addFriendRequestToUser(email)
 
 
-
+    fun requestAlreadySend(email: String):LiveData<Boolean>{
+        val doubleRequest = MutableLiveData<Boolean>()
+        firebaseUser.requestAlreadySend(email) { bool ->
+            doubleRequest.postValue(bool)
+        }
+        return doubleRequest
+    }
 
 
     fun addFriendRequestToUserByUid(uid: String?) = firebaseUser.addFriendRequestToUserByUid(uid)

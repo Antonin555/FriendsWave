@@ -133,7 +133,7 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
 
     fun afficheInteret(){
         binding.viewmodel!!.interetList.observe(this, Observer{
-            adapter = MyGridViewAdapter(this, it, binding.viewmodel!!)
+            adapter = MyGridViewAdapter(this, it, viewModel!!)
             binding.gridView.adapter = adapter
         })
 
