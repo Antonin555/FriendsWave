@@ -88,8 +88,8 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     val userListAttentePrivate: LiveData<List<User>> = _userListAttentePrivate
 
 
-    fun fetchDataEvent(position: Int) {
-        repoEvent.getEventData(position).observeForever { event ->
+    fun fetchDataEvent(key: String) {
+        repoEvent.getEventData(key).observeForever { event ->
             _eventDataPrivate.value = event
         }
     }

@@ -300,7 +300,7 @@
                     android:layout_marginRight="10dp" />
 
                 <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    android:id="@+id/button5"
+                    android:id="@+id/btn_inscription"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"

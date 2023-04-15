@@ -88,6 +88,20 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
             }
         })
 
+
+        adapter2.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
+            override fun onClick(view: View, position: Int) {
+
+                val event = viewModel.eventPendingPublic.value?.get(position)!!.key
+                val bool = true
+                val intent = Intent(view.context, DetailEventActivity::class.java)
+                intent.putExtra("idEvent", event)
+                intent.putExtra("inscrit_ou_non", bool)
+                view.context.startActivity(intent)
+
+            }
+        })
+
     }
 
 }

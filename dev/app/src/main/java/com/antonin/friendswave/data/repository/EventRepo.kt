@@ -224,10 +224,10 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
 
     }
 
-    fun getEventData(position: Int) : LiveData<Event> {
+    fun getEventData(key: String) : LiveData<Event> {
         val eventLiveData = MutableLiveData<Event>()
 
-        firebaseEvent.getEventData(position) { event ->
+        firebaseEvent.getEventData(key) { event ->
             eventLiveData.postValue(event)
         }
 

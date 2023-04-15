@@ -39,20 +39,15 @@ class FirebaseSourceEvent {
 
 
     // GET EVENT DATA DETAIL PUBLIC PAGE EVENT FRAGMENT MAIN :
-    fun getEventData(position: Int,onResult: (Event?) -> Unit) {
+    fun getEventData(key:String,onResult: (Event?) -> Unit) {
 
-        firebaseData.child("event/eventPublic").addListenerForSingleValueEvent(object :
+        firebaseData.child("event/eventPublic").child(key).addListenerForSingleValueEvent(object :
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                var i = 0
-                for(snap in snapshot.children){
-                    if(position == i){
-                        val data = snap.getValue(Event::class.java)!!
-                        onResult(data)
+                val data = snapshot.getValue(Event::class.java)!!
+                onResult(data)
                     }
-                    i+=1
-                }
-            }
+
 
             override fun onCancelled(error: DatabaseError) {
 //                Log.e("FirebaseHelper", "Error fetching data", error.toException())
@@ -99,26 +94,6 @@ class FirebaseSourceEvent {
         })
     }
 
-    //Retourne la la liste des User en attente pour un event
-//    fun fetchParticipantAttente(key: String, onResult: (List<User?>) -> Unit){
-//        val userList: ArrayList<User> = ArrayList()
-//
-//        firebaseData.child("user").addValueEventListener(object :ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//
-//                for (snap in snapshot.children) {
-//                    if(event.invitations.containsKey(snap.key)){
-//                        val user = snap.getValue(User::class.java)
-//                        userList.add(user!!)
-//                    }
-//                }
-//                onResult(userList)
-//            }
-//            override fun onCancelled(error: DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//        })
-//    }
 
     // 3/ METTRE A JOUR LE RECYCLER DES EVENTS EN ATTENTE POUR L'UTILISATEUR :
     fun addPendingEventsToRecyclerNotif(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
@@ -142,46 +117,6 @@ class FirebaseSourceEvent {
 
     }
 
-
-
-
-    ////////////////////////////////////////////////////////////////////////
-
-//
-//    fun sendAnInvitationEvent(email: String, key: String?) {
-
-//        var eventId : String?
-//
-//        val firebaseDataEventPublic = firebaseData.child("event/eventPublic")
-//        val firebaseDataEventPrivate = firebaseData.child("event/eventPrivate")
-//
-//
-//        addInvitationToUser(event?.key.toString(),email)
-//
-////        firebaseData.child("event/eventPrivate").child(mainUid!!).addListenerForSingleValueEvent(object : ValueEventListener {
-////            override fun onDataChange(dataSnapshot: DataSnapshot) {
-////                if (dataSnapshot.exists()) {
-////                    var i = 0
-////                    for (childSnapshot in dataSnapshot.children)  {
-////                        if(position == i){
-////                            eventId = childSnapshot.key
-////                            firebaseData.child("event/eventPrivate").child(mainUid).child(eventId!!)
-////                                .child("invitations").child(email.hashCode().toString())
-////                                .setValue(email)
-////                            addInvitationToUser(eventId.toString(),email)
-////                        }
-////                        i++
-////                    }
-////                } else {
-////                    println("Aucun événement trouvé avec ce nom")
-////                }
-////            }
-////
-////            override fun onCancelled(databaseError: DatabaseError) {
-////                println("Erreur lors de la récupération de l'ID de l'événement : ${databaseError.message}")
-////            }
-////        })
-//    }
 
     // COMPLEMENT DE LA METHODE PRECEDENTE :
     fun sendAnInvitationEvent(event:Event, email:String){
@@ -384,17 +319,6 @@ class FirebaseSourceEvent {
             })
     }
 
-
-
-
-    ///  A FAIRE :
-
-    // list des invitations pour event PRIVATE
-    // list des confirmés pour PUBLIC
-
-
-
-    //
 
 
 

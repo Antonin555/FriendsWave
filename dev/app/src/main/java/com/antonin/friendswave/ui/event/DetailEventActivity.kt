@@ -2,6 +2,7 @@ package com.antonin.friendswave.ui.event
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -30,7 +31,7 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_event)
 
-        val pos   = intent.getIntExtra("position", 0)
+        val bool   = intent.getBooleanExtra("inscrit_ou_non", false)
         val idEvent = intent.getStringExtra("idEvent")
         val adminEvent = intent.getStringExtra("adminEvent")
 
@@ -48,7 +49,14 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
 
         binding.recyclerConfirmGuest.layoutManager = layoutManager
         binding.recyclerConfirmGuest.adapter = adapter1
-        viewModel.fetchDataEvent(pos)
+
+        if(bool) {
+
+            binding.btnInscription.visibility = View.INVISIBLE
+        }
+
+
+        viewModel.fetchDataEvent(idEvent.toString())
         viewModel.fetchGuestConfirmDetailEventPublic(idEvent)
 
 
