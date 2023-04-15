@@ -106,6 +106,9 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
 //    fun fetchEventsPublic5() = firebase.fetchEventsPublic2()
     fun deleteConfirmation(event: Event?) = firebaseEvent.deleteConfirmation(event)
 
+    fun deletePendingEvent(event: Event?) = firebaseEvent.deletePendingEvent(event)
+
+
     fun fetchEventsPrivateUser() : LiveData<List<Event>> {
 
         val eventList = MutableLiveData<List<Event>>()

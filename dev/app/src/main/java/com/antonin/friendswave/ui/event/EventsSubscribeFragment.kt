@@ -79,13 +79,13 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
 
-                val event = viewModel.eventListConfirm.value?.get(0) as Event
+                val event = viewModel.eventListConfirm.value?.get(position)
 
                 if(view.id == R.id.recycler_my_event_inscrits){
 
                     val intent = Intent(view.context, GroupChatActivity::class.java)
-                    intent.putExtra("eventKey", event.key)
-                    intent.putExtra("admin", event.admin)
+                    intent.putExtra("eventKey", event!!.key)
+                    intent.putExtra("admin", event!!.admin)
                     view.context.startActivity(intent)
 
                 }
@@ -102,12 +102,21 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
         adapter2.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
 
-                val event = viewModel.eventPendingPublic.value?.get(position)!!.key
-                val bool = true
-                val intent = Intent(view.context, DetailEventActivity::class.java)
-                intent.putExtra("idEvent", event)
-                intent.putExtra("inscrit_ou_non", bool)
-                view.context.startActivity(intent)
+                val event = viewModel.eventPendingPublic.value?.get(position)
+                if(view.id == R.id.recycler_pending_participants) {
+
+                    val bool = true
+                    val intent = Intent(view.context, DetailEventActivity::class.java)
+                    intent.putExtra("idEvent", event!!.key)
+                    intent.putExtra("inscrit_ou_non", bool)
+                    view.context.startActivity(intent)
+                }
+
+                if(view.id== R.id.btn_delete){
+
+                    viewModel.deletePendingEvent(event)
+                }
+
 
             }
         })

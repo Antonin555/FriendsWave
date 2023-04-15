@@ -13,8 +13,8 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/custom_shape"
-        android:orientation="vertical">
-        <!--        android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'-->
+        android:orientation="vertical"
+        android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'>
 
 
         <LinearLayout
