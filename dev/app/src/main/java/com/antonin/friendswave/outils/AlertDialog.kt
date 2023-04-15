@@ -14,30 +14,6 @@ import androidx.core.content.res.ResourcesCompat.getDrawable
 
 class AlertDialog(private var context: Context): DialogInterface {
 
-    fun onCreateDialog(str:String) {
-
-        val alertDialogBuilder = AlertDialog.Builder(context)
-        with(alertDialogBuilder) {
-            setTitle("Avertissement")
-            setMessage(str)
-            setPositiveButton("OK", DialogInterface.OnClickListener(function = positiveButtonClick))
-            setNegativeButton("CANCEL", null)
-        }
-
-        alertDialogBuilder.create()
-
-        alertDialogBuilder.show()
-
-
-    }
-
-    val positiveButtonClick = { dialog: DialogInterface, which: Int ->
-        Toast.makeText(context,
-            android.R.string.yes, Toast.LENGTH_SHORT).show()
-    }
-
-
-
     fun showDialog(context: Context, title: String, msg: String,
                    positiveBtnText: String, negativeBtnText: String?,
                    positiveBtnClickListener: DialogInterface.OnClickListener,

@@ -80,10 +80,20 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
             override fun onClick(view: View, position: Int) {
 
                 val event = viewModel.eventListConfirm.value?.get(0) as Event
-                val intent = Intent(view.context, GroupChatActivity::class.java)
-                intent.putExtra("eventKey", event.key)
-                intent.putExtra("admin", event.admin)
-                view.context.startActivity(intent)
+
+                if(view.id == R.id.recycler_my_event_inscrits){
+
+                    val intent = Intent(view.context, GroupChatActivity::class.java)
+                    intent.putExtra("eventKey", event.key)
+                    intent.putExtra("admin", event.admin)
+                    view.context.startActivity(intent)
+
+                }
+
+                if(view.id == R.id.btn_delete){
+
+                    viewModel.deleteConfirmation(event)
+                }
 
             }
         })

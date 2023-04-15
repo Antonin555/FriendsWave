@@ -37,6 +37,19 @@ class FirebaseSourceEvent {
 
     }
 
+    fun deleteConfirmation(event:Event?){
+        if(event!!.isPublic == true){
+
+            firebaseData.child("event/eventPublic").child(event.key.toString()).child("listInscrits").child(mainUid!!).removeValue()
+        }
+        else{
+            firebaseData.child("event/eventPrivate").child(event.admin).child(event.key.toString()).child("listInscrits").child(mainUid!!).removeValue()
+        }
+
+        firebaseData.child("user").child(mainUid!!).child("eventConfirmationList").child(event.key.toString()).removeValue()
+
+    }
+
 
     // GET EVENT DATA DETAIL PUBLIC PAGE EVENT FRAGMENT MAIN :
     fun getEventData(key:String,onResult: (Event?) -> Unit) {
