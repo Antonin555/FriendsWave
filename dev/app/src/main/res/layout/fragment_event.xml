@@ -39,7 +39,7 @@
                     android:layout_marginBottom="15dp"
                     android:layout_weight="1"
                     android:backgroundTint="#F06292"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                     />
 
                 <LinearLayout
                     android:layout_width="match_parent"

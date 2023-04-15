@@ -40,24 +40,29 @@ class FirebaseSourceEvent {
     fun deleteConfirmation(event:Event?){
         if(event!!.isPublic == true){
 
-            firebaseData.child("event/eventPublic").child(event.key.toString()).child("listInscrits").child(mainUid!!).removeValue()
+            firebaseData.child("event/eventPublic").child(event.key.toString())
+                .child("listInscrits").child(mainUid!!).removeValue()
         }
         else{
-            firebaseData.child("event/eventPrivate").child(event.admin).child(event.key.toString()).child("listInscrits").child(mainUid!!).removeValue()
+            firebaseData.child("event/eventPrivate").child(event.admin).child(event.key.toString())
+                .child("listInscrits").child(mainUid!!).removeValue()
         }
 
         firebaseData.child("user").child(mainUid!!).child("eventConfirmationList").child(event.key.toString()).removeValue()
-
     }
 
     fun deletePendingEvent(event:Event?){
 
         if(event!!.isPublic == true){
 
-            firebaseData.child("event/eventPublic").child(event.key.toString()).child("pendingRequestEventPublic").child(currentUser()!!.email.hashCode().toString()).removeValue()
+            firebaseData.child("event/eventPublic").child(event.key.toString())
+                .child("pendingRequestEventPublic")
+                .child(currentUser()!!.email.hashCode().toString()).removeValue()
         } else {
 
-            firebaseData.child("event/eventPrivate").child(event.key.toString()).child("pendingRequestEventPublic").child(currentUser()!!.email.hashCode().toString()).removeValue()
+            firebaseData.child("event/eventPrivate").child(event.key.toString())
+                .child("pendingRequestEventPublic")
+                .child(currentUser()!!.email.hashCode().toString()).removeValue()
         }
 
         firebaseData.child("user").child(mainUid!!).child("pendingRequestEventPublic").child(event.admin).removeValue()
@@ -470,23 +475,13 @@ class FirebaseSourceEvent {
                                 }
                             }
                         }
-
-
                     }
                     onResult(eventList)
                 }
-
                 override fun onCancelled(error: DatabaseError) {
                     TODO("Not yet implemented")
                 }
-
-
             })
-
-
-
-
-
         }
 
 

@@ -12,7 +12,7 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
 
     fun login(email: String, password: String) = firebaseUser.login(email, password)
 
-    fun register(name : String,email: String, password: String) = firebaseUser.register(name,email, password)
+
 
     fun register(
         name: String,

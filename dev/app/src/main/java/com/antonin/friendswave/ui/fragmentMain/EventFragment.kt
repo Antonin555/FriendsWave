@@ -56,6 +56,9 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+
+
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
         viewModel.fetchEventsPublic1()
         viewModel.interfaceEvent = this
@@ -69,7 +72,9 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
         binding.mapView.onCreate(savedInstanceState)
 
         loc = GoogleLocation()
-        loc.getLocation(requireContext(),binding.mapView,requireActivity())
+//        loc.getLocation(requireContext(),binding.mapView,requireActivity())
+
+
         return binding.root
     }
 
@@ -80,7 +85,10 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
         binding.mapView.onResume()
         viewModel.eventList.observe(this, Observer { eventList ->
             adapter1.addItems(eventList)
+            loc.getAllLocationsEvent(eventList,binding.mapView)
         })
+
+
 
 
         var tempList : ArrayList<Event> = ArrayList()

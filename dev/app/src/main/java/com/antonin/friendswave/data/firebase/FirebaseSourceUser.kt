@@ -124,9 +124,9 @@ class FirebaseSourceUser {
             })
     }
 
-    fun  addUserToDatabase(name: String, email: String, uid: String ){
-        firebaseData.child("user").child(uid).setValue(User(name,email,uid))
-    }
+//    fun  addUserToDatabase(name: String, email: String, uid: String ){
+//        firebaseData.child("user").child(uid).setValue(User(name,email,uid))
+//    }
 
     fun  addUserToDatabase(
         name: String,
@@ -157,19 +157,19 @@ class FirebaseSourceUser {
 
     }
 
-    fun register(name: String, email: String, password: String) = Completable.create { emitter ->
-        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-            addUserToDatabase(name,email, firebaseAuth.currentUser?.uid!!)
-            if (!emitter.isDisposed) {
-                if (it.isSuccessful) {
-                    emitter.onComplete()
-                } else {
-                    emitter.onError(it.exception!!)
-                }
-            }
-
-        }
-    }
+//    fun register(name: String, email: String, password: String) = Completable.create { emitter ->
+//        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+//            addUserToDatabase(name,email, firebaseAuth.currentUser?.uid!!)
+//            if (!emitter.isDisposed) {
+//                if (it.isSuccessful) {
+//                    emitter.onComplete()
+//                } else {
+//                    emitter.onError(it.exception!!)
+//                }
+//            }
+//
+//        }
+//    }
 
     fun register(
         name: String,

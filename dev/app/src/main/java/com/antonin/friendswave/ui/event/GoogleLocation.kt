@@ -9,7 +9,10 @@ import android.location.Location
 import android.location.LocationManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LiveData
+import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.ui.fragmentMain.EventFragment
+import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -56,6 +59,34 @@ class GoogleLocation  {
                 }
             }
         }
+
+    }
+
+
+    fun getAllLocationsEvent(viewModel: List<Event>, mapView: MapView){
+
+
+
+        for ( i in viewModel){
+
+            mapView.getMapAsync { googleMap ->
+
+                val latLng = LatLng(i.lattitude.toDouble(), i.longitude.toDouble())
+                val markerOptions = MarkerOptions()
+                    .position(latLng)
+                    .title(i.name)
+                    .snippet(i.adress)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+                googleMap.addMarker(markerOptions)
+                val cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 12f)
+                googleMap.moveCamera(cameraUpdate)
+
+
+            }
+
+        }
+
+
 
     }
 
