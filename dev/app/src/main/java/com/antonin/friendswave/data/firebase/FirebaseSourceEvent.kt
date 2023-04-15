@@ -77,7 +77,7 @@ class FirebaseSourceEvent {
 
     fun getAllEventsPendingRequestPublic(onResult: (List<Event>) -> Unit){
 
-        var eventId: Any?
+        var hostId: Any?
         var eventValue: Any?
         val eventIdList = HashMap<String,String>()
         val eventList: ArrayList<Event> = ArrayList()
@@ -86,8 +86,8 @@ class FirebaseSourceEvent {
                 if (dataSnapshot.exists()) {
                     for (data in dataSnapshot.children){
                         eventValue = data.value.toString()
-                        eventId = data.key.toString()
-                        eventIdList.put(eventId.toString(),eventValue.toString())
+                        hostId = data.key.toString()
+                        eventIdList.put(hostId.toString(),eventValue.toString())
 
                     }
                     addPendingEventsToRecyclerNotif(eventIdList,eventList, onResult)
@@ -123,12 +123,12 @@ class FirebaseSourceEvent {
     // 3/ METTRE A JOUR LE RECYCLER DES EVENTS EN ATTENTE POUR L'UTILISATEUR :
     fun addPendingEventsToRecyclerNotif(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
 
-        for(i in eventIdList){
-            firebaseData.child("event/eventPublic").addValueEventListener(object :ValueEventListener {
+
+        firebaseData.child("event/eventPublic").addValueEventListener(object :ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
 
                     for (snap in snapshot.children) {
-                        if(eventIdList.containsKey(snap.key)){
+                        if(eventIdList.containsValue(snap.key)){
                             val event = snap.getValue(Event::class.java)
                             eventList.add(event!!)
                         }
@@ -139,7 +139,7 @@ class FirebaseSourceEvent {
                     TODO("Not yet implemented")
                 }
             })
-        }
+
     }
 
 
