@@ -1,11 +1,12 @@
 package com.antonin.friendswave.ui.viewModel
 
 import android.content.Intent
+import android.os.Build
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.antonin.friendswave.data.model.User
 
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.ui.authentification.InterfaceAuth
@@ -14,6 +15,9 @@ import com.antonin.friendswave.ui.authentification.SignupActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 class AuthViewModel(private val repository: UserRepo) : ViewModel() {
 
@@ -21,6 +25,10 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
     var familyName: String? = null
     var nickname: String? = null
     var age: Int? = 0
+    var day: Int? = 0
+    var month: Int? = 0
+    var year:Int? = 0
+    var date: String? = ""
     var email: String? = null
     var city: String? = null
     var password: String? = null
@@ -31,6 +39,9 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
 
     private val _pseudoList = MutableLiveData<List<String>>()
     var pseudoList_live: LiveData<List<String>> = _pseudoList
+
+    private val _emailList = MutableLiveData<List<String>>()
+    val emailList: LiveData<List<String>> = _emailList
 
     val user by lazy {
         repository.currentUser()
@@ -78,17 +89,35 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
     }
 
     //Doing same thing with signup
+    @RequiresApi(Build.VERSION_CODES.O)
     fun signup() {
         if (email.isNullOrEmpty() || password.isNullOrEmpty() || name.isNullOrEmpty() || familyName.isNullOrEmpty() || nickname.isNullOrEmpty() || city.isNullOrEmpty()) {
             interfaceAuth?.onFailure("Please input all values")
             return
         }
-        if(pseudoList_live.value!!.contains(nickname!!)){
-            interfaceAuth?.onFailure("Please choose another pseudo")
+        if (!pseudoList_live.value.isNullOrEmpty()){
+            if(pseudoList_live.value!!.contains(nickname!!)){
+                interfaceAuth?.onFailure("Please choose another pseudo")
+                return
+            }
+        }
+        //regarde si 18+ et si la date est supperieur a la date actuelle
+        if(!verificatioAge(date!!)){
+            interfaceAuth?.onFailure("Sorry your date of birth is not valid")
             return
         }
+        if(!isEmailValid(email!!)){
+            interfaceAuth?.onFailure("Sorry your email is not valid")
+            return
+        }
+        if(!emailList.value.isNullOrEmpty()){
+            if(!emailList.value!!.contains(email!!)){
+                interfaceAuth?.onFailure("Sorry you already have an account with this email. Did you forget your password?")
+                return
+            }
+        }
 //        interfaceAuth?.onStarted()
-        val disposable = repository.register(name!!,email!!, password!!, familyName!!, nickname!!, city!!, age!!)
+        val disposable = repository.register(name!!,email!!, password!!, familyName!!, nickname!!, city!!, date!!)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -113,6 +142,50 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
         }
     }
 
+    fun fetchEmail() {
+        repository.fetchfetchEmail().observeForever{ email ->
+            _emailList.value = email
+        }
+    }
+
+    fun changeDate(year: Int, month: Int, day: Int) {
+
+
+        var dayString : String = ""
+        var monthString : String = ""
+
+        if(day < 10) {
+            dayString = "0" + day.toString()
+        } else
+            dayString = day.toString()
+
+        if(month < 10) {
+            monthString = "0"+(month + 1).toString()
+        } else
+            monthString = (month+1).toString()
+
+        date = dayString + "/"+monthString +"/"+ year.toString()
+//        if(dateEvent.before(currentDate)){
+//
+//            println("Impossible de revenir dans le passé")
+//
+//        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun verificatioAge(date: String): Boolean {
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val dateNaissance = LocalDate.parse(date, formatter)
+        val age = ChronoUnit.YEARS.between(dateNaissance, LocalDate.now())
+        val estMajeur = age >= 18 && dateNaissance.isBefore(LocalDate.now())
+        return estMajeur
+    }
+
+
+    fun isEmailValid(email: String): Boolean {
+        val emailRegex = Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
+        return emailRegex.matches(email)
+    }
 
 
 }

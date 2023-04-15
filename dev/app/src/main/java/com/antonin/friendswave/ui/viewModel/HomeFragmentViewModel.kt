@@ -25,6 +25,10 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
 
     var profilUid: String? = ""
     var messSignalement: String? = ""
+    var day: Int? = 0
+    var month: Int? = 0
+    var year:Int? = 0
+    var date: String? = ""
 
     val searchCategory = SearchCategory()
     val searchByCities = SearchByCities()
@@ -56,8 +60,6 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
     val user by lazy {
         repository.currentUser()
     }
-
-
 
     private val _interetList = MutableLiveData<List<String>>()
     val interetList: LiveData<List<String>> = _interetList
@@ -202,6 +204,30 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
 //
 //        return tempList
 //    }
+
+    fun changeDate(year: Int, month: Int, day: Int) {
+
+
+        var dayString : String = ""
+        var monthString : String = ""
+
+        if(day < 10) {
+            dayString = "0" + day.toString()
+        } else
+            dayString = day.toString()
+
+        if(month < 10) {
+            monthString = "0"+(month + 1).toString()
+        } else
+            monthString = (month+1).toString()
+
+        date = dayString + "/"+monthString +"/"+ year.toString()
+//        if(dateEvent.before(currentDate)){
+//
+//            println("Impossible de revenir dans le passé")
+//
+//        }
+    }
 
 
 

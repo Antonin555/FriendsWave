@@ -5,11 +5,13 @@ import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -32,6 +34,8 @@ import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 class EditProfilActivity : AppCompatActivity(), KodeinAware {
@@ -47,6 +51,7 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
     private lateinit var img_uri : Uri
     private val AUTOCOMPLETE_REQUEST_CODE = 1
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profil)
@@ -63,11 +68,19 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
             Places.initialize(applicationContext, apiKey)
         }
 
-
         viewModel.fetchUserData()
         viewModel.fetchInteret()
         actualiserSpinner()
         afficheInteret()
+
+        viewModel.user_live.observe(this, Observer {
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+
+            val date = LocalDate.parse(it.date, formatter)
+            viewModel.day = date.dayOfMonth
+            viewModel.month = date.monthValue
+            viewModel.year = date.year
+        })
 
         binding.btnLoad.setOnClickListener {
             val img = Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
@@ -83,7 +96,6 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
             startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
         }
     }
-
 
     private val getResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {

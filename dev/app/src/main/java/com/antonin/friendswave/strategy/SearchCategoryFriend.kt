@@ -1,6 +1,11 @@
 package com.antonin.friendswave.strategy
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.antonin.friendswave.data.model.User
+import java.time.LocalDate
+import java.time.Period
+import java.time.format.DateTimeFormatter
 
 class SearchHobbyFriend: InterfaceSearchFriend {
 
@@ -50,16 +55,32 @@ class SearchCityFriend: InterfaceSearchFriend {
 class SearchAgeFriend: InterfaceSearchFriend {
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun sortedUser(mainUser: User?, totalUser: List<User>?): List<User> {
         var similarUsers : ArrayList<User> = ArrayList()
 
+        val mainUserAge = mainUser?.date?.let { calculateAge(it) }
+
         //lambda pour aller chercher les utilisateur qui ont plus ou moin 5 ans
-        similarUsers = totalUser!!.filter { user ->
-            user.age in (mainUser!!.age - 5)..(mainUser.age + 5)
-        } as ArrayList<User>
+//        similarUsers = totalUser!!.filter { user ->
+//            user.age in (mainUser!!.age - 5)..(mainUser.age + 5)
+//        } as ArrayList<User>
+        similarUsers.addAll(totalUser!!
+            .filter { user ->
+                val userAge = user.date?.let { calculateAge(it) }
+                userAge != null && mainUserAge != null && userAge in (mainUserAge - 5)..(mainUserAge + 5)
+            })
 
         return similarUsers
 
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun calculateAge(dateOfBirth: String): Int {
+        val dob = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+        val now = LocalDate.now()
+        val age = Period.between(dob, now).years
+        return age
     }
 
 }

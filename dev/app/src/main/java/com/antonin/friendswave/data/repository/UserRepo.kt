@@ -21,8 +21,8 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
         familyName: String,
         nickname: String,
         city: String,
-        age: Int
-    ) = firebaseUser.register(name,email, password, familyName, nickname, city, age)
+        date: String
+    ) = firebaseUser.register(name,email, password, familyName, nickname, city, date)
 
     fun fetchAllPseudo():LiveData<List<String>> {
         val pseudoList = MutableLiveData<List<String>>()

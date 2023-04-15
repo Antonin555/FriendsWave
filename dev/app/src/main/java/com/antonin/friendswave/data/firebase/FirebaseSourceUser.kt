@@ -135,9 +135,9 @@ class FirebaseSourceUser {
         familyName: String,
         nickname: String,
         city: String,
-        age: Int
+        date: String
     ){
-        firebaseData.child("user").child(uid).setValue(User(name,email,uid, familyName, nickname, city, age))
+        firebaseData.child("user").child(uid).setValue(User(name,email,uid, familyName, nickname, city, date))
     }
 
     // REFUSER
@@ -178,10 +178,10 @@ class FirebaseSourceUser {
         familyName: String,
         nickname: String,
         city: String,
-        age: Int
+        date: String
     ) = Completable.create { emitter ->
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-            addUserToDatabase(name,email, firebaseAuth.currentUser?.uid!!, familyName!!, nickname!!, city!!, age!!)
+            addUserToDatabase(name,email, firebaseAuth.currentUser?.uid!!, familyName!!, nickname!!, city!!, date!!)
             if (!emitter.isDisposed) {
                 if (it.isSuccessful) {
                     emitter.onComplete()
@@ -311,8 +311,6 @@ class FirebaseSourceUser {
 
 
     fun fetchUsersRequest(onResult: (List<User>) -> Unit){
-
-
         firebaseData.child("user").child(mainUid!!).addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
@@ -445,7 +443,9 @@ class FirebaseSourceUser {
 
 
     fun fetchEmail(onResult: (List<String>) -> Unit){
-        firebaseData.child("user/").addValueEventListener(object : ValueEventListener {
+        var userRef = firebaseData.child("user/")
+
+        userRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val emailList = ArrayList<String>()
                 for (postSnapshot in snapshot.children){
@@ -455,6 +455,7 @@ class FirebaseSourceUser {
                 onResult(emailList)
             }
             override fun onCancelled(error: DatabaseError) {
+
 
             }
         })
@@ -477,6 +478,7 @@ class FirebaseSourceUser {
             }
         })
     }
+
 
 
 }

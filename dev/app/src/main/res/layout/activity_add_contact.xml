@@ -31,7 +31,7 @@
             android:paddingStart="13dp"
             android:text="@string/add_contact"
             android:textSize="19sp"
-            android:layout_marginTop="178dp"
+            android:layout_marginTop="88dp"
             android:textStyle="bold"/>
 
         <EditText
@@ -40,7 +40,7 @@
             android:layout_height="58dp"
             android:layout_below="@+id/info"
             android:layout_marginLeft="28dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="58dp"
             android:background="@drawable/custom_shape"
             android:fontFamily="@font/roboto_mono"
             android:hint="@string/add_event_hint_mail"
@@ -66,27 +66,35 @@
         </Button>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="408dp">
+            android:gravity="center_horizontal"
+            android:layout_marginTop="338dp">
 
             <Button
                 android:id="@+id/btn_hobby"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="by Hobby" />
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="20dp"
+                android:text="by Hobby"
+             />
 
             <Button
                 android:id="@+id/btn_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="20dp"
                 android:text="by city" />
 
             <Button
                 android:id="@+id/btn_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="20dp"
                 android:text="by age" />
 
 
@@ -95,10 +103,11 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerSuggestion"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:layout_gravity="bottom"
                 android:layout_weight="0.8"
-                android:layout_alignParentBottom="true"/>
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="50dp"/>
 
     </RelativeLayout>
 </layout>

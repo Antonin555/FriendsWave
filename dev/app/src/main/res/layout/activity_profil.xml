@@ -199,7 +199,7 @@
                             android:gravity="center"
                             android:layout_marginBottom="8dp"
                             android:layout_weight="1"
-                            android:text="@{`` + item.user_liveProfil.age}" />
+                            android:text="@{item.user_liveProfil.date}" />
                         <!--                            android:text="@{item.user_liveProfil.age == 0 ? @string/add_event_public : @string/add_event_private}" />-->
                     </LinearLayout>
 

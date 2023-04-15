@@ -62,6 +62,15 @@ class AddContactActivity : AppCompatActivity(), KodeinAware {
             searchStrategyFriend = StrategyFriend(searchHobbyFriend)
             strategyUser(searchStrategyFriend)
         }
+        binding.btnCity.setOnClickListener{
+            searchStrategyFriend = StrategyFriend(searchCityFriend)
+            strategyUser(searchStrategyFriend)
+        }
+        binding.btnAge.setOnClickListener{
+            searchStrategyFriend = StrategyFriend(searchAgeFriend)
+            strategyUser(searchStrategyFriend)
+        }
+
     }
 
 //    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -75,6 +84,7 @@ class AddContactActivity : AppCompatActivity(), KodeinAware {
 //    }
 
     fun strategyUser(strategy: StrategyFriend) {
+
         var tempList : ArrayList<User> =  ArrayList()
         viewModel.totalUserList.observe(this, Observer { userList ->
             tempList = strategy.search(viewModel.user_live.value, userList) as ArrayList<User>

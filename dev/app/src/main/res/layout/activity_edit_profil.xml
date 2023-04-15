@@ -212,8 +212,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+
                 android:orientation="horizontal">
 
                 <TextView
@@ -226,16 +226,46 @@
                     android:text="@string/age"
                     android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/editAge"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:ems="10"
-                    android:fontFamily="@font/roboto_mono"
-                    android:inputType="number"
-                    android:text="@={``+viewmodel.user_live.age}"
-                    tools:ignore="Autofill" />
+<!--                <EditText-->
+<!--                    android:id="@+id/editAge"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="3"-->
+<!--                    android:ems="10"-->
+<!--                    android:fontFamily="@font/roboto_mono"-->
+<!--                    android:inputType="number"-->
+<!--                    android:text="@={``+viewmodel.user_live.age}"-->
+<!--                    tools:ignore="Autofill" />-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_mono"
+                        android:gravity="center"
+                        android:text="@string/hint_age"
+                        android:textSize="15sp" />
+
+                    <DatePicker
+                        android:id="@+id/datePicker"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:calendarViewShown="false"
+                        android:datePickerMode="spinner"
+                        android:day="@={viewmodel.day}"
+                        android:month="@={viewmodel.month}"
+                        android:onDateChanged="@{(v, year, month, day) -> viewmodel.changeDate(year, month, day)}"
+                        android:year="@={viewmodel.year}" />
+                </LinearLayout>
 
 
             </LinearLayout>
