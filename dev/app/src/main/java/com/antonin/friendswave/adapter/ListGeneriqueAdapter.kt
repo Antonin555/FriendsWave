@@ -2,16 +2,22 @@ package com.antonin.friendswave.adapter
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.annotation.LayoutRes
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.antonin.friendswave.R
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int) :
         ListAdapter<T, ListGeneriqueAdapter.GenericViewHolder<T>>(WordsComparator()) {
@@ -44,12 +50,14 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
             itemViewModel.adapterPosition = position
             onListItemViewClickListener?.let { itemViewModel.onListItemViewClickListener = it }
             holder.bind(itemViewModel)
+            holder.itemView.findViewById<ImageView>(R.id.imageProfil)
 
         }
 
 
     class GenericViewHolder<T : ListItemViewModel>(private val binding: ViewDataBinding) :
             RecyclerView.ViewHolder(binding.root) {
+
 
             fun bind(itemViewModel: T) {
                 binding.setVariable(BR.item, itemViewModel)
@@ -75,3 +83,6 @@ class WordsComparator <T>: DiffUtil.ItemCallback<T>() {
         return oldItem == newItem
     }
 }
+
+
+

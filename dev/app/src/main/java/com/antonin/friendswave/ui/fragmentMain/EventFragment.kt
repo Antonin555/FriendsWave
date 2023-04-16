@@ -32,6 +32,8 @@ import com.antonin.friendswave.ui.event.InterfaceEvent
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -50,6 +52,7 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
         repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
     private var adapter1 : ListGeneriqueAdapter<Event> = ListGeneriqueAdapter<Event>(R.layout.recycler_events)
     private lateinit var loc : GoogleLocation
+    private lateinit var googleMap: GoogleMap
 
 
 
@@ -72,7 +75,9 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
         binding.mapView.onCreate(savedInstanceState)
 
         loc = GoogleLocation()
+        binding.mapView.getMapAsync(this)
 //        loc.getLocation(requireContext(),binding.mapView,requireActivity())
+
 
 
         return binding.root
@@ -83,9 +88,10 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
     override fun onResume() {
         super.onResume()
         binding.mapView.onResume()
+
         viewModel.eventList.observe(this, Observer { eventList ->
             adapter1.addItems(eventList)
-            loc.getAllLocationsEvent(eventList,binding.mapView)
+//            loc.getAllLocationsEvent(eventList,binding.mapView, requireActivity(),requireContext())
         })
 
 
@@ -166,7 +172,14 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
     }
 
     override fun onMapReady(p0: GoogleMap) {
-        TODO("Not yet implemented")
+
+        googleMap = p0
+
+        googleMap.addMarker(MarkerOptions().position(LatLng(-73.4220, 45.0841)).title("Marker à Mountain View"))
+        viewModel.eventList.observe(requireActivity(), Observer { eventList ->
+
+            loc.getAllLocationsEvent(eventList,binding.mapView, requireActivity(),requireContext())
+        })
 
     }
 

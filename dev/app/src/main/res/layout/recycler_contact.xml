@@ -10,6 +10,8 @@
         <variable
             name="imageUrl"
             type="String" />
+
+
     </data>
 
 <LinearLayout
@@ -36,6 +38,7 @@
                 android:id="@+id/imageProfil"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
+                app:imageUri="@{item.img}"
                 android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }' />
 
         </androidx.cardview.widget.CardView>

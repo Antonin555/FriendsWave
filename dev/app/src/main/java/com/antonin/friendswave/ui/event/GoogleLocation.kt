@@ -20,6 +20,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import java.io.IOException
 
@@ -63,11 +64,49 @@ class GoogleLocation  {
     }
 
 
-    fun getAllLocationsEvent(viewModel: List<Event>, mapView: MapView){
+//    fun getAllLocationsEvent(viewModel: List<Event>, mapView: MapView){
+//
+//
+//
+//        for ( i in viewModel){
+//
+//            mapView.getMapAsync { googleMap ->
+//
+//                val latLng = LatLng(i.lattitude.toDouble(), i.longitude.toDouble())
+//                val markerOptions = MarkerOptions()
+//                    .position(latLng)
+//                    .title(i.name)
+//                    .snippet(i.adress)
+//                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+//                googleMap.addMarker(markerOptions)
+//                val cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 12f)
+//                googleMap.moveCamera(cameraUpdate)
+//
+//
+//            }
+//
+//        }
+//
+//
+//
+//    }
 
 
 
-        for ( i in viewModel){
+    fun getAllLocationsEvent(viewModel: List<Event>, mapView: MapView, requireActivity: Activity,requireContext: Context) {
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext)
+
+        locationManager = requireContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if ((ContextCompat.checkSelfPermission(requireContext,android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(requireActivity, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
+            return
+        }
+
+        // Create a LatLngBounds.Builder to calculate the bounds of all markers
+        val builder = LatLngBounds.Builder()
+
+        for (i in viewModel) {
 
             mapView.getMapAsync { googleMap ->
 
@@ -78,21 +117,19 @@ class GoogleLocation  {
                     .snippet(i.adress)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
                 googleMap.addMarker(markerOptions)
-                val cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 12f)
-                googleMap.moveCamera(cameraUpdate)
 
+                // Include the marker position in the LatLngBounds.Builder
+                builder.include(latLng)
 
+                // Move the camera only once after all markers are added
+                if (viewModel.indexOf(i) == viewModel.size - 1) {
+                    val bounds = builder.build()
+                    val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 100) // 100 is the padding in pixels
+                    googleMap.moveCamera(cameraUpdate)
+                }
             }
-
         }
-
-
-
     }
-
-
-
-
 
 
 

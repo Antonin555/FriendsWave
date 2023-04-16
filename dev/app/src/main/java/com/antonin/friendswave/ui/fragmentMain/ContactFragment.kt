@@ -1,6 +1,7 @@
 package com.antonin.friendswave.ui.fragmentMain
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -8,8 +9,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -26,6 +29,8 @@ import com.antonin.friendswave.ui.chat.ChatActivity
 import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -50,6 +55,7 @@ class ContactFragment : Fragment(), KodeinAware {
         return binding.root
     }
 
+    @SuppressLint("ResourceType")
     override fun onResume() {
         super.onResume()
 
@@ -92,6 +98,20 @@ class ContactFragment : Fragment(), KodeinAware {
                 }
             }
         })
+    }
+
+    object GlideBindingAdapters {
+        @BindingAdapter("imageUri")
+        @JvmStatic
+        fun loadImage(imageView: ImageView, imageUri: String?) {
+            
+                Glide.with(imageView)
+                    .load(imageUri.toString())
+                    .apply(RequestOptions().override(100, 100))
+                    .centerCrop()
+                    .into(imageView)
+
+            }
     }
 
 
