@@ -109,13 +109,13 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
         binding.recyclerFragmentEvent.adapter = adapter1
 
 
-        binding.btnCat.setOnClickListener{
-
-            var type = "Mars"
-            searchStrategy = Strategy(searchCategory)
-            strategyEvent(searchStrategy,type)
-
-        }
+//        binding.btnCat.setOnClickListener{
+//
+//            var type = "Mars"
+//            searchStrategy = Strategy(searchCategory)
+//            strategyEvent(searchStrategy,type)
+//
+//        }
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {

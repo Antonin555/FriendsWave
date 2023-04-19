@@ -48,15 +48,15 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="100dp"
+                        android:layout_width="150dp"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
 
                         <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="2"
+                            android:layout_gravity="center"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             app:cardCornerRadius="100dp">
 
                             <ImageView
@@ -66,13 +66,6 @@
                                 android:contentDescription="@string/add_event_description" />
 
                         </androidx.cardview.widget.CardView>
-
-
-                        <View
-                            android:id="@+id/view2"
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp"
-                            android:layout_marginTop="20dp" />
 
                         <TextView
                             android:id="@+id/nameUser"
@@ -115,7 +108,8 @@
                                 android:layout_weight="1"
                                 android:fontFamily="@font/roboto_mono"
                                 android:gravity="center"
-                                android:text="@string/friends_fragment_home" />
+                                android:text="@string/friends_fragment_home"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -146,7 +140,8 @@
                                 android:layout_weight="1"
                                 android:fontFamily="@font/roboto_mono"
                                 android:gravity="center"
-                                android:text="@string/rating_fragment_home" />
+                                android:text="@string/rating_fragment_home"
+                                android:textStyle="bold" />
 
                         </LinearLayout>
 

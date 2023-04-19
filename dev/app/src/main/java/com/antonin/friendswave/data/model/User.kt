@@ -27,5 +27,5 @@ data class User (
     var pendingRequestEventPublic: HashMap<String,String>? = HashMap(),
     var ConfirmHostRequestEventPublic: HashMap<String,String>? = HashMap(),
     var nbre_event : Int? =0,
-//    var ListItemViewModel.img:String?  = ""
+
     ): ListItemViewModel()

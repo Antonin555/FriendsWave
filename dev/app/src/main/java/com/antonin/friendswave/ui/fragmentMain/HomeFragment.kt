@@ -61,7 +61,7 @@ class HomeFragment : Fragment(), KodeinAware {
 
     private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 1
     private var firebaseMessaging = FirebaseMessaging.getInstance()
-    private lateinit var firebaseNotifs : FirebaseNotificationsService
+    private var firebaseNotifs : FirebaseNotificationsService = FirebaseNotificationsService()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,10 +76,12 @@ class HomeFragment : Fragment(), KodeinAware {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
-        permissionNotifs()
+//        permissionNotifs()
 
-
+//        firebaseNotifs.onCreate()
         permissionNotifs()
+        FirebaseMessaging.getInstance().subscribeToTopic("pushNotification")
+//        firebaseMessaging.subscribeToTopic("pushNotification")
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
         binding.lifecycleOwner = this
@@ -130,17 +132,6 @@ class HomeFragment : Fragment(), KodeinAware {
             if( adapter3.itemCount == 0){binding.tempInvitations.visibility =View.VISIBLE}
         })
 
-        firebaseMessaging.subscribeToTopic("new_event_public")
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // Abonnement réussi
-
-                    Log.d(TAG, "Abonnement au topic de notification réussi")
-                } else {
-                    // Échec de l'abonnement
-                    Log.e(TAG, "Échec de l'abonnement au topic de notification", task.exception)
-                }
-            }
 
 //        adapter1 = ListGeneriqueAdapter(R.layout.recycler_events)
 //        val layoutManager = LinearLayoutManager(context)
@@ -174,17 +165,17 @@ class HomeFragment : Fragment(), KodeinAware {
 //
 //        }
 
-//        FirebaseMessaging.getInstance().token
-//            .addOnCompleteListener { task ->
-//                if (!task.isSuccessful) {
-//                    Log.w(TAG, "Échec de la récupération du token du dispositif.", task.exception)
-//                    return@addOnCompleteListener
-//                }
-//
-//                // Le token du dispositif
-//                val token = task.result
-//                Log.d(TAG, "Token du dispositif : $token")
-//            }
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(TAG, "Échec de la récupération du token du dispositif.", task.exception)
+                    return@addOnCompleteListener
+                }
+
+                // Le token du dispositif
+                val token = task.result
+                Log.d(TAG, "Token du dispositif : $token")
+            }
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {

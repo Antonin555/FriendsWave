@@ -233,13 +233,14 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/button3"
+                        android:id="@+id/addphotoevent"
                         android:layout_width="50dp"
                         android:layout_height="40dp"
                         android:layout_marginLeft="50dp"
                         android:layout_marginRight="10dp"
                         android:gravity="center"
-                        android:text="Button" />
+                        android:text="Button"
+                        />
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="100dp"
@@ -248,7 +249,7 @@
                         app:cardCornerRadius="100dp">
 
                         <ImageView
-                            android:id="@+id/imageView"
+                            android:id="@+id/imagePreviewEvent"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_gravity="center"

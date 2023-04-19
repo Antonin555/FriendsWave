@@ -18,6 +18,7 @@ import org.kodein.di.generic.singleton
 class FriendWaveApp : Application(), KodeinAware {
 
 
+
     override val kodein = Kodein.lazy {
         import(androidXModule(this@FriendWaveApp))
         bind() from singleton {FirebaseSourceUser()}

@@ -40,6 +40,7 @@ class AddContactActivity : AppCompatActivity(), KodeinAware, InterfaceAuth {
         binding.viewmodel = viewModel
         viewModel.interfaceAuth = this
         binding.lifecycleOwner = this
+
     }
 
     override fun onResume() {

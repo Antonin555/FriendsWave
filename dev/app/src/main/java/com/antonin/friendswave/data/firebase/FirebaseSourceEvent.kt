@@ -11,6 +11,7 @@ import com.google.firebase.ktx.Firebase
 class FirebaseSourceEvent {
 
 
+
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
@@ -18,7 +19,21 @@ class FirebaseSourceEvent {
     val mainUid = FirebaseAuth.getInstance().currentUser?.uid
     fun currentUser() = firebaseAuth.currentUser
 
+    val firebaseEventPublic = firebaseData.child("event/eventPublic")
+    val firebaseEventPrivate = firebaseData.child("event/eventPrivate")
+    val firebaseUserCurrent = firebaseData.child("user").child(mainUid!!)
+
+    val firebaseEventConfirmCurrentUser = firebaseData.child("user").child(mainUid!!).child("eventConfirmationList")
+
+    val firebaseEventPendingPublicCurrentUser = firebaseData.child("user").child(mainUid!!).child("pendingRequestEventPublic")
+
+
+
+
+
     fun editEvent(event: Event?){
+
+        
         if(event!!.isPublic == true){
             firebaseData.child("event/eventPublic").child(event.key.toString()).setValue(event)
         }else{
@@ -294,7 +309,7 @@ class FirebaseSourceEvent {
             }
         })
     }
-
+    // A REVOIR NE FONCTIONNE PAS
     fun addEventsPrivateToRecyclerNotif(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
 
             firebaseData.child("event/eventPrivate").addValueEventListener(object :ValueEventListener{
@@ -318,10 +333,6 @@ class FirebaseSourceEvent {
 
 
             })
-
-
-
-
 
     }
 

@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
 
         <variable
@@ -14,11 +15,54 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
         android:background="@drawable/custom_shape"
+        android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
         android:orientation="vertical">
         <!--        android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'-->
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        app:cardCornerRadius="100dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imageEvent"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            app:imageUri="@{item.imgEvent}" />
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/event_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/roboto_mono"
+                android:gravity="center"
+                android:text="@{item.name}" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,37 +73,39 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp">
 
-            <TextView
-                android:id="@+id/event_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:fontFamily="@font/roboto_mono"
-                android:text="@string/add_event_name" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.6"
-                android:fontFamily="@font/roboto_mono"
-                android:text="@{item.name}" />
-
-            <TextView
+            <ImageView
                 android:id="@+id/event_date"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.3"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
                 android:fontFamily="@font/roboto_mono"
-                android:text="@string/add_event_date"
+                android:src="@drawable/hour"
                 android:textColor="#E57373" />
 
             <TextView
                 android:id="@+id/textView17"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="0.6"
                 android:fontFamily="@font/roboto_mono"
+                android:gravity="center"
                 android:text="@{item.date}" />
+
+            <ImageView
+                android:id="@+id/event_categorie"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:fontFamily="@font/roboto_mono"
+                android:src="@drawable/category" />
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
+                android:fontFamily="@font/roboto_mono"
+                android:gravity="center"
+                android:text="@{item.categorie}" />
 
         </LinearLayout>
 
@@ -70,23 +116,6 @@
             android:orientation="horizontal"
             android:paddingLeft="15dp"
             android:paddingRight="5dp">
-
-            <TextView
-                android:id="@+id/event_categorie"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:fontFamily="@font/roboto_mono"
-                android:text="@string/add_event_categorie"
-                android:textColor="#7986CB" />
-
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.6"
-                android:fontFamily="@font/roboto_mono"
-                android:text="@{item.categorie}" />
 
             <TextView
                 android:id="@+id/event_nbre_personnes"

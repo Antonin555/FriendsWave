@@ -51,6 +51,7 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
             onListItemViewClickListener?.let { itemViewModel.onListItemViewClickListener = it }
             holder.bind(itemViewModel)
             holder.itemView.findViewById<ImageView>(R.id.imageProfil)
+            holder.itemView.findViewById<ImageView>(R.id.imageEvent)
 
         }
 

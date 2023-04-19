@@ -102,6 +102,13 @@
     </string-array>
 
 
+    <string-array name="list_categorie_strategy">
+        <item>Categorie</item>
+        <item>autour de toi (km)</item>
+        <item>Interets</item>
+    </string-array>
+
+
     <string-array name="list_langues">
         <item>Francais</item>
         <item>Anglais</item>

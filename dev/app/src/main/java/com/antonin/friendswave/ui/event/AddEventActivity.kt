@@ -11,9 +11,12 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -48,10 +51,11 @@ class AddEventActivity : AppCompatActivity(), KodeinAware, OnMapReadyCallback,
     private val factory : EventFragmentVMFactory by instance()
     private lateinit var binding :ActivityAddEventBinding
     private lateinit var viewModel: EventFragmentViewModel
-    private val AUTOCOMPLETE_REQUEST_CODE = 1
     var addressList: List<Address>? = null
     lateinit var address : Address
+    private lateinit var img_uri : Uri
 
+    private val AUTOCOMPLETE_REQUEST_CODE = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_event)
@@ -77,7 +81,30 @@ class AddEventActivity : AppCompatActivity(), KodeinAware, OnMapReadyCallback,
 
         }
 
+//        binding.addphotoevent.setOnClickListener {
+//
+//
+//            val img = Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+//            getResult.launch(img)
+//
+//
+//        }
+
+
+
     }
+
+
+//    private val getResult =
+//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+//
+//            if (it.resultCode == Activity.RESULT_OK) {
+//                img_uri = it?.data?.data!!
+//                binding.imagePreviewEvent.setImageURI(img_uri)
+//                viewModel.eventDataPublic.value!!.imgEvent = img_uri.toString()
+//            }
+//        }
+
 
     override fun onMapReady(p0: GoogleMap) {
         TODO("Not yet implemented")

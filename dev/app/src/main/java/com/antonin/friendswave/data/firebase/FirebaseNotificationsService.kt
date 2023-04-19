@@ -16,6 +16,9 @@ import com.google.firebase.messaging.ktx.remoteMessage
 class FirebaseNotificationsService : FirebaseMessagingService() {
 
 
+    private lateinit var firebase: FirebaseSourceUser
+
+
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
         val title = message.notification!!.title
@@ -53,5 +56,13 @@ class FirebaseNotificationsService : FirebaseMessagingService() {
         }
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
+    }
+
+    override fun onNewToken(token: String) {
+        super.onNewToken(token)
+
+
+        firebase.firebaseData.child("user/" + firebase.mainUid!!).child(token).setValue(true)
+
     }
 }
