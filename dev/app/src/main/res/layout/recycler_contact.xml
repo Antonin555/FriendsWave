@@ -24,8 +24,7 @@
         android:layout_height="70dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/custom_shape">
+        android:layout_marginRight="10dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
@@ -38,8 +37,8 @@
                 android:id="@+id/imageProfil"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                app:imageUri="@{item.img}"
-                android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }' />
+                android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
+                app:imageUri="@{item.img}" />
 
         </androidx.cardview.widget.CardView>
 
@@ -48,8 +47,9 @@
             android:id="@+id/layoutChat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/nomProfile"
@@ -58,12 +58,11 @@
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/roboto_mono"
                 android:gravity="center"
+                android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
                 android:text="@{item.name}"
                 android:textAlignment="center"
                 android:textColor="@color/design_default_color_primary"
-                android:textSize="20sp"
-                android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
-                />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/timeProfile"

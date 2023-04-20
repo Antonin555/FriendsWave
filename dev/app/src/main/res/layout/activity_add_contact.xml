@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
+        android:background="#F1F1F1"
         android:scrollbarAlwaysDrawVerticalTrack="true">
 
 
@@ -48,6 +48,7 @@
                 android:fontFamily="@font/roboto_mono"
                 android:hint="@string/add_event_hint_mail"
                 android:importantForAutofill="no"
+                android:textSize="12sp"
                 android:inputType="textEmailAddress"
                 android:paddingLeft="13dp"
                 android:text="@={viewmodel.email}" />
@@ -57,14 +58,14 @@
                 android:layout_width="158dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:backgroundTint="#7986CB"
+                android:backgroundTint="#7C819A"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:fontFamily="@font/roboto_mono"
                 android:onClick="@{(v) -> viewmodel.addFriendRequestToUser(v)}"
                 android:text="@string/send"
                 android:textColor="@color/white"
-                android:textSize="20sp"/>
+                android:textSize="16sp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -74,7 +75,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/custom_shape"
-                android:backgroundTint="#00FFE1"
+                android:backgroundTint="#7986CB"
                 android:orientation="horizontal">
 
                 <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -82,9 +83,11 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:backgroundTint="#00FFE1"
+                    android:backgroundTint="#7986CB"
                     android:layout_weight="1"
                     app:elevation="0dp"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto_mono"
                     android:textColor="@color/white"
                     android:stateListAnimator="@null"
                     android:text="by Hobby" />
@@ -93,11 +96,13 @@
                     android:id="@+id/btn_city"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#00FFE1"
+                    android:backgroundTint="#7986CB"
                     android:gravity="center"
                     android:stateListAnimator="@null"
                     android:textColor="@color/white"
                     app:elevation="0dp"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto_mono"
                     android:layout_weight="1"
 
                     android:text="by city" />
@@ -110,8 +115,10 @@
                     app:elevation="0dp"
                     android:stateListAnimator="@null"
                     android:textColor="@color/white"
-                    android:backgroundTint="#00FFE1"
+                    android:backgroundTint="#7986CB"
                     android:layout_weight="1"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto_mono"
                     android:text="by age" />
 
 
