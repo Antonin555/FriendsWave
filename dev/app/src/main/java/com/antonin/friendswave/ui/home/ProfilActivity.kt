@@ -36,6 +36,7 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
         setContentView(R.layout.activity_profil)
 
         val profilUid = intent.getStringExtra("uid")
+        val uidUser = intent.getStringExtra("uidUserProfil")
         binding= DataBindingUtil.setContentView(this, R.layout.activity_profil)
         viewModel = ViewModelProviders.of(this, factory).get(HomeFragmentViewModel::class.java)
 
@@ -44,15 +45,24 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
         binding.item?.profilUid = profilUid
         //a changer puisque le UId est dispo dasn le viewModel
 //        binding.item?.fetchUserProfilData(profilUid)
-        viewModel.fetchUserProfilData(profilUid)
-        binding.item?.verifAmitier(profilUid)
+
+        if(profilUid != null){
+            viewModel.fetchUserProfilData(profilUid)
+            binding.item?.verifAmitier(profilUid)
+
+        }
+
+        if(uidUser != null){
+
+            viewModel.fetchUserProfilData(uidUser)
+        }
+
         viewModel.fetchUserData()
 
 
 
         viewModel.ami_live.observe(this, Observer { message ->
             if(viewModel.ami_live?.value == true){
-
 
                 val addIcon = resources.getDrawable(android.R.drawable.ic_delete)
                 binding.floatingActionButton.setImageDrawable(addIcon)
@@ -74,18 +84,7 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
         })
 
     }
-// Essai pour recup photo , ne fonctionne pas dans le onCreate ou dans le onResume
-//    override fun onResume() {
-//        super.onResume()
-//        viewModel.user_liveProfil.observe(this, Observer { it ->
-//            Glide.with(binding.imgProfil.context)
-//                .load(it.img)
-//                .apply(RequestOptions().override(100, 100))
-//                .centerCrop()
-//                .into(binding.imgProfil)
-//        })
-//
-//    }
+
 
 
 }

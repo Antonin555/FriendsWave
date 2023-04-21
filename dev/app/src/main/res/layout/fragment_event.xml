@@ -31,7 +31,7 @@
                 android:id="@+id/mapView"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="15dp"
                 android:apiKey="@string/api_key_google_map"
@@ -43,7 +43,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginBottom="20dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp">
 
                 <EditText
                     android:id="@+id/choice_strategy"
@@ -87,16 +89,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:ignore="MissingConstraints" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_marginBottom="70dp"
             android:layout_marginRight="100dp"
+            android:layout_marginBottom="70dp"
+            android:fontFamily="@font/roboto_mono"
             android:text="ajouter event"
+            android:textColor="#FF8A80"
             android:textSize="10sp"
             android:textStyle="bold"
-            android:fontFamily="@font/roboto_mono"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -120,12 +124,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_marginBottom="140dp"
             android:layout_marginRight="100dp"
+            android:layout_marginBottom="140dp"
+            android:fontFamily="@font/roboto_mono"
             android:text="mes events"
+            android:textColor="#FF8A80"
             android:textSize="10sp"
             android:textStyle="bold"
-            android:fontFamily="@font/roboto_mono"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

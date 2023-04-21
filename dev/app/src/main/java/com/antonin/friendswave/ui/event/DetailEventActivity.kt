@@ -1,5 +1,6 @@
 package com.antonin.friendswave.ui.event
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,6 +12,7 @@ import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.databinding.ActivityDetailEventBinding
+import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import org.kodein.di.KodeinAware
@@ -62,6 +64,21 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
 
         viewModel.confirm_guestListPublic.observe(this, Observer{ confirm_guestList->
             adapter1.addItems(confirm_guestList)
+        })
+
+        adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
+            override fun onClick(view: View, position: Int) {
+
+                val uidUser = viewModel.confirm_guestListPublic.value!!.get(position).toString()
+
+                val intent = Intent(view.context, ProfilActivity::class.java )
+                intent.putExtra("uidUserProfil", uidUser)
+                startActivity(intent)
+
+            }
+
+
+
         })
     }
 

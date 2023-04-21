@@ -41,8 +41,7 @@ import org.kodein.di.generic.instance
 
 
 
-class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallback,
-    LocationListener{
+class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallback, LocationListener {
 
 
     override val kodein : Kodein by kodein()
@@ -55,15 +54,14 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
     private lateinit var googleMap: GoogleMap
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
+        loc = GoogleLocation()
 
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
         viewModel.fetchEventsPublic1()
+
+
         viewModel.interfaceEvent = this
     }
 
@@ -72,13 +70,9 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
         binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_event, container, false)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
-        binding.mapView.onCreate(savedInstanceState)
 
-        loc = GoogleLocation()
         binding.mapView.getMapAsync(this)
-//        loc.getLocation(requireContext(),binding.mapView,requireActivity())
-
-
+        binding.mapView.onCreate(savedInstanceState)
 
         return binding.root
     }
@@ -86,15 +80,13 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
 
     @SuppressLint("ResourceType")
     override fun onResume() {
-        super.onResume()
         binding.mapView.onResume()
+        super.onResume()
 
         viewModel.eventList.observe(this, Observer { eventList ->
             adapter1.addItems(eventList)
-//            loc.getAllLocationsEvent(eventList,binding.mapView, requireActivity(),requireContext())
+//
         })
-
-
 
 
         var tempList : ArrayList<Event> = ArrayList()
@@ -121,7 +113,6 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
             override fun onClick(view: View, position: Int) {
                 val idEvent = viewModel.eventList.value!!.get(position).key
                 val adminEvent = viewModel.eventList.value!!.get(position).admin
-                println("PLEEEEEEEEEEEEEEEEEEEEASSSSSSSSSSSSSE : "+ idEvent)
                 val intent = Intent(context, DetailEventActivity::class.java )
                 intent.putExtra("position", position)
                 intent.putExtra("idEvent", idEvent)
@@ -174,13 +165,13 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
     override fun onMapReady(p0: GoogleMap) {
 
         googleMap = p0
-
-        googleMap.addMarker(MarkerOptions().position(LatLng(-73.4220, 45.0841)).title("Marker à Mountain View"))
+//        loc.getLocation(requireContext(),binding.mapView,requireActivity())
+//        googleMap.addMarker(MarkerOptions().position(LatLng(-73.4220, 45.0841)).title("Marker à Mountain View"))
         viewModel.eventList.observe(requireActivity(), Observer { eventList ->
 
-            loc.getAllLocationsEvent(eventList,binding.mapView, requireActivity(),requireContext())
+            loc.getAllLocationsEvent(googleMap,eventList,binding.mapView, requireActivity(),requireContext())
         })
-
+//
     }
 
     override fun onLocationChanged(p0: Location) {

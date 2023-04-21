@@ -1,7 +1,9 @@
 package com.antonin.friendswave.ui.event
 import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -16,6 +18,7 @@ import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityMyEventManageBinding
 import com.antonin.friendswave.outils.AlertDialog
+import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import org.kodein.di.Kodein
@@ -102,7 +105,20 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         })
 
 
+        // pour avoir le detail des user En Cours NE FONCTIONNE PAS
+//        adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
+//
+//
+//            override fun onClick(view: View, position: Int) {
+//                val intent = Intent(view.context, ProfilActivity::class.java)
+//            }
+//        })
+
+
     }
+
+
+
 
     val positiveButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
         // Code à exécuter si le bouton positif est cliqué

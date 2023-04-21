@@ -71,12 +71,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
-                android:layout_marginBottom="70dp"
                 android:layout_marginRight="100dp"
+                android:layout_marginBottom="70dp"
+                android:fontFamily="@font/roboto_mono"
                 android:text="ajouter un contact"
+                android:textColor="#FF8A80"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                android:fontFamily="@font/roboto_mono"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 

@@ -33,7 +33,7 @@ class FirebaseSourceEvent {
 
     fun editEvent(event: Event?){
 
-        
+
         if(event!!.isPublic == true){
             firebaseData.child("event/eventPublic").child(event.key.toString()).setValue(event)
         }else{
@@ -63,7 +63,7 @@ class FirebaseSourceEvent {
                 .child("listInscrits").child(mainUid!!).removeValue()
         }
 
-        firebaseData.child("user").child(mainUid!!).child("eventConfirmationList").child(event.key.toString()).removeValue()
+        firebaseData.child("user").child(mainUid).child("eventConfirmationList").child(event.key.toString()).removeValue()
     }
 
     fun deletePendingEvent(event:Event?){
@@ -93,7 +93,7 @@ class FirebaseSourceEvent {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val data = snapshot.getValue(Event::class.java)!!
                 onResult(data)
-                    }
+            }
 
 
             override fun onCancelled(error: DatabaseError) {
@@ -147,20 +147,20 @@ class FirebaseSourceEvent {
 
 
         firebaseData.child("event/eventPublic").addValueEventListener(object :ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
+            override fun onDataChange(snapshot: DataSnapshot) {
 
-                    for (snap in snapshot.children) {
-                        if(eventIdList.containsValue(snap.key)){
-                            val event = snap.getValue(Event::class.java)
-                            eventList.add(event!!)
-                        }
+                for (snap in snapshot.children) {
+                    if(eventIdList.containsValue(snap.key)){
+                        val event = snap.getValue(Event::class.java)
+                        eventList.add(event!!)
                     }
-                    onResult(eventList)
                 }
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-            })
+                onResult(eventList)
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
 
     }
 
@@ -252,16 +252,16 @@ class FirebaseSourceEvent {
 
 
     fun fetchSpecificEvents( hostId: String, eventValue: String, onResult: (Event) -> Unit) {
-        var hostId = hostId
-        var eventValue = eventValue
-        var event: Event = Event()
+        val hostId = hostId
+        val eventValue = eventValue
+
 
         firebaseData.child("event/eventPrivate").child(hostId).get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 for (snap in task.result.children) {
                     if (snap.exists()) {
                         if(eventValue == snap.key){
-                            event = snap.getValue(Event::class.java)!!
+                            val event = snap.getValue(Event::class.java)!!
                             onResult(event)
                         }
                     }
@@ -272,7 +272,7 @@ class FirebaseSourceEvent {
                         for (snap in task.result.children) {
                             if (snap.exists()) {
                                 if(eventValue == snap.key){
-                                    event = snap.getValue(Event::class.java)!!
+                                    val event = snap.getValue(Event::class.java)!!
                                     onResult(event)
                                 }
                             }
@@ -282,7 +282,6 @@ class FirebaseSourceEvent {
 
             }
         }
-
 
     }
 
@@ -312,54 +311,54 @@ class FirebaseSourceEvent {
     // A REVOIR NE FONCTIONNE PAS
     fun addEventsPrivateToRecyclerNotif(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
 
-            firebaseData.child("event/eventPrivate").addValueEventListener(object :ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
+        firebaseData.child("event/eventPrivate").addValueEventListener(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
 
 
-                    for (snap in snapshot.children) {
+                for (snap in snapshot.children) {
 
-                        val event = snap.getValue(Event::class.java)
-                        if(eventIdList.containsValue(snap.key)){
-                            eventList.add(event!!)
-                        }
-
+                    val event = snap.getValue(Event::class.java)
+                    if(eventIdList.containsValue(snap.key)){
+                        eventList.add(event!!)
                     }
-                    onResult(eventList)
+
                 }
+                onResult(eventList)
+            }
 
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
 
 
-            })
+        })
 
     }
 
     //Alex 2eme fonction pour ne pas faire result children
     fun addEventsPublicToRecyclerNotif2(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
 
-            firebaseData.child("event/eventPublic").addValueEventListener(object :ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
+        firebaseData.child("event/eventPublic").addValueEventListener(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
 
 
-                    for (snap in snapshot.children) {
+                for (snap in snapshot.children) {
 
-                        val event = snap.getValue(Event::class.java)
-                        if(eventIdList.containsValue(snap.key)){
-                            eventList.add(event!!)
-                        }
-
+                    val event = snap.getValue(Event::class.java)
+                    if(eventIdList.containsValue(snap.key)){
+                        eventList.add(event!!)
                     }
-                    onResult(eventList)
+
                 }
+                onResult(eventList)
+            }
 
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
 
 
-            })
+        })
     }
 
 
@@ -475,25 +474,25 @@ class FirebaseSourceEvent {
 
     fun addEventsPublicToRecyclerNotif(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
 
-            firebaseData.child("event/eventPublic").addValueEventListener( object :ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if(snapshot.exists()){
-                        for (snap in snapshot.children) {
-                            if (snap.exists()) {
-                                val event = snap.getValue(Event::class.java)
-                                if(eventIdList.containsKey(snap.key)){
-                                    eventList.add(event!!)
-                                }
+        firebaseData.child("event/eventPublic").addValueEventListener( object :ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    for (snap in snapshot.children) {
+                        if (snap.exists()) {
+                            val event = snap.getValue(Event::class.java)
+                            if(eventIdList.containsKey(snap.key)){
+                                eventList.add(event!!)
                             }
                         }
                     }
-                    onResult(eventList)
                 }
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-            })
-        }
+                onResult(eventList)
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
 
 
     fun addEventsPublicToNotifsRequest(eventIdList:HashMap<String,String>, userList:ArrayList<User>, onResult: (List<User>) -> Unit){
@@ -521,9 +520,8 @@ class FirebaseSourceEvent {
     }
 
     fun acceptRequestEvent(user: User?){
-        var hashmail :String = user!!.email.hashCode().toString()
-        var idEvent:String = user.pendingRequestEventPublic!!.get(mainUid!!).toString()
-//        user!!.pendingRequestEventPublic!!.get(user.email.hashCode().toString()).toString()
+
+        var idEvent:String = user!!.pendingRequestEventPublic!!.get(mainUid!!).toString()
         val queryEventPublic = firebaseData.child("event/eventPublic").child(idEvent)
         val queryAcceptHostEventUser = firebaseData.child("user").child(mainUid)
         val queryAcceptGuestEventUser = firebaseData.child("user").child(user.uid.toString())
@@ -532,7 +530,7 @@ class FirebaseSourceEvent {
         queryEventPublic.child("listInscrits").child(user.email.hashCode().toString()).setValue(user.email)
 
         queryAcceptHostEventUser.child("hostPendingRequestEventPublic").child(idEvent).removeValue()
-        queryAcceptHostEventUser.child("ConfirmHostRequestEventPublic").child(idEvent).setValue(user.email)
+        queryAcceptHostEventUser.child("ConfirmHostRequestEventPublic").child(idEvent).setValue(user!!.email)
 
         queryAcceptGuestEventUser.child("pendingRequestEventPublic").child(mainUid).removeValue()
         queryAcceptGuestEventUser.child("eventConfirmationList").child(mainUid).setValue(idEvent)
@@ -545,7 +543,7 @@ class FirebaseSourceEvent {
     fun declineRequestEvent(user: User?){
         var idEvent:String = user!!.pendingRequestEventPublic!!.get(mainUid!!).toString()
         val queryEventPublic = firebaseData.child("event/eventPublic").child(idEvent)
-        val queryAcceptHostEventUser = firebaseData.child("user").child(mainUid!!)
+        val queryAcceptHostEventUser = firebaseData.child("user").child(mainUid)
         val queryAcceptGuestEventUser = firebaseData.child("user").child(user.uid.toString())
 
         queryEventPublic.child("pendingRequestEventPublic").child(user.email.hashCode().toString()).removeValue()
@@ -560,13 +558,13 @@ class FirebaseSourceEvent {
     fun acceptInvitationEvent(event: Event?){
 
         val queryEventPrivate = firebaseData.child("event/eventPrivate").child(event!!.admin).child(event.key!!)
-        val queryEventPublic = firebaseData.child("event/eventPublic").child(event!!.key.toString())
+        val queryEventPublic = firebaseData.child("event/eventPublic").child(event.key.toString())
         val queryAcceptEventUser = firebaseData.child("user").child(mainUid!!)
 
         if(event.isPublic == true){
 
 
-            queryEventPublic.child("invitation").child(mainUid!!).removeValue()
+            queryEventPublic.child("invitation").child(mainUid).removeValue()
             queryEventPublic.child("listInscrits").child(mainUid).setValue(currentUser()!!.email.toString())
 
         }else {
@@ -584,7 +582,7 @@ class FirebaseSourceEvent {
     fun refuseInvitationEvent(event: Event?){
 
         val queryEventPublic = firebaseData.child("event/eventPublic").child(event!!.key.toString())
-        val queryEventPrivate = firebaseData.child("event/eventPrivate").child(event!!.admin).child(event.key!!)
+        val queryEventPrivate = firebaseData.child("event/eventPrivate").child(event.admin).child(event.key!!)
         val queryAcceptEventUser = firebaseData.child("user").child(mainUid!!)
 
         if(event.isPublic == true){

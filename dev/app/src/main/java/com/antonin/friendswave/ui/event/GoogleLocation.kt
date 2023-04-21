@@ -64,36 +64,8 @@ class GoogleLocation  {
     }
 
 
-//    fun getAllLocationsEvent(viewModel: List<Event>, mapView: MapView){
-//
-//
-//
-//        for ( i in viewModel){
-//
-//            mapView.getMapAsync { googleMap ->
-//
-//                val latLng = LatLng(i.lattitude.toDouble(), i.longitude.toDouble())
-//                val markerOptions = MarkerOptions()
-//                    .position(latLng)
-//                    .title(i.name)
-//                    .snippet(i.adress)
-//                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
-//                googleMap.addMarker(markerOptions)
-//                val cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 12f)
-//                googleMap.moveCamera(cameraUpdate)
-//
-//
-//            }
-//
-//        }
-//
-//
-//
-//    }
 
-
-
-    fun getAllLocationsEvent(viewModel: List<Event>, mapView: MapView, requireActivity: Activity,requireContext: Context) {
+    fun getAllLocationsEvent(googleMap:GoogleMap,viewModel: List<Event>, mapView: MapView, requireActivity: Activity,requireContext: Context) {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext)
 
@@ -103,12 +75,31 @@ class GoogleLocation  {
             return
         }
 
+
+
+
+
         // Create a LatLngBounds.Builder to calculate the bounds of all markers
         val builder = LatLngBounds.Builder()
-
+        val latLng = LatLng(45.508888,-73.561668 )
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom( latLng, 10f))
         for (i in viewModel) {
 
-            mapView.getMapAsync { googleMap ->
+
+//            mapView.getMapAsync { googleMap ->
+//
+//                val latLng = LatLng(i.lattitude.toDouble(), i.longitude.toDouble())
+//                val markerOptions = MarkerOptions()
+//                    .position(latLng)
+//                    .title(i.name)
+//                    .snippet(i.adress)
+//                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
+//                googleMap.addMarker(markerOptions)
+//
+//                val cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 5f)
+//                googleMap.moveCamera(cameraUpdate)
+//
+//            }
 
                 val latLng = LatLng(i.lattitude.toDouble(), i.longitude.toDouble())
                 val markerOptions = MarkerOptions()
@@ -117,18 +108,20 @@ class GoogleLocation  {
                     .snippet(i.adress)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
                 googleMap.addMarker(markerOptions)
-
-                // Include the marker position in the LatLngBounds.Builder
+//                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom( latLng, 10f))
+//                 Include the marker position in the LatLngBounds.Builder
                 builder.include(latLng)
 
                 // Move the camera only once after all markers are added
-                if (viewModel.indexOf(i) == viewModel.size - 1) {
-                    val bounds = builder.build()
-                    val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 100) // 100 is the padding in pixels
-                    googleMap.moveCamera(cameraUpdate)
-                }
-            }
+//                if (viewModel.indexOf(i) == viewModel.size - 1) {
+//                    var bounds = builder.build()
+////                    val cameraUpdate = CameraUpdateFactory.newLatLngBounds( bounds,600,200,10) // 100 is the padding in pixels
+//
+//                }
+
         }
+
+
     }
 
 
