@@ -303,6 +303,8 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         repoEvent.deletePendingEvent(event)
     }
 
+
+
 }
 
 

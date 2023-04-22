@@ -13,7 +13,7 @@ class FirebaseSourceUser {
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
-    public val firebaseData : DatabaseReference = FirebaseDatabase.getInstance().getReference()
+    val firebaseData : DatabaseReference = FirebaseDatabase.getInstance().getReference()
     val mainUid = FirebaseAuth.getInstance().currentUser?.uid
 
     fun currentUser() = firebaseAuth.currentUser
@@ -50,6 +50,8 @@ class FirebaseSourceUser {
                 }
             })
     }
+
+
 
     fun fetchInteret(onResult: (List<String>?) -> Unit) {
         firebaseData.child("interet")
@@ -499,6 +501,34 @@ class FirebaseSourceUser {
 
             }
         })
+    }
+
+
+
+
+
+     // POUR AVOIR LE PROFILS DES USERS INSCRITS DANS LES EVENTS PUBLICS :
+
+    fun fetchUserByMail(mail:String, onResult: (User?) -> Unit){
+
+        firebaseData.child("user").addValueEventListener(object:ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(snap in snapshot.children){
+                    val user = snapshot.getValue(User::class.java)
+                    if(user!!.email == mail){
+                        onResult(user)
+                    }
+
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                onResult(null)
+            }
+
+
+        })
+
     }
 
 

@@ -9,9 +9,12 @@ import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.antonin.friendswave.ui.fragmentMain.NotifsFragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.google.firebase.messaging.ktx.remoteMessage
+
 
 class FirebaseNotificationsService : FirebaseMessagingService() {
 
@@ -61,8 +64,16 @@ class FirebaseNotificationsService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         super.onNewToken(token)
 
-
-        firebase.firebaseData.child("user/" + firebase.mainUid!!).child(token).setValue(true)
+        sendRegistrationToServer(token)
 
     }
+    private fun sendRegistrationToServer(token: String) {
+
+        val reference = FirebaseDatabase.getInstance().reference
+        reference.child("user").child(FirebaseAuth.getInstance().currentUser!!.uid)
+            .child("token")
+            .setValue(token)
+    }
+
+
 }

@@ -184,5 +184,16 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
     }
 
 
+    fun fetchUserByMail(mail:String):LiveData<User> {
+
+        val userLiveData = MutableLiveData<User>()
+
+        firebaseUser.fetchUserByMail(mail) { user ->
+            userLiveData.postValue(user)
+        }
+
+        return userLiveData
+    }
+
 
 }

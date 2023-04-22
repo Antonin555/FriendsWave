@@ -230,5 +230,10 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
     }
 
 
+    fun fetchUserByMail(mail:String){
+
+        repository.fetchUserByMail(mail)
+    }
+
 
 }

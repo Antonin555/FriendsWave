@@ -69,15 +69,13 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
 
-                val uidUser = viewModel.confirm_guestListPublic.value!!.get(position).toString()
+                val emailUser = viewModel.confirm_guestListPublic.value!!.get(position).toString()
 
                 val intent = Intent(view.context, ProfilActivity::class.java )
-                intent.putExtra("uidUserProfil", uidUser)
+                intent.putExtra("emailUserProfil", emailUser)
                 startActivity(intent)
 
             }
-
-
 
         })
     }

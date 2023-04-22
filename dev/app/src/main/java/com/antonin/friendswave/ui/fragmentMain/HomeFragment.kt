@@ -34,6 +34,9 @@ import com.antonin.friendswave.ui.viewModel.NotifFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.NotifFragmentViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import org.kodein.di.Kodein
 
@@ -70,6 +73,7 @@ class HomeFragment : Fragment(), KodeinAware {
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
         adapter2 = ListGeneriqueAdapter(R.layout.recycler_invite_events)
         adapter3 = ListGeneriqueAdapter(R.layout.recycler_demande_inscription)
+        initFCM()
 
 //        viewModel.fetchEventsInvitation(_eventList)
     }
@@ -80,7 +84,8 @@ class HomeFragment : Fragment(), KodeinAware {
 
 //        firebaseNotifs.onCreate()
         permissionNotifs()
-        FirebaseMessaging.getInstance().subscribeToTopic("pushNotification")
+        FirebaseMessaging.getInstance().subscribeToTopic("nom-du-topic")
+//        FirebaseMessaging.getInstance().subscribeToTopic("sendNotification")
 //        firebaseMessaging.subscribeToTopic("pushNotification")
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
@@ -177,6 +182,8 @@ class HomeFragment : Fragment(), KodeinAware {
                 Log.d(TAG, "Token du dispositif : $token")
             }
 
+
+
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
                 if (view.id == R.id.btn_accept){
@@ -272,6 +279,19 @@ class HomeFragment : Fragment(), KodeinAware {
                 }
             }
         }
+    }
+
+    private fun sendRegistrationToServer(token: String) {
+
+        val reference = FirebaseDatabase.getInstance().reference
+        reference.child("user").child(FirebaseAuth.getInstance().currentUser!!.uid)
+            .child("token")
+            .setValue(token)
+    }
+
+    private fun initFCM() {
+        val token = FirebaseInstanceId.getInstance().token
+        sendRegistrationToServer(token!!)
     }
 
 
