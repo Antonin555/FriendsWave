@@ -80,46 +80,49 @@ class GoogleLocation  {
 
 
         // Create a LatLngBounds.Builder to calculate the bounds of all markers
-
+        val builder = LatLngBounds.Builder()
         for (i in viewModel) {
 
 
-//            mapView.getMapAsync { googleMap ->
-//
-//                val latLng = LatLng(i.lattitude.toDouble(), i.longitude.toDouble())
-//                val markerOptions = MarkerOptions()
-//                    .position(latLng)
-//                    .title(i.name)
-//                    .snippet(i.adress)
-//                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
-//                googleMap.addMarker(markerOptions)
-//
-//                val cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 5f)
-//                googleMap.moveCamera(cameraUpdate)
-//
-//            }
+            mapView.getMapAsync { googleMap ->
 
-                val latLng1 = LatLng(i.lattitude.toDouble(), i.longitude.toDouble())
+                val latLng = LatLng(i.lattitude.toDouble(), i.longitude.toDouble())
                 val markerOptions = MarkerOptions()
-                    .position(latLng1)
+                    .position(latLng)
                     .title(i.name)
                     .snippet(i.adress)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
                 googleMap.addMarker(markerOptions)
-//                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom( latLng, 10f))
-//                 Include the marker position in the LatLngBounds.Builder
-//                builder.include(latLng1)
+                builder.include(latLng)
 
-                // Move the camera only once after all markers are added
+                if (viewModel.indexOf(i) == viewModel.size - 1) {
+                    var bounds = builder.build()
+                    val cameraUpdate = CameraUpdateFactory.newLatLngBounds( bounds,100) // 100 is the padding in pixels
+                    googleMap.moveCamera(cameraUpdate)
+                }
+
+            }
+
+//                val latLng1 = LatLng(i.lattitude.toDouble(), i.longitude.toDouble())
+//                val markerOptions = MarkerOptions()
+//                    .position(latLng1)
+//                    .title(i.name)
+//                    .snippet(i.adress)
+//                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+//                googleMap.addMarker(markerOptions)
+////                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom( latLng, 10f))
+////                 Include the marker position in the LatLngBounds.Builder
+//                builder.include(latLng1)
+//                // Move the camera only once after all markers are added
 //                if (viewModel.indexOf(i) == viewModel.size - 1) {
 //                    var bounds = builder.build()
-////                    val cameraUpdate = CameraUpdateFactory.newLatLngBounds( bounds,600,200,10) // 100 is the padding in pixels
-//
+//                    val cameraUpdate = CameraUpdateFactory.newLatLngBounds( bounds,100) // 100 is the padding in pixels
+//                    googleMap.moveCamera(cameraUpdate)
 //                }
 
-//            val builder = LatLngBounds.Builder()
-            val latLng = LatLng(45.508888,-73.561668 )
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom( latLng, 10f))
+//
+//            val latLng = LatLng(45.508888,-73.561668 )
+//            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom( latLng, 10f))
 
         }
 

@@ -75,18 +75,14 @@ class HomeFragment : Fragment(), KodeinAware {
         adapter3 = ListGeneriqueAdapter(R.layout.recycler_demande_inscription)
         initFCM()
 
-//        viewModel.fetchEventsInvitation(_eventList)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
-//        permissionNotifs()
 
-//        firebaseNotifs.onCreate()
         permissionNotifs()
         FirebaseMessaging.getInstance().subscribeToTopic("nom-du-topic")
-//        FirebaseMessaging.getInstance().subscribeToTopic("sendNotification")
-//        firebaseMessaging.subscribeToTopic("pushNotification")
+
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
         binding.lifecycleOwner = this
@@ -124,17 +120,18 @@ class HomeFragment : Fragment(), KodeinAware {
 
         viewModel2.friendNotifList.observe(this, Observer { notifUserList ->
             adapter1.addItems(notifUserList)
-            if(adapter1.itemCount ==0 ) {binding.makefriends.visibility = View.VISIBLE}
+            if(adapter1.itemCount !=0 ) binding.makefriends.visibility= View.GONE
+
         })
 
         viewModel2.eventList.observe(this,Observer { eventList ->
             adapter2.addItems(eventList)
-            if( adapter2.itemCount ==0){binding.searchEvents.visibility = View.VISIBLE }
+            if( adapter2.itemCount !=0) binding.searchEvents.visibility = View.GONE
         })
 
         viewModel2.requestListEvent.observe(this, Observer { userList ->
             adapter3.addItems(userList)
-            if( adapter3.itemCount == 0){binding.tempInvitations.visibility =View.VISIBLE}
+            if( adapter3.itemCount != 0){binding.tempInvitations.visibility =View.GONE}
         })
 
 
