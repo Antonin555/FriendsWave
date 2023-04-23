@@ -6,7 +6,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.antonin.friendswave.ui.fragmentMain.ContactFragment
 import com.antonin.friendswave.ui.fragmentMain.EventFragment
 import com.antonin.friendswave.ui.fragmentMain.HomeFragment
-import com.antonin.friendswave.ui.fragmentMain.NotifsFragment
 
 class AdapterFragment(fa: FragmentActivity) : FragmentStateAdapter(fa) {
     override fun getItemCount(): Int = 3

@@ -36,7 +36,7 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
         setContentView(R.layout.activity_profil)
 
         val profilUid = intent.getStringExtra("uid")
-        val emailUser = intent.getStringExtra("emailUserProfil")
+
         binding= DataBindingUtil.setContentView(this, R.layout.activity_profil)
         viewModel = ViewModelProviders.of(this, factory).get(HomeFragmentViewModel::class.java)
 
@@ -52,10 +52,10 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
 
         }
 
-        if(emailUser != null){
-
-            viewModel.fetchUserByMail(emailUser)
-        }
+//        if(emailUser != null){
+//
+//            viewModel.fetchUserByMail(emailUser)
+//        }
 
         viewModel.fetchUserData()
 

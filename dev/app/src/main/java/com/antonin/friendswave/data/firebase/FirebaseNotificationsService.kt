@@ -7,14 +7,14 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.antonin.friendswave.ui.fragmentMain.NotifsFragment
+import com.antonin.friendswave.ui.fragmentMain.HomeFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-
+import com.google.firebase.R
 
 class FirebaseNotificationsService : FirebaseMessagingService() {
 
@@ -24,17 +24,15 @@ class FirebaseNotificationsService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-        val title = message.notification!!.title
-        val text = message.notification!!.body
-        if(message.notification != null) {
-            var notification : RemoteMessage.Notification = message.notification!!
-            sendNotification(notification.toString());
 
-        }
+        val title = message.data["title"]!!.toString()
+        val body = message.data["body"]!!.toString()
+        sendNotification(title.toString(),body.toString())
+
     }
 
-    private fun sendNotification(messageBody: String) {
-        val intent = Intent(this, NotifsFragment::class.java)
+    private fun sendNotification(titre: String, body:String ) {
+        val intent = Intent(this, HomeFragment::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
             PendingIntent.FLAG_IMMUTABLE)
@@ -42,9 +40,10 @@ class FirebaseNotificationsService : FirebaseMessagingService() {
         val channelId = "fcm_default_channel"
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setContentTitle("FCM Message")
-            .setContentText(messageBody)
+            .setContentTitle(titre)
+            .setContentText(body)
             .setAutoCancel(true)
+            .setSmallIcon(R.drawable.notification_bg)
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)
 

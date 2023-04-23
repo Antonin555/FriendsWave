@@ -203,8 +203,8 @@ class HomeFragment : Fragment(), KodeinAware {
         adapter2.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
                 if (view.id == R.id.btn_accept){
-                    val eventKey = viewModel2.eventList.value?.get(position)
-                    viewModel2.acceptInvitationEvent(eventKey)
+                    val event = viewModel2.eventList.value?.get(position)
+                    viewModel2.acceptInvitationEvent(event)
 
                 }
 

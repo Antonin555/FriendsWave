@@ -81,19 +81,26 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
 
                 val event = viewModel.eventListConfirm.value?.get(position)
 
-                if(view.id == R.id.recycler_my_event_inscrits){
 
-                    val intent = Intent(view.context, GroupChatActivity::class.java)
-                    intent.putExtra("eventKey", event!!.key)
-                    intent.putExtra("admin", event!!.admin)
-                    view.context.startActivity(intent)
 
-                }
+
+
+
 
                 if(view.id == R.id.btn_delete){
 
                     viewModel.deleteConfirmation(event)
                 }
+
+                else {
+
+                    val intent = Intent(view.context, GroupChatActivity::class.java)
+                    intent.putExtra("eventKey", event!!.key)
+                    intent.putExtra("admin", event!!.admin)
+                    view.context.startActivity(intent)
+                }
+
+
 
             }
         })
