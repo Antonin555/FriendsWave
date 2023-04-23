@@ -197,7 +197,7 @@
                     android:id="@+id/searchEvents"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:src="@drawable/send_invitation" />
+                    android:src="@drawable/make_event" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerFragmentNotifEvents"
@@ -226,7 +226,7 @@
                     android:id="@+id/tempInvitations"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:src="@drawable/make_friends" />
+                    android:src="@drawable/send_invitation" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_request_event"
