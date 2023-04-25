@@ -1,5 +1,6 @@
 package com.antonin.friendswave.ui.viewModel
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.View
@@ -232,14 +233,11 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
 
 
     fun fetchUserByMail(mail:String){
-
         repository.fetchUserByMail(mail)
     }
 
-    fun registerPhoto(photo: Uri){
-
-        repository.registerPhoto(photo)
-
+    fun registerPhoto(photo: Uri, context: Context){
+        user_live.value?.img = repository.registerPhoto(photo, context)
 
     }
 

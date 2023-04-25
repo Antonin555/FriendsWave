@@ -15,6 +15,9 @@ import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -23,6 +26,8 @@ import org.kodein.di.generic.instance
 
 
 class ProfilActivity : AppCompatActivity(), KodeinAware {
+
+    var storage: FirebaseStorage = Firebase.storage
 
     override val kodein : Kodein by kodein()
     private val factory : HomeFragmentVMFactory by instance()
@@ -76,11 +81,18 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
 
 
         viewModel.user_liveProfil.observe(this, Observer { it ->
-            Glide.with(binding.imgProfil.context)
-                .load(it.img)
-                .apply(RequestOptions().override(100, 100))
-                .centerCrop()
-                .into(binding.imgProfil)
+            var storageRef = storage.reference.child("photos/" + it.img.toString())
+
+            storageRef.downloadUrl.addOnSuccessListener {
+                Glide.with(binding.imgProfil.context)
+                    .load(it)
+                    .apply(RequestOptions().override(100, 100))
+                    .centerCrop()
+                    .into(binding.imgProfil)
+            }.addOnFailureListener {
+                println(it)
+            }
+
         })
 
     }

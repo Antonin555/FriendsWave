@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil.inflate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -37,7 +38,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import org.kodein.di.Kodein
 
 
@@ -45,8 +49,14 @@ import org.kodein.di.KodeinAware
 
 import org.kodein.di.generic.instance
 import org.kodein.di.android.x.kodein
+import java.net.URL
 
 class HomeFragment : Fragment(), KodeinAware {
+
+
+
+
+    var storage: FirebaseStorage = Firebase.storage
 
     override val kodein : Kodein by kodein()
     private val factory : HomeFragmentVMFactory by instance()
@@ -74,6 +84,16 @@ class HomeFragment : Fragment(), KodeinAware {
         adapter3 = ListGeneriqueAdapter(R.layout.recycler_demande_inscription)
         initFCM()
 
+//        storageRef.downloadUrl.addOnSuccessListener {
+//            Glide.with(binding.imgProfil.context)
+//                .load(it)
+//                .apply(RequestOptions().override(100, 100))
+//                .centerCrop()
+//                .into(binding.imgProfil)
+//        }.addOnFailureListener {
+//            println(it)
+//        }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -81,6 +101,7 @@ class HomeFragment : Fragment(), KodeinAware {
 
         permissionNotifs()
         FirebaseMessaging.getInstance().subscribeToTopic("nom-du-topic")
+        FirebaseMessaging.getInstance().subscribeToTopic("nom-du-topic1")
 
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
@@ -148,13 +169,23 @@ class HomeFragment : Fragment(), KodeinAware {
         }
 
         viewModel.user_live.observe(this, Observer { it ->
-            Glide.with(binding.imgProfil.context)
-                .load(it.img)
-                .apply(RequestOptions().override(100, 100))
-                .centerCrop()
-                .into(binding.imgProfil)
+            var storageRef = storage.reference.child("photos/" + it.img.toString())
+
+            storageRef.downloadUrl.addOnSuccessListener {
+                Glide.with(binding.imgProfil.context)
+                    .load(it)
+                    .apply(RequestOptions().override(100, 100))
+                    .centerCrop()
+                    .into(binding.imgProfil)
+            }.addOnFailureListener {
+                println(it)
+            }
 
         })
+
+
+
+
 
 //        binding.btnCategory.setOnClickListener{
 //            var type = "Mars"
@@ -212,7 +243,6 @@ class HomeFragment : Fragment(), KodeinAware {
             }
 
         })
-
 
         adapter3.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {

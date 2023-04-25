@@ -110,10 +110,8 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
             if (it.resultCode == Activity.RESULT_OK) {
 
                 img_uri = it?.data?.data!! as Uri
-                val bit: Bitmap = getBitmap(contentResolver, img_uri)
-                val temp_uri = getImageUriFromBitmap(applicationContext,bit)
                 binding.imgPreview.setImageURI(img_uri)
-                viewModel.registerPhoto(temp_uri)
+                viewModel.registerPhoto(img_uri, this)
 
             }
         }
@@ -178,13 +176,6 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
 
 
 
-    private fun getImageUriFromBitmap(context: Context?, bitmap: Bitmap): Uri {
-        val bytes = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,bytes)
-        val path = MediaStore.Images.Media.insertImage(context!!.contentResolver,bitmap,"File",null)
-        return Uri.parse(path.toString())
-
-    }
 
 }
 

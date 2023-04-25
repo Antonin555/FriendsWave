@@ -76,6 +76,8 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
             return
         }
 
+        repository.login(email!!, password!!)
+
         //calling login from repository to perform the actual authentication
         val disposable = repository.login(email!!, password!!).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
             interfaceAuth?.onSuccess()

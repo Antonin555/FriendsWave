@@ -1,5 +1,7 @@
 package com.antonin.friendswave.data.firebase
 
+import android.content.ContentResolver
+import android.content.Context
 import android.net.Uri
 import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.model.User
@@ -10,6 +12,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import io.reactivex.Completable
 import java.io.File
+import java.util.Calendar
 
 class FirebaseSourceUser {
 
@@ -536,20 +539,30 @@ class FirebaseSourceUser {
 
     }
 
-    fun registerPhoto(photo: Uri){
+    fun registerPhoto(photo: Uri, context: Context) : String{
 
-        var storageRef = storage.reference
+        var currentTime = Calendar.getInstance().timeInMillis
 
-        val file = Uri.fromFile(File(photo.toString()))
+        var storageRef = storage.reference.child("photos/").child(mainUid!!).child(currentTime.toString())
 
-        val photoRef = storageRef.child("photos/${file.lastPathSegment}")
+        val path = storageRef.toString().substringAfter("photos/")
 
-        val uploadTask = photoRef.putFile(file)
+//        val file = Uri.fromFile(File(photo.toString()))
+//
+//        val photoRef = storageRef.child("photos/${file.lastPathSegment}")
+//
+////        val uploadTask = photoRef.putFile(file)
+
+        val inputStream = context.contentResolver.openInputStream(photo)
+        val uploadTask = storageRef.putStream(inputStream!!)
         uploadTask.addOnSuccessListener {
-            firebaseData.child("user/" + mainUid).child("img").setValue(file)
+//            firebaseData.child("user/" + mainUid).child("img").setValue(path)
+
         }.addOnFailureListener {
             // Une erreur s'est produite lors du chargement de la photo
         }
+
+        return path
     }
 
 
