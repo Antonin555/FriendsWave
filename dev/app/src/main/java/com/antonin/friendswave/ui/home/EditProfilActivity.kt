@@ -3,15 +3,21 @@ package com.antonin.friendswave.ui.home
 
 import android.app.Activity
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.MediaStore.Images.Media
+import android.provider.MediaStore.Images.Media.getBitmap
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.core.net.toFile
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -34,6 +40,7 @@ import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+import java.io.ByteArrayOutputStream
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -74,8 +81,8 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
         afficheInteret()
 
         viewModel.user_live.observe(this, Observer {
-            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
             val date = LocalDate.parse(it.date, formatter)
             viewModel.day = date.dayOfMonth
             viewModel.month = date.monthValue
@@ -101,9 +108,13 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 
             if (it.resultCode == Activity.RESULT_OK) {
-                img_uri = it?.data?.data!!
+
+                img_uri = it?.data?.data!! as Uri
+                val bit: Bitmap = getBitmap(contentResolver, img_uri)
+                val temp_uri = getImageUriFromBitmap(applicationContext,bit)
                 binding.imgPreview.setImageURI(img_uri)
-                viewModel.user_live.value!!.img = img_uri.toString()
+                viewModel.registerPhoto(temp_uri)
+
             }
         }
 
@@ -163,6 +174,16 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
             return
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+
+
+    private fun getImageUriFromBitmap(context: Context?, bitmap: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,bytes)
+        val path = MediaStore.Images.Media.insertImage(context!!.contentResolver,bitmap,"File",null)
+        return Uri.parse(path.toString())
+
     }
 
 }

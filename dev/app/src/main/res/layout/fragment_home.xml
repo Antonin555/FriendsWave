@@ -27,9 +27,14 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:scaleType="centerCrop"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
             android:src="@drawable/sendemail"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="20dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -165,15 +170,13 @@
                     android:id="@+id/makefriends"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    app:srcCompat="@drawable/make_friends"
-                    />
+                    app:srcCompat="@drawable/make_friends" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerFragmentNotif"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    />
+                    android:layout_gravity="center" />
 
                 <TextView
                     android:id="@+id/textView55"

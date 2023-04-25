@@ -34,6 +34,7 @@ class FirebaseNotificationsService : FirebaseMessagingService() {
     private fun sendNotification(titre: String, body:String ) {
         val intent = Intent(this, HomeFragment::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
             PendingIntent.FLAG_IMMUTABLE)
 

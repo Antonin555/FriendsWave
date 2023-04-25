@@ -1,14 +1,19 @@
 package com.antonin.friendswave.data.firebase
 
+import android.net.Uri
 import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import io.reactivex.Completable
+import java.io.File
 
 class FirebaseSourceUser {
 
-
+    var storage: FirebaseStorage = Firebase.storage
 
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
@@ -333,7 +338,7 @@ class FirebaseSourceUser {
             .setValue(messageObject)
     }
 
-
+/// A REVOIR !!!!!!!!!
     fun fetchUsersRequest(onResult: (List<User>) -> Unit){
         firebaseData.child("user").child(mainUid!!).addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -529,6 +534,22 @@ class FirebaseSourceUser {
 
         })
 
+    }
+
+    fun registerPhoto(photo: Uri){
+
+        var storageRef = storage.reference
+
+        val file = Uri.fromFile(File(photo.toString()))
+
+        val photoRef = storageRef.child("photos/${file.lastPathSegment}")
+
+        val uploadTask = photoRef.putFile(file)
+        uploadTask.addOnSuccessListener {
+            firebaseData.child("user/" + mainUid).child("img").setValue(file)
+        }.addOnFailureListener {
+            // Une erreur s'est produite lors du chargement de la photo
+        }
     }
 
 

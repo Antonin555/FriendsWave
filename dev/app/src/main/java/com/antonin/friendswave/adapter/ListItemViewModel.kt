@@ -7,5 +7,6 @@ abstract class ListItemViewModel{
     var onListItemViewClickListener: ListGeneriqueAdapter.OnListItemViewClickListener? = null
     var img : String?= ""
     var imgEvent : String? = ""
+    var imgCover : String? = ""
 
 }

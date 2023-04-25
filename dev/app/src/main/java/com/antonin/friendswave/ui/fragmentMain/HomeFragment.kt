@@ -64,7 +64,6 @@ class HomeFragment : Fragment(), KodeinAware {
 
     private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 1
     private var firebaseMessaging = FirebaseMessaging.getInstance()
-    private var firebaseNotifs : FirebaseNotificationsService = FirebaseNotificationsService()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

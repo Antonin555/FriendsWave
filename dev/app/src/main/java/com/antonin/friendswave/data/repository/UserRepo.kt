@@ -1,5 +1,6 @@
 package com.antonin.friendswave.data.repository
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
@@ -195,5 +196,9 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
         return userLiveData
     }
 
+    fun registerPhoto(photo: Uri){
+
+        firebaseUser.registerPhoto(photo)
+    }
 
 }
