@@ -18,12 +18,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.antonin.friendswave.R
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 
 class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int) :
         ListAdapter<T, ListGeneriqueAdapter.GenericViewHolder<T>>(WordsComparator()) {
 
         private val items = mutableListOf<T>()
-
+        var storage: FirebaseStorage = Firebase.storage
         private var inflater: LayoutInflater? = null
         private var onListItemViewClickListener: OnListItemViewClickListener? = null
 
@@ -47,11 +50,26 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
 
         override fun onBindViewHolder(holder: GenericViewHolder<T>, position: Int) {
             val itemViewModel = items[position]
+
             itemViewModel.adapterPosition = position
+
             onListItemViewClickListener?.let { itemViewModel.onListItemViewClickListener = it }
             holder.bind(itemViewModel)
+
             holder.itemView.findViewById<ImageView>(R.id.imageProfil)
             holder.itemView.findViewById<ImageView>(R.id.imageEvent)
+
+
+            val storageRef = storage.reference.child("photos/" + itemViewModel.img.toString())
+            storageRef.downloadUrl.addOnSuccessListener {
+                Glide.with(holder.itemView.findViewById<ImageView>(R.id.imageProfil).context)
+                    .load(it)
+                    .apply(RequestOptions().override(100, 100))
+                    .centerCrop()
+                    .into(holder.itemView.findViewById<ImageView>(R.id.imageProfil))
+            }.addOnFailureListener {
+                println(it)
+            }
 
         }
 

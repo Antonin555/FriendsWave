@@ -90,19 +90,23 @@
                 <TextView
                     android:id="@+id/textView5"
                     android:layout_width="0dp"
+                    android:gravity="center"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:layout_weight="0.4"
+                    android:layout_weight="1"
                     android:fontFamily="@font/roboto_mono"
-                    android:text="@string/friends_fragment_home" />
+                    android:text="@{item.user_live.friends.toString()}"
+                    />
 
                 <TextView
                     android:id="@+id/friends"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
+                    android:gravity="center"
                     android:layout_weight="1"
-                    android:text="@{item.user_live.friends.toString()}" />
+                    android:text="@{item.user_live.rating.toString()}"
+                     />
 
             </LinearLayout>
 
@@ -116,16 +120,21 @@
                     android:id="@+id/textView4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:fontFamily="@font/roboto_mono"
-                    android:text="@string/rating_fragment_home" />
+                    android:text="@string/friends_fragment_home"
+                     />
 
                 <TextView
                     android:id="@+id/rating"
                     android:layout_width="0dp"
+                    android:gravity="center"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@{item.user_live.rating.toString()}" />
+                    android:text="@string/rating_fragment_home"
+                    android:fontFamily="@font/roboto_mono"
+                     />
             </LinearLayout>
 
         </LinearLayout>
@@ -152,6 +161,7 @@
                     android:id="@+id/textView53"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:text="@string/fragment_notifs_demande_de_suivi"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -160,11 +170,11 @@
                     android:id="@+id/view17"
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="50dp"
+                    android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="#E57373" />
+                    android:background="#3F51B5" />
 
                 <ImageView
                     android:id="@+id/makefriends"
@@ -183,6 +193,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/fragment_notifs_demande_events"
+                    android:layout_marginLeft="10dp"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -190,11 +201,11 @@
                     android:id="@+id/view18"
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="50dp"
+                    android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="#E57373" />
+                    android:background="#673AB7" />
 
                 <ImageView
                     android:id="@+id/searchEvents"
@@ -212,6 +223,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/fragment_notifs_invitations"
+                    android:layout_marginLeft="10dp"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -219,11 +231,11 @@
                     android:id="@+id/view20"
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="50dp"
+                    android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="#E57373" />
+                    android:background="#9C27B0" />
 
                 <ImageView
                     android:id="@+id/tempInvitations"

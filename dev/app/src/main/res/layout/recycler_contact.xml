@@ -38,7 +38,8 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
-                app:imageUri="@{item.img}" />
+
+                />
 
         </androidx.cardview.widget.CardView>
 

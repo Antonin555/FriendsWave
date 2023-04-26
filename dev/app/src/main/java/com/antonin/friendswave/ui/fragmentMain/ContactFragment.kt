@@ -31,15 +31,20 @@ import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
+import java.net.URL
 
 
 class ContactFragment : Fragment(), KodeinAware {
 
     override val kodein : Kodein by kodein()
+    var storage: FirebaseStorage = Firebase.storage
     private val factory : HomeFragmentVMFactory by instance()
     private lateinit var adapter1 : ListGeneriqueAdapter<User>
     private var viewModel: HomeFragmentViewModel  = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
@@ -98,22 +103,9 @@ class ContactFragment : Fragment(), KodeinAware {
                 }
             }
         })
+
     }
-
-    object GlideBindingAdapters {
-        @BindingAdapter("imageUri")
-        @JvmStatic
-        fun loadImage(imageView: ImageView, imageUri: String?) {
-            
-                Glide.with(imageView)
-                    .load(imageUri.toString())
-                    .apply(RequestOptions().override(100, 100))
-                    .centerCrop()
-                    .into(imageView)
-
-            }
-    }
-
 
 
 }
+
