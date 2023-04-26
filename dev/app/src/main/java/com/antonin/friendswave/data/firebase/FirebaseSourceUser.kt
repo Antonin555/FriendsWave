@@ -512,9 +512,6 @@ class FirebaseSourceUser {
     }
 
 
-
-
-
      // POUR AVOIR LE PROFILS DES USERS INSCRITS DANS LES EVENTS PUBLICS :
 
     fun fetchUserByMail(mail:String, onResult: (User?) -> Unit){
