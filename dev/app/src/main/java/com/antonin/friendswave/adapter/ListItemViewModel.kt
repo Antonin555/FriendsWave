@@ -8,5 +8,6 @@ abstract class ListItemViewModel{
     var img : String?= ""
     var imgEvent : String? = ""
     var imgCover : String? = ""
+    var lastMessage: HashMap<String, String>? = HashMap()
 
 }

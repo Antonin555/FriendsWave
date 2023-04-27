@@ -1,5 +1,6 @@
 package com.antonin.friendswave.ui.viewModel
 
+import android.content.DialogInterface
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -7,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.data.model.User
+import com.antonin.friendswave.outils.AlertDialog
 //import com.antonin.friendswave.strategy.SearchAgeFriend
 //import com.antonin.friendswave.strategy.SearchCityFriend
 import com.antonin.friendswave.strategy.SearchHobbyFriend
@@ -23,9 +25,9 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
 
     var email: String? = null
     var interfaceAuth : InterfaceAuth? = null
-//    val user by lazy {
-//        repository.currentUser()
-//    }
+    val user by lazy {
+        repository.currentUser()
+    }
 
 //    val searchHobbyFriend = SearchHobbyFriend()
 ////    val searchCityFriend = SearchCityFriend()
@@ -49,6 +51,22 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
     }
 
     fun addFriendRequestToUser(view: View){
+        val alertDialog: AlertDialog = AlertDialog(view.context)
+
+        val positiveButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
+            // Code à exécuter si le bouton positif est cliqué
+            if (which == DialogInterface.BUTTON_POSITIVE) {
+                alertDialog.cancel()
+            }
+        }
+
+        val negativeButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
+            // Code à exécuter si le bouton négatif est cliqué
+            if (which == DialogInterface.BUTTON_NEGATIVE) {
+                Toast.makeText(view.context,"ok on touche a rien", Toast.LENGTH_LONG).show()
+                alertDialog.cancel()
+            }
+        }
 
         if (email.isNullOrEmpty()) {
             //faire un interface pour indiquer les erreurs
@@ -56,7 +74,10 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
             return
         }
         if (!emailList.value!!.contains(email!!)){
-            interfaceAuth?.onFailure("This email match no account, we are sending an invitation via email")
+//            interfaceAuth?.onFailure("This email match no account, we are sending an invitation via email")
+
+            alertDialog.showDialog(view.context, "Attention", "This email match no account, do you want to make an invitation via email", "yes","no", positiveButtonClickListener, negativeButtonClickListener)
+
             //envoyer une demande directement par couriel
             sendEmail("caron.alex18@hotmail.fr")
             return
@@ -116,6 +137,8 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
             _user.value = user
         }
     }
+
+
 
 //    fun strategyByAge(): List<User>{
 //        searchFriendStrategy = StrategyFriend(searchHobbyFriend)

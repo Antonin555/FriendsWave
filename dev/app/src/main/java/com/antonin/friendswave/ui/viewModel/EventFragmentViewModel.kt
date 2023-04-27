@@ -15,6 +15,7 @@ import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.ui.chat.GroupChatActivity
 import com.antonin.friendswave.ui.event.*
 import com.antonin.friendswave.ui.home.ManageHomeActivity
+import com.antonin.friendswave.ui.home.SignalementActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -301,6 +302,14 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     fun deletePendingEvent(event: Event?){
 
         repoEvent.deletePendingEvent(event)
+    }
+
+    fun startGroupChat(view: View, eventKey: String, admin: String){
+        Intent(view.context, GroupChatActivity::class.java).also{
+            it.putExtra("eventKey", eventKey)
+            it.putExtra("admin", admin)
+            view.context.startActivity(it)
+        }
     }
 
 

@@ -10,9 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
+import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.adapter.MessageAdapter
 import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
+import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityGroupChatBinding
@@ -34,6 +36,8 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
     var eventKey: String = ""
     var admin: String = ""
     private  lateinit var messageAdapter : MessageAdapter
+    private lateinit var adapter1 : ListGeneriqueAdapter<User>
+
     private var bool : Boolean = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,10 +67,7 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
             binding.messageBoxGroup.setText(message)
         })
 
-
-
-
-        binding.teest.visibility = View.GONE
+//        binding.teest.visibility = View.GONE
 
         binding.linearExpand.setOnClickListener{
 
@@ -84,17 +85,26 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
 
     }
 
-
-
     override fun onResume() {
         super.onResume()
         viewModel.fetchSpecificEvents(admin, eventKey)
         viewModel.fetchUserData()
         viewModel.fetchDiscussionGroup()
 
-//        viewModel.mainEvent.observe(this, Observer {
-//            it
-//        })
+
+        viewModel.mainEvent.observe(this, Observer {
+            viewModel.fetchParticipant(it)
+        })
+
+        adapter1 = ListGeneriqueAdapter(R.layout.recycler_contact)
+        val layoutManager2 = LinearLayoutManager(this)
+        binding.chatRecyclerViewGroupParticipant.layoutManager = layoutManager2
+        binding.chatRecyclerViewGroupParticipant.adapter = adapter1
+
+        viewModel.participantList.observe(this, Observer {
+            adapter1.addItems(it)
+        })
+
     }
     //https://stackoverflow.com/questions/4946295/android-expand-collapse-animation
     fun expand(view: View,duration:Int, targetHeight:Int) {

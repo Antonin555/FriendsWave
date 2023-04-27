@@ -32,11 +32,11 @@ class AlertDialog(private var context: Context): DialogInterface {
 
 
     override fun cancel() {
-        TODO("Not yet implemented")
+        return
     }
 
     override fun dismiss() {
-        TODO("Not yet implemented")
+        return
     }
 
 

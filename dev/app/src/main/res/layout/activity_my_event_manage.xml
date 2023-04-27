@@ -250,6 +250,18 @@
 
         </LinearLayout>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/activity_manage_my_event_go_to_chat"
+            android:fontFamily="@font/roboto_mono"
+            android:backgroundTint="@color/teal_200"
+            android:textColor="@color/black"
+            android:onClick="@{(v) -> viewmodel.startGroupChat(v, viewmodel.eventDataPublic.key, viewmodel.eventDataPublic.admin)}">
+
+        </Button>
+
         <TextView
             android:id="@+id/textView39"
             android:layout_width="match_parent"

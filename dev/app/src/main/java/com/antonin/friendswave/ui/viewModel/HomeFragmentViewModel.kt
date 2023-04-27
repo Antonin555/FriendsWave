@@ -2,10 +2,12 @@ package com.antonin.friendswave.ui.viewModel
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.net.Uri
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -21,6 +23,11 @@ import com.antonin.friendswave.ui.contact.AddContactActivity
 import com.antonin.friendswave.ui.home.ManageHomeActivity
 import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.home.SignalementActivity
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
+import java.util.*
 
 
 class HomeFragmentViewModel(private val repository: UserRepo, private val repoEvent:EventRepo):ViewModel() {
@@ -82,15 +89,23 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
         repository.editProfil(user_live.value)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun editProfil(view: View){
-        repository.editProfil(user_live.value)
 
-        val toast = Toast.makeText(view.context, "Votre profil a bien été modifié!", Toast.LENGTH_SHORT)
-        toast.show()
+        if(!verificatioAge(user_live.value!!.date!!)){
+            val toast = Toast.makeText(view.context, "Votre date de naissance n'est pas valide", Toast.LENGTH_SHORT)
+            toast.show()
+        }
+        else{
+            repository.editProfil(user_live.value)
 
-        Intent(view.context, ManageHomeActivity::class.java).also {
-            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            view.context.startActivity(it)
+            val toast = Toast.makeText(view.context, "Votre profil a bien été modifié!", Toast.LENGTH_SHORT)
+            toast.show()
+
+            Intent(view.context, ManageHomeActivity::class.java).also {
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                view.context.startActivity(it)
+            }
         }
 
     }
@@ -231,8 +246,18 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
 //        }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun verificatioAge(date: String): Boolean {
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val dateNaissance = LocalDate.parse(date, formatter)
+        val age = ChronoUnit.YEARS.between(dateNaissance, LocalDate.now())
+        val estMajeur = age >= 18 && dateNaissance.isBefore(LocalDate.now())
+        return estMajeur
+    }
+
 
     fun fetchUserByMail(mail:String){
+
         repository.fetchUserByMail(mail)
     }
 
