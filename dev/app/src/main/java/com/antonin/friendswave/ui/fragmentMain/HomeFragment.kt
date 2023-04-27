@@ -13,14 +13,12 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil.inflate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
-import com.antonin.friendswave.data.firebase.FirebaseNotificationsService
 import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
 import com.antonin.friendswave.data.model.Event
@@ -28,7 +26,6 @@ import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentHomeBinding
-import com.antonin.friendswave.databinding.FragmentNotifsBinding
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.antonin.friendswave.ui.viewModel.NotifFragmentVMFactory
@@ -49,14 +46,14 @@ import org.kodein.di.KodeinAware
 
 import org.kodein.di.generic.instance
 import org.kodein.di.android.x.kodein
-import java.net.URL
+
 
 class HomeFragment : Fragment(), KodeinAware {
 
 
 
 
-    var storage: FirebaseStorage = Firebase.storage
+    private var storage: FirebaseStorage = Firebase.storage
 
     override val kodein : Kodein by kodein()
     private val factory : HomeFragmentVMFactory by instance()
@@ -66,7 +63,6 @@ class HomeFragment : Fragment(), KodeinAware {
     private var viewModel2: NotifFragmentViewModel = NotifFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
     repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var binding2 : FragmentNotifsBinding
 
     private lateinit var adapter1 : ListGeneriqueAdapter<User>
     private lateinit var adapter2 : ListGeneriqueAdapter<Event>
@@ -109,7 +105,7 @@ class HomeFragment : Fragment(), KodeinAware {
         binding.item = viewModel
 
 
-        binding2  = inflate(inflater, R.layout.fragment_notifs, container, false)
+//        binding2  = inflate(inflater, R.layout.fragment_notifs, container, false)
         viewModel2 = ViewModelProviders.of(this,factory2).get(NotifFragmentViewModel::class.java)
         binding.viewmodel = viewModel2
         binding.lifecycleOwner = this
@@ -169,11 +165,12 @@ class HomeFragment : Fragment(), KodeinAware {
         }
 
         viewModel.user_live.observe(this, Observer { it ->
-            var storageRef = storage.reference.child("photos/" + it.img.toString())
+            val storageRef = storage.reference.child("photos/" + it.img.toString())
 
             storageRef.downloadUrl.addOnSuccessListener {
                 Glide.with(binding.imgProfil.context)
                     .load(it)
+                    .placeholder(R.drawable.user)
                     .apply(RequestOptions().override(100, 100))
                     .centerCrop()
                     .into(binding.imgProfil)
@@ -214,12 +211,12 @@ class HomeFragment : Fragment(), KodeinAware {
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
                 if (view.id == R.id.btn_accept){
-                    var userNotif = viewModel2.friendNotifList.value?.get(position)
+                    val userNotif = viewModel2.friendNotifList.value?.get(position)
                     viewModel2.acceptRequest(userNotif)
                 }
 
                 else if (view.id == R.id.btn_delete){
-                    var userNotif = viewModel2.friendNotifList.value?.get(position)
+                    val userNotif = viewModel2.friendNotifList.value?.get(position)
                     viewModel2.refuseRequest(userNotif)
                 }
             }
@@ -248,7 +245,7 @@ class HomeFragment : Fragment(), KodeinAware {
             override fun onClick(view: View, position: Int) {
                 if (view.id == R.id.btn_accept){
                     val eventKey = viewModel2.requestListEvent.value?.get(position)!!
-                    viewModel2.acceptRequestEvent(eventKey!!)
+                    viewModel2.acceptRequestEvent(eventKey)
 
                 }
 

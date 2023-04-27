@@ -18,6 +18,7 @@ import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityGroupChatBinding
+import com.antonin.friendswave.outils.AnimationLayout
 import com.antonin.friendswave.ui.viewModel.ChatVMFactory
 import com.antonin.friendswave.ui.viewModel.ChatViewModel
 import org.kodein.di.Kodein
@@ -37,6 +38,7 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
     var admin: String = ""
     private  lateinit var messageAdapter : MessageAdapter
     private lateinit var adapter1 : ListGeneriqueAdapter<User>
+    private val animation = AnimationLayout()
 
     private var bool : Boolean = true
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,14 +73,12 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
 
         binding.linearExpand.setOnClickListener{
 
-
             if(bool == true){
                 bool = false
-                expand(binding.linearExpand,1000,500)
-
+                animation.expand(binding.linearExpand,1000,500)
             }
             else{
-                collapse(binding.linearExpand,1000,30)
+                animation.collapse(binding.linearExpand,1000,30)
                 bool = true
             }
         }
@@ -106,47 +106,6 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
         })
 
     }
-    //https://stackoverflow.com/questions/4946295/android-expand-collapse-animation
-    fun expand(view: View,duration:Int, targetHeight:Int) {
-
-
-
-        var prevHeight  = view.getHeight()
-
-        view.visibility = View.VISIBLE
-        val valueAnimator : ValueAnimator = ValueAnimator.ofInt(prevHeight, targetHeight)
-
-        valueAnimator.addUpdateListener(object : ValueAnimator.AnimatorUpdateListener {
-            override fun onAnimationUpdate(animation: ValueAnimator) {
-                view.layoutParams.height = animation.getAnimatedValue() as Int
-                view.requestLayout()
-            }
-        });
-        valueAnimator.interpolator = DecelerateInterpolator()
-        valueAnimator.duration = duration.toLong()
-        valueAnimator.start()
-
-    }
-
-    fun  collapse(view: View,duration:Int, targetHeight:Int) {
-        val prevHeight: Int = view.height
-        val valueAnimator = ValueAnimator.ofInt(prevHeight, targetHeight)
-        valueAnimator.interpolator = DecelerateInterpolator()
-        valueAnimator.addUpdateListener { animation ->
-            view.layoutParams.height = animation.animatedValue as Int
-            view.requestLayout()
-        }
-        valueAnimator.interpolator = DecelerateInterpolator()
-        valueAnimator.duration = duration.toLong()
-        valueAnimator.start()
-
-    }
-
-
-
-
-
-
 
 
     }

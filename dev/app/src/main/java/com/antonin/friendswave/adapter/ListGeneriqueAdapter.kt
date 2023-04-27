@@ -56,20 +56,26 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
             onListItemViewClickListener?.let { itemViewModel.onListItemViewClickListener = it }
             holder.bind(itemViewModel)
 
-            holder.itemView.findViewById<ImageView>(R.id.imageProfil)
-            holder.itemView.findViewById<ImageView>(R.id.imageEvent)
 
+            val image_event = holder.itemView.findViewById<ImageView>(R.id.imageEvent)
+            val image_profil = holder.itemView.findViewById<ImageView>(R.id.imageProfil)
 
-            val storageRef = storage.reference.child("photos/" + itemViewModel.img.toString())
-            storageRef.downloadUrl.addOnSuccessListener {
-                Glide.with(holder.itemView.findViewById<ImageView>(R.id.imageProfil).context)
-                    .load(it)
-                    .apply(RequestOptions().override(100, 100))
-                    .centerCrop()
-                    .into(holder.itemView.findViewById<ImageView>(R.id.imageProfil))
-            }.addOnFailureListener {
-                println(it)
+            if(image_profil != null){
+
+                val storageRef = storage.reference.child("photos/" + itemViewModel.img.toString())
+                storageRef.downloadUrl.addOnSuccessListener {
+                    Glide.with(image_profil.context)
+                        .load(it)
+                        .placeholder(R.drawable.profil)
+                        .apply(RequestOptions().override(100, 100))
+                        .centerCrop()
+                        .into(image_profil)
+                }.addOnFailureListener {
+                    println(it)
+                }
+
             }
+
 
         }
 
