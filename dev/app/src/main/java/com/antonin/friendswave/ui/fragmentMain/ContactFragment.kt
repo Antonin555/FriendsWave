@@ -69,13 +69,15 @@ class ContactFragment : Fragment(), KodeinAware {
         }
 
 
-        viewModel.fetchUsersFriends()
+//        viewModel.fetchUsersFriends()
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_contact)
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerFragmentContact.layoutManager = layoutManager
         binding.recyclerFragmentContact.adapter = adapter1
 
         viewModel.fetchUsersFriends()
+
+
 
         viewModel.emailUserList.observe(this, Observer { userList ->
             adapter1.addItems(userList)

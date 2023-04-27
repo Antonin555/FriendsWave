@@ -1,8 +1,8 @@
 package com.antonin.friendswave.data.firebase
 
-import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
+import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.model.User
 import com.google.firebase.auth.FirebaseAuth
@@ -417,8 +417,8 @@ class FirebaseSourceUser {
         })
     }
 
-    fun addMessagetoDatabase(messageEnvoye: String, receiverUid: String, userName: String){
-        val messageObject = Messages(messageEnvoye, mainUid, userName)
+    fun addMessagetoDatabase(messageEnvoye: String, receiverUid: String, user: User?){
+        val messageObject = Messages(messageEnvoye, mainUid, user?.name)
         val senderRoom = receiverUid + mainUid
         val receiverRoom = mainUid + receiverUid
 
@@ -471,6 +471,25 @@ class FirebaseSourceUser {
                 onResult(messageList)
             }
         }
+    }
+
+    fun fetchParticipant(event: Event?, onResult:(List<User>) -> Unit){
+
+        firebaseData.child("user").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userList = ArrayList<User>()
+                for (postSnapshot in snapshot.children){
+                    val user = postSnapshot.getValue(User::class.java)
+                    if(event!!.listInscrits.containsValue(user!!.email) || event!!.admin == user!!.uid){
+                        userList.add(user)
+                    }
+                }
+                onResult(userList)
+            }
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
     }
 
 

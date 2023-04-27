@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
+import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.model.User
 
@@ -159,6 +160,17 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
         return messageList
     }
 
+    fun fetchParticipant(event: Event?):LiveData<List<User>>{
+        val participant = MutableLiveData<List<User>>()
+
+        event?.listInscrits
+
+        firebaseUser.fetchParticipant(event) { participants ->
+            participant.postValue(participants)
+        }
+        return participant
+    }
+
     fun fetchfetchEmail():LiveData<List<String>>{
         val emailList = MutableLiveData<List<String>>()
 
@@ -168,8 +180,8 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
         return emailList
     }
 
-    fun addMessagetoDatabase(messageEnvoye: String, receiverUid: String, userName: String){
-        firebaseUser.addMessagetoDatabase(messageEnvoye, receiverUid, userName)
+    fun addMessagetoDatabase(messageEnvoye: String, receiverUid: String, user: User?){
+        firebaseUser.addMessagetoDatabase(messageEnvoye, receiverUid, user)
     }
 
     fun addMessageGrouptoDatabase(messageEnvoye: String, receiverUid: String, userName: String){

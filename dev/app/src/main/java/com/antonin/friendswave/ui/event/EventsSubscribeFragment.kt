@@ -80,15 +80,7 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
             override fun onClick(view: View, position: Int) {
 
                 val event = viewModel.eventListConfirm.value?.get(position)
-
-
-
-
-
-
-
                 if(view.id == R.id.btn_delete){
-
                     viewModel.deleteConfirmation(event)
                 }
 

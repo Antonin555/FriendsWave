@@ -6,6 +6,7 @@
     <string name="titre_fragment_home">HOME</string>
     <string name="titre_fragment_event">EVENTS</string>
     <string name="titre_signalement_activity">SIGNALEMENT</string>
+    <string name="titre_rating_activity">EVALUATION</string>
     <string name="description_signalement_activity">DESCRIPTION</string>
     <string name="warning_signalement_activity">ATTENTION VOUS ETES SUR LE POINT DE SIGNALER UN UTILISATEUR</string>
     <string name="suggests_fragment_home">SUGGESTIONS </string>
@@ -62,13 +63,19 @@
     <string name="activity_event_confirm">events confirmés</string>
     <string name="activity_event_pending">events en attente</string>
 
+
+
     <string name="activity_manage_my_event_search">ajoutez des participants :</string>
+    <string name="activity_manage_my_event_go_to_chat">Chat Group</string>
     <string name="activity_manage_my_event_pending_participants">en attente :</string>
     <string name="activity_manage_my_event_manage">gestion :</string>
 
     <string name="fragment_notifs_demande_de_suivi">demande d""ami(e)s</string>
     <string name="fragment_notifs_demande_events">demande event</string>
     <string name="fragment_notifs_invitations">invitation</string>
+
+    <string name="rating_participants">Liste des participants</string>
+    <string name="rating_valider">valider</string>
 
     <string name="recycler_delete">supprimer</string>
     <string name="add_contact">Faites une nouvelle demande d""ami(e)"</string>

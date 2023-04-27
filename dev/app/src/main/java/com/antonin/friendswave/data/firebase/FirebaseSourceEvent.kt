@@ -283,6 +283,7 @@ class FirebaseSourceEvent {
             }
         }
 
+
     }
 
     fun fetchConfirmationEvents( onResult: (List<Event>) -> Unit) {
