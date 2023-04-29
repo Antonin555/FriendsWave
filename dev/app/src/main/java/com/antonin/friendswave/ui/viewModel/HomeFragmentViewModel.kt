@@ -265,6 +265,9 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
         user_live.value?.img = repository.registerPhoto(photo, context)
 
     }
+    fun registerPhotoCover(photo: Uri, context: Context){
+        user_live.value?.imgCover = repository.registerPhotoCover(photo, context)
 
+    }
 
 }

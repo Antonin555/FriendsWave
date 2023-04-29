@@ -88,6 +88,10 @@
     <string name="delete_friend">supprimer de votre liste d""amis ?</string>
     <string name="signal_profil">signaler ?</string>
 
+    <string name="by_hoobby">hobby</string>
+    <string name="by_city">ville</string>
+    <string name="by_age">age</string>
+
     <string name="api_key_google_map">AIzaSyDDvmYhowxWZi-TRhLBK1bduYexZAHhaQ8</string>
     <string name="id_maps_pereso">cee059bafdb02fa3</string>
 

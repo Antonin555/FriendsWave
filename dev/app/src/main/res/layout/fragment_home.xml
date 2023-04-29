@@ -23,7 +23,7 @@
 
 
         <ImageView
-            android:id="@+id/imageView9"
+            android:id="@+id/image_cover"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:scaleType="centerCrop"
@@ -43,10 +43,10 @@
             android:layout_gravity="center"
             android:layout_marginTop="100dp"
             app:cardCornerRadius="100dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView9"
-            app:layout_constraintEnd_toEndOf="@+id/imageView9"
+            app:layout_constraintBottom_toBottomOf="@+id/image_cover"
+            app:layout_constraintEnd_toEndOf="@+id/image_cover"
             app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="@+id/imageView9"
+            app:layout_constraintStart_toStartOf="@+id/image_cover"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             tools:ignore="RtlHardcoded">
@@ -70,7 +70,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView9">
+            app:layout_constraintTop_toBottomOf="@+id/image_cover">
 
             <TextView
                 android:id="@+id/nameUser"

@@ -50,7 +50,7 @@
                 android:importantForAutofill="no"
                 android:textSize="12sp"
                 android:inputType="textEmailAddress"
-                android:paddingLeft="13dp"
+                android:paddingStart="13dp"
                 android:text="@={viewmodel.email}" />
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -90,7 +90,7 @@
                     android:fontFamily="@font/roboto_mono"
                     android:textColor="@color/white"
                     android:stateListAnimator="@null"
-                    android:text="by Hobby" />
+                    android:text="@string/by_hoobby" />
 
                 <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:id="@+id/btn_city"
@@ -104,8 +104,7 @@
                     android:textSize="12sp"
                     android:fontFamily="@font/roboto_mono"
                     android:layout_weight="1"
-
-                    android:text="by city" />
+                    android:text="@string/by_city" />
 
                 <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:id="@+id/btn_age"
@@ -119,7 +118,7 @@
                     android:layout_weight="1"
                     android:textSize="12sp"
                     android:fontFamily="@font/roboto_mono"
-                    android:text="by age" />
+                    android:text="@string/by_age" />
 
 
             </LinearLayout>

@@ -50,6 +50,7 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
     private val animation = AnimationLayout()
 
     private var bool : Boolean = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_group_chat)

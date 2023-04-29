@@ -55,7 +55,7 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
     )
     private lateinit var binding: ActivityEditProfilBinding
     private lateinit var adapter: MyGridViewAdapter
-    private lateinit var img_uri : Uri
+
     private val AUTOCOMPLETE_REQUEST_CODE = 1
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -91,7 +91,16 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
 
         binding.pictureProfil.setOnClickListener {
             val img = Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+
             getResult.launch(img)
+
+        }
+
+        binding.pictureCover.setOnClickListener{
+
+            val img = Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+
+            getResultCover.launch(img)
 
         }
 
@@ -109,9 +118,22 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
 
             if (it.resultCode == Activity.RESULT_OK) {
 
-                img_uri = it?.data?.data!! as Uri
+                val img_uri = it?.data?.data!!
                 binding.imgProfil.setImageURI(img_uri)
                 viewModel.registerPhoto(img_uri, this)
+
+            }
+        }
+
+
+    private val getResultCover =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+
+            if (it.resultCode == Activity.RESULT_OK) {
+
+                val img_uri = it?.data?.data!!
+                binding.imageCover.setImageURI(img_uri)
+                viewModel.registerPhotoCover(img_uri, this)
 
             }
         }

@@ -165,7 +165,9 @@ class HomeFragment : Fragment(), KodeinAware {
         }
 
         viewModel.user_live.observe(this, Observer { it ->
+
             val storageRef = storage.reference.child("photos/" + it.img.toString())
+            val storageRefCover = storage.reference.child("photosCover/" + it.imgCover.toString())
 
             storageRef.downloadUrl.addOnSuccessListener {
                 Glide.with(binding.imgProfil.context)
@@ -174,6 +176,15 @@ class HomeFragment : Fragment(), KodeinAware {
                     .apply(RequestOptions().override(100, 100))
                     .centerCrop()
                     .into(binding.imgProfil)
+            }.addOnFailureListener {
+                println(it)
+            }
+
+            storageRefCover.downloadUrl.addOnSuccessListener {
+                Glide.with(binding.imageCover.context)
+                    .load(it)
+                    .centerCrop()
+                    .into(binding.imageCover)
             }.addOnFailureListener {
                 println(it)
             }

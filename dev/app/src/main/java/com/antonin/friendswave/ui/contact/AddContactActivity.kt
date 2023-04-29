@@ -1,8 +1,10 @@
 package com.antonin.friendswave.ui.contact
 
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -10,11 +12,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
-import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.databinding.ActivityAddContactBinding
 import com.antonin.friendswave.strategy.*
 import com.antonin.friendswave.ui.authentification.InterfaceAuth
+import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.*
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -36,11 +38,11 @@ class AddContactActivity : AppCompatActivity(), KodeinAware, InterfaceAuth {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_contact)
         viewModel = ViewModelProviders.of(this, factory).get(ContactViewModel::class.java)
-        val view = binding.root
+
         binding.viewmodel = viewModel
         viewModel.interfaceAuth = this
         binding.lifecycleOwner = this
-
+        binding.root
     }
 
     override fun onResume() {
@@ -74,28 +76,33 @@ class AddContactActivity : AppCompatActivity(), KodeinAware, InterfaceAuth {
             searchStrategyFriend = StrategyFriend(searchAgeFriend)
             strategyUser(searchStrategyFriend)
         }
+    // A REVOIR ne prend pas en compte la stratégie
 
-    }
-
-//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-////        return inflater.inflate(R.layout.fragment_contact, container, false)
+//        adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {
+//            override fun onClick(view: View, position: Int) {
 //
-//        // Inflate the layout for this fragment
-//        binding  = DataBindingUtil.inflate(inflater, R.layout.activity_add_contact, container, false)
-//        viewModel = ViewModelProviders.of(this,factory).get(ContactViewModel::class.java)
-//        binding.viewmodel = viewModel
-//        return binding.root
-//    }
+//                val userChoisi = viewModel.totalUserList.value!!.get(position)
+//
+//                if(view.id == R.id.imageProfil){
+//                    val intent = Intent(view.context, ProfilActivity::class.java)
+//                    intent.putExtra("uid", userChoisi.uid)
+//                    startActivity(intent)
+//                }
+//            }
+//        })
+    }
 
     fun strategyUser(strategy: StrategyFriend) {
 
-        var tempList : ArrayList<User> =  ArrayList()
+
         viewModel.totalUserList.observe(this, Observer { userList ->
-            tempList = strategy.search(viewModel.user_live.value, userList) as ArrayList<User>
+            val tempList = strategy.search(viewModel.user_live.value, userList) as ArrayList<User>
             adapter1.addItems(tempList)
         })
 
     }
+
+
 
     override fun onSuccess() {
         TODO("Not yet implemented")

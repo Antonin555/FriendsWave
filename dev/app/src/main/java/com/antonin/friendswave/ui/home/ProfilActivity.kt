@@ -67,12 +67,12 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
 
 
         viewModel.ami_live.observe(this, Observer { message ->
-            if(viewModel.ami_live?.value == true){
+            if(viewModel.ami_live.value == true){
 
                 val addIcon = resources.getDrawable(android.R.drawable.ic_delete)
                 binding.floatingActionButton.setImageDrawable(addIcon)
             }
-            if(viewModel.ami_live?.value == false){
+            if(viewModel.ami_live.value == false){
 
                 val addIcon = resources.getDrawable(android.R.drawable.ic_input_add)
                 binding.floatingActionButton.setImageDrawable(addIcon)
@@ -81,7 +81,9 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
 
 
         viewModel.user_liveProfil.observe(this, Observer { it ->
-            var storageRef = storage.reference.child("photos/" + it.img.toString())
+            val storageRef = storage.reference.child("photos/" + it.img.toString())
+
+            val storageRefCover = storage.reference.child("photosCover/" + it.imgCover.toString())
 
             storageRef.downloadUrl.addOnSuccessListener {
                 Glide.with(binding.imgProfil.context)
@@ -89,6 +91,16 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
                     .apply(RequestOptions().override(100, 100))
                     .centerCrop()
                     .into(binding.imgProfil)
+            }.addOnFailureListener {
+                println(it)
+            }
+
+
+            storageRefCover.downloadUrl.addOnSuccessListener {
+                Glide.with(binding.imageCover.context)
+                    .load(it)
+                    .centerCrop()
+                    .into(binding.imageCover)
             }.addOnFailureListener {
                 println(it)
             }
