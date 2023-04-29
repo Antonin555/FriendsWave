@@ -9,14 +9,14 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 
-class FirebaseStorage {
+class FirebaseStore {
 
 
     var storage: FirebaseStorage = Firebase.storage
 
     fun displayProfil(imgView:ImageView, user: User, path: String){
 
-        val storageRef = storage.reference.child(path + user.img.toString())
+        val storageRef = storage.reference.child(path)
 
         storageRef.downloadUrl.addOnSuccessListener {
             Glide.with(imgView.context)

@@ -21,6 +21,7 @@ import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
+import com.antonin.friendswave.data.firebase.FirebaseStore
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.model.User
@@ -54,7 +55,7 @@ class HomeFragment : Fragment(), KodeinAware {
 
 
     private var storage: FirebaseStorage = Firebase.storage
-
+    private var storeMedia = FirebaseStore()
     override val kodein : Kodein by kodein()
     private val factory : HomeFragmentVMFactory by instance()
     private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
@@ -166,28 +167,11 @@ class HomeFragment : Fragment(), KodeinAware {
 
         viewModel.user_live.observe(this, Observer { it ->
 
-            val storageRef = storage.reference.child("photos/" + it.img.toString())
-            val storageRefCover = storage.reference.child("photosCover/" + it.imgCover.toString())
+            val path1 = "photos/" + it.img.toString()
+            val path2 = "photosCover/" + it.imgCover.toString()
 
-            storageRef.downloadUrl.addOnSuccessListener {
-                Glide.with(binding.imgProfil.context)
-                    .load(it)
-                    .placeholder(R.drawable.user)
-                    .apply(RequestOptions().override(100, 100))
-                    .centerCrop()
-                    .into(binding.imgProfil)
-            }.addOnFailureListener {
-                println(it)
-            }
-
-            storageRefCover.downloadUrl.addOnSuccessListener {
-                Glide.with(binding.imageCover.context)
-                    .load(it)
-                    .centerCrop()
-                    .into(binding.imageCover)
-            }.addOnFailureListener {
-                println(it)
-            }
+            storeMedia.displayProfil(binding.imgProfil, it,path1)
+            storeMedia.displayProfil(binding.imageCover, it,path2)
 
         })
 
