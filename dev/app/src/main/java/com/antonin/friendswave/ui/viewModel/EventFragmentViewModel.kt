@@ -18,6 +18,7 @@ import com.antonin.friendswave.ui.home.ManageHomeActivity
 import com.antonin.friendswave.ui.home.SignalementActivity
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class EventFragmentViewModel(private val repository:UserRepo,private val repoEvent:EventRepo):ViewModel() {
@@ -115,18 +116,27 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
 
     fun addEventUser(view: View) {
-        if(isPublic == true) {
-            repoEvent.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!, adress!!,description!!,
-            longitude!!,lattitude!!)
-        }else {
-            repoEvent.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid, categorie!!,date!!, horaire!!, adress!!, description!!, longitude!!,lattitude!!)
-        }
-        Toast.makeText(view.context,"Evenement en cours de publication", Toast.LENGTH_LONG).show()
 
-        Intent(view.context, ManageHomeActivity::class.java).also {
-            view.context.startActivity(it)
+            if(name!!.isNotEmpty() && nbrePersonnes!! != null  && user!!.uid.isNotEmpty() && categorie!!.isNotEmpty() && date!!.isNotEmpty() && horaire!!.isNotEmpty() && adress!!.isNotEmpty() &&
+                    description!!.isNotEmpty() && longitude!!.isNotEmpty() && lattitude!!.isNotEmpty()){
+
+                if(isPublic == true) {
+
+                    repoEvent.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!, adress!!,description!!,
+                        longitude!!,lattitude!!)
+
+                } else {
+
+                    repoEvent.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid, categorie!!,date!!, horaire!!, adress!!, description!!, longitude!!,lattitude!!)
+                }
+
+                Toast.makeText(view.context,"Evenement en cours de publication", Toast.LENGTH_LONG).show()
+                Intent(view.context, ManageHomeActivity::class.java).also { view.context.startActivity(it)}
+
+            } else Toast.makeText(view.context,"Veuillez remplir tous les champs", Toast.LENGTH_LONG).show()
+
         }
-    }
+
 
     val isChecked: MutableLiveData<Boolean> = MutableLiveData()
     fun executeOnStatusChanged(switch: CompoundButton, isChecked: Boolean) {
@@ -278,17 +288,13 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     }
 
 
-    // Est ce mieux de faire la verif si Public ou PRive ici ou daans Firebase Source ???
     fun editEvent(){
-
-
 
         val patternDate = Regex("\\d{2}/\\d{2}/\\d{4}")
         if(_eventDataPublic.value!!.date!!.matches(patternDate)){
 
             repoEvent.editEvent(_eventDataPublic.value)
         }
-
     }
 
     fun  deleteEvent() {

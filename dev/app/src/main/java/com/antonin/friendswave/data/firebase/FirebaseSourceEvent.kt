@@ -347,7 +347,7 @@ class FirebaseSourceEvent {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
 
 
@@ -460,7 +460,7 @@ class FirebaseSourceEvent {
                 onResult(userList)
             }
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
         })
     }
@@ -482,7 +482,7 @@ class FirebaseSourceEvent {
                 onResult(eventList)
             }
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
         })
     }
@@ -505,7 +505,7 @@ class FirebaseSourceEvent {
                 }
             }
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
         })
 

@@ -3,6 +3,7 @@ package com.antonin.friendswave.outils
 import android.content.Context
 import android.content.Intent
 import com.antonin.friendswave.ui.authentification.LoginActivity
+import com.antonin.friendswave.ui.fragmentMain.HomeFragment
 import com.antonin.friendswave.ui.home.ManageHomeActivity
 
 fun Context.startHomeActivity() =

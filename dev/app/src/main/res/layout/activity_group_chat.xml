@@ -7,7 +7,10 @@
 
     <data>
         <variable name="viewmodel"
-            type="com.antonin.friendswave.ui.viewModel.ChatViewModel"/>
+        type="com.antonin.friendswave.ui.viewModel.ChatViewModel"/>
+
+        <variable name="item"
+            type="com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel"/>
     </data>
 
     <RelativeLayout

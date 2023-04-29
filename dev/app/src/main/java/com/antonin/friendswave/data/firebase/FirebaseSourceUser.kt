@@ -361,13 +361,13 @@ class FirebaseSourceUser {
                             onResult(userList)
                         }
                         override fun onCancelled(error: DatabaseError) {
-                            TODO("Not yet implemented")
+
                         }
                     })
                 }
             }
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
         })
 

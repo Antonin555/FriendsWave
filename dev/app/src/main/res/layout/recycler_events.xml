@@ -15,7 +15,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:background="#EDE8E8"
         android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
         android:orientation="vertical">
         <!--        android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'-->
@@ -24,7 +23,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -42,6 +40,7 @@
                         android:layout_height="45dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         app:cardCornerRadius="60dp">
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -61,7 +60,7 @@
                 android:fontFamily="@font/roboto_mono"
                 android:gravity="center"
                 android:text="@{item.name}"
-                android:textSize="20sp" />
+                android:textSize="30sp" />
 
 
         </LinearLayout>

@@ -17,10 +17,13 @@ import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityMyEventManageBinding
+import com.antonin.friendswave.generated.callback.OnClickListener
 import com.antonin.friendswave.outils.AlertDialog
+import com.antonin.friendswave.outils.AnimationLayout
 import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
+import com.google.firebase.database.ValueEventListener
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -36,8 +39,9 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
     private var adapter1 : ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
     private var adapter2 : ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
-
-
+    private val animation = AnimationLayout()
+    private var bool_linear1 : Boolean = true
+    private var bool_linear2 : Boolean = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_event_manage)
@@ -104,6 +108,35 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
             adapter2.addItems(attente_guestList)
         })
 
+
+        binding.linearInscrit.setOnClickListener{
+
+            if(bool_linear1 == true ){
+                bool_linear1 = false
+
+                animation.expand(binding.linearInscrit,1000,800)
+            }
+            else{
+                animation.collapse(binding.linearInscrit,1000,80)
+                bool_linear1 = true
+
+            }
+        }
+
+
+        binding.linearAttenteExpand.setOnClickListener{
+
+            if(bool_linear2 == true){
+
+                bool_linear2 = false
+                animation.expand(binding.linearAttenteExpand,1000,800)
+            }
+            else{
+                animation.collapse(binding.linearAttenteExpand,1000,80)
+
+                bool_linear2 = true
+            }
+        }
 
         // pour avoir le detail des user En Cours NE FONCTIONNE PAS
 //        adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{

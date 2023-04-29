@@ -89,7 +89,7 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
             viewModel.year = date.year
         })
 
-        binding.btnLoad.setOnClickListener {
+        binding.pictureProfil.setOnClickListener {
             val img = Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             getResult.launch(img)
 
@@ -110,7 +110,7 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
             if (it.resultCode == Activity.RESULT_OK) {
 
                 img_uri = it?.data?.data!! as Uri
-                binding.imgPreview.setImageURI(img_uri)
+                binding.imgProfil.setImageURI(img_uri)
                 viewModel.registerPhoto(img_uri, this)
 
             }

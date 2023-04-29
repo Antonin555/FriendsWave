@@ -1,6 +1,7 @@
 package com.antonin.friendswave.ui.chat
 
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.animation.DecelerateInterpolator
@@ -19,8 +20,11 @@ import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityGroupChatBinding
 import com.antonin.friendswave.outils.AnimationLayout
+import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.ChatVMFactory
 import com.antonin.friendswave.ui.viewModel.ChatViewModel
+import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
+import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -30,7 +34,12 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
 
     override val kodein : Kodein by kodein()
     private val factory : ChatVMFactory by instance()
-    private var viewModel : ChatViewModel = ChatViewModel(repository = UserRepo(firebaseUser= FirebaseSourceUser()),
+    private val factory2 : HomeFragmentVMFactory by instance()
+    private var viewModel = ChatViewModel(repository = UserRepo(firebaseUser= FirebaseSourceUser()),
+        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
+    )
+
+    private var viewModel2  = HomeFragmentViewModel(repository = UserRepo(firebaseUser= FirebaseSourceUser()),
         repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
     )
     private lateinit var binding : ActivityGroupChatBinding
@@ -50,8 +59,10 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
         admin = intent.getStringExtra("admin").toString()
 
         viewModel = ViewModelProviders.of(this,factory).get(ChatViewModel::class.java)
+        viewModel2 = ViewModelProviders.of(this,factory2).get(HomeFragmentViewModel::class.java)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_group_chat)
         binding.viewmodel = viewModel
+        binding.item = viewModel2
         binding.lifecycleOwner = this
         viewModel.receiverUidGroup = admin + eventKey
 
@@ -103,6 +114,20 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
 
         viewModel.participantList.observe(this, Observer {
             adapter1.addItems(it)
+        })
+
+
+        adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {
+            override fun onClick(view: View, position: Int) {
+
+                val userChoisi = viewModel.participantList.value!!.get(position)
+
+                if(view.id == R.id.imageProfil){
+                    val intent = Intent(view.context, ProfilActivity::class.java)
+                    intent.putExtra("uid", userChoisi.uid)
+                    startActivity(intent)
+                }
+            }
         })
 
     }

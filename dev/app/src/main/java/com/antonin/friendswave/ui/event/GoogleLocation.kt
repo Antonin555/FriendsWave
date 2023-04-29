@@ -40,13 +40,16 @@ class GoogleLocation  {
             ActivityCompat.requestPermissions(requireActivity, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
             return
         }
+
         val task = fusedLocationProviderClient.lastLocation
+
         task.addOnSuccessListener { location ->
             if(location != null ) {
                 mLastLocation = location
                 mapView.getMapAsync { googleMap ->
 
                     val latLng = LatLng(location.latitude, location.longitude)
+
                     val markerOptions = MarkerOptions()
                         .position(latLng)
                         .title("My Marker")
@@ -59,7 +62,10 @@ class GoogleLocation  {
 
                 }
             }
+
         }
+
+
 
     }
 

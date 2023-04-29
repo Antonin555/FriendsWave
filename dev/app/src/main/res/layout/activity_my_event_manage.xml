@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
@@ -10,361 +11,440 @@
         <variable name="viewmodelContact"
             type="com.antonin.friendswave.ui.viewModel.ContactViewModel" />
         <variable name="clef"
-        type="String"/>
+            type="String"/>
 
     </data>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="24sp"
-            android:fontFamily="@font/roboto_mono"
-            android:gravity="center"
-            android:text="@string/add_event_title"
-            android:textSize="28sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:fontFamily="@font/roboto_mono"
-            android:gravity="center"
-            android:text="@string/detail_event_infos"
-            android:textSize="26sp"/>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5">
 
             <TextView
-                android:id="@+id/textView260"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:fontFamily="@font/roboto_mono"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/detail_event_infos"
                 android:gravity="center"
-                android:text="@string/add_event_name"
-                android:textStyle="bold" />
+                android:textSize="30sp"/>
 
-            <EditText
-                android:id="@+id/textView300"
-                android:layout_width="0dp"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_mono"
-                android:inputType="text"
-                android:text="@={viewmodel.eventDataPublic.name}" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/stylo6"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:layout_weight="0.3"
-                android:src="@drawable/stylo" />
+                <TextView
+                    android:id="@+id/textView260"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:fontFamily="@font/roboto_mono"
+                    android:gravity="center"
+                    android:text="@string/add_event_name"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/textView300"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_mono"
+                    android:gravity="center"
+                    android:inputType="text"
+                    android:text="@={viewmodel.eventDataPublic.name}"
+                    android:importantForAutofill="no" />
+
+                <ImageView
+                    android:id="@+id/stylo6"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.3"
+                    android:src="@drawable/stylo" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView26"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:fontFamily="@font/roboto_mono"
+                    android:gravity="center"
+                    android:text="@string/add_event_lieu"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/textView30"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_mono"
+                    android:text="@={viewmodel.eventDataPublic.adress}"
+                    android:importantForAutofill="no" />
+
+                <ImageView
+                    android:id="@+id/stylo1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.3"
+                    android:src="@drawable/stylo" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView33"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:fontFamily="@font/roboto_mono"
+                    android:gravity="center"
+                    android:text="@string/add_event_date"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/textView34"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:inputType="date"
+                    android:fontFamily="@font/roboto_mono"
+                    android:tooltipText="format dd/mm/yyyy"
+                    android:text="@={viewmodel.eventDataPublic.date}" />
+
+
+
+                <ImageView
+                    android:id="@+id/stylo2"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.3"
+                    android:src="@drawable/stylo" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView35"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:fontFamily="@font/roboto_mono"
+                    android:gravity="center"
+                    android:text="@string/add_event_heure"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/textView36"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:fontFamily="@font/roboto_mono"
+                    android:inputType="datetime"
+                    android:tooltipText="format 00:00"
+                    android:text="@={viewmodel.eventDataPublic.heure}" />
+
+                <ImageView
+                    android:id="@+id/stylo3"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.3"
+                    android:src="@drawable/stylo" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView37"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:fontFamily="@font/roboto_mono"
+                    android:gravity="center"
+                    android:text="@string/detail_event_duration"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/textView38"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_mono"
+                    android:inputType="number"
+                    android:text="@={``+viewmodel.eventDataPublic.duree}" />
+
+                <ImageView
+                    android:id="@+id/stylo4"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.3"
+                    android:src="@drawable/stylo" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_mono"
+                    android:gravity="center"
+                    android:text="@string/detail_event_nbre_inscrit"
+                    android:textStyle="bold" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_weight="0.6"
+                    android:fontFamily="@font/roboto_mono"
+                    android:text="@{viewmodel.eventDataPublic.nbrePersonnes.toString()}" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linearAttenteExpand"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+                    <TextView
+
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_mono"
+                        android:gravity="center"
+                        android:text="@string/activity_manage_my_event_pending_participants"
+                        android:textStyle="bold" />
+
+                    <ImageView
+
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_weight="0.6"
+                        app:srcCompat="@android:drawable/ic_menu_more" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_pending_participants"
+                        android:layout_alignParentTop="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearInscrit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView24"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_mono"
+                        android:gravity="center"
+                        android:text="@string/detail_event_inscrit"
+                        android:textStyle="bold" />
+
+                    <ImageView
+
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_weight="0.6"
+                        app:srcCompat="@android:drawable/ic_menu_more" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_my_event_inscrits"
+                        android:layout_alignParentTop="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView26"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:fontFamily="@font/roboto_mono"
-                android:gravity="center"
-                android:text="@string/add_event_lieu"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/textView30"
-                android:layout_width="0dp"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_mono"
-                android:text="@={viewmodel.eventDataPublic.adress}" />
-
-            <ImageView
-                android:id="@+id/stylo1"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:layout_weight="0.3"
-                android:src="@drawable/stylo" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView33"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:fontFamily="@font/roboto_mono"
-                android:gravity="center"
-                android:text="@string/add_event_date"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/textView34"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:inputType="date"
-                android:fontFamily="@font/roboto_mono"
-                android:tooltipText="format dd/mm/yyyy"
-                android:text="@={viewmodel.eventDataPublic.date}" />
-
-
-
-            <ImageView
-                android:id="@+id/stylo2"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:layout_weight="0.3"
-                android:src="@drawable/stylo" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView35"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:fontFamily="@font/roboto_mono"
-                android:gravity="center"
-                android:text="@string/add_event_heure"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/textView36"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:fontFamily="@font/roboto_mono"
-                android:inputType="datetime"
-                android:tooltipText="format 00:00"
-                android:text="@={viewmodel.eventDataPublic.heure}" />
-
-            <ImageView
-                android:id="@+id/stylo3"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:layout_weight="0.3"
-                android:src="@drawable/stylo" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView37"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:fontFamily="@font/roboto_mono"
-                android:gravity="center"
-                android:text="@string/detail_event_duration"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/textView38"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_mono"
-                android:inputType="number"
-                android:text="@={``+viewmodel.eventDataPublic.duree}" />
-
-            <ImageView
-                android:id="@+id/stylo4"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:layout_weight="0.3"
-                android:src="@drawable/stylo" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView24"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:fontFamily="@font/roboto_mono"
-                android:gravity="center"
-                android:text="@string/detail_event_nbre_inscrit"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_weight="0.6"
-                android:fontFamily="@font/roboto_mono"
-                android:text="@{viewmodel.eventDataPublic.nbrePersonnes.toString()}" />
-
-        </LinearLayout>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/activity_manage_my_event_go_to_chat"
-            android:fontFamily="@font/roboto_mono"
-            android:backgroundTint="@color/teal_200"
-            android:textColor="@color/black"
-            android:onClick="@{(v) -> viewmodel.startGroupChat(v, viewmodel.eventDataPublic.key, viewmodel.eventDataPublic.admin)}">
-
-        </Button>
-
-        <TextView
-            android:id="@+id/textView39"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-             />
-
-        <TextView
-            android:id="@+id/textView40"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_mono"
-            android:gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:text="@string/activity_manage_my_event_search"
-            android:textSize="24sp" />
-
-        <EditText
-            android:id="@+id/editTextTextPersonName3"
-            android:layout_width="300dp"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:fontFamily="@font/roboto_mono"
-            android:inputType="textPersonName"
-            android:text="@={viewmodel.email}"
-            android:importantForAutofill="no"
-            tools:ignore="LabelFor" />
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/button7"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/teal_200"
             android:fontFamily="@font/roboto_mono"
-            android:gravity="center"
+            android:onClick="@{(v) -> viewmodel.startGroupChat(v, viewmodel.eventDataPublic.key, viewmodel.eventDataPublic.admin)}"
+            android:textColor="@color/black"
+            android:tooltipText="@string/chat_group"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.904"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.834" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chat_group"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.691"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.818" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/teal_200"
+            android:fontFamily="@font/roboto_mono"
+            android:textColor="@color/black"
             android:onClick="@{() -> viewmodel.sendAnInvitationPrivateEvent(clef)}"
-            android:text="@string/send" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.904"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.948" />
 
         <TextView
-            android:id="@+id/textView41"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_mono"
-            android:gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
-            android:text="@string/detail_event_inscrit"
-            android:textSize="24sp" />
+            android:text="@string/add_friend"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.627"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.926" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_my_event_inscrits"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_gravity="center" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_delete_my_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            app:backgroundTint="#E57373"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.926" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/roboto_mono"
-            android:gravity="center"
-            android:text="@string/activity_manage_my_event_pending_participants"
-            android:textSize="26sp"/>
+            android:text="@string/recycler_delete"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.97" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_save_my_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_pending_participants"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_gravity="center" />
+            android:onClick="@{() -> viewmodel.editEvent()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.904"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.7" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.904"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.75" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal">
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                android:id="@+id/btn_delete_my_event"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text="@string/recycler_delete"
-                app:backgroundTint="#E57373" />
-
-            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                android:id="@+id/btn_save_my_event"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="@string/save"
-                android:onClick="@{() -> viewmodel.editEvent()}"/>
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-    </ScrollView>
 </layout>
