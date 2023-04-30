@@ -27,7 +27,7 @@ class SearchByName : InterfaceSearch {
 
         for(data in event!!) {
 
-            if(data.name == str) {
+            if(data.name!!.contains(str)) {
                 tempListEvent.add(data)
             }
         }
@@ -42,6 +42,7 @@ class SearchByCities : InterfaceSearch {
 
         val foundEvents = mutableListOf<Event>()
         val earthRadius = 6371.0 // Rayon moyen de la Terre en kilomètres
+
         val radius = str.toInt()
 
         for (event in events!!) {

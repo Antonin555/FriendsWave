@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.text.isDigitsOnly
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -101,18 +103,25 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
 
         binding.btnRecherche.setOnClickListener{
             var searchStrategy = Strategy(searchCategory)
-            if(viewModel.categorie == "autour de toi (km)"){
+            var type = viewModel.strCategory!!.value.toString()
+
+            if(viewModel.categorie == "(km) Autour de toi"){
+                if(!type.isDigitsOnly()){
+                    Toast.makeText(context, "Vous devez inscrire un nombre", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
                 searchStrategy = Strategy(searchByCities)
             }
-            else if(viewModel.categorie == "Interets"){
+            //A CHANGER IL N'Y A PAS D'INTERET DANS LES EVENTS, METTRE DATE?
+            else if(viewModel.categorie == "Nom"){
                 searchStrategy = Strategy(searchByName)
             }
             else if(viewModel.categorie == "Categorie"){
                 searchStrategy = Strategy(searchCategory)
             }
 
-            var type = viewModel.strCategory!!
-            viewModel.strCategory = ""
+
+            viewModel.strCategory.value = ""
             strategyEvent(searchStrategy,type)
         }
 
@@ -135,6 +144,20 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
             val user = viewModel.user_live.value
             tempList = strategy.search(str, eventList, user!!) as ArrayList<Event>
             adapter1.addItems(tempList)
+
+
+            adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
+                override fun onClick(view: View, position: Int) {
+                    val idEvent = tempList.get(position).key
+                    val adminEvent = tempList.get(position).admin
+                    val intent = Intent(context, DetailEventActivity::class.java )
+                    intent.putExtra("position", position)
+                    intent.putExtra("idEvent", idEvent)
+                    intent.putExtra("adminEvent", adminEvent)
+                    startActivity(intent)
+                }
+            })
+
         })
 
     }

@@ -7,9 +7,10 @@
     <string name="titre_fragment_event">EVENTS</string>
     <string name="titre_signalement_activity">SIGNALEMENT</string>
     <string name="titre_rating_activity">EVALUATION</string>
-    <string name="description_signalement_activity">DESCRIPTION</string>
-    <string name="warning_signalement_activity">ATTENTION VOUS ETES SUR LE POINT DE SIGNALER UN UTILISATEUR</string>
+    <string name="description_profil">DESCRIPTION</string>
+    <string name="warning_signalement_activity">ATTENTION VOUS ETES SUR LE POINT DE SIGNALER UN UTILISATEUR!</string>
     <string name="suggests_fragment_home">SUGGESTIONS </string>
+    <string name="description_signalement_activity">Quelle est la raison du signalement?</string>
     <string name="rating_fragment_home">rating</string>
     <string name="friends_fragment_home">friends</string>
     <string name="add_event_public">public</string>
@@ -115,8 +116,8 @@
 
     <string-array name="list_categorie_strategy">
         <item>Categorie</item>
-        <item>autour de toi (km)</item>
-        <item>Interets</item>
+        <item>(km) Autour de toi</item>
+        <item>Nom</item>
     </string-array>
 
 

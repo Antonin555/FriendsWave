@@ -43,7 +43,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     var keyEvent: String? = ""
 
-    var strCategory: String? = ""
+    var strCategory = MutableLiveData<String>()
 
 //    val currentDate = formatter.parse(dateFormat.toString())
 

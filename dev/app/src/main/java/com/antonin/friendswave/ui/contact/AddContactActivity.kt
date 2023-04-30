@@ -76,20 +76,6 @@ class AddContactActivity : AppCompatActivity(), KodeinAware, InterfaceAuth {
             searchStrategyFriend = StrategyFriend(searchAgeFriend)
             strategyUser(searchStrategyFriend)
         }
-    // A REVOIR ne prend pas en compte la stratégie
-
-//        adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {
-//            override fun onClick(view: View, position: Int) {
-//
-//                val userChoisi = viewModel.totalUserList.value!!.get(position)
-//
-//                if(view.id == R.id.imageProfil){
-//                    val intent = Intent(view.context, ProfilActivity::class.java)
-//                    intent.putExtra("uid", userChoisi.uid)
-//                    startActivity(intent)
-//                }
-//            }
-//        })
     }
 
     fun strategyUser(strategy: StrategyFriend) {
@@ -97,11 +83,17 @@ class AddContactActivity : AppCompatActivity(), KodeinAware, InterfaceAuth {
         viewModel.totalUserList.observe(this, Observer { userList ->
             val tempList = strategy.search(viewModel.user_live.value, userList) as ArrayList<User>
             adapter1.addItems(tempList)
+
+            adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {
+                override fun onClick(view: View, position: Int) {
+                    val userChoisi = tempList.get(position)
+                    val intent = Intent(view.context, ProfilActivity::class.java)
+                    intent.putExtra("uid", userChoisi.uid)
+                    startActivity(intent)
+                }
+            })
         })
-
     }
-
-
 
     override fun onSuccess() {
         TODO("Not yet implemented")

@@ -260,7 +260,7 @@
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/roboto_mono"
                 android:gravity="center"
-                android:text="@string/description_signalement_activity"
+                android:text="@string/description_profil"
                 android:textSize="20sp" />
 
             <ScrollView

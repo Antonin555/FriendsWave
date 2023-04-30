@@ -30,18 +30,20 @@
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/titre_signalement_activity"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:layout_marginBottom="60dp"/>
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_weight="0"
-            android:fontFamily="@font/roboto_mono"
-            android:gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginBottom="30dp"
+            android:layout_weight="0"
             android:background="@drawable/custom_shape"
+            android:fontFamily="@font/roboto_mono"
+            android:gravity="center"
             android:text="@string/warning_signalement_activity"
             android:textSize="24sp" />
 
@@ -53,15 +55,13 @@
             android:layout_marginLeft="10dp"
             android:paddingTop="10dp"
             android:text="@string/description_signalement_activity"
-            android:textSize="24sp"
+            android:textSize="18sp"
             />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:fontFamily="@font/roboto_mono"
-            android:text="@string/description_signalement_activity"
-            android:textSize="24sp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/rectangle"/>
@@ -74,6 +74,7 @@
             android:inputType="textMultiLine"
             android:gravity="top"
             android:padding="10dp"
+            android:layout_margin="10dp"
             android:text="@={view.messSignalement}"
             >
         </EditText>
