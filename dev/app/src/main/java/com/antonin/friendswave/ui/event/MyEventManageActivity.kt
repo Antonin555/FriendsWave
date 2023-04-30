@@ -194,9 +194,6 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
                         address = addressList!![0]
 
-
-//                        viewModel.longitude = address.longitude.toString()
-//                        viewModel.lattitude = address.latitude.toString()
                     }
 
                     viewModel.longitude = address.longitude.toString()
