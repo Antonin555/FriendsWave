@@ -173,7 +173,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.5"
                         android:orientation="horizontal">
 
                         <TextView
@@ -201,7 +201,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_weight="1.5"
                         android:orientation="horizontal">
 
                         <TextView
@@ -288,8 +288,10 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
+                        android:layout_weight="2"
+                        android:orientation="horizontal"
+
+                        >
 
                         <ImageView
                             android:id="@+id/txtLieuEdit"
@@ -304,7 +306,9 @@
                             android:layout_height="match_parent"
                             android:layout_weight="5"
                             android:fontFamily="@font/roboto_mono"
-                            android:text="@={viewmodel.user_live.lieu}" />
+                            android:text="@={viewmodel.user_live.lieu}"
+                            android:paddingTop="15dp"
+                            />
 
                         <ImageView
                             android:id="@+id/searchCity"

@@ -1,48 +1,28 @@
 package com.antonin.friendswave.strategy
 
 import com.antonin.friendswave.data.model.Event
+import com.antonin.friendswave.data.model.User
 
 
 class SearchCategory: InterfaceSearch {
 
 
-    override fun sortedEvent(str: String, event: List<Event>?): List<Event> {
-        TODO("Not yet implemented")
-    }
+    override fun sortedEvent(str: String, event: List<Event>?, user: User): List<Event> {
+        val tempListEvent : ArrayList<Event> = ArrayList()
 
-    override fun sortedEventAroundMe(str: String, events: List<Event>?, userLatitude: String,
-        userLongitude: String, radius: Int): List<Event> {
-
-        val foundEvents = mutableListOf<Event>()
-        val earthRadius = 6371.0 // Rayon moyen de la Terre en kilomètres
-
-        for (event in events!!) {
-            val eventLatitude = event.lattitude as Double
-            val eventLongitude = event.longitude as Double
-
-            val dLat = Math.toRadians(eventLatitude - userLatitude as Double)
-            val dLon = Math.toRadians(eventLongitude - userLongitude as Double)
-
-            val a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                    Math.cos(Math.toRadians(userLatitude)) * Math.cos(Math.toRadians(eventLatitude)) *
-                    Math.sin(dLon / 2) * Math.sin(dLon / 2)
-            val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-
-            val distance = earthRadius * c
-
-            if (distance <= radius) {
-                foundEvents.add(event)
+        for(data in event!!) {
+            if(data.categorie == str) {
+                tempListEvent.add(data)
             }
         }
-
-        return foundEvents
+        return tempListEvent
     }
 
 }
 
 class SearchByName : InterfaceSearch {
 
-    override fun sortedEvent(str: String, event: List<Event>?): List<Event> {
+    override fun sortedEvent(str: String, event: List<Event>?, user: User): List<Event> {
         val tempListEvent : ArrayList<Event> = ArrayList()
 
         for(data in event!!) {
@@ -54,33 +34,39 @@ class SearchByName : InterfaceSearch {
         return tempListEvent
     }
 
-    override fun sortedEventAroundMe(str: String, event: List<Event>?, userLatitude: String,
-        userLongitude: String, radius: Int): List<Event> {
-        TODO("Not yet implemented")
-    }
-
 }
 
 class SearchByCities : InterfaceSearch {
 
-    override fun sortedEvent(str: String, event: List<Event>?): List<Event> {
+    override fun sortedEvent(str: String, events: List<Event>?, user: User): List<Event> {
 
-        val tempListEvent : ArrayList<Event> = ArrayList()
+        val foundEvents = mutableListOf<Event>()
+        val earthRadius = 6371.0 // Rayon moyen de la Terre en kilomètres
+        val radius = str.toInt()
 
-        for(data in event!!) {
+        for (event in events!!) {
+            val eventLatitude = event.lattitude!!.toDouble()
+            val eventLongitude = event.longitude!!.toDouble()
 
-            if(data.adress == str) {
-                tempListEvent.add(data)
+            val dLat = Math.toRadians(eventLatitude - user.lattitude as Double)
+            val dLon = Math.toRadians(eventLongitude - user.longitude as Double)
+
+            val a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(Math.toRadians(user.lattitude as Double)) * Math.cos(Math.toRadians(eventLatitude)) *
+                    Math.sin(dLon / 2) * Math.sin(dLon / 2)
+            val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+
+            val distance = earthRadius * c
+
+            if (distance <= radius) {
+                foundEvents.add(event)
             }
         }
-        return tempListEvent
+
+        return foundEvents
+
+
     }
 
-    override fun sortedEventAroundMe(str: String, event: List<Event>?, userLatitude: String,
-        userLongitude: String, radius: Int): List<Event> {
-        TODO("Not yet implemented")
-    }
 }
 
-
-//}

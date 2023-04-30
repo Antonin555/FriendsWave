@@ -92,8 +92,10 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
         return eventList
     }
 
-    fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid: String, category:String, date : String, horaire:String, adress:String,
-                           description:String, longitude:String, latitude:String) =
+    fun addEventUserPublic(
+        name: String, isPublic: Boolean, nbrePersonnes:Int, uid: String, category:String, date: String, horaire:String, adress:String,
+        description:String, longitude: String, latitude: String
+    ) =
         firebaseEvent.addEventUserPublic(name,isPublic,nbrePersonnes, uid, category, date, horaire, adress,description, longitude,latitude)
 
     fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid:String,category:String, date : String, horaire:String, adress:String,

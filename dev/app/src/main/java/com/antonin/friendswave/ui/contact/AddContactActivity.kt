@@ -94,7 +94,6 @@ class AddContactActivity : AppCompatActivity(), KodeinAware, InterfaceAuth {
 
     fun strategyUser(strategy: StrategyFriend) {
 
-
         viewModel.totalUserList.observe(this, Observer { userList ->
             val tempList = strategy.search(viewModel.user_live.value, userList) as ArrayList<User>
             adapter1.addItems(tempList)

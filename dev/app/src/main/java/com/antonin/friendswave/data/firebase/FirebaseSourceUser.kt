@@ -207,6 +207,7 @@ class FirebaseSourceUser {
     ////                            A REVOIR FAIT PLANTER L'APP A LA PREMIERE CONNEXION -------------> //////////////////////////////////////////
     fun fetchUsersFriend(onResult: (List<User>) -> Unit){
         val userList = ArrayList<User>()
+        val mainUid = firebaseAuth.currentUser?.uid
         firebaseData.child("user").child(mainUid!!)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -343,6 +344,8 @@ class FirebaseSourceUser {
 
 /// A REVOIR !!!!!!!!!
     fun fetchUsersRequest(onResult: (List<User>) -> Unit){
+        val mainUid = FirebaseAuth.getInstance().currentUser?.uid
+
         firebaseData.child("user").child(mainUid!!).addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {

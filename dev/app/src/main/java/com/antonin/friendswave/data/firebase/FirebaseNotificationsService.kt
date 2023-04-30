@@ -67,7 +67,7 @@ class FirebaseNotificationsService : FirebaseMessagingService() {
         sendRegistrationToServer(token)
 
     }
-    private fun sendRegistrationToServer(token: String) {
+    fun sendRegistrationToServer(token: String) {
 
         val reference = FirebaseDatabase.getInstance().reference
         reference.child("user").child(FirebaseAuth.getInstance().currentUser!!.uid)

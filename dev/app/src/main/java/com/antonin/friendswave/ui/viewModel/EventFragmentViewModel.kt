@@ -15,10 +15,8 @@ import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.ui.chat.GroupChatActivity
 import com.antonin.friendswave.ui.event.*
 import com.antonin.friendswave.ui.home.ManageHomeActivity
-import com.antonin.friendswave.ui.home.SignalementActivity
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class EventFragmentViewModel(private val repository:UserRepo,private val repoEvent:EventRepo):ViewModel() {
@@ -32,7 +30,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     var categorie: String? = ""
     var adress: String? = ""
     var lattitude: String? = ""
-    var longitude : String?  =""
+    var longitude : String?  = ""
     var date: String? = ""
     var horaire: String? = ""
     var day: Int? = 0
@@ -45,11 +43,16 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     var keyEvent: String? = ""
 
+    var strCategory: String? = ""
+
 //    val currentDate = formatter.parse(dateFormat.toString())
 
     val user by lazy {
         repository.currentUser()
     }
+
+    private val _user = MutableLiveData<User>()
+    var user_live: LiveData<User> = _user
 
     private val _guestList = MutableLiveData<List<User>>()
     val guestList: LiveData<List<User>> = _guestList
@@ -60,7 +63,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     private val _confirm_guestListPublic = MutableLiveData<List<User>>()
     val confirm_guestListPublic: LiveData<List<User>> = _confirm_guestListPublic
 
-    var  interfaceEvent: InterfaceEvent? = null
+    var interfaceEvent: InterfaceEvent? = null
 
     private val _eventDataPrivate = MutableLiveData<Event>()
     val eventDataPrivate: LiveData<Event> = _eventDataPrivate
@@ -68,14 +71,11 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     private val _eventPublicUser = MutableLiveData<Event>()
     val eventPublicUser: LiveData<Event> = _eventPublicUser
 
-
     private val _eventDataPublic = MutableLiveData<Event>()
     val eventDataPublic: LiveData<Event> = _eventDataPublic
 
-
     private val _eventPendingPublic = MutableLiveData<List<Event>>()
     val eventPendingPublic: LiveData<List<Event>> = _eventPendingPublic
-
 
     private val _eventList = MutableLiveData<List<Event>>()
     val eventList: LiveData<List<Event>> = _eventList
@@ -89,6 +89,11 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     private val _userListAttentePrivate = MutableLiveData<List<User>>()
     val userListAttentePrivate: LiveData<List<User>> = _userListAttentePrivate
 
+    fun fetchUserData() {
+        repository.getUserData().observeForever { user ->
+            _user.value = user
+        }
+    }
 
     fun fetchDataEvent(key: String) {
         repoEvent.getEventData(key).observeForever { event ->
@@ -118,7 +123,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     fun addEventUser(view: View) {
 
             if(name!!.isNotEmpty() && nbrePersonnes!! != null  && user!!.uid.isNotEmpty() && categorie!!.isNotEmpty() && date!!.isNotEmpty() && horaire!!.isNotEmpty() && adress!!.isNotEmpty() &&
-                    description!!.isNotEmpty() && longitude!!.isNotEmpty() && lattitude!!.isNotEmpty()){
+                    description!!.isNotEmpty()){
 
                 if(isPublic == true) {
 

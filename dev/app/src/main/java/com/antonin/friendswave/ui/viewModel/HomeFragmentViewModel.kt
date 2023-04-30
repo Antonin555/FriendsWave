@@ -1,5 +1,6 @@
 package com.antonin.friendswave.ui.viewModel
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -43,6 +44,7 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
     val searchByCities = SearchByCities()
     val searchByName = SearchByName()
     private lateinit var searchStrategy : Strategy
+
 
 
     private val _user = MutableLiveData<User>()
@@ -149,6 +151,9 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
 
     fun logout(view: View){
         repository.logout()
+        //Alex pour gerer le cycle de vie des activity
+        val activity = view.context as Activity
+        activity.finish()
         view.context.startLoginActivity() // va chercher les fonctions utiles pour les Intent
     }
 

@@ -6,6 +6,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.location.Address
+import android.location.Geocoder
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -41,6 +43,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import java.io.ByteArrayOutputStream
+import java.io.IOException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -53,6 +56,8 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
     private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
         repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
     )
+    var addressList: List<Address>? = null
+    lateinit var address : Address
     private lateinit var binding: ActivityEditProfilBinding
     private lateinit var adapter: MyGridViewAdapter
 
@@ -105,10 +110,10 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
         }
 
         binding.searchCity.setOnClickListener {
-            val fields = listOf(Place.Field.ID, Place.Field.NAME)
-
-            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).setTypeFilter(
-                TypeFilter.CITIES).build(this)
+            val fields = listOf(Place.Field.ID, Place.Field.ADDRESS)
+//            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).setTypeFilter(
+//                TypeFilter.CITIES).build(this)
+            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
             startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
         }
     }
@@ -177,8 +182,21 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
                 Activity.RESULT_OK -> {
                     data?.let {
                         val place = Autocomplete.getPlaceFromIntent(data)
-                        binding.editLieu.setText(place.name.toString())
+                        binding.editLieu.setText(place.address.toString().split(",")[0])
+                        //Ajout Alex pour avoir longitude latitude du user
+                        val geoCoder = Geocoder(this)
+                        try {
+                            addressList = geoCoder.getFromLocationName(place.address.toString(), 1)
+
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        }
+
+                        address = addressList!![0]
                     }
+
+                    viewModel.user_live.value?.longitude = address.longitude
+                    viewModel.user_live.value?.lattitude = address.latitude
                 }
                 AutocompleteActivity.RESULT_ERROR -> {
                     // TODO: Handle the error.

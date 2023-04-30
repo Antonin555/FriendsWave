@@ -19,6 +19,7 @@ import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
 import com.antonin.friendswave.data.model.Event
+import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentEventBinding
@@ -59,9 +60,6 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
         loc = GoogleLocation()
 
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
-        viewModel.fetchEventsPublic1()
-
-
         viewModel.interfaceEvent = this
     }
 
@@ -83,11 +81,13 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
         binding.mapView.onResume()
         super.onResume()
 
+        viewModel.fetchEventsPublic1()
+        viewModel.fetchUserData()
+
         viewModel.eventList.observe(this, Observer { eventList ->
             adapter1.addItems(eventList)
 //
         })
-
 
         var tempList : ArrayList<Event> = ArrayList()
         val searchCategory = SearchCategory()
@@ -95,19 +95,26 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
         val searchByName = SearchByName()
         var searchStrategy : Strategy
 
-
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerFragmentEvent.layoutManager = layoutManager
         binding.recyclerFragmentEvent.adapter = adapter1
 
+        binding.btnRecherche.setOnClickListener{
+            var searchStrategy = Strategy(searchCategory)
+            if(viewModel.categorie == "autour de toi (km)"){
+                searchStrategy = Strategy(searchByCities)
+            }
+            else if(viewModel.categorie == "Interets"){
+                searchStrategy = Strategy(searchByName)
+            }
+            else if(viewModel.categorie == "Categorie"){
+                searchStrategy = Strategy(searchCategory)
+            }
 
-//        binding.btnCat.setOnClickListener{
-//
-//            var type = "Mars"
-//            searchStrategy = Strategy(searchCategory)
-//            strategyEvent(searchStrategy,type)
-//
-//        }
+            var type = viewModel.strCategory!!
+            viewModel.strCategory = ""
+            strategyEvent(searchStrategy,type)
+        }
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
@@ -120,14 +127,13 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
                 startActivity(intent)
             }
         })
-
-
     }
 
     fun strategyEvent(strategy: Strategy, str:String) {
         var tempList : ArrayList<Event> =  ArrayList()
         viewModel.eventList.observe(this, Observer { eventList ->
-            tempList = strategy.search(str, eventList) as ArrayList<Event>
+            val user = viewModel.user_live.value
+            tempList = strategy.search(str, eventList, user!!) as ArrayList<Event>
             adapter1.addItems(tempList)
         })
 

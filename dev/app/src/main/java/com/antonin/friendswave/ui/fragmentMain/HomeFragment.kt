@@ -3,6 +3,7 @@ package com.antonin.friendswave.ui.fragmentMain
 import android.Manifest
 import android.content.ContentValues.TAG
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -30,10 +31,15 @@ import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.antonin.friendswave.ui.viewModel.NotifFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.NotifFragmentViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import org.kodein.di.Kodein
 
 
@@ -45,14 +51,22 @@ import org.kodein.di.android.x.kodein
 
 class HomeFragment : Fragment(), KodeinAware {
 
+
+
+
+    private var storage: FirebaseStorage = Firebase.storage
     private var storeMedia = FirebaseStore()
     override val kodein : Kodein by kodein()
     private val factory : HomeFragmentVMFactory by instance()
-    private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
-        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
+    private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(
+        repository = UserRepo(firebaseUser = FirebaseSourceUser()),
+        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
+    )
     private val factory2 : NotifFragmentVMFactory by instance()
-    private var viewModel2: NotifFragmentViewModel = NotifFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
-    repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
+    private var viewModel2: NotifFragmentViewModel = NotifFragmentViewModel(
+        repository = UserRepo(firebaseUser = FirebaseSourceUser()),
+        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
+    )
     private lateinit var binding: FragmentHomeBinding
 
     private lateinit var adapter1 : ListGeneriqueAdapter<User>
@@ -84,7 +98,7 @@ class HomeFragment : Fragment(), KodeinAware {
 
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
-
+        binding.lifecycleOwner = this
         binding.item = viewModel
 
 
@@ -115,6 +129,10 @@ class HomeFragment : Fragment(), KodeinAware {
 
     override fun onResume() {
         super.onResume()
+
+        viewModel2.fetchUsersRequest()
+        viewModel2.fetchEventsInvitation()
+        viewModel2.fetchDemandeInscriptionEventPublic()
         viewModel.fetchUserData()
 
         viewModel2.friendNotifList.observe(this, Observer { notifUserList ->
@@ -244,6 +262,8 @@ class HomeFragment : Fragment(), KodeinAware {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 print("ok")
                 // La permission a été accordée, vous pouvez maintenant accéder au fournisseur de documents de médias Android.
+            } else {
+                // La permission a été refusée, vous devez gérer le cas où l'utilisateur refuse la permission.
             }
         }
     }
@@ -256,6 +276,8 @@ class HomeFragment : Fragment(), KodeinAware {
             if (isGranted) {
                 print("ok")
                 // FCM SDK (and your app) can post notifications.
+            } else {
+                // TODO: Inform user that that your app will not show notifications.
             }
         }
 

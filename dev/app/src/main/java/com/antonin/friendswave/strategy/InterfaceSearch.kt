@@ -1,11 +1,10 @@
 package com.antonin.friendswave.strategy
 
 import com.antonin.friendswave.data.model.Event
+import com.antonin.friendswave.data.model.User
 
 interface InterfaceSearch {
 
-    fun sortedEvent(str : String, event: List<Event>?): List<Event>
-    fun sortedEventAroundMe(str : String, event: List<Event>?, userLatitude:String, userLongitude:String, radius : Int): List<Event>
-
+    fun sortedEvent(str : String, event: List<Event>?, user: User): List<Event>
 
 }

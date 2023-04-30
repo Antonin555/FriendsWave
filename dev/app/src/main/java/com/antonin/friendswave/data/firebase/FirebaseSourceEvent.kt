@@ -24,12 +24,7 @@ class FirebaseSourceEvent {
     val firebaseUserCurrent = firebaseData.child("user").child(mainUid!!)
 
     val firebaseEventConfirmCurrentUser = firebaseData.child("user").child(mainUid!!).child("eventConfirmationList")
-
     val firebaseEventPendingPublicCurrentUser = firebaseData.child("user").child(mainUid!!).child("pendingRequestEventPublic")
-
-
-
-
 
     fun editEvent(event: Event?){
 
@@ -623,6 +618,9 @@ class FirebaseSourceEvent {
                 }
                 onResult(eventsList)
             }
+            else {
+                task.exception?.printStackTrace()
+            }
         }
     }
 
@@ -684,15 +682,17 @@ class FirebaseSourceEvent {
 
 
 
-    fun addEventUserPublic(name: String, isPublic : Boolean, nbrePersonnes:Int, uid : String,
-                           category:String, date : String, horaire:String, adress:String,
-                           description:String, longitude:String,latitude:String )
+    fun addEventUserPublic(
+        name: String, isPublic: Boolean, nbrePersonnes:Int, uid: String,
+        category:String, date: String, horaire:String, adress:String,
+        description:String, longitude: String, latitude: String
+    )
 
     {
         val database = Firebase.database
         val myRef = database.getReference("event/eventPublic/").push()
         myRef.setValue(Event(myRef.key,name,isPublic,nbrePersonnes, uid, category, date, horaire,
-            adress, description, longitude, latitude))
+            adress, description, latitude, longitude))
 
     }
 
@@ -703,7 +703,7 @@ class FirebaseSourceEvent {
         val database = Firebase.database
         val myRef = database.getReference ("event/eventPrivate/" + mainUid!!).push()
         myRef.setValue(Event(myRef.key, name,isPublic,nbrePersonnes, uid, category, date, horaire,
-            adress,description, longitude, latitude))
+            adress,description, latitude, longitude))
 
     }
 

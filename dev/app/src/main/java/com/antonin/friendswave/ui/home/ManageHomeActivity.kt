@@ -70,6 +70,7 @@ class ManageHomeActivity : AppCompatActivity() {
 
         if(item.itemId == R.id.logout){
             viewModel.logout(View(this))
+            finish()
             return true
         }
 
@@ -79,5 +80,10 @@ class ManageHomeActivity : AppCompatActivity() {
         }
 
         return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        finish()
     }
 }
