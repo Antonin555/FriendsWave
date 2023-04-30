@@ -69,10 +69,10 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
         binding.lifecycleOwner = this
 
 
-        val apiKey = getString(R.string.api_key_google_map)
+//        val apiKey = getString(R.string.api_key_google_map)
 
         if (!Places.isInitialized()) {
-            Places.initialize(applicationContext, apiKey)
+            Places.initialize(applicationContext, getString(R.string.api_key_google_map))
         }
 
         viewModel.fetchUserData()

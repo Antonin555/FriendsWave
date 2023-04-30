@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.antonin.friendswave.R
 import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
+import com.antonin.friendswave.data.firebase.FirebaseStore
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityProfilBinding
@@ -27,7 +28,7 @@ import org.kodein.di.generic.instance
 
 class ProfilActivity : AppCompatActivity(), KodeinAware {
 
-    var storage: FirebaseStorage = Firebase.storage
+    val storeMedia = FirebaseStore()
 
     override val kodein : Kodein by kodein()
     private val factory : HomeFragmentVMFactory by instance()
@@ -48,8 +49,6 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
         binding.item = viewModel
         binding.lifecycleOwner = this
         binding.item?.profilUid = profilUid
-        //a changer puisque le UId est dispo dasn le viewModel
-//        binding.item?.fetchUserProfilData(profilUid)
 
         if(profilUid != null){
             viewModel.fetchUserProfilData(profilUid)
@@ -57,14 +56,7 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
 
         }
 
-//        if(emailUser != null){
-//
-//            viewModel.fetchUserByMail(emailUser)
-//        }
-
         viewModel.fetchUserData()
-
-
 
         viewModel.ami_live.observe(this, Observer { message ->
             if(viewModel.ami_live.value == true){
@@ -81,29 +73,12 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
 
 
         viewModel.user_liveProfil.observe(this, Observer { it ->
-            val storageRef = storage.reference.child("photos/" + it.img.toString())
 
-            val storageRefCover = storage.reference.child("photosCover/" + it.imgCover.toString())
+            val path1 = "photos/" + it.img.toString()
+            val path2 = "photosCover/" + it.imgCover.toString()
 
-            storageRef.downloadUrl.addOnSuccessListener {
-                Glide.with(binding.imgProfil.context)
-                    .load(it)
-                    .apply(RequestOptions().override(100, 100))
-                    .centerCrop()
-                    .into(binding.imgProfil)
-            }.addOnFailureListener {
-                println(it)
-            }
-
-
-            storageRefCover.downloadUrl.addOnSuccessListener {
-                Glide.with(binding.imageCover.context)
-                    .load(it)
-                    .centerCrop()
-                    .into(binding.imageCover)
-            }.addOnFailureListener {
-                println(it)
-            }
+            storeMedia.displayProfil(binding.imgProfil, it, path1 )
+            storeMedia.displayProfil(binding.imageCover, it, path2 )
 
         })
 

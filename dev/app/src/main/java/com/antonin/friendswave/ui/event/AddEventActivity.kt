@@ -51,9 +51,8 @@ class AddEventActivity : AppCompatActivity(), KodeinAware, OnMapReadyCallback,
     private val factory : EventFragmentVMFactory by instance()
     private lateinit var binding :ActivityAddEventBinding
     private lateinit var viewModel: EventFragmentViewModel
-    var addressList: List<Address>? = null
-    lateinit var address : Address
-    private lateinit var img_uri : Uri
+    private var addressList: List<Address>? = null
+    private lateinit var address : Address
 
     private val AUTOCOMPLETE_REQUEST_CODE = 1
     override fun onCreate(savedInstanceState: Bundle?) {

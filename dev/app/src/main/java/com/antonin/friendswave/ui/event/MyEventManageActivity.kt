@@ -1,8 +1,13 @@
 package com.antonin.friendswave.ui.event
+import android.app.Activity
+import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -23,12 +28,18 @@ import com.antonin.friendswave.outils.AnimationLayout
 import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.model.TypeFilter
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.firebase.database.ValueEventListener
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
-
+import java.io.IOException
 
 
 class MyEventManageActivity : AppCompatActivity(), KodeinAware {
@@ -42,9 +53,16 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
     private val animation = AnimationLayout()
     private var bool_linear1 : Boolean = true
     private var bool_linear2 : Boolean = true
-    override fun onCreate(savedInstanceState: Bundle?) {
+    private val AUTOCOMPLETE_REQUEST_CODE = 1
+    private lateinit var binding: ActivityMyEventManageBinding
+    var addressList: List<Address>? = null
+    private lateinit var address : Address
+
+            override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_event_manage)
+
+
         val keyPrivate = intent.getStringExtra("clefPrivate")
         val keyPublic = intent.getStringExtra("clefPublic")
         val pos   = intent.getIntExtra("position", 0)
@@ -55,6 +73,9 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         binding.lifecycleOwner = this
 
 
+        if (!Places.isInitialized()) {
+            Places.initialize(applicationContext, getString(R.string.api_key_google_map))
+        }
 
         if(keyPublic != null ){
             binding.clef = keyPublic
@@ -98,6 +119,12 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
             val alert = AlertDialog(this)
             alert.showDialog(this,"title", "message", "OK", "Cancel", positiveButtonClickListener, negativeButtonClickListener)
 
+        }
+
+        binding.editCity.setOnClickListener {
+            val fields = listOf(Place.Field.ID, Place.Field.ADDRESS)
+            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
+            startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
         }
 
         viewModel.guestListPublic.observe(this,Observer{ attente_guestList->
@@ -150,7 +177,47 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            when (resultCode) {
+                Activity.RESULT_OK -> {
+                    data?.let {
+                        val place = Autocomplete.getPlaceFromIntent(data)
+                        binding.adress.text = place.address.toString()
+                        val geoCoder = Geocoder(this)
+                        try {
+                            addressList = geoCoder.getFromLocationName(place.address.toString(), 1)
 
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        }
+
+                        address = addressList!![0]
+
+
+//                        viewModel.longitude = address.longitude.toString()
+//                        viewModel.lattitude = address.latitude.toString()
+                    }
+
+                    viewModel.longitude = address.longitude.toString()
+                    viewModel.lattitude = address.latitude.toString()
+                }
+                AutocompleteActivity.RESULT_ERROR -> {
+                    // TODO: Handle the error.
+                    data?.let {
+                        val status = Autocomplete.getStatusFromIntent(data)
+                        Log.i(ContentValues.TAG, status.statusMessage ?: "")
+                    }
+                }
+                Activity.RESULT_CANCELED -> {
+                    // The user canceled the operation.
+                }
+            }
+
+            return
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
 
 
     val positiveButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
@@ -173,4 +240,8 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         super.onResume()
 //        viewModel.fetchParticipantAttente()
     }
+
+
+    // methode de Google dans la doc:
+
 }

@@ -109,7 +109,7 @@ class GoogleLocation  {
 //
 //            }
 
-                val latLng1 = LatLng(i.lattitude.toDouble(), i.longitude.toDouble())
+                val latLng1 = LatLng(i.lattitude!!.toDouble(), i.longitude!!.toDouble())
                 val markerOptions = MarkerOptions()
                     .position(latLng1)
                     .title(i.name)

@@ -90,24 +90,24 @@
                     android:text="@string/add_event_lieu"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/textView30"
+                <TextView
+                    android:id="@+id/adress"
                     android:layout_width="0dp"
                     android:gravity="center"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:fontFamily="@font/roboto_mono"
                     android:text="@={viewmodel.eventDataPublic.adress}"
-                    android:importantForAutofill="no" />
+                   />
 
                 <ImageView
-                    android:id="@+id/stylo1"
+                    android:id="@+id/edit_city"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginRight="10dp"
                     android:layout_weight="0.3"
-                    android:src="@drawable/stylo" />
+                    android:src="@drawable/map" />
             </LinearLayout>
 
             <LinearLayout
