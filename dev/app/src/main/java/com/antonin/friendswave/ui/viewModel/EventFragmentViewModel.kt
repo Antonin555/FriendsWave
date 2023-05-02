@@ -1,6 +1,8 @@
 package com.antonin.friendswave.ui.viewModel
 
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.view.View
 import android.widget.AdapterView
 import android.widget.CompoundButton
@@ -23,9 +25,8 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     var name: String? = null
     var description: String? = null
-    var isPhotoLoad : Boolean? = false
     private var isPublic : Boolean? = false
-    var photo: String? = null
+    var photo: Uri? = null
     var nbrePersonnes : Int? = 0
     var categorie: String? = ""
     var adress: String? = ""
@@ -128,11 +129,11 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
                 if(isPublic == true) {
 
                     repoEvent.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!, adress!!,description!!,
-                        longitude!!,lattitude!!)
+                        longitude!!,lattitude!!,photo!!,view.context)
 
                 } else {
 
-                    repoEvent.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid, categorie!!,date!!, horaire!!, adress!!, description!!, longitude!!,lattitude!!)
+                    repoEvent.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid, categorie!!,date!!, horaire!!, adress!!, description!!, longitude!!,lattitude!!, photo!!, view.context)
                 }
 
                 Toast.makeText(view.context,"Evenement en cours de publication", Toast.LENGTH_LONG).show()
@@ -323,7 +324,11 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         }
     }
 
-
+//    fun registerPhotoEvent(photo: Uri, context: Context){
+//        eventDataPublic.value?.imgEvent = repoEvent.registerPhotoEvent(photo, context)
+//
+//
+//    }
 
 
 

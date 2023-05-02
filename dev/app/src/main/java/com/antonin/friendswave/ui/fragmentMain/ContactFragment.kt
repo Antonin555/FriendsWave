@@ -77,8 +77,6 @@ class ContactFragment : Fragment(), KodeinAware {
 
         viewModel.fetchUsersFriends()
 
-
-
         viewModel.emailUserList.observe(this, Observer { userList ->
             adapter1.addItems(userList)
             if(userList.isEmpty()){

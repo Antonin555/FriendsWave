@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
+import com.antonin.friendswave.data.firebase.FirebaseStore
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.databinding.ActivityDetailEventBinding
 import com.antonin.friendswave.ui.home.ProfilActivity
@@ -24,10 +25,8 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
     override val kodein by kodein()
     private lateinit var viewModel: EventFragmentViewModel
     private val factory : EventFragmentVMFactory by instance()
-
+    val storeMedia = FirebaseStore()
     private var adapter1 : ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,11 +65,16 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
             adapter1.addItems(confirm_guestList)
         })
 
+
+        viewModel.eventDataPublic.observe(this, Observer { it ->
+            val path1 = "photosEvent/" +it.key.toString() +"/"+ it.imgEvent.toString()
+            storeMedia.displayImage(binding.imagePreviewEvent, path1 )
+        })
+
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
 
                 val idGuest = viewModel.confirm_guestListPublic.value!!.get(position).uid
-
                 val intent = Intent(view.context, ProfilActivity::class.java )
                 intent.putExtra("uid", idGuest)
                 startActivity(intent)

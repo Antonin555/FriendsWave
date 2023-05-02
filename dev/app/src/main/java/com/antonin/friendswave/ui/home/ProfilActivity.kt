@@ -77,8 +77,8 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
             val path1 = "photos/" + it.img.toString()
             val path2 = "photosCover/" + it.imgCover.toString()
 
-            storeMedia.displayProfil(binding.imgProfil, it, path1 )
-            storeMedia.displayProfil(binding.imageCover, it, path2 )
+            storeMedia.displayImage(binding.imgProfil, path1 )
+            storeMedia.displayImage(binding.imageCover, path2 )
 
         })
 

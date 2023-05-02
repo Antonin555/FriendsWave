@@ -2,7 +2,7 @@ package com.antonin.friendswave.ui.fragmentMain
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
+
 import android.location.Location
 import android.location.LocationListener
 import android.os.Bundle
@@ -12,8 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.text.isDigitsOnly
-import androidx.core.view.children
-import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -23,7 +21,6 @@ import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
 import com.antonin.friendswave.data.model.Event
-import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentEventBinding
@@ -37,13 +34,10 @@ import com.antonin.friendswave.ui.event.InterfaceEvent
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
-
 
 
 class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallback, LocationListener {
@@ -93,11 +87,11 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
 //
         })
 
-        var tempList : ArrayList<Event> = ArrayList()
+//        var tempList : ArrayList<Event> = ArrayList()
         val searchCategory = SearchCategory()
         val searchByCities = SearchByCities()
         val searchByName = SearchByName()
-        var searchStrategy : Strategy
+//        var searchStrategy : Strategy
 
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerFragmentEvent.layoutManager = layoutManager
@@ -105,7 +99,7 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
 
         binding.btnRecherche.setOnClickListener{
             var searchStrategy = Strategy(searchCategory)
-            var type = viewModel.strCategory!!.value.toString()
+            val type = viewModel.strCategory.value.toString()
 
             if(viewModel.categorie == "(km) Autour de toi"){
                 if(!type.isDigitsOnly()){
@@ -129,51 +123,40 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
-
-
                 val id_event = viewModel.eventList.value!!.get(position).key
                 val admin_event = viewModel.eventList.value!!.get(position).admin
-                goToDetailEvent(id_event,admin_event, intent = Intent(),position)
-
+                goToDetailEvent(id_event,admin_event, position)
             }
-
         })
     }
 
 
-
     fun strategyEvent(strategy: Strategy, str:String) {
-        var tempList : ArrayList<Event> =  ArrayList()
+        var tempList: ArrayList<Event>
         viewModel.eventList.observe(this, Observer { eventList ->
             val user = viewModel.user_live.value
             tempList = strategy.search(str, eventList, user!!) as ArrayList<Event>
             adapter1.addItems(tempList)
 
-
             adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
                 override fun onClick(view: View, position: Int) {
-
-
                     val id_event = tempList.get(position).key
                     val admin_event = tempList.get(position).admin
-                    goToDetailEvent(id_event,admin_event, intent = Intent(),position)
+                    goToDetailEvent(id_event,admin_event,position)
 
                 }
             })
-
         })
 
     }
 
-    fun goToDetailEvent(id_event:String?, admin_event:String ,intent: Intent, position:Int){
-
+    fun goToDetailEvent(id_event:String?, admin_event:String , position:Int){
 
         val intent = Intent(context, DetailEventActivity::class.java )
         intent.putExtra("position", position)
         intent.putExtra("idEvent", id_event)
         intent.putExtra("adminEvent", admin_event)
         startActivity(intent)
-
 
     }
 
@@ -186,10 +169,8 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
     }
 
     override fun checkContent() {
-        println("checkkkkkkkkkkkkkkkkkkkk innnnnnnnnnnnnnnnnnnnnnnntent")
 
     }
-
 
     override fun onPause() {
         super.onPause()

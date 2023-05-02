@@ -1,12 +1,19 @@
 package com.antonin.friendswave.data.firebase
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.net.Uri
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class FirebaseSourceEvent {
 
@@ -685,7 +692,7 @@ class FirebaseSourceEvent {
     fun addEventUserPublic(
         name: String, isPublic: Boolean, nbrePersonnes:Int, uid: String,
         category:String, date: String, horaire:String, adress:String,
-        description:String, longitude: String, latitude: String
+        description:String, longitude: String, latitude: String, photo: Uri, context: Context
     )
 
     {
@@ -693,17 +700,18 @@ class FirebaseSourceEvent {
         val myRef = database.getReference("event/eventPublic/").push()
         myRef.setValue(Event(myRef.key,name,isPublic,nbrePersonnes, uid, category, date, horaire,
             adress, description, latitude, longitude))
-
+        registerPhotoEvent(photo, context, myRef.key!!)
     }
 
     fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid: String,
                             category:String, date : String, horaire:String, adress:String,
-                            description: String,longitude:String,latitude:String)
+                            description: String,longitude:String,latitude:String, photo:Uri, context: Context)
     {
         val database = Firebase.database
         val myRef = database.getReference ("event/eventPrivate/" + mainUid!!).push()
         myRef.setValue(Event(myRef.key, name,isPublic,nbrePersonnes, uid, category, date, horaire,
-            adress,description, latitude, longitude))
+            adress,description,latitude, longitude))
+        registerPhotoEvent(photo, context, myRef.key!!)
 
     }
 
@@ -726,6 +734,29 @@ class FirebaseSourceEvent {
 
             }
         })
+    }
+
+
+    fun registerPhotoEvent(photo: Uri,context:Context ,key:String) : String{
+
+        var storage: FirebaseStorage = Firebase.storage
+
+        var currentTime = Calendar.getInstance().timeInMillis
+
+        var storageRef = storage.reference.child("photosEvent/").child(key).child(currentTime.toString())
+
+        val path = storageRef.toString().substringAfter("photosEvent/")
+
+        val inputStream = context.contentResolver.openInputStream(photo)
+        val uploadTask = storageRef.putStream(inputStream!!)
+        uploadTask.addOnSuccessListener {
+//            firebaseData.child("user/" + mainUid).child("img").setValue(path)
+
+        }.addOnFailureListener {
+            // Une erreur s'est produite lors du chargement de la photo
+        }
+
+        return path
     }
 
 }

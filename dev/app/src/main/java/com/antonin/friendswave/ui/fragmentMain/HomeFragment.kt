@@ -96,6 +96,7 @@ class HomeFragment : Fragment(), KodeinAware {
         FirebaseMessaging.getInstance().subscribeToTopic("nom-du-topic")
         FirebaseMessaging.getInstance().subscribeToTopic("nom-du-topic1")
 
+
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
         binding.lifecycleOwner = this
@@ -170,8 +171,8 @@ class HomeFragment : Fragment(), KodeinAware {
             val path1 = "photos/" + it.img.toString()
             val path2 = "photosCover/" + it.imgCover.toString()
 
-            storeMedia.displayProfil(binding.imgProfil, it,path1)
-            storeMedia.displayProfil(binding.imageCover, it,path2)
+            storeMedia.displayImage(binding.imgProfil,path1)
+            storeMedia.displayImage(binding.imageCover,path2)
 
         })
 

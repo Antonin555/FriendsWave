@@ -1,5 +1,7 @@
 package com.antonin.friendswave.data.repository
 
+import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
@@ -94,13 +96,13 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
 
     fun addEventUserPublic(
         name: String, isPublic: Boolean, nbrePersonnes:Int, uid: String, category:String, date: String, horaire:String, adress:String,
-        description:String, longitude: String, latitude: String
+        description:String, longitude: String, latitude: String, photo:Uri, context: Context
     ) =
-        firebaseEvent.addEventUserPublic(name,isPublic,nbrePersonnes, uid, category, date, horaire, adress,description, longitude,latitude)
+        firebaseEvent.addEventUserPublic(name,isPublic,nbrePersonnes, uid, category, date, horaire, adress,description, longitude,latitude, photo, context)
 
     fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid:String,category:String, date : String, horaire:String, adress:String,
-                            description: String, longitude:String, latitude:String) =
-        firebaseEvent.addEventUserPrivate(name,isPublic,nbrePersonnes,uid, category, date, horaire, adress, description, longitude, latitude)
+                            description: String, longitude:String, latitude:String, photo: Uri, context: Context) =
+        firebaseEvent.addEventUserPrivate(name,isPublic,nbrePersonnes,uid, category, date, horaire, adress, description, longitude, latitude, photo, context)
 
     fun editEvent(event:Event?)= firebaseEvent.editEvent(event)
 
@@ -239,6 +241,11 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
 
         return eventLiveData
     }
+
+//    fun registerPhotoEvent(photo: Uri, context: Context): String{
+//
+//        return firebaseEvent.registerPhotoEvent(photo, context)
+//    }
 
 
 }

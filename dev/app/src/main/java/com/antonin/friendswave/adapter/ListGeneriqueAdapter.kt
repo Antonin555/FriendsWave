@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.antonin.friendswave.R
+import com.antonin.friendswave.data.firebase.FirebaseStore
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.ktx.Firebase
@@ -27,6 +28,7 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
 
         private val items = mutableListOf<T>()
         var storage: FirebaseStorage = Firebase.storage
+        private val store = FirebaseStore()
         private var inflater: LayoutInflater? = null
         private var onListItemViewClickListener: OnListItemViewClickListener? = null
 
@@ -56,33 +58,24 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
             onListItemViewClickListener?.let { itemViewModel.onListItemViewClickListener = it }
             holder.bind(itemViewModel)
 
-
             val image_event = holder.itemView.findViewById<ImageView>(R.id.imageEvent)
             val image_profil = holder.itemView.findViewById<ImageView>(R.id.imageProfil)
 
             if(image_profil != null){
-
-                val storageRef = storage.reference.child("photos/" + itemViewModel.img.toString())
-                storageRef.downloadUrl.addOnSuccessListener {
-                    Glide.with(image_profil.context)
-                        .load(it)
-                        .placeholder(R.drawable.profil)
-                        .apply(RequestOptions().override(100, 100))
-                        .centerCrop()
-                        .into(image_profil)
-                }.addOnFailureListener {
-                    println(it)
-                }
+                var path_profil = "photos/"+ itemViewModel.img.toString()
+                store.displayImage(image_profil,path_profil)
 
             }
-
+            if(image_event != null){
+                val path_event = "photosEvent/" + itemViewModel.imgEvent.toString()
+                store.displayImage(image_event,path_event)
+            }
 
         }
 
 
     class GenericViewHolder<T : ListItemViewModel>(private val binding: ViewDataBinding) :
             RecyclerView.ViewHolder(binding.root) {
-
 
             fun bind(itemViewModel: T) {
                 binding.setVariable(BR.item, itemViewModel)
@@ -93,7 +86,6 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
 
         interface OnListItemViewClickListener{
             fun onClick(view: View, position: Int)
-
         }
     }
 

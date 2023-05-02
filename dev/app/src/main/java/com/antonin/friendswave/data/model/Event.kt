@@ -1,5 +1,6 @@
 package com.antonin.friendswave.data.model
 
+import android.net.Uri
 import com.antonin.friendswave.adapter.ListItemViewModel
 
 data class Event(

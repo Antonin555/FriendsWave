@@ -51,9 +51,10 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
     private var adapter1 : ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
     private var adapter2 : ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
     private val animation = AnimationLayout()
-    private var bool_linear1 : Boolean = true
-    private var bool_linear_description : Boolean = true
-    private var bool_linear2 : Boolean = true
+    private var bool_linear1 : Boolean = false
+    private var bool_linear_description : Boolean = false
+    private var bool_linear_invitation : Boolean = false
+    private var bool_linear2 : Boolean = false
     private val AUTOCOMPLETE_REQUEST_CODE = 1
     private lateinit var binding: ActivityMyEventManageBinding
     var addressList: List<Address>? = null
@@ -166,6 +167,19 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
         }
 
+        binding.linearInvitation.setOnClickListener{
+
+            if(bool_linear_invitation == true ){
+                bool_linear_invitation = false
+
+                animation.expand(binding.linearInvitation,1000,800)
+            }
+            else{
+                animation.collapse(binding.linearInvitation,1000,80)
+                bool_linear_invitation = true
+
+            }
+        }
 
         binding.linearAttenteExpand.setOnClickListener{
 
