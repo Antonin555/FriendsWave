@@ -52,13 +52,14 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
     private var adapter2 : ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
     private val animation = AnimationLayout()
     private var bool_linear1 : Boolean = true
+    private var bool_linear_description : Boolean = true
     private var bool_linear2 : Boolean = true
     private val AUTOCOMPLETE_REQUEST_CODE = 1
     private lateinit var binding: ActivityMyEventManageBinding
     var addressList: List<Address>? = null
     private lateinit var address : Address
 
-            override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_event_manage)
 
@@ -148,6 +149,21 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
                 bool_linear1 = true
 
             }
+        }
+
+        binding.linearDescription.setOnClickListener{
+
+            if(bool_linear_description == true ){
+                bool_linear_description = false
+
+                animation.expand(binding.linearDescription,1000,800)
+            }
+            else{
+                animation.collapse(binding.linearDescription,1000,80)
+                bool_linear_description = true
+
+            }
+
         }
 
 

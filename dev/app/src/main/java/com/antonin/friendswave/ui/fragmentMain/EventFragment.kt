@@ -12,6 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.text.isDigitsOnly
+import androidx.core.view.children
+import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -127,16 +129,18 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
-                val idEvent = viewModel.eventList.value!!.get(position).key
-                val adminEvent = viewModel.eventList.value!!.get(position).admin
-                val intent = Intent(context, DetailEventActivity::class.java )
-                intent.putExtra("position", position)
-                intent.putExtra("idEvent", idEvent)
-                intent.putExtra("adminEvent", adminEvent)
-                startActivity(intent)
+
+
+                val id_event = viewModel.eventList.value!!.get(position).key
+                val admin_event = viewModel.eventList.value!!.get(position).admin
+                goToDetailEvent(id_event,admin_event, intent = Intent(),position)
+
             }
+
         })
     }
+
+
 
     fun strategyEvent(strategy: Strategy, str:String) {
         var tempList : ArrayList<Event> =  ArrayList()
@@ -148,17 +152,28 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
 
             adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
                 override fun onClick(view: View, position: Int) {
-                    val idEvent = tempList.get(position).key
-                    val adminEvent = tempList.get(position).admin
-                    val intent = Intent(context, DetailEventActivity::class.java )
-                    intent.putExtra("position", position)
-                    intent.putExtra("idEvent", idEvent)
-                    intent.putExtra("adminEvent", adminEvent)
-                    startActivity(intent)
+
+
+                    val id_event = tempList.get(position).key
+                    val admin_event = tempList.get(position).admin
+                    goToDetailEvent(id_event,admin_event, intent = Intent(),position)
+
                 }
             })
 
         })
+
+    }
+
+    fun goToDetailEvent(id_event:String?, admin_event:String ,intent: Intent, position:Int){
+
+
+        val intent = Intent(context, DetailEventActivity::class.java )
+        intent.putExtra("position", position)
+        intent.putExtra("idEvent", id_event)
+        intent.putExtra("adminEvent", admin_event)
+        startActivity(intent)
+
 
     }
 

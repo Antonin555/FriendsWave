@@ -258,7 +258,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         }
     }
 
-    fun sendAnInvitationPrivateEvent(key: String){
+    fun sendAnInvitationEvent(key: String){
 
         if (email.isNullOrEmpty()) {
             return
@@ -322,6 +322,8 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
             view.context.startActivity(it)
         }
     }
+
+
 
 
 
