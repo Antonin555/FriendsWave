@@ -21,11 +21,11 @@
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabBackground="@color/design_default_color_primary"
+            app:tabBackground="@color/purple_500"
             app:tabGravity="fill"
-            app:tabMode="fixed"
             app:tabIndicatorColor="@color/design_default_color_background"
             app:tabIndicatorHeight="4dp"
+            app:tabMode="fixed"
             app:tabTextColor="@color/white">
 
             <com.google.android.material.tabs.TabItem

@@ -111,6 +111,7 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:onClick="@{(v)->viewmodel.gotoMesEventsActivity(v)}"
+                        app:backgroundTint="#FF4D7167"
                         app:fabSize="normal" />
 
                     <TextView
@@ -141,7 +142,8 @@
                         android:layout_gravity="center"
                         android:gravity="bottom|end"
                         android:onClick="@{(v)->viewmodel.goToAddEvent(v)}"
-                        android:src="@android:drawable/ic_input_add" />
+                        android:src="@android:drawable/ic_input_add"
+                        app:backgroundTint="#FF4D7167" />
 
                     <TextView
                         android:id="@+id/add_alarm_action"

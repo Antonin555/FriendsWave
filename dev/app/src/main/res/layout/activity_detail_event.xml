@@ -70,7 +70,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="10dp"
-                    android:background="#7986CB" />
+                    android:background="#4D7167" />
 
                 <TextView
                     android:id="@+id/textView27"
@@ -247,7 +247,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="10dp"
-                    android:background="#7986CB" />
+                    android:background="#4D7167" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -317,7 +317,11 @@
                     android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:onClick="@{(v)-> event.sendRequestToParticipatePublicEvent(idEvent,adminEvent)}"
-                    android:text="@string/detail_event_inscription" />
+                    android:text="@string/detail_event_inscription"
+                    android:textColor="#FDFCFC"
+                    android:textColorHighlight="#525E5E"
+                    android:textColorLink="#556865"
+                    app:backgroundTint="#4D7167" />
             </LinearLayout>
         </ScrollView>
 

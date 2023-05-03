@@ -59,11 +59,11 @@
                 app:srcCompat="@drawable/photo" />
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="15dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
@@ -135,7 +135,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
@@ -153,12 +154,11 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:inputType="date"
-                    android:fontFamily="@font/roboto_mono"
-                    android:tooltipText="format dd/mm/yyyy"
-                    android:text="@={viewmodel.eventDataPublic.date}" />
-
+                    android:text="@={viewmodel.eventDataPublic.date}"
+                    android:tooltipText="format dd/mm/yyyy" />
 
 
                 <ImageView
@@ -173,7 +173,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
@@ -191,11 +192,11 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center"
                     android:fontFamily="@font/roboto_mono"
+                    android:gravity="center"
                     android:inputType="datetime"
-                    android:tooltipText="format 00:00"
-                    android:text="@={viewmodel.eventDataPublic.heure}" />
+                    android:text="@={viewmodel.eventDataPublic.heure}"
+                    android:tooltipText="format 00:00" />
 
                 <ImageView
                     android:id="@+id/stylo3"
@@ -209,7 +210,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
@@ -226,9 +228,9 @@
                     android:id="@+id/textView38"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:layout_weight="1"
                     android:fontFamily="@font/roboto_mono"
+                    android:gravity="center"
                     android:inputType="number"
                     android:text="@={``+viewmodel.eventDataPublic.duree}" />
 
@@ -244,7 +246,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.7"
                 android:orientation="horizontal">
 
                 <TextView
@@ -261,9 +264,9 @@
 
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:layout_weight="0.6"
                     android:fontFamily="@font/roboto_mono"
+                    android:gravity="center"
                     android:text="@{viewmodel.eventDataPublic.nbrePersonnes.toString()}" />
 
             </LinearLayout>
@@ -271,12 +274,13 @@
             <LinearLayout
                 android:id="@+id/linear_description"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal">
 
                     <TextView
@@ -291,8 +295,8 @@
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:gravity="center"
                         android:layout_weight="0.6"
+                        android:gravity="center"
                         app:srcCompat="@android:drawable/ic_menu_more" />
 
                 </LinearLayout>
@@ -303,11 +307,10 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_alignParentTop="true"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="@={viewmodel.eventDataPublic.description}"
-                        />
+                        android:layout_alignParentTop="true"
+                        android:text="@={viewmodel.eventDataPublic.description}" />
 
                 </LinearLayout>
 
@@ -316,12 +319,13 @@
             <LinearLayout
                 android:id="@+id/linear_invitation"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal">
 
                     <TextView
@@ -373,15 +377,17 @@
                 </LinearLayout>
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/linearAttenteExpand"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal">
 
                     <TextView
@@ -396,8 +402,8 @@
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:gravity="center"
                         android:layout_weight="0.6"
+                        android:gravity="center"
                         app:srcCompat="@android:drawable/ic_menu_more" />
 
                 </LinearLayout>
@@ -409,10 +415,9 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_pending_participants"
-                        android:layout_alignParentTop="true"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        />
+                        android:layout_alignParentTop="true" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -420,7 +425,8 @@
             <LinearLayout
                 android:id="@+id/linearInscrit"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -466,12 +472,16 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1.5"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:orientation="vertical">
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -489,67 +499,47 @@
                         android:text="@string/chat_group"
                         android:textSize="18sp" />
                 </LinearLayout>
+
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:orientation="vertical">
+
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/btn_save_my_event"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:onClick="@{() -> viewmodel.editEvent()}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.904"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.7" />
+                        android:onClick="@{() -> viewmodel.editEvent()}" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/save"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.904"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.75" />
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:orientation="vertical">
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/btn_delete_my_event"
-                        android:layout_width="wrap_content"
+                        android:layout_width="61dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        app:backgroundTint="#E57373"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.1"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.926" />
+                        app:backgroundTint="#E57373" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/recycler_delete"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.1"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.97" />
-
+                        android:textSize="18sp" />
 
 
                 </LinearLayout>

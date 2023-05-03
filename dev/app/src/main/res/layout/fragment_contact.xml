@@ -54,17 +54,18 @@
 
             </LinearLayout>
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fabAddContact"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginBottom="50dp"
-                    android:clickable="true"
-                    android:tooltipText="@string/add_friend"
-                    android:onClick="@{(v) -> viewmodel.goToAddContact(v)}"
-                    android:src="@android:drawable/ic_input_add"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabAddContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="50dp"
+                android:clickable="true"
+                android:onClick="@{(v) -> viewmodel.goToAddContact(v)}"
+                android:src="@android:drawable/ic_input_add"
+                android:tooltipText="@string/add_friend"
+                app:backgroundTint="#FF4D7167" />
 
             <TextView
                 android:id="@+id/add_alarm_action_text"

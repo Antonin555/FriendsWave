@@ -22,7 +22,6 @@ import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityMyEventManageBinding
-import com.antonin.friendswave.generated.callback.OnClickListener
 import com.antonin.friendswave.outils.AlertDialog
 import com.antonin.friendswave.outils.AnimationLayout
 import com.antonin.friendswave.ui.home.ProfilActivity
@@ -30,11 +29,9 @@ import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
-import com.google.firebase.database.ValueEventListener
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -44,21 +41,17 @@ import java.io.IOException
 
 class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
-    override val kodein : Kodein by kodein()
-    private val factory : EventFragmentVMFactory by instance()
-    private var viewModel: EventFragmentViewModel = EventFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
-        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
-    private var adapter1 : ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
-    private var adapter2 : ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
-    private val animation = AnimationLayout()
-    private var bool_linear1 : Boolean = false
-    private var bool_linear_description : Boolean = false
-    private var bool_linear_invitation : Boolean = false
-    private var bool_linear2 : Boolean = false
+    override val kodein: Kodein by kodein()
+    private val factory: EventFragmentVMFactory by instance()
+    private var viewModel: EventFragmentViewModel = EventFragmentViewModel(
+        repository = UserRepo(firebaseUser = FirebaseSourceUser()), repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
+    private var adapter1: ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
+    private var adapter2: ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
     private val AUTOCOMPLETE_REQUEST_CODE = 1
+    private val ecouteur = Ecouteur()
     private lateinit var binding: ActivityMyEventManageBinding
     var addressList: List<Address>? = null
-    private lateinit var address : Address
+    private lateinit var address: Address
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,10 +60,11 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
         val keyPrivate = intent.getStringExtra("clefPrivate")
         val keyPublic = intent.getStringExtra("clefPublic")
-        val pos   = intent.getIntExtra("position", 0)
+        val pos = intent.getIntExtra("position", 0)
 
-        var binding : ActivityMyEventManageBinding = DataBindingUtil.setContentView(this, R.layout.activity_my_event_manage)
-        viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
+        val binding: ActivityMyEventManageBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_my_event_manage)
+        viewModel = ViewModelProviders.of(this, factory).get(EventFragmentViewModel::class.java)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
@@ -79,7 +73,7 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
             Places.initialize(applicationContext, getString(R.string.api_key_google_map))
         }
 
-        if(keyPublic != null ){
+        if (keyPublic != null) {
             binding.clef = keyPublic
             viewModel.fetchDetailEventPublicUser(keyPublic) // event public
             viewModel.fetchGuestDetailEventPublic(keyPublic) // chercher les invitations dans l'event Public
@@ -89,7 +83,7 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
 
         }
-        if(keyPrivate != null) {
+        if (keyPrivate != null) {
             binding.clef = keyPrivate
             viewModel.fetchEventUserPrivate(pos)
             viewModel.fetchGuestDetailEvent(keyPrivate)
@@ -112,111 +106,80 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         })
 
 
-        viewModel.confirm_guestListPublic.observe(this,Observer{ confirm_guestList->
+        viewModel.confirm_guestListPublic.observe(this, Observer { confirm_guestList ->
             adapter1.addItems(confirm_guestList)
         })
 
-        binding.btnDeleteMyEvent.setOnClickListener{
+        binding.btnDeleteMyEvent.setOnClickListener {
 
             val alert = AlertDialog(this)
-            alert.showDialog(this,"title", "message", "OK", "Cancel", positiveButtonClickListener, negativeButtonClickListener)
+            alert.showDialog(this, "title", "message", "OK",
+                "Cancel", positiveButtonClickListener, negativeButtonClickListener)
 
         }
 
         binding.editCity.setOnClickListener {
             val fields = listOf(Place.Field.ID, Place.Field.ADDRESS)
-            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
+            val intent =
+                Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
             startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
         }
 
-        viewModel.guestListPublic.observe(this,Observer{ attente_guestList->
+        viewModel.guestListPublic.observe(this, Observer { attente_guestList ->
             adapter2.addItems(attente_guestList)
         })
 
-        viewModel.userListAttentePrivate.observe(this,Observer{ attente_guestList->
+        viewModel.userListAttentePrivate.observe(this, Observer { attente_guestList ->
             adapter2.addItems(attente_guestList)
         })
 
-
-        binding.linearInscrit.setOnClickListener{
-
-            if(bool_linear1 == true ){
-                bool_linear1 = false
-
-                animation.expand(binding.linearInscrit,1000,800)
-            }
-            else{
-                animation.collapse(binding.linearInscrit,1000,80)
-                bool_linear1 = true
-
-            }
-        }
-
-        binding.linearDescription.setOnClickListener{
-
-            if(bool_linear_description == true ){
-                bool_linear_description = false
-
-                animation.expand(binding.linearDescription,1000,800)
-            }
-            else{
-                animation.collapse(binding.linearDescription,1000,80)
-                bool_linear_description = true
-
-            }
-
-        }
-
-        binding.linearInvitation.setOnClickListener{
-
-            if(bool_linear_invitation == true ){
-                bool_linear_invitation = false
-
-                animation.expand(binding.linearInvitation,1000,800)
-            }
-            else{
-                animation.collapse(binding.linearInvitation,1000,80)
-                bool_linear_invitation = true
-
-            }
-        }
-
-        binding.linearAttenteExpand.setOnClickListener{
-
-            if(bool_linear2 == true){
-
-                bool_linear2 = false
-                animation.expand(binding.linearAttenteExpand,1000,800)
-            }
-            else{
-                animation.collapse(binding.linearAttenteExpand,1000,80)
-
-                bool_linear2 = true
-            }
-        }
-
-        // pour avoir le detail des user En Cours NE FONCTIONNE PAS
-//        adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
-//
-//
-//            override fun onClick(view: View, position: Int) {
-//                val intent = Intent(view.context, ProfilActivity::class.java)
-//            }
-//        })
+        binding.linearInvitation.setOnClickListener(ecouteur)
+        binding.linearDescription.setOnClickListener(ecouteur)
+        binding.linearInscrit.setOnClickListener(ecouteur)
+        binding.linearAttenteExpand.setOnClickListener(ecouteur)
 
 
+        adapter1.setOnListItemViewClickListener(
+            object : ListGeneriqueAdapter.OnListItemViewClickListener {
+                override fun onClick(view: View, position: Int) {
+
+                    val idGuest = viewModel.guestList.value!!.get(position).uid
+                    val intent = Intent(view.context, ProfilActivity::class.java)
+                    intent.putExtra("uid", idGuest)
+                    startActivity(intent)
+
+                }
+            })
     }
 
+    val positiveButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
+        // Code à exécuter si le bouton positif est cliqué
+        if (which == DialogInterface.BUTTON_POSITIVE) {
+
+            viewModel.deleteEvent()
+            finish()
+        }
+    }
+
+    val negativeButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
+        // Code à exécuter si le bouton négatif est cliqué
+        if (which == DialogInterface.BUTTON_NEGATIVE) {
+            Toast.makeText(this, "ok on touche a rien", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    // methode de Google dans la doc:
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             when (resultCode) {
                 Activity.RESULT_OK -> {
                     data?.let {
                         val place = Autocomplete.getPlaceFromIntent(data)
-                        binding.adress.text = place.address.toString()
+                        binding.adress.text = place.address?.toString()
                         val geoCoder = Geocoder(this)
                         try {
-                            addressList = geoCoder.getFromLocationName(place.address.toString(), 1)
+                            addressList =
+                                geoCoder.getFromLocationName(place.address!!.toString(), 1)
 
                         } catch (e: IOException) {
                             e.printStackTrace()
@@ -245,30 +208,80 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
-
-
-    val positiveButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
-        // Code à exécuter si le bouton positif est cliqué
-        if (which == DialogInterface.BUTTON_POSITIVE) {
-
-            viewModel.deleteEvent()
-            finish()
-        }
-    }
-
-    val negativeButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
-        // Code à exécuter si le bouton négatif est cliqué
-        if (which == DialogInterface.BUTTON_NEGATIVE) {
-            Toast.makeText(this,"ok on touche a rien", Toast.LENGTH_LONG).show()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-//        viewModel.fetchParticipantAttente()
-    }
-
-
-    // methode de Google dans la doc:
-
 }
+
+
+
+
+
+    private class Ecouteur : View.OnClickListener {
+
+        private var bool_linear_attente: Boolean = true
+        private var bool_linear_description: Boolean = true
+        private var bool_linear_invitation: Boolean = true
+        private var bool_linear_inscrit: Boolean = true
+        private val animation = AnimationLayout()
+
+        override fun onClick(view: View?) {
+
+            if(view!!.id == R.id.linearAttenteExpand){
+                if (bool_linear_attente == true) {
+                    bool_linear_attente = false
+
+                    animation.expand(view.rootView.findViewById(R.id.linearAttenteExpand), 1000, 800)
+                } else {
+                    animation.collapse(view.rootView.findViewById(R.id.linearAttenteExpand), 1000, 80)
+                    bool_linear_attente = true
+
+                }
+
+            }
+
+            if(view.id == R.id.linearInscrit){
+
+                if (bool_linear_inscrit == true) {
+                    bool_linear_inscrit = false
+
+                    animation.expand(view.rootView.findViewById(R.id.linearInscrit), 1000, 800)
+                } else {
+                    animation.collapse(view.rootView.findViewById(R.id.linearInscrit), 1000, 80)
+                    bool_linear_inscrit = true
+
+                }
+
+            }
+
+
+            if(view.id == R.id.linear_description){
+
+                if (bool_linear_description == true) {
+                    bool_linear_description = false
+
+                    animation.expand(view.rootView.findViewById(R.id.linear_description), 1000, 800)
+                } else {
+                    animation.collapse(view.rootView.findViewById(R.id.linear_description), 1000, 80)
+                    bool_linear_description = true
+
+                }
+
+            }
+
+            if(view.id == R.id.linear_invitation){
+
+                if (bool_linear_invitation == true) {
+                    bool_linear_invitation= false
+
+                    animation.expand(view.rootView.findViewById(R.id.linear_invitation), 1000, 800)
+                } else {
+                    animation.collapse(view.rootView.findViewById(R.id.linear_invitation), 1000, 80)
+                    bool_linear_invitation = true
+
+                }
+
+            }
+        }
+
+        }
+
+
+
