@@ -17,7 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="50dp"
-        android:background="#F1F1F1"
         tools:context=".ui.fragmentMain.ContactFragment">
 
         <!-- TODO: Update blank fragment layout -->

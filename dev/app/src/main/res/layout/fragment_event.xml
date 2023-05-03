@@ -26,19 +26,29 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            tools:layout_editor_absoluteY="50dp">
+            >
 
-
-            <com.google.android.gms.maps.MapView
-                android:id="@+id/mapView"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="15dp"
                 android:layout_weight="0.35"
-                android:apiKey="@string/api_key_google_map"
-                android:backgroundTint="#F06292" />
+                app:cardCornerRadius="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp">
+
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/mapView"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:apiKey="@string/api_key_google_map"
+                    android:backgroundTint="#F06292" />
+
+
+            </androidx.cardview.widget.CardView>
+
 
 
             <LinearLayout
@@ -48,7 +58,6 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="0.08"
-                android:background="@drawable/custom_shape"
                 android:orientation="horizontal">
 
                 <EditText
@@ -92,38 +101,34 @@
 
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="0.2">
+                android:layout_weight="0.08"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_shape"
+                android:backgroundTint="#FF4D7167">
 
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                         android:id="@+id/add_alarm_fab"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
+                        android:stateListAnimator="@null"
                         android:onClick="@{(v)->viewmodel.gotoMesEventsActivity(v)}"
                         app:backgroundTint="#FF4D7167"
-                        app:fabSize="normal" />
-
-                    <TextView
-                        android:id="@+id/add_alarm_action_"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:textColor="@color/white"
                         android:fontFamily="@font/roboto_mono"
+                        android:gravity="center"
+                        android:textSize="7sp"
                         android:text="mes events"
-                        android:textColor="#FF8A80"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        app:fabSize="normal" />
 
 
                 </LinearLayout>
@@ -135,26 +140,18 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                         android:id="@+id/fabAddEvent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="bottom|end"
-                        android:onClick="@{(v)->viewmodel.goToAddEvent(v)}"
-                        android:src="@android:drawable/ic_input_add"
-                        app:backgroundTint="#FF4D7167" />
-
-                    <TextView
-                        android:id="@+id/add_alarm_action"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:fontFamily="@font/roboto_mono"
+                        android:onClick="@{(v)->viewmodel.goToAddEvent(v)}"
                         android:text="@string/add_event"
-                        android:textColor="#FF8A80"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/white"
+                        android:stateListAnimator="@null"
+                        android:textSize="7sp"
+                        android:textStyle="bold"
+                        app:backgroundTint="#FF4D7167" />
 
 
                 </LinearLayout>

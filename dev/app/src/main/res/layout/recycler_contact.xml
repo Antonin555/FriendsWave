@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            app:cardCornerRadius="100dp">
+            app:cardCornerRadius="10dp">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imageProfil"
@@ -50,8 +50,8 @@
         <LinearLayout
             android:id="@+id/layoutChat"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
             android:orientation="vertical">
 
@@ -59,14 +59,13 @@
                 android:id="@+id/nomProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="15dp"
                 android:fontFamily="@font/roboto_mono"
-                android:gravity="center"
                 android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
                 android:text="@{item.name}"
-                android:textAlignment="center"
-                android:textColor="@color/design_default_color_primary"
-                android:textSize="20sp" />
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/timeProfile"
@@ -74,10 +73,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/roboto_mono"
-                android:gravity="center"
                 android:text="@{item.email}"
-                android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="13sp" />
 <!--            android:text="@{item.lastMessage.get(`CdbacBmIaHdqhqpBcV7bXKKHs4o2`)}"-->
 
         </LinearLayout>

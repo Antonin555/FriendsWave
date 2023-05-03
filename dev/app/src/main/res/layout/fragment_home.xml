@@ -21,20 +21,30 @@
         android:paddingTop="50dp"
         tools:context=".ui.fragmentMain.HomeFragment">
 
-
-        <ImageView
-            android:id="@+id/image_cover"
-            android:layout_width="match_parent"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_cover"
             android:layout_height="150dp"
-            android:scaleType="centerCrop"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/sendemail"
+            android:layout_width="match_parent"
+            app:cardCornerRadius="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/image_cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="#C0EFE6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+            </ImageView>
+
+        </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -42,11 +52,11 @@
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:layout_marginTop="100dp"
-            app:cardCornerRadius="100dp"
-            app:layout_constraintBottom_toBottomOf="@+id/image_cover"
-            app:layout_constraintEnd_toEndOf="@+id/image_cover"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/card_cover"
+            app:layout_constraintEnd_toEndOf="@+id/card_cover"
             app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="@+id/image_cover"
+            app:layout_constraintStart_toStartOf="@+id/card_cover"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             tools:ignore="RtlHardcoded">
@@ -70,7 +80,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_cover">
+            app:layout_constraintTop_toBottomOf="@+id/card_cover">
 
             <TextView
                 android:id="@+id/nameUser"
@@ -78,6 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textColor="@color/black"
                 android:text="@{item.user_live.name}"
                 android:textSize="24sp" />
 
@@ -94,6 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:layout_weight="1"
+                    android:textColor="@color/black"
                     android:fontFamily="@font/roboto_mono"
                     android:text="@{item.user_live.friends.toString()}"
                     />
@@ -104,6 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:gravity="center"
+                    android:textColor="@color/black"
                     android:layout_weight="1"
                     android:text="@{item.user_live.rating.toString()}"
                      />
