@@ -49,7 +49,8 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:scaleType="centerCrop"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        tools:srcCompat="@tools:sample/avatars"
+                        tools:ignore="ContentDescription" />
                 </androidx.cardview.widget.CardView>
 
                 <TextView
@@ -72,14 +73,6 @@
                     android:layout_marginBottom="10dp"
                     android:background="#4D7167" />
 
-                <TextView
-                    android:id="@+id/textView27"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/roboto_mono"
-                    android:text="@{event.eventDataPrivate.duree.toString()}" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -92,7 +85,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_marginBottom="10dp"
-                        android:src="@drawable/category" />
+                        android:src="@drawable/category"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/textView32"
@@ -117,7 +111,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_marginBottom="10dp"
-                        android:src="@drawable/where" />
+                        android:src="@drawable/where"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/textView321"
@@ -142,7 +137,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_marginBottom="10dp"
-                        android:src="@drawable/calendar" />
+                        android:src="@drawable/calendar"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/textView277"
@@ -167,7 +163,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_marginBottom="10dp"
-                        android:src="@drawable/hour" />
+                        android:src="@drawable/hour"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/textView25"
@@ -192,7 +189,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_marginBottom="10dp"
-                        android:src="@drawable/time" />
+                        android:src="@drawable/time"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/textView251"
@@ -202,7 +200,7 @@
                         android:layout_weight="0.5"
                         android:fontFamily="@font/roboto_mono"
                         android:gravity="center"
-                        android:text="@{event.eventDataPrivate.heure}" />
+                        android:text="@{event.eventDataPrivate.duree}" />
 
                 </LinearLayout>
 
@@ -228,7 +226,8 @@
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
                     android:lines="10"
-                    android:text="@{event.eventDataPrivate.description}" />
+                    android:text="@{event.eventDataPrivate.description}"
+                    tools:ignore="TextViewEdits" />
 
                 <TextView
                     android:id="@+id/textView29"
@@ -251,7 +250,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
@@ -260,16 +259,17 @@
                     <ImageView
                         android:id="@+id/imageView4"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_marginBottom="10dp"
-                        app:srcCompat="@drawable/couronne" />
+                        android:layout_height="match_parent"
+                        app:srcCompat="@drawable/couronne"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/profilHost"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="0.4"
+                        android:text="@{event.pseudo}"
                         android:gravity="center"
                         android:onClick="@{(v)-> user.goToYourProfil(v)}" />
 
@@ -311,7 +311,7 @@
                     android:id="@+id/btn_inscription"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="100dp"
+                    android:layout_marginEnd="100dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:fontFamily="@font/roboto_mono"

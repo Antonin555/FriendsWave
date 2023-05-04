@@ -292,7 +292,9 @@
                     android:onClick="@{() -> viewmodel.signup()}"
                     android:text="@string/signup"
                     android:textColor="#fff"
-                    android:textSize="18sp" />
+                    android:textStyle="bold"
+                    android:backgroundTint="#4D7167"
+                    android:textSize="15sp" />
 
                 <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:id="@+id/text_view_register"
@@ -302,7 +304,9 @@
                     android:fontFamily="@font/roboto_mono"
                     android:onClick="@{(v) -> viewmodel.goToLogin(v)}"
                     android:text="@string/login"
+                    android:backgroundTint="#4D7167"
                     android:textColor="#fff"
+                    android:textStyle="bold"
                     android:textAlignment="center" />
 
             </LinearLayout>

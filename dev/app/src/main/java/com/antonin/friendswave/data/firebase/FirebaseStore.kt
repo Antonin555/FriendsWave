@@ -22,7 +22,6 @@ class FirebaseStore {
         storageRef.downloadUrl.addOnSuccessListener {
             Glide.with(imgView.context)
                 .load(it)
-                .placeholder(R.drawable.user)
                 .apply(RequestOptions().override(100, 100))
                 .centerCrop()
                 .into(imgView)

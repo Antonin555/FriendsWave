@@ -96,13 +96,13 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
 
     fun addEventUserPublic(
         name: String, isPublic: Boolean, nbrePersonnes:Int, uid: String, category:String, date: String, horaire:String, adress:String,
-        description:String, longitude: String, latitude: String, photo:Uri, context: Context
+        description:String, longitude: String, latitude: String, photo:Uri, context: Context, host:String, timeStamp : Double
     ) =
-        firebaseEvent.addEventUserPublic(name,isPublic,nbrePersonnes, uid, category, date, horaire, adress,description, longitude,latitude, photo, context)
+        firebaseEvent.addEventUserPublic(name,isPublic,nbrePersonnes, uid, category, date, horaire, adress,description, longitude,latitude, photo, context, host, timeStamp)
 
     fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid:String,category:String, date : String, horaire:String, adress:String,
-                            description: String, longitude:String, latitude:String, photo: Uri, context: Context) =
-        firebaseEvent.addEventUserPrivate(name,isPublic,nbrePersonnes,uid, category, date, horaire, adress, description, longitude, latitude, photo, context)
+                            description: String, longitude:String, latitude:String, photo: Uri, context: Context, host:String, timeStamp : Double) =
+        firebaseEvent.addEventUserPrivate(name,isPublic,nbrePersonnes,uid, category, date, horaire, adress, description, longitude, latitude, photo, context, host, timeStamp)
 
     fun editEvent(event:Event?)= firebaseEvent.editEvent(event)
 

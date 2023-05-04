@@ -39,9 +39,9 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     var year:Int? = 0
     var hour:Int? = 0
     var minute: Int? = 0
-
+    var timeStamp : Double = 0.0
     var email: String? = null
-
+    var pseudo:String? = ""
     var keyEvent: String? = ""
 
     var strCategory = MutableLiveData<String>()
@@ -129,11 +129,11 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
                 if(isPublic == true) {
 
                     repoEvent.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!, adress!!,description!!,
-                        longitude!!,lattitude!!,photo!!,view.context)
+                        longitude!!,lattitude!!,photo!!,view.context,  user_live.value!!.nickname.toString(), timeStamp )
 
                 } else {
 
-                    repoEvent.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid, categorie!!,date!!, horaire!!, adress!!, description!!, longitude!!,lattitude!!, photo!!, view.context)
+                    repoEvent.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid, categorie!!,date!!, horaire!!, adress!!, description!!, longitude!!,lattitude!!, photo!!, view.context, user_live.value!!.nickname.toString(), timeStamp)
                 }
 
                 Toast.makeText(view.context,"Evenement en cours de publication", Toast.LENGTH_LONG).show()
@@ -166,6 +166,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         val sdf = SimpleDateFormat("dd/MM/yyyy")
         var strDate: Date? = null
         strDate = sdf.parse(date)
+        timeStamp = strDate.time.toDouble()
 
         if (Date().after(strDate)) {
             Toast.makeText(view.context,"Impossible de remonter dans le temps",Toast.LENGTH_SHORT).show()

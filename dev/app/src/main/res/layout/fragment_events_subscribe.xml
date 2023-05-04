@@ -18,9 +18,8 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/activity_event_confirm"
@@ -30,21 +29,23 @@
         <View
             android:id="@+id/view12"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="#7986CB" />
+            android:layout_height="0dp"
+            android:layout_weight="0.02"
+            android:background="#FF4D7167" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_my_event_inscrits"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1" />
 
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/activity_event_pending"
@@ -54,14 +55,17 @@
         <View
             android:id="@+id/view13"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="#7986CB" />
+            android:layout_height="0dp"
+            android:layout_weight="0.02"
+            android:background="#FF4D7167" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_pending_participants"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1" />
 
 
     </LinearLayout>

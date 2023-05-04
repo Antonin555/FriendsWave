@@ -32,8 +32,7 @@ import java.io.IOException
 
 
 
-class AddEventActivity : AppCompatActivity(), KodeinAware, OnMapReadyCallback,
-    LocationListener {
+class AddEventActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein by kodein()
     private val factory : EventFragmentVMFactory by instance()
@@ -60,15 +59,12 @@ class AddEventActivity : AppCompatActivity(), KodeinAware, OnMapReadyCallback,
         }
 
         binding.searchCities.setOnClickListener{
-
             val fields = listOf(Place.Field.ID, Place.Field.ADDRESS)
             val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
             startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
-
         }
 
         binding.loadImgEvent.setOnClickListener {
-
             val img = Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             getResult.launch(img)
         }
@@ -84,13 +80,6 @@ class AddEventActivity : AppCompatActivity(), KodeinAware, OnMapReadyCallback,
             }
         }
 
-    override fun onMapReady(p0: GoogleMap) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onLocationChanged(p0: Location) {
-        TODO("Not yet implemented")
-    }
     // methode de Google dans la doc:
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {

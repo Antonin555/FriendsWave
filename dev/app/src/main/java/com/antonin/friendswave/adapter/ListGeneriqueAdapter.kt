@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.LayoutRes
+import androidx.core.view.children
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -55,11 +56,14 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
 
             itemViewModel.adapterPosition = position
 
-            onListItemViewClickListener?.let { itemViewModel.onListItemViewClickListener = it }
+            onListItemViewClickListener?.let { itemViewModel.onListItemViewClickListener = it
+            }
             holder.bind(itemViewModel)
 
             val image_event = holder.itemView.findViewById<ImageView>(R.id.imageEvent)
             val image_profil = holder.itemView.findViewById<ImageView>(R.id.imageProfil)
+
+
 
             if(image_profil != null){
                 var path_profil = "photos/"+ itemViewModel.img.toString()
@@ -70,6 +74,7 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
                 val path_event = "photosEvent/" + itemViewModel.imgEvent.toString()
                 store.displayImage(image_event,path_event)
             }
+
 
         }
 

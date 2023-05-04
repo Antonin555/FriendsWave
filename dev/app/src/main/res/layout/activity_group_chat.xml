@@ -22,7 +22,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
 
             <TextView
                 android:layout_width="match_parent"
@@ -47,7 +48,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
-                    app:srcCompat="@drawable/map_btn_myl" />
+                    app:srcCompat="@drawable/map_btn_myl"
+                    tools:ignore="ContentDescription,NestedWeights" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -70,7 +72,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
-                    app:srcCompat="@drawable/calendar" />
+                    app:srcCompat="@drawable/calendar"
+                    tools:ignore="ContentDescription,NestedWeights" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -93,7 +96,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
-                    app:srcCompat="@drawable/hour" />
+                    app:srcCompat="@drawable/hour"
+                    tools:ignore="ContentDescription,NestedWeights" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -140,7 +144,8 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        app:srcCompat="@android:drawable/ic_menu_more" />
+                        app:srcCompat="@android:drawable/ic_menu_more"
+                        tools:ignore="ContentDescription" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -153,7 +158,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        />
+                        tools:ignore="ObsoleteLayoutParam" />
 
                 </LinearLayout>
 
@@ -167,7 +172,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="2dp"
                 android:layout_weight="8"
-                android:background="#F8F2F2" />
+                android:background="#F4F4F4" />
 
 
             <LinearLayout
@@ -186,17 +191,19 @@
                     android:layout_height="50dp"
                     android:layout_weight="2"
                     android:fontFamily="@font/roboto_mono"
-                    android:hint="Type a message"
-                    android:text="@={viewmodel.messageEnvoyeGroup}" />
+                    android:text="@={viewmodel.messageEnvoyeGroup}"
+                    android:importantForAutofill="no"
+                    tools:ignore="LabelFor,NestedWeights,TextFields" />
 
                 <ImageView
                     android:id="@+id/sentButtonGroup"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:layout_weight="0.16"
                     android:onClick="@{(v) -> viewmodel.addMessageGrouptoDatabase(v)}"
-                    android:src="@drawable/envoi" />
+                    android:src="@drawable/envoi"
+                    tools:ignore="ContentDescription" />
             </LinearLayout>
 
 

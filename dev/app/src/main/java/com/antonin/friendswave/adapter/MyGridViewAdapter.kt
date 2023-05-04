@@ -13,9 +13,10 @@ import com.antonin.friendswave.R
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 
 class MyGridViewAdapter(private val context: Context, private val values: List<String>, private val viewModel: HomeFragmentViewModel) : BaseAdapter() {
+
+
+
     private var selectedPositions = mutableListOf<Int>()
-
-
 
     override fun getCount(): Int {
         return values.size
@@ -43,10 +44,12 @@ class MyGridViewAdapter(private val context: Context, private val values: List<S
         textView.text = values[position]
 
         if (selectedPositions.contains(position)) {
-            textView.setBackgroundColor(ContextCompat.getColor(context, R.color.teal_200))
+//            textView.setBackgroundColor(ContextCompat.getColor(context, R.color.teal_200))
+            textView.setBackground(ContextCompat.getDrawable(context,R.drawable.custom_shape))
         }
         else if(viewModel.user_live.value!!.interet!!.contains(values[position])){
-            textView.setBackgroundColor(ContextCompat.getColor(context, R.color.teal_200))
+//            textView.setBackgroundColor(ContextCompat.getColor(context, R.color.teal_200))
+            textView.setBackground(ContextCompat.getDrawable(context,R.drawable.custom_shape))
             selectedPositions.add(position)
         }
         else {

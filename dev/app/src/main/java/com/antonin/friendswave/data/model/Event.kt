@@ -18,8 +18,10 @@ data class Event(
     var lattitude : String? = "",
     var longitude : String? = "",
     var duree: Int? = 0,
+    var pseudo:String? ="",
+    var timeStamp: Double? = 0.0,
     var listInscrits : HashMap<String, String> = HashMap(),
     var invitations : HashMap<String, String> = HashMap(),
-    var pendingRequestEventPublic : HashMap<String, String> = HashMap(),
+    var pendingRequestEventPublic : HashMap<String, String> = HashMap()
 
 ):ListItemViewModel()

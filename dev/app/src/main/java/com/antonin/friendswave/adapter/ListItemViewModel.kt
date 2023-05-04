@@ -10,4 +10,5 @@ abstract class ListItemViewModel{
     var imgCover : String? = ""
     var lastMessage: HashMap<String, String>? = HashMap()
 
+
 }

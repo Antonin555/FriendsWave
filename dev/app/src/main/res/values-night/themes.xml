@@ -7,7 +7,7 @@
         <item name="colorOnPrimary">#4D7167</item>
         <item name="android:itemBackground">#4D7167</item>
 
-        <item name="android:panelFullBackground">#4D7167</item>
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>

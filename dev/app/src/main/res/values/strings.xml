@@ -64,6 +64,10 @@
     <string name="activity_event_confirm">events confirmés</string>
     <string name="activity_event_pending">events en attente</string>
 
+    <string name="add_contact_texte1">Cliquez sur un des criteres pour trouver des personnes susceptible de partager les mêmes events que vous :</string>
+    <string name="minute">minutes</string>
+
+    <string name="description_event">Faites la meilleure presentation de votre evenement. Une description complete vous permettra d""avoir potentiellement plus de participants </string>
 
     <string name="activity_manage_my_event_search">ajoutez des participants :</string>
     <string name="activity_manage_my_event_go_to_chat">Chat Group</string>
@@ -102,14 +106,28 @@
 
 
     <string-array name="list_categorie">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
+
+        <item>Sport et activités physiques</item>
+        <item>Arts et artisanat</item>
+        <item>Musique et concerts</item>
+        <item>Cinéma et films</item>
+        <item>Gastronomie et cuisine</item>
+        <item>Jeux de société et jeux de rôle</item>
+        <item>Science et technologie</item>
+        <item>Voyages et tourisme</item>
+        <item>Théâtre et représentations</item>
+        <item>Danse et spectacles de danse</item>
+        <item>Activités en plein air</item>
+        <item>Activités nautiques</item>
+        <item>Festivals et événements culturels</item>
+        <item>Ateliers et formations</item>
+        <item>Activités pour enfants et familles</item>
+        <item>Vie nocturne et fêtes</item>
+        <item>Conférences et débats</item>
+        <item>Activités caritatives et bénévoles</item>
+        <item>Mode et design</item>
+        <item>Spectacles de cirque et acrobaties</item>
+
     </string-array>
 
 

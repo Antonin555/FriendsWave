@@ -19,7 +19,7 @@
         >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:paddingTop="50dp"
             tools:context=".ui.fragmentMain.HomeFragment">
 
@@ -35,7 +35,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.129"
-                app:srcCompat="@drawable/photo" />
+                app:srcCompat="@drawable/photo"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:id="@+id/picture_profil"
@@ -47,7 +48,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.143"
-                app:srcCompat="@drawable/photo" />
+                app:srcCompat="@drawable/photo"
+                tools:ignore="ContentDescription" />
 
 
             <androidx.cardview.widget.CardView
@@ -72,7 +74,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
             </androidx.cardview.widget.CardView>
 
 
@@ -95,7 +98,8 @@
                     android:id="@+id/imgProfil"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    tools:ignore="ContentDescription" />
 
             </androidx.cardview.widget.CardView>
 
@@ -153,7 +157,8 @@
                     android:scrollbars="vertical"
                     android:scrollHorizontally="false"
                     android:text="@={viewmodel.user_live.desciption}"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:id="@+id/textView12"
@@ -197,7 +202,8 @@
                             android:fontFamily="@font/roboto_mono"
                             android:gravity="center"
                             android:text="@string/prenom"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            tools:ignore="NestedWeights" />
 
                         <EditText
                             android:id="@+id/editPrenom"
@@ -206,7 +212,8 @@
                             android:layout_weight="3"
                             android:fontFamily="@font/roboto_mono"
                             android:importantForAutofill="no"
-                            android:text="@={viewmodel.user_live.name}" />
+                            android:text="@={viewmodel.user_live.name}"
+                            tools:ignore="TextFields" />
 
 
                     </LinearLayout>
@@ -225,7 +232,8 @@
                             android:fontFamily="@font/roboto_mono"
                             android:gravity="center"
                             android:text="@string/add_event_name"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            tools:ignore="NestedWeights" />
 
                         <EditText
                             android:id="@+id/editNom"
@@ -234,7 +242,8 @@
                             android:layout_weight="3"
                             android:fontFamily="@font/roboto_mono"
                             android:importantForAutofill="no"
-                            android:text="@={viewmodel.user_live.familyName}" />
+                            android:text="@={viewmodel.user_live.familyName}"
+                            tools:ignore="TextFields" />
 
 
                     </LinearLayout>
@@ -280,7 +289,8 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginBottom="10dp"
                                 android:layout_weight="1"
-                                android:src="@drawable/birthday" />
+                                android:src="@drawable/birthday"
+                                tools:ignore="ContentDescription" />
 
                             <DatePicker
                                 android:id="@+id/datePicker"
@@ -311,7 +321,8 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:src="@drawable/batiment" />
+                            android:src="@drawable/batiment"
+                            tools:ignore="ContentDescription,NestedWeights" />
 
                         <EditText
                             android:id="@+id/editLieu"
@@ -321,16 +332,18 @@
                             android:fontFamily="@font/roboto_mono"
                             android:text="@={viewmodel.user_live.lieu}"
                             android:paddingTop="15dp"
-                            />
+                            android:importantForAutofill="no"
+                            tools:ignore="TextFields" />
 
                         <ImageView
                             android:id="@+id/searchCity"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_gravity="right"
-                            android:layout_marginLeft="20dp"
+                            android:layout_gravity="end"
+                            android:layout_marginStart="20dp"
                             android:layout_weight="1"
-                            android:src="@drawable/map" />
+                            android:src="@drawable/map"
+                            tools:ignore="ContentDescription" />
 
 
                     </LinearLayout>
@@ -346,7 +359,8 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:src="@drawable/langue" />
+                            android:src="@drawable/langue"
+                            tools:ignore="ContentDescription,NestedWeights" />
 
                         <Spinner
                             android:id="@+id/spinnerLangues"
@@ -370,7 +384,8 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:src="@drawable/diplome" />
+                            android:src="@drawable/diplome"
+                            tools:ignore="ContentDescription,NestedWeights" />
 
                         <Spinner
                             android:id="@+id/spinnerEtudes"

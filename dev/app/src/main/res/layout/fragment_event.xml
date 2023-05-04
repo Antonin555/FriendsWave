@@ -64,9 +64,11 @@
                     android:id="@+id/choice_strategy"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="2"
-                    android:text="@={viewmodel.strCategory}" />
+                    android:text="@={viewmodel.strCategory}"
+                    android:importantForAutofill="no"
+                    tools:ignore="LabelFor,NestedWeights,TextFields" />
 
 
                 <androidx.appcompat.widget.AppCompatSpinner
@@ -85,7 +87,8 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="0.3"
-                    android:src="@drawable/search">
+                    android:src="@drawable/search"
+                    tools:ignore="ContentDescription">
 
                 </ImageView>
             </LinearLayout>
@@ -107,14 +110,16 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/custom_shape"
-                android:backgroundTint="#FF4D7167">
+                android:backgroundTint="#FF4D7167"
+                android:baselineAligned="false">
 
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.4"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    tools:ignore="NestedWeights">
 
                     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                         android:id="@+id/add_alarm_fab"
@@ -124,11 +129,13 @@
                         android:gravity="center"
                         android:onClick="@{(v)->viewmodel.gotoMesEventsActivity(v)}"
                         android:stateListAnimator="@null"
-                        android:text="mes events"
+                        android:text="@string/activity_event_perso"
                         android:textColor="@color/white"
                         android:textSize="7sp"
+                        android:textStyle="bold"
                         app:backgroundTint="#FF4D7167"
-                        app:fabSize="normal" />
+                        app:fabSize="normal"
+                        tools:ignore="SmallSp" />
 
 
                 </LinearLayout>
@@ -152,7 +159,8 @@
                         android:stateListAnimator="@null"
                         android:textSize="7sp"
                         android:textStyle="bold"
-                        app:backgroundTint="#FF4D7167" />
+                        app:backgroundTint="#FF4D7167"
+                        tools:ignore="SmallSp" />
 
 
                 </LinearLayout>
