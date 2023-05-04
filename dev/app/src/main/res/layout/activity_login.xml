@@ -29,17 +29,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_marginBottom="20dp"
-                    android:src="@drawable/logo"/>
+                    android:src="@drawable/wave1"/>
 
                 <TextView
                     android:id="@+id/login_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="160dp"
+                    android:layout_marginBottom="60dp"
                     android:fontFamily="@font/roboto_mono"
                     android:gravity="center_horizontal"
                     android:text="@string/login"
-                    android:textColor="#7986CB"
+                    android:textColor="#4D7167"
                     android:textSize="30sp"
                     android:textStyle="bold" />
 
@@ -47,7 +47,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:orientation="horizontal"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
@@ -56,11 +56,8 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="0dp"
                         android:src="@drawable/email"
+                        android:layout_gravity="center"
                         android:gravity="center"
                     />
 
@@ -79,13 +76,13 @@
                         android:textStyle="italic"
                         android:textSize="18sp"
                         android:text="@={view.email}"
-                        android:textColorHint="#F06292"
+                        android:textColorHint="#4D7167"
                         tools:ignore="Autofill" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="20dp"
                     android:layout_marginRight="10dp"
@@ -95,10 +92,7 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        android:gravity="center"
+                        android:layout_gravity="center"
                         android:src="@drawable/password" />
 
                     <EditText
@@ -115,7 +109,7 @@
                         android:inputType="textPassword"
                         android:singleLine="true"
                         android:text="@={view.password}"
-                        android:textColorHint="#F06292"
+                        android:textColorHint="#4D7167"
                         android:textSize="18sp"
                         android:textStyle="italic"
                         tools:ignore="LabelFor" />
@@ -124,11 +118,11 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="45dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/custom_shape"
-                    android:backgroundTint="#7985CA"
+                    android:backgroundTint="#4D7167"
                     android:orientation="horizontal"
                     android:layout_marginTop="45dp">
 
@@ -137,7 +131,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:backgroundTint="#7986CB"
+                        android:backgroundTint="#4D7167"
                         android:fontFamily="@font/roboto_mono"
                         android:gravity="center"
                         android:stateListAnimator="@null"
@@ -146,7 +140,7 @@
                         android:textAllCaps="false"
                         app:elevation="0dp"
                         android:textColor="#fff"
-                        android:textSize="10sp" />
+                        android:textSize="14sp" />
 
                     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                         android:id="@+id/text_view_register"
@@ -154,14 +148,14 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
-                        android:backgroundTint="#7986CB"
+                        android:backgroundTint="#4D7167"
                         app:elevation="0dp"
                         android:stateListAnimator="@null"
                         android:fontFamily="@font/roboto_mono"
                         android:onClick="@{(v) -> view.goToSignup(v)}"
                         android:text="@string/register"
                         android:textAlignment="center"
-                        android:textSize="10sp"
+                        android:textSize="14sp"
                         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                         android:textColor="#FFFFFF" />
                 </LinearLayout>

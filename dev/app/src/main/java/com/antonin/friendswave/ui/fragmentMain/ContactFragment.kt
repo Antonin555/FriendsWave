@@ -83,7 +83,7 @@ class ContactFragment : Fragment(), KodeinAware {
                 binding.recoContact.visibility = View.VISIBLE
 
             }else
-                binding.recoContact.visibility = View.INVISIBLE
+                binding.recoContact.visibility = View.GONE
         })
 
 

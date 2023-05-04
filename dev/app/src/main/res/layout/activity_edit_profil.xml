@@ -28,7 +28,7 @@
                 android:id="@+id/picture_cover"
                 android:layout_width="20dp"
                 android:layout_height="17dp"
-                android:elevation="@dimen/cardview_default_elevation"
+                android:elevation="3dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.977"
@@ -49,19 +49,32 @@
                 app:layout_constraintVertical_bias="0.143"
                 app:srcCompat="@drawable/photo" />
 
-            <ImageView
-                android:id="@+id/image_cover"
-                android:layout_width="match_parent"
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview_cover"
+                android:layout_width="wrap_content"
                 android:layout_height="150dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/sendemail"
+                android:layout_marginStart="20dp"
+                app:cardCornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/image_cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/sendemail"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.cardview.widget.CardView>
+
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
@@ -69,11 +82,11 @@
                 android:layout_height="70dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="100dp"
-                app:cardCornerRadius="100dp"
-                app:layout_constraintBottom_toBottomOf="@+id/image_cover"
-                app:layout_constraintEnd_toEndOf="@+id/image_cover"
+                app:cardCornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/cardview_cover"
+                app:layout_constraintEnd_toEndOf="@+id/cardview_cover"
                 app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="@+id/image_cover"
+                app:layout_constraintStart_toStartOf="@+id/cardview_cover"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
                 tools:ignore="RtlHardcoded">
@@ -99,7 +112,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_cover">
+                app:layout_constraintTop_toBottomOf="@+id/cardview_cover">
 
 
 
@@ -120,7 +133,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="50dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@color/design_default_color_primary" />
+                    android:background="#FF4D7167" />
 
 
                 <EditText
@@ -158,7 +171,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="50dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@color/design_default_color_primary" />
+                    android:background="#FF4D7167" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -387,7 +400,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="50dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@color/design_default_color_primary" />
+                    android:background="#FF4D7167" />
 
                 <GridView
                     android:id="@+id/gridView"
@@ -406,13 +419,15 @@
                 <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:id="@+id/textView15"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    android:layout_height="45dp"
                     android:layout_gravity="center"
-                    android:layout_margin="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
                     android:fontFamily="@font/roboto_mono"
                     android:onClick="@{(v) -> viewmodel.editProfil(v)}"
-                    android:text="@string/save" />
+                    android:text="@string/save"
+                    android:textColor="@color/white"
+                    app:backgroundTint="#FF4D7167" />
 
             </LinearLayout>
 
