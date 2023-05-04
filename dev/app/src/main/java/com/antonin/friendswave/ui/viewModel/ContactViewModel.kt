@@ -56,6 +56,9 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
         val positiveButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
             // Code à exécuter si le bouton positif est cliqué
             if (which == DialogInterface.BUTTON_POSITIVE) {
+                //envoyer une demande directement par couriel
+                sendEmail(email!!)
+                Toast.makeText(view.context,"demande envoye par couriel", Toast.LENGTH_LONG).show()
                 alertDialog.cancel()
             }
         }
@@ -78,8 +81,6 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
 
             alertDialog.showDialog(view.context, "Attention", "This email match no account, do you want to make an invitation via email", "yes","no", positiveButtonClickListener, negativeButtonClickListener)
 
-            //envoyer une demande directement par couriel
-            sendEmail("caron.alex18@hotmail.fr")
             return
         }
         if (user_live.value!!.friendList!!.containsValue(email)){
@@ -99,23 +100,23 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
     // Fonction pour envoyer un e-mail
     fun sendEmail(recipient: String) {
         val props = Properties()
-        props.setProperty("mail.smtp.host", "smtp.gmail.com")
+        props.setProperty("mail.smtp.host", "smtp-mail.outlook.com")
         props.setProperty("mail.smtp.port", "587")
         props.setProperty("mail.smtp.auth", "true")
         props.setProperty("mail.smtp.starttls.enable", "true")
-        props.setProperty("mail.smtp.ssl.trust", "smtp.gmail.com")
+        props.setProperty("mail.smtp.ssl.trust", "smtp-mail.outlook.com")
 
         val session = Session.getInstance(props, object : Authenticator() {
             override fun getPasswordAuthentication(): PasswordAuthentication {
-                return PasswordAuthentication("babinobang@gmail.com", "letsg0boy$")
+                return PasswordAuthentication("FriendWaveOfficial@hotmail.com", "Friend12Wave12")
             }
         })
 
         val message = MimeMessage(session)
-        message.setFrom(InternetAddress("babinobang@gmail.com"))
+        message.setFrom(InternetAddress("FriendWaveOfficial@hotmail.com"))
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient))
-        message.subject = "Test Email"
-        message.setText("This is a test email")
+        message.subject = "Venez rejoindre la communaute FriendsWave"
+        message.setText("Bonjour " + user_live.value!!.email + " mieux connu sous le nom de " +  user_live.value!!.name + " vous invite a rejoindre l'application FriendsWave")
 
         Thread(Runnable {
             try {
@@ -125,6 +126,9 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
             }
         }).start()
     }
+
+
+
 
     fun fetchAllUser(){
         repository.fetchAllUser().observeForever{ user ->

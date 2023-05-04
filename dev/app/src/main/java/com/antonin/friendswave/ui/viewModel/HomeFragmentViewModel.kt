@@ -45,8 +45,6 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
     val searchByName = SearchByName()
     private lateinit var searchStrategy : Strategy
 
-
-
     private val _user = MutableLiveData<User>()
     var user_live: LiveData<User> = _user
 
