@@ -10,9 +10,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/custom_shape"
         android:orientation="vertical"
         android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'>
 
@@ -20,12 +17,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
             android:orientation="horizontal"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+            android:paddingRight="15dp"
+            tools:ignore="UselessParent">
 
             <TextView
                 android:id="@+id/event_name"
@@ -46,6 +41,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
+                android:layout_marginEnd="10dp"
                 android:backgroundTint="#81C784"
                 tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
@@ -55,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="0.2"
+                android:layout_marginStart="10dp"
                 android:backgroundTint="#E57373"
                 android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
                 tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />

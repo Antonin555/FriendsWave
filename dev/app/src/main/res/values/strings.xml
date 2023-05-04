@@ -52,6 +52,8 @@
     <string name="add_event">ajouter un event</string>
     <string name="add_friend">ajouter un contact</string>
 
+    <string name="pseudo">pseudo</string>
+
     <string name="detail_event_nbre_inscrit">nombre inscrits : </string>
     <string name="detail_event_inscrit">Inscrits : </string>
     <string name="detail_event_inscription">inscrivez vous</string>
@@ -86,7 +88,7 @@
     <string name="alert_yes">oui</string>
     <string name="alert_no">non</string>
     <string name="save">sauvegarder</string>
-    <string name="pseudo">pseudo :</string>
+
     <string name="education">education :</string>
     <string name="langue">langue :</string>
     <string name="delete_friend">supprimer de votre liste d""amis ?</string>

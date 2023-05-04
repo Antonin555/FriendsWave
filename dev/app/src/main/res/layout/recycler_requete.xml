@@ -11,23 +11,59 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/custom_shape"
         android:orientation="vertical">
-        <!--        android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'-->
-
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="10dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp">
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:textSize="12sp"
+                android:fontFamily="@font/roboto_mono"
+                android:text="@string/pseudo" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:fontFamily="@font/roboto_mono"
+                android:text="@{item.nickname}" />
+
+            <Button
+                android:id="@+id/btn_accept"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/btn_decline"
+                android:fontFamily="@font/roboto_mono"
+                android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
+                android:text="Decline"/>
+
+            <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/btn_accept"
+                android:fontFamily="@font/roboto_mono"
+                android:text="ACCEPT"
+                android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
+               />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
             <TextView
                 android:id="@+id/event_name"
                 android:layout_width="0dp"
@@ -43,29 +79,7 @@
                 android:fontFamily="@font/roboto_mono"
                 android:text="@{item.name}" />
 
-            <Button
-                android:id="@+id/btn_accept"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/btn_accept"
-                android:backgroundTint="#7986CB"
-                android:fontFamily="@font/roboto_mono"
-                android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
-                android:text="ACCEPT"/>
 
-            <Button
-                android:id="@+id/btn_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/btn_accept"
-                android:backgroundTint="#7986CB"
-                android:fontFamily="@font/roboto_mono"
-                android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
-                android:text="DECLINE"/>
         </LinearLayout>
 
 
