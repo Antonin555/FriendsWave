@@ -13,6 +13,7 @@ import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.data.firebase.FirebaseStore
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.databinding.ActivityDetailEventBinding
+import com.antonin.friendswave.outils.AnimationLayout
 import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
@@ -27,6 +28,9 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
     private val factory : EventFragmentVMFactory by instance()
     val storeMedia = FirebaseStore()
     private var adapter1 : ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
+    private var bool_linear_inscrit = true
+    private var bool_linear_description_event = true
+    private val animeLayout = AnimationLayout()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,7 +86,38 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
             }
 
         })
+
+        binding.linearDescriptionEvent.setOnClickListener{
+
+            if(bool_linear_description_event == true){
+
+                animeLayout.expand(binding.linearDescriptionEvent, 1000,500)
+                bool_linear_description_event = false
+
+            } else {
+
+                animeLayout.collapse(binding.linearDescriptionEvent, 1000, 40)
+                bool_linear_description_event = true
+            }
+
+        }
+
+        binding.linearInscritEvent.setOnClickListener{
+
+
+            if(bool_linear_inscrit == true) {
+
+                animeLayout.expand(binding.linearInscritEvent, 1000, 500)
+                bool_linear_inscrit = false
+            }else {
+
+                animeLayout.collapse(binding.linearInscritEvent, 1000, 40)
+                bool_linear_inscrit = true
+            }
+        }
     }
+
+
 
 
 }

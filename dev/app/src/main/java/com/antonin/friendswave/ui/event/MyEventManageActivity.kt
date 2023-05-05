@@ -230,7 +230,7 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
                     animation.expand(view.rootView.findViewById(R.id.linearAttenteExpand), 1000, 800)
                 } else {
-                    animation.collapse(view.rootView.findViewById(R.id.linearAttenteExpand), 1000, 80)
+                    animation.collapse(view.rootView.findViewById(R.id.linearAttenteExpand), 1000, 40)
                     bool_linear_attente = true
 
                 }
@@ -244,7 +244,7 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
                     animation.expand(view.rootView.findViewById(R.id.linearInscrit), 1000, 800)
                 } else {
-                    animation.collapse(view.rootView.findViewById(R.id.linearInscrit), 1000, 80)
+                    animation.collapse(view.rootView.findViewById(R.id.linearInscrit), 1000, 40)
                     bool_linear_inscrit = true
 
                 }
@@ -259,7 +259,7 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
                     animation.expand(view.rootView.findViewById(R.id.linear_description), 1000, 800)
                 } else {
-                    animation.collapse(view.rootView.findViewById(R.id.linear_description), 1000, 80)
+                    animation.collapse(view.rootView.findViewById(R.id.linear_description), 1000, 40)
                     bool_linear_description = true
 
                 }
@@ -273,7 +273,7 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
                     animation.expand(view.rootView.findViewById(R.id.linear_invitation), 1000, 800)
                 } else {
-                    animation.collapse(view.rootView.findViewById(R.id.linear_invitation), 1000, 80)
+                    animation.collapse(view.rootView.findViewById(R.id.linear_invitation), 1000, 40)
                     bool_linear_invitation = true
 
                 }

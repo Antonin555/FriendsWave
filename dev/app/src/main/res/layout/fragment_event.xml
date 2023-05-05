@@ -105,8 +105,7 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="0.08"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/custom_shape"
@@ -115,9 +114,8 @@
 
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.4"
                     android:orientation="vertical"
                     tools:ignore="NestedWeights">
 
@@ -131,7 +129,7 @@
                         android:stateListAnimator="@null"
                         android:text="@string/activity_event_perso"
                         android:textColor="@color/white"
-                        android:textSize="7sp"
+                        android:textSize="10sp"
                         android:textStyle="bold"
                         app:backgroundTint="#FF4D7167"
                         app:fabSize="normal"
@@ -141,23 +139,22 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1.4"
                     android:orientation="vertical">
 
                     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                         android:id="@+id/fabAddEvent"
-                        android:layout_width="wrap_content"
+                        android:layout_width="185dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_mono"
+                        android:gravity="center"
                         android:onClick="@{(v)->viewmodel.goToAddEvent(v)}"
+                        android:stateListAnimator="@null"
                         android:text="@string/add_event"
                         android:textColor="@color/white"
-                        android:gravity="center"
-                        android:stateListAnimator="@null"
-                        android:textSize="7sp"
+                        android:textSize="10sp"
                         android:textStyle="bold"
                         app:backgroundTint="#FF4D7167"
                         tools:ignore="SmallSp" />

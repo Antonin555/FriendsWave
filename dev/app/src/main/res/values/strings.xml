@@ -88,6 +88,8 @@
     <string name="alert_yes">oui</string>
     <string name="alert_no">non</string>
     <string name="save">sauvegarder</string>
+    <string name="add">ajouter</string>
+    <string name="adress">adresse</string>
 
     <string name="education">education :</string>
     <string name="langue">langue :</string>

@@ -25,6 +25,7 @@
             android:orientation="vertical"
             tools:ignore="UselessParent">
 
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -34,21 +35,22 @@
                 android:fontFamily="@font/roboto_mono"
                 android:gravity="center"
                 android:text="@{viewmodel.mainEvent.name}"
-                android:textSize="30sp"
+                android:textColor="@color/black"
+                android:textSize="28sp"
                 android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/imageView10"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
                     android:layout_weight="0.3"
-                    app:srcCompat="@drawable/map_btn_myl"
+                    app:srcCompat="@drawable/gnb"
                     tools:ignore="ContentDescription,NestedWeights" />
 
                 <TextView
@@ -63,16 +65,16 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/imageView11"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
                     android:layout_weight="0.3"
-                    app:srcCompat="@drawable/calendar"
+                    app:srcCompat="@drawable/calendrierios"
                     tools:ignore="ContentDescription,NestedWeights" />
 
                 <TextView
@@ -87,16 +89,16 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/imageView12"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
                     android:layout_weight="0.3"
-                    app:srcCompat="@drawable/hour"
+                    app:srcCompat="@drawable/horloge"
                     tools:ignore="ContentDescription,NestedWeights" />
 
                 <TextView
@@ -109,26 +111,18 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto_mono"
-                android:gravity="center"
-                android:text="@string/activity_group_chat"
-                android:textStyle="bold" />
+
 
 
             <LinearLayout
                 android:id="@+id/linearExpand"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="40dp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -150,14 +144,14 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/chatRecyclerViewGroupParticipant"
-                        android:layout_alignParentTop="true"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
                         tools:ignore="ObsoleteLayoutParam" />
 
                 </LinearLayout>
@@ -171,6 +165,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="2dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="8"
                 android:background="#F4F4F4" />
 

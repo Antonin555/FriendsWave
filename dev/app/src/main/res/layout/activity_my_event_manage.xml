@@ -61,9 +61,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="10dp"
-                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
@@ -130,13 +129,12 @@
                     android:layout_gravity="center"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="0.3"
-                    android:src="@drawable/map" />
+                    android:src="@drawable/gnb" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -173,8 +171,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -203,15 +200,14 @@
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.3"
                     android:src="@drawable/stylo" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -239,15 +235,14 @@
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.3"
                     android:src="@drawable/stylo" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.7"
+                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -274,13 +269,12 @@
             <LinearLayout
                 android:id="@+id/linear_description"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.8"
+                android:layout_height="40dp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -319,13 +313,12 @@
             <LinearLayout
                 android:id="@+id/linear_invitation"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.8"
+                android:layout_height="40dp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -356,22 +349,28 @@
                         android:layout_height="wrap_content"
                         android:text="@string/send" />
 
-                    <EditText
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:autofillHints="name">
+                        android:orientation="horizontal">
 
-                    </EditText>
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="@string/hint_mail"
+                            android:autofillHints="name">
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/add_guest"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:backgroundTint="@color/teal_200"
-                        android:fontFamily="@font/roboto_mono"
-                        android:onClick="@{() -> viewmodel.sendAnInvitationEvent(clef)}"
-                        android:textColor="@color/black" />
+                        </EditText>
+
+                        <ImageView
+                            android:id="@+id/add_guest"
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_weight="0.3"
+                            android:src="@drawable/envoi"
+                            android:onClick="@{() -> viewmodel.sendAnInvitationEvent(clef)}" />
+                    </LinearLayout>
 
 
                 </LinearLayout>
@@ -381,13 +380,12 @@
             <LinearLayout
                 android:id="@+id/linearAttenteExpand"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.8"
+                android:layout_height="40dp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -425,8 +423,7 @@
             <LinearLayout
                 android:id="@+id/linearInscrit"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.8"
+                android:layout_height="40dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -474,13 +471,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginEnd="10dp"
-                android:orientation="horizontal"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_shape"
                 android:backgroundTint="#FF4D7167"
-                android:background="@drawable/custom_shape">
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -495,8 +492,8 @@
                         android:backgroundTint="#FF4D7167"
                         android:fontFamily="@font/roboto_mono"
                         android:onClick="@{(v) -> viewmodel.startGroupChat(v, viewmodel.eventDataPublic.key, viewmodel.eventDataPublic.admin)}"
-                        android:text="@string/chat_group"
                         android:stateListAnimator="@null"
+                        android:text="@string/chat_group"
                         android:textColor="@color/white"
                         android:tooltipText="@string/chat_group" />
 
@@ -515,8 +512,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="@{() -> viewmodel.editEvent()}"
-                        android:text="@string/save"
                         android:stateListAnimator="@null"
+                        android:text="@string/save"
                         android:textColor="@color/white"
                         app:backgroundTint="#FF4D7167" />
 
@@ -535,12 +532,10 @@
                         android:id="@+id/btn_delete_my_event"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:stateListAnimator="@null"
                         android:text="@string/recycler_delete"
                         android:textColor="@color/white"
-                        android:stateListAnimator="@null"
                         app:backgroundTint="#E57373" />
-
-
 
 
                 </LinearLayout>

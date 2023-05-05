@@ -90,7 +90,7 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
                 animation.expand(binding.linearExpand,1000,500)
             }
             else{
-                animation.collapse(binding.linearExpand,1000,30)
+                animation.collapse(binding.linearExpand,1000,40)
                 bool = true
             }
         }

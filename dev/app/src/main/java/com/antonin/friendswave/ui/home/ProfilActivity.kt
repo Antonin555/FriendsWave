@@ -12,6 +12,7 @@ import com.antonin.friendswave.data.firebase.FirebaseStore
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityProfilBinding
+import com.antonin.friendswave.outils.AnimationLayout
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.bumptech.glide.Glide
@@ -36,6 +37,8 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
         repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
     )
     private lateinit var binding: ActivityProfilBinding
+    private var bool = true
+    private var anim = AnimationLayout()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,13 +64,13 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
         viewModel.ami_live.observe(this, Observer { message ->
             if(viewModel.ami_live.value == true){
 
-                val addIcon = resources.getDrawable(android.R.drawable.ic_delete)
-                binding.floatingActionButton.setImageDrawable(addIcon)
+//                val addIcon = resources.getDrawable(android.R.drawable.ic_delete)
+                binding.floatingActionButton.setText(R.string.recycler_delete)
             }
             if(viewModel.ami_live.value == false){
 
-                val addIcon = resources.getDrawable(android.R.drawable.ic_input_add)
-                binding.floatingActionButton.setImageDrawable(addIcon)
+//                val addIcon = resources.getDrawable(android.R.drawable.ic_input_add)
+                binding.floatingActionButton.setText(R.string.add)
             }
         })
 
@@ -82,7 +85,23 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
 
         })
 
+        binding.linearDescriptionProfil.setOnClickListener{
+
+            if(bool == true){
+
+                anim.expand(binding.linearDescriptionProfil, 1000,500)
+                bool = false
+            } else {
+
+                anim.collapse(binding.linearDescriptionProfil,1000, 40)
+                bool = true
+            }
+
+        }
+
     }
+
+
 
 
 
