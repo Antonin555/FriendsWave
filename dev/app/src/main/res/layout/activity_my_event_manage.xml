@@ -288,10 +288,12 @@
 
                     <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/arrow"
                         android:layout_weight="0.6"
                         android:gravity="center"
-                        app:srcCompat="@android:drawable/ic_menu_more" />
+                         />
 
                 </LinearLayout>
 
@@ -332,10 +334,12 @@
 
                     <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/arrow"
                         android:layout_weight="0.6"
                         android:gravity="center"
-                        app:srcCompat="@android:drawable/ic_menu_more" />
+                         />
 
                 </LinearLayout>
 
@@ -399,10 +403,12 @@
 
                     <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/arrow"
                         android:layout_weight="0.6"
                         android:gravity="center"
-                        app:srcCompat="@android:drawable/ic_menu_more" />
+                         />
 
                 </LinearLayout>
 
@@ -445,10 +451,12 @@
                     <ImageView
 
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/arrow"
                         android:layout_weight="0.6"
                         android:gravity="center"
-                        app:srcCompat="@android:drawable/ic_menu_more" />
+                         />
 
                 </LinearLayout>
 

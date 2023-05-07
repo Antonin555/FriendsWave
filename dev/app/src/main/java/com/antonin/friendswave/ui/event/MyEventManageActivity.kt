@@ -25,6 +25,7 @@ import com.antonin.friendswave.databinding.ActivityMyEventManageBinding
 import com.antonin.friendswave.outils.AlertDialog
 import com.antonin.friendswave.outils.AnimationLayout
 import com.antonin.friendswave.ui.home.ProfilActivity
+import com.antonin.friendswave.ui.viewModel.ContactViewModel
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import com.google.android.libraries.places.api.Places
@@ -43,9 +44,10 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein: Kodein by kodein()
     private val factory: EventFragmentVMFactory by instance()
+
     private var viewModel: EventFragmentViewModel = EventFragmentViewModel(
         repository = UserRepo(firebaseUser = FirebaseSourceUser()), repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
-    private var adapter1: ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
+    private var adapter1: ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_inscrit_event)
     private var adapter2: ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
     private val AUTOCOMPLETE_REQUEST_CODE = 1
     private val ecouteur = Ecouteur()
@@ -143,7 +145,14 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
             object : ListGeneriqueAdapter.OnListItemViewClickListener {
                 override fun onClick(view: View, position: Int) {
 
+                    val event = viewModel.eventListConfirm.value?.get(position)
                     val idGuest = viewModel.guestList.value!!.get(position).uid
+
+                    if(view.id == R.id.btn_delete_guest){
+
+                        viewModel.deleteConfirmationGuest(event,idGuest!!)
+                    }
+
                     val intent = Intent(view.context, ProfilActivity::class.java)
                     intent.putExtra("uid", idGuest)
                     startActivity(intent)

@@ -1,5 +1,6 @@
 package com.antonin.friendswave.ui.home
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -66,11 +67,13 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
 
 //                val addIcon = resources.getDrawable(android.R.drawable.ic_delete)
                 binding.floatingActionButton.setText(R.string.recycler_delete)
+
             }
             if(viewModel.ami_live.value == false){
 
 //                val addIcon = resources.getDrawable(android.R.drawable.ic_input_add)
                 binding.floatingActionButton.setText(R.string.add)
+                binding.floatingActionButton.setBackgroundColor(Color.CYAN)
             }
         })
 

@@ -32,9 +32,8 @@
                 android:layout_weight="0.6"
                 android:fontFamily="@font/roboto_mono"
                 android:text="@{item.name}"
-                android:textSize="14sp"
                 android:textColor="@color/black"
-                />
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/btn_delete"
@@ -57,10 +56,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
-                android:text="par :"
                 android:fontFamily="@font/roboto_mono"
+                android:gravity="center"
 
-                />
+                android:text="par :" />
 
             <TextView
                 android:layout_width="0dp"

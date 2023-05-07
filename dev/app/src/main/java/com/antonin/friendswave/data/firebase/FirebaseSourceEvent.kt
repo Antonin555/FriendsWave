@@ -55,8 +55,8 @@ class FirebaseSourceEvent {
     }
 
     fun deleteConfirmation(event:Event?){
-        if(event!!.isPublic == true){
 
+        if(event!!.isPublic == true){
             firebaseEventPublic.child(event.key.toString())
                 .child("listInscrits").child(mainUid!!).removeValue()
         }
@@ -64,8 +64,18 @@ class FirebaseSourceEvent {
             firebaseEventPrivate.child(event.admin).child(event.key.toString())
                 .child("listInscrits").child(mainUid!!).removeValue()
         }
-
         firebaseData.child("user").child(mainUid).child("eventConfirmationList").child(event.key.toString()).removeValue()
+    }
+
+    fun deleteConfirmationGuest(event: Event?, idGuest: String){
+
+        if(event!!.isPublic == true) {
+            firebaseEventPublic.child(event.key.toString()).child("listInscrits").child(idGuest).removeValue()
+        }
+        else{
+            firebaseEventPrivate.child(event.admin).child(event.key.toString()).child("listInscrits").child(idGuest).removeValue()
+        }
+        firebaseData.child("user").child(idGuest).child("eventConfirmationList").child(event.key.toString()).removeValue()
     }
 
     fun deletePendingEvent(event:Event?){

@@ -312,6 +312,11 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         repoEvent.deleteConfirmation(event)
     }
 
+    fun deleteConfirmationGuest(event:Event?,idGuest:String){
+
+        repoEvent.deleteConfirmationGuest(event,idGuest)
+    }
+
     fun deletePendingEvent(event: Event?){
 
         repoEvent.deletePendingEvent(event)

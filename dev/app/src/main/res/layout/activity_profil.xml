@@ -64,9 +64,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="30dp"
             android:layout_marginRight="15dp"
             android:orientation="vertical"
+            android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -141,12 +141,12 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linear_infos_profil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearInfoProfil"
             tools:ignore="UselessParent">
@@ -154,16 +154,17 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
+                android:layout_marginBottom="120dp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"/>
+                    android:orientation="horizontal" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -245,6 +246,7 @@
                         android:gravity="center"
                         android:text="@{item.user_liveProfil.langue}" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/linear_description_profil"
                     android:layout_width="match_parent"
@@ -276,15 +278,15 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:layout_alignParentTop="true"
                             android:text="@={item.user_liveProfil.desciption}" />
 
                     </LinearLayout>
@@ -296,10 +298,10 @@
                 android:id="@+id/linear_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:background="@drawable/custom_shape"
-                android:backgroundTint="#4D7167">
+                android:backgroundTint="#4D7167"
+                android:orientation="horizontal">
 
                 <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                     android:id="@+id/floatingActionButton"
@@ -308,10 +310,10 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:clickable="true"
+                    android:onClick='@{()-> item.addOrDelete() }'
                     android:stateListAnimator="@null"
                     android:text="@string/recycler_delete"
                     android:textColor="@color/white"
-                    android:onClick='@{()-> item.addOrDelete() }'
                     android:tooltipText="@string/delete_friend"
                     app:backgroundTint="#E57373"
                     app:srcCompat="@android:drawable/ic_delete" />
@@ -322,12 +324,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:backgroundTint="#4D7167"
                     android:clickable="true"
+                    android:onClick='@{(v)-> item.signaler(v)}'
                     android:stateListAnimator="@null"
                     android:text="@string/signal_profil"
                     android:textColor="@color/white"
-                    android:backgroundTint="#4D7167"
-                    android:onClick='@{(v)-> item.signaler(v)}'
                     android:tooltipText="@string/signal_profil"
                     app:srcCompat="@android:drawable/ic_dialog_alert" />
 

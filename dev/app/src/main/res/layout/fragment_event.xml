@@ -105,9 +105,9 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="50dp"
                 android:background="@drawable/custom_shape"
                 android:backgroundTint="#FF4D7167"
                 android:baselineAligned="false">
@@ -146,7 +146,7 @@
 
                     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                         android:id="@+id/fabAddEvent"
-                        android:layout_width="185dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_mono"
                         android:gravity="center"
