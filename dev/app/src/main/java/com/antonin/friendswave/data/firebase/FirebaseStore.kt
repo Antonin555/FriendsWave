@@ -18,6 +18,7 @@ class FirebaseStore {
     fun displayImage(imgView:ImageView, path: String){
 
         val storageRef = storage.reference.child(path)
+        println("PHHHHHHHHHHHHHHHHHHHHHHOOOOOOOOOOOOOOOOOOTOOOOOOOOOOOO : " + storage.reference.child(path))
 
         storageRef.downloadUrl.addOnSuccessListener {
             Glide.with(imgView.context)

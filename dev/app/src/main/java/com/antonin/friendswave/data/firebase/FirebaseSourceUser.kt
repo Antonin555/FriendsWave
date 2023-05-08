@@ -134,25 +134,14 @@ class FirebaseSourceUser {
             })
     }
 
-//    fun  addUserToDatabase(name: String, email: String, uid: String ){
-//        firebaseData.child("user").child(uid).setValue(User(name,email,uid))
-//    }
 
-    fun  addUserToDatabase(
-        name: String,
-        email: String,
-        uid: String,
-        familyName: String,
-        nickname: String,
-        city: String,
-        date: String
-    ){
+
+    fun  addUserToDatabase(name: String, email: String, uid: String, familyName: String,
+        nickname: String, city: String, date: String){
         firebaseData.child("user").child(uid).setValue(User(name,email,uid, familyName, nickname, city, date))
     }
 
     // REFUSER
-
-
     fun declineRequestEvent(user:User?){
         var idEvent:String = user!!.pendingRequestEventPublic!!.get(mainUid!!).toString()
         val queryEventPublic = firebaseData.child("event/eventPublic").child(idEvent)
@@ -167,29 +156,9 @@ class FirebaseSourceUser {
 
     }
 
-//    fun register(name: String, email: String, password: String) = Completable.create { emitter ->
-//        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-//            addUserToDatabase(name,email, firebaseAuth.currentUser?.uid!!)
-//            if (!emitter.isDisposed) {
-//                if (it.isSuccessful) {
-//                    emitter.onComplete()
-//                } else {
-//                    emitter.onError(it.exception!!)
-//                }
-//            }
-//
-//        }
-//    }
 
-    fun register(
-        name: String,
-        email: String,
-        password: String,
-        familyName: String,
-        nickname: String,
-        city: String,
-        date: String
-    ) = Completable.create { emitter ->
+    fun register(name: String, email: String, password: String, familyName: String, nickname: String,
+        city: String, date: String) = Completable.create { emitter ->
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             addUserToDatabase(name,email, firebaseAuth.currentUser?.uid!!, familyName!!, nickname!!, city!!, date!!)
             if (!emitter.isDisposed) {
@@ -376,8 +345,6 @@ class FirebaseSourceUser {
 
     }
 
-
-
     fun acceptRequestUpdateUser(userNotif: User?){
 
         val userRef = FirebaseDatabase.getInstance().getReference("user").child(mainUid!!)
@@ -400,7 +367,6 @@ class FirebaseSourceUser {
         })
 
     }
-
 
     fun refuseRequest(userNotif: User?){
 
@@ -533,7 +499,6 @@ class FirebaseSourceUser {
         })
     }
 
-
      // POUR AVOIR LE PROFILS DES USERS INSCRITS DANS LES EVENTS PUBLICS :
 
     fun fetchUserByMail(mail:String, onResult: (User?) -> Unit){
@@ -553,9 +518,7 @@ class FirebaseSourceUser {
                 onResult(null)
             }
 
-
         })
-
     }
 
     fun registerPhoto(photo: Uri, context: Context) : String{
@@ -565,12 +528,6 @@ class FirebaseSourceUser {
         var storageRef = storage.reference.child("photos/").child(mainUid!!).child(currentTime.toString())
 
         val path = storageRef.toString().substringAfter("photos/")
-
-//        val file = Uri.fromFile(File(photo.toString()))
-//
-//        val photoRef = storageRef.child("photos/${file.lastPathSegment}")
-//
-////        val uploadTask = photoRef.putFile(file)
 
         val inputStream = context.contentResolver.openInputStream(photo)
         val uploadTask = storageRef.putStream(inputStream!!)

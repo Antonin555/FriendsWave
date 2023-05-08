@@ -219,10 +219,6 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
     }
 }
 
-
-
-
-
     private class Ecouteur : View.OnClickListener {
 
         private var bool_linear_attente: Boolean = true

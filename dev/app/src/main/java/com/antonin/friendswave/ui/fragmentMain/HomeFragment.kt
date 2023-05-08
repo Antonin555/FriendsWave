@@ -54,7 +54,7 @@ class HomeFragment : Fragment(), KodeinAware {
 
 
 
-    private var storage: FirebaseStorage = Firebase.storage
+
     private var storeMedia = FirebaseStore()
     override val kodein : Kodein by kodein()
     private val factory : HomeFragmentVMFactory by instance()
@@ -171,8 +171,11 @@ class HomeFragment : Fragment(), KodeinAware {
             val path1 = "photos/" + it.img.toString()
             val path2 = "photosCover/" + it.imgCover.toString()
 
+
+            if(it.imgCover != null) storeMedia.displayImage(binding.imageCover,path2)
+
             storeMedia.displayImage(binding.imgProfil,path1)
-            storeMedia.displayImage(binding.imageCover,path2)
+
 
         })
 

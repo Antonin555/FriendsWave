@@ -699,22 +699,18 @@ class FirebaseSourceEvent {
 
 
 
-    fun addEventUserPublic(
-        name: String, isPublic: Boolean, nbrePersonnes:Int, uid: String,
-        category:String, date: String, horaire:String, adress:String,
-        description:String, longitude: String, latitude: String, photo: Uri, context: Context, host:String, timeStamp:Double
-    )
-
+    fun addEventUserPublic(name: String, isPublic: Boolean, nbrePersonnes:Int, uid: String, category:String, date: String, horaire:String, adress:String,
+        description:String, longitude: String, latitude: String, photo: Uri, context: Context, host:String, timeStamp:Double)
     {
         val database = Firebase.database
         val myRef = database.getReference("event/eventPublic/").push()
         myRef.setValue(Event(myRef.key,name,isPublic,nbrePersonnes, uid, category, date, horaire,
             adress, description, latitude, longitude, duree = 10, host,timeStamp))
         registerPhotoEvent(photo, context, myRef.key!!)
+
     }
 
-    fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid: String,
-                            category:String, date : String, horaire:String, adress:String,
+    fun addEventUserPrivate(name: String, isPublic : Boolean, nbrePersonnes:Int, uid: String, category:String, date : String, horaire:String, adress:String,
                             description: String,longitude:String,latitude:String, photo:Uri, context: Context, host:String, timeStamp:Double)
     {
         val database = Firebase.database
@@ -749,6 +745,7 @@ class FirebaseSourceEvent {
 
     fun registerPhotoEvent(photo: Uri,context:Context ,key:String) : String{
 
+
         var storage: FirebaseStorage = Firebase.storage
 
         var currentTime = Calendar.getInstance().timeInMillis
@@ -756,6 +753,8 @@ class FirebaseSourceEvent {
         var storageRef = storage.reference.child("photosEvent/").child(key).child(currentTime.toString())
 
         val path = storageRef.toString().substringAfter("photosEvent/")
+
+        Firebase.database.getReference("event/eventPublic/" + key).child("imgEvent").setValue(path)
 
         val inputStream = context.contentResolver.openInputStream(photo)
         val uploadTask = storageRef.putStream(inputStream!!)
