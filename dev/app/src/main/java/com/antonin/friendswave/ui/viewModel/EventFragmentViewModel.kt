@@ -159,7 +159,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     fun changeDate(view: View,year: Int, month: Int, day: Int) {
 
         val dayString =  if (day < 10) "0$day" else day.toString()
-        val monthString = if (month < 10) "0${month + 1}" else "${month + 1}"
+        val monthString = if (month <= 10) "0${month + 1}" else "${month + 1}"
 
         date = dayString + "/"+monthString +"/"+ year.toString()
 
@@ -330,11 +330,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         }
     }
 
-//    fun registerPhotoEvent(photo: Uri, context: Context){
-//        eventDataPublic.value?.imgEvent = repoEvent.registerPhotoEvent(photo, context)
-//
-//
-//    }
+
 
 
 

@@ -228,25 +228,12 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
     fun changeDate(year: Int, month: Int, day: Int) {
 
 
-        var dayString : String = ""
-        var monthString : String = ""
 
-        if(day < 10) {
-            dayString = "0" + day.toString()
-        } else
-            dayString = day.toString()
-
-        if(month < 10) {
-            monthString = "0"+(month + 1).toString()
-        } else
-            monthString = (month+1).toString()
+        val dayString =  if (day < 10) "0$day" else day.toString()
+        val monthString = if (month <= 10) "0${month + 1}" else "${month + 1}"
 
         date = dayString + "/"+monthString +"/"+ year.toString()
-//        if(dateEvent.before(currentDate)){
-//
-//            println("Impossible de revenir dans le passé")
-//
-//        }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
