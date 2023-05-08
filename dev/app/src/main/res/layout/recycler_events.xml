@@ -28,6 +28,7 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imageEvent"
+                android:src="@drawable/logoevent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

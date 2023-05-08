@@ -39,7 +39,15 @@
                     android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:text="@string/titre_fragment_contact"
-                    android:textSize="24sp" />
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:id="@+id/contactImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/contact_friends"/>
+
 
 
                 <androidx.recyclerview.widget.RecyclerView

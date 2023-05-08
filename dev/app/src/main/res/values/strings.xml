@@ -2,7 +2,7 @@
     <string name="app_name">Friends Wave</string>
     <!-- TODO: Remove or change this placeholder text -->
 
-    <string name="titre_fragment_contact">LISTE DAMIS</string>
+    <string name="titre_fragment_contact">Ajoutez des contacts et discutez avec eux</string>
     <string name="titre_fragment_home">HOME</string>
     <string name="titre_fragment_event">EVENTS</string>
     <string name="titre_signalement_activity">SIGNALEMENT</string>

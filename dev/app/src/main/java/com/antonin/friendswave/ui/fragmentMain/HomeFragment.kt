@@ -3,7 +3,6 @@ package com.antonin.friendswave.ui.fragmentMain
 import android.Manifest
 import android.content.ContentValues.TAG
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -31,15 +30,10 @@ import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.antonin.friendswave.ui.viewModel.NotifFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.NotifFragmentViewModel
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.iid.FirebaseInstanceId
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
 import org.kodein.di.Kodein
 
 
@@ -80,6 +74,8 @@ class HomeFragment : Fragment(), KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
         adapter2 = ListGeneriqueAdapter(R.layout.recycler_invite_events)
         adapter3 = ListGeneriqueAdapter(R.layout.recycler_demande_inscription)
@@ -90,6 +86,7 @@ class HomeFragment : Fragment(), KodeinAware {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+
 
 
         permissionNotifs()
@@ -130,11 +127,17 @@ class HomeFragment : Fragment(), KodeinAware {
 
     override fun onResume() {
         super.onResume()
+        try{
 
-        viewModel2.fetchUsersRequest()
-        viewModel2.fetchEventsInvitation()
-        viewModel2.fetchDemandeInscriptionEventPublic()
-        viewModel.fetchUserData()
+            viewModel2.fetchUsersRequest()
+            viewModel2.fetchEventsInvitation()
+            viewModel2.fetchDemandeInscriptionEventPublic()
+            viewModel.fetchUserData()
+
+        } catch(e : Exception){
+
+            e.printStackTrace()
+        }
 
         viewModel2.friendNotifList.observe(this, Observer { notifUserList ->
             adapter1.addItems(notifUserList)

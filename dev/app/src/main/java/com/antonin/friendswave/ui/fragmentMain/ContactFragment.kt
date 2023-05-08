@@ -81,9 +81,14 @@ class ContactFragment : Fragment(), KodeinAware {
             adapter1.addItems(userList)
             if(userList.isEmpty()){
                 binding.recoContact.visibility = View.VISIBLE
+                binding.contactImg.visibility = View.VISIBLE
 
-            }else
+            }else{
+
                 binding.recoContact.visibility = View.GONE
+                binding.contactImg.visibility = View.GONE
+            }
+
         })
 
 
