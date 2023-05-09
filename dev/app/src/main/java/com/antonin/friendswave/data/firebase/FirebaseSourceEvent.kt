@@ -604,12 +604,29 @@ class FirebaseSourceEvent {
     }
 
 
+//    fun fetchEventsPublic1(onResult: (List<Event>) -> Unit){
+//
+//        firebaseData.child("event/eventPublic").get().addOnCompleteListener { task ->
+//            if (task.isSuccessful) {
+//                val eventsList = ArrayList<Event>()
+//                for (snap in task.result.children) {
+//                    if (snap.exists()) {
+//                        val event = snap.getValue(Event::class.java)
+//                        eventsList.add(event!!)
+//                    }
+//                }
+//                onResult(eventsList)
+//            }
+//        }
+//    }
+
     fun fetchEventsPublic1(onResult: (List<Event>) -> Unit){
 
-        firebaseData.child("event/eventPublic").get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
+
+        firebaseData.child("event/eventPublic").addValueEventListener(object :ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
                 val eventsList = ArrayList<Event>()
-                for (snap in task.result.children) {
+                for (snap in snapshot.children) {
                     if (snap.exists()) {
                         val event = snap.getValue(Event::class.java)
                         eventsList.add(event!!)
@@ -617,7 +634,13 @@ class FirebaseSourceEvent {
                 }
                 onResult(eventsList)
             }
-        }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+
+        })
     }
 
     // va chercher juste les evenements de l'utilisateur dans la partie Privée

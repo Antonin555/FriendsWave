@@ -2,6 +2,7 @@ package com.antonin.friendswave.ui.fragmentMain
 
 import android.Manifest
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -26,6 +27,7 @@ import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentHomeBinding
+import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.antonin.friendswave.ui.viewModel.NotifFragmentVMFactory
@@ -44,9 +46,6 @@ import org.kodein.di.android.x.kodein
 
 
 class HomeFragment : Fragment(), KodeinAware {
-
-
-
 
 
     private var storeMedia = FirebaseStore()
@@ -79,7 +78,7 @@ class HomeFragment : Fragment(), KodeinAware {
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
         adapter2 = ListGeneriqueAdapter(R.layout.recycler_invite_events)
         adapter3 = ListGeneriqueAdapter(R.layout.recycler_demande_inscription)
-        initFCM()
+
 
 
 
@@ -88,11 +87,20 @@ class HomeFragment : Fragment(), KodeinAware {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
 
-
+        initFCM()
         permissionNotifs()
         FirebaseMessaging.getInstance().subscribeToTopic("nom-du-topic")
         FirebaseMessaging.getInstance().subscribeToTopic("nom-du-topic1")
 
+
+        val inte = Intent()
+        if (inte != null && inte.extras != null) {
+            val clickAction = inte.extras!!.getString("click_action")
+            if (clickAction != null && clickAction == "OPEN_ACTIVITY") {
+                val intent = Intent(requireContext(), ProfilActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)

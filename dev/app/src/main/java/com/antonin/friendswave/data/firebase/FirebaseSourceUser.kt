@@ -113,7 +113,7 @@ class FirebaseSourceUser {
     }
 
     fun verifAmitier(profilUid: String?, onResult: (Boolean?) -> Unit){
-        firebaseData.child("user").child(mainUid!!)
+        firebaseData.child("user").child(firebaseAuth.currentUser!!.uid)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {

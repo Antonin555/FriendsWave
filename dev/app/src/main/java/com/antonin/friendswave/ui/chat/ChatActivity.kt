@@ -46,11 +46,9 @@ class ChatActivity : AppCompatActivity(), KodeinAware {
 
 
         viewModel.messageList.observe(this, Observer { messageList ->
-
-
-
             messageAdapter = MessageAdapter(this, messageList)
             messageAdapter.addItems(messageList)
+            //viewModel.user_live.value?.lastMessage?.put(reveiverUid.toString(), messageList.lastOrNull().toString())
             binding.chatRecyclerView.adapter = messageAdapter
         })
 
