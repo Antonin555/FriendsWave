@@ -10,310 +10,270 @@
             type="com.antonin.friendswave.ui.viewModel.AuthViewModel"/>
     </data>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:orientation="vertical"
-        android:scrollbarAlwaysDrawVerticalTrack="true"
-        tools:context=".ui.auth.SignupActivity">
+        android:scrollbarAlwaysDrawVerticalTrack="true">
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="729dp"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5">
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2.2"
+                app:srcCompat="@drawable/wave1" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/roboto_mono"
+                android:text="@string/signup"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="0.6"
+                android:orientation="horizontal">
+
+
+                <EditText
+                    android:id="@+id/text_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:drawableLeft="@color/design_default_color_primary"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/roboto_mono"
+                    android:hint="@string/hint_name"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true"
+                    android:text="@={viewmodel.name}"
+                    android:textSize="12sp"
+                    android:textStyle="italic" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="0.6"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/text_familyName"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:drawableLeft="@color/design_default_color_primary"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/roboto_mono"
+                    android:hint="@string/hint_familyName"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true"
+                    android:text="@={viewmodel.familyName}"
+                    android:textSize="12sp"
+                    android:textStyle="italic" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="0.6"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/text_pseudo"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:drawableLeft="@color/design_default_color_primary"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/roboto_mono"
+                    android:hint="@string/hint_pseudo"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true"
+                    android:text="@={viewmodel.nickname}"
+                    android:textSize="12sp"
+                    android:textStyle="italic" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="0.6"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/text_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:drawableLeft="@color/design_default_color_primary"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/roboto_mono"
+                    android:hint="@string/hint_mail"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true"
+                    android:text="@={viewmodel.email}"
+                    android:textSize="12sp"
+                    android:textStyle="italic" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="0.6"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edit_text_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:drawableLeft="@color/black"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/roboto_mono"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:singleLine="true"
+                    android:text="@={viewmodel.password}"
+                    android:textSize="12sp"
+                    android:textStyle="italic" />
+            </LinearLayout>
 
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="10dp">
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="0.6"
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageView"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        app:srcCompat="@drawable/user" />
-
-                    <EditText
-                        android:id="@+id/text_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:drawableLeft="@color/design_default_color_primary"
-                        android:drawablePadding="10dp"
-                        android:fontFamily="@font/roboto_mono"
-                        android:gravity="center"
-                        android:hint="@string/hint_name"
-                        android:inputType="textEmailAddress"
-                        android:singleLine="true"
-                        android:text="@={viewmodel.name}"
-                        android:textSize="12sp"
-                        android:textStyle="italic" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageView5"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        app:srcCompat="@drawable/idcard" />
-
-                    <EditText
-                        android:id="@+id/text_familyName"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:drawableLeft="@color/design_default_color_primary"
-                        android:drawablePadding="10dp"
-                        android:fontFamily="@font/roboto_mono"
-                        android:gravity="center"
-                        android:hint="@string/hint_familyName"
-                        android:inputType="textEmailAddress"
-                        android:singleLine="true"
-                        android:text="@={viewmodel.familyName}"
-                        android:textSize="12sp"
-                        android:textStyle="italic" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageView6"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        app:srcCompat="@drawable/pseudo" />
-
-                    <EditText
-                        android:id="@+id/text_pseudo"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:drawableLeft="@color/design_default_color_primary"
-                        android:drawablePadding="10dp"
-                        android:fontFamily="@font/roboto_mono"
-                        android:gravity="center"
-                        android:hint="@string/hint_pseudo"
-                        android:inputType="textEmailAddress"
-                        android:singleLine="true"
-                        android:text="@={viewmodel.nickname}"
-                        android:textSize="12sp"
-                        android:textStyle="italic" />
-                </LinearLayout>
-
-                <!--                <EditText-->
-<!--                    android:id="@+id/text_ville"-->
-<!--                    android:layout_width="fill_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginBottom="10dp"-->
-<!--                    android:drawableLeft="@color/design_default_color_primary"-->
-<!--                    android:drawablePadding="10dp"-->
-<!--                    android:fontFamily="@font/roboto_mono"-->
-<!--                    android:hint="@string/hint_ville"-->
-<!--                    android:inputType="textEmailAddress"-->
-<!--                    android:singleLine="true"-->
-<!--                    android:text="@={viewmodel.city}" />-->
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/txtLieuEdit"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:gravity="center"
-                        android:src="@drawable/ville"
-                        android:textSize="18sp" />
-
-                    <EditText
-                        android:id="@+id/editLieu"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="2"
-                        android:fontFamily="@font/roboto_mono"
-                        android:text="@={viewmodel.city}" />
-
-                    <ImageView
-                        android:id="@+id/searchCity"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="right"
-
-                        android:layout_weight="1"
-                        android:src="@drawable/map" />
-
-
-                </LinearLayout>
-
-<!--                <EditText-->
-<!--                    android:id="@+id/text_age"-->
-<!--                    android:layout_width="fill_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginBottom="10dp"-->
-<!--                    android:drawableLeft="@color/design_default_color_primary"-->
-<!--                    android:drawablePadding="10dp"-->
-<!--                    android:fontFamily="@font/roboto_mono"-->
-<!--                    android:hint="@string/hint_age"-->
-<!--                    android:inputType="textEmailAddress"-->
-<!--                    android:singleLine="true"-->
-<!--                    android:text="@={`` + viewmodel.age}" />-->
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/textView13"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/roboto_mono"
-                        android:src="@drawable/birthday" />
-
-                    <DatePicker
-                        android:id="@+id/datePicker"
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:calendarViewShown="false"
-                        android:datePickerMode="spinner"
-                        android:day="@={viewmodel.day}"
-                        android:month="@={viewmodel.month}"
-                        android:onDateChanged="@{(v, year, month, day) -> viewmodel.changeDate(year, month, day)}"
-                        android:year="@={viewmodel.year}" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageView7"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        app:srcCompat="@drawable/email" />
-
-                    <EditText
-                        android:id="@+id/text_email"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:drawableLeft="@color/design_default_color_primary"
-                        android:drawablePadding="10dp"
-                        android:fontFamily="@font/roboto_mono"
-                        android:gravity="center"
-                        android:hint="@string/hint_mail"
-                        android:inputType="textEmailAddress"
-                        android:singleLine="true"
-                        android:text="@={viewmodel.email}"
-                        android:textSize="12sp"
-                        android:textStyle="italic" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageView8"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        app:srcCompat="@drawable/password" />
-
-                    <EditText
-                        android:id="@+id/edit_text_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:drawableLeft="@color/black"
-                        android:drawablePadding="10dp"
-                        android:fontFamily="@font/roboto_mono"
-                        android:gravity="center"
-                        android:hint="@string/password"
-                        android:inputType="textPassword"
-                        android:singleLine="true"
-                        android:text="@={viewmodel.password}"
-                        android:textSize="12sp"
-                        android:textStyle="italic" />
-                </LinearLayout>
-
-
-                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    android:id="@+id/button_sign_up"
+                <ImageView
+                    android:id="@+id/searchCity"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_margin="22dp"
-                    android:gravity="center"
-                    android:onClick="@{() -> viewmodel.signup()}"
-                    android:text="@string/signup"
-                    android:textColor="#fff"
-                    android:textStyle="bold"
-                    android:backgroundTint="#4D7167"
-                    android:textSize="15sp" />
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_marginStart="5dp"
+                    android:src="@drawable/gnb" />
 
-                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    android:id="@+id/text_view_register"
+                <TextView
+                    android:id="@+id/editLieu"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/roboto_mono"
-                    android:onClick="@{(v) -> viewmodel.goToLogin(v)}"
-                    android:text="@string/login"
-                    android:backgroundTint="#4D7167"
-                    android:textColor="#fff"
-                    android:textStyle="bold"
-                    android:textAlignment="center" />
+                    android:text="@={viewmodel.city}" />
+
 
             </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="0.7"
+                android:orientation="horizontal">
 
-    </RelativeLayout>
+                <ImageView
+                    android:id="@+id/textView13"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_mono"
+                    android:src="@drawable/birthday" />
+
+                <DatePicker
+                    android:id="@+id/datePicker"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:calendarViewShown="false"
+                    android:datePickerMode="spinner"
+                    android:day="@={viewmodel.day}"
+                    android:month="@={viewmodel.month}"
+                    android:onDateChanged="@{(v, year, month, day) -> viewmodel.changeDate(year, month, day)}"
+                    android:year="@={viewmodel.year}" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:background="@drawable/custom_shape"
+                android:backgroundTint="#4D7167"
+                android:gravity="center">
+
+                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                    android:id="@+id/button_sign_up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:backgroundTint="#4D7167"
+                    android:gravity="center"
+                    android:onClick="@{() -> viewmodel.signup()}"
+                    android:stateListAnimator="@null"
+                    android:text="@string/signup"
+                    android:textColor="#fff"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                    android:id="@+id/text_view_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:backgroundTint="#4D7167"
+                    android:fontFamily="@font/roboto_mono"
+                    android:onClick="@{(v) -> viewmodel.goToLogin(v)}"
+                    android:stateListAnimator="@null"
+                    android:text="@string/login"
+                    android:textAlignment="center"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <!--    </RelativeLayout>-->
