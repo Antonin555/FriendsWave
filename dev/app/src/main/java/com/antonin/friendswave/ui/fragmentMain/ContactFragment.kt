@@ -68,7 +68,6 @@ class ContactFragment : Fragment(), KodeinAware {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_PERMISSION_READ_EXTERNAL_STORAGE)
         }
 
-
 //        viewModel.fetchUsersFriends()
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_contact)
         val layoutManager = LinearLayoutManager(context)
@@ -84,7 +83,6 @@ class ContactFragment : Fragment(), KodeinAware {
                 binding.contactImg.visibility = View.VISIBLE
 
             }else{
-
                 binding.recoContact.visibility = View.GONE
                 binding.contactImg.visibility = View.GONE
             }
@@ -96,15 +94,16 @@ class ContactFragment : Fragment(), KodeinAware {
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
                 val userChoisi = binding.viewmodel!!.emailUserList.value?.get(position)
-                if(view.id == R.id.nomProfile){
-                    val intent = Intent(context, ChatActivity::class.java)
-                    intent.putExtra("uid", userChoisi?.uid)
-                    startActivity(intent)
-                }
+
                 if(view.id == R.id.imageProfil){
                     val intent = Intent(context, ProfilActivity::class.java)
                     intent.putExtra("uid", userChoisi?.uid)
                     startActivity(intent)
+                } else {
+                    val intent = Intent(context, ChatActivity::class.java)
+                    intent.putExtra("uid", userChoisi?.uid)
+                    startActivity(intent)
+
                 }
             }
         })

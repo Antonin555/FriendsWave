@@ -61,6 +61,7 @@
                     android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
                     android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
                     android:text="@{event.eventDataPrivate.name}"
                     android:textSize="34sp" />
 
@@ -86,9 +87,10 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="0.4"
-                        android:text="@{event.pseudo}"
-                        android:gravity="center"
-                        android:onClick="@{(v)-> user.goToYourProfil(v)}" />
+                        android:text="@{event.eventDataPrivate.pseudo}"
+                        android:gravity="center"/>
+
+<!--                        android:onClick="@{(v)-> user.goToYourProfil(v)}" />-->
 
                 </LinearLayout>
                 <LinearLayout
@@ -114,6 +116,7 @@
                         android:layout_weight="0.5"
                         android:fontFamily="@font/roboto_mono"
                         android:gravity="center"
+                        android:textColor="#FF8A65"
                         android:text="@{event.eventDataPrivate.categorie.toString()}" />
                 </LinearLayout>
 
@@ -234,6 +237,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:fontFamily="@font/roboto_mono"
                         android:text="@string/add_event_nbre_personnes" />
 
@@ -279,7 +283,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="250dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -346,7 +352,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="5dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="50dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="10dp"
                     android:background="#4D7167" />
@@ -358,7 +364,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="50dp"
                     android:layout_marginBottom="20dp"
                     android:fontFamily="@font/roboto_mono"
                     android:gravity="center"

@@ -91,7 +91,6 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
                         "Annuler", clickOnPositiveButton(event), negativeButtonClickListener)
 
                 }
-
                 else {
 
                     val intent = Intent(view.context, GroupChatActivity::class.java)
@@ -100,42 +99,47 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
                     view.context.startActivity(intent)
                 }
 
-
-
             }
         })
 
 
         adapter2.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
-
                 val event = viewModel.eventPendingPublic.value?.get(position)
-                if(view.id == R.id.recycler_pending) {
-                    println("JEEEEEEEEEEEEEE SUIIIIIIIISSSSS    CLLIQUEEEEEEE")
-                    val bool = true
-                    val intent = Intent(view.context, DetailEventActivity::class.java)
-                    intent.putExtra("idEvent", event!!.key)
-                    intent.putExtra("inscrit_ou_non", bool)
-                    view.context.startActivity(intent)
+               if(view.id == R.id.btn_delete) {
+
+                   val alert = AlertDialog(requireContext())
+                   alert.showDialog(requireContext(),
+                       "Suppression de votre participation",
+                       "Etes vous certain de vouloir supprimer cet event ?",
+                       "Confirmer",
+                       "Annuler", cliclPositiveButtonPendingEvent(event), negativeButtonClickListener)
+
+               } else {
+
+                   val bool = true
+                   val intent = Intent(view.context, DetailEventActivity::class.java)
+                   intent.putExtra("idEvent", event!!.key)
+                   intent.putExtra("inscrit_ou_non", bool)
+                   view.context.startActivity(intent)
+
                 }
-
-                if(view.id== R.id.btn_delete){
-
-                    viewModel.deletePendingEvent(event)
-                }
-
-
             }
         })
-
     }
-    fun clickOnPositiveButton(event:Event?) = DialogInterface.OnClickListener { dialog, which ->
 
+
+    fun clickOnPositiveButton(event:Event?) = DialogInterface.OnClickListener { dialog, which ->
             if (which == DialogInterface.BUTTON_POSITIVE) {
                 viewModel.deleteConfirmation(event)
-
             }
         }
+
+    fun cliclPositiveButtonPendingEvent(event:Event?) = DialogInterface.OnClickListener { dialog,which ->
+        if(which == DialogInterface.BUTTON_POSITIVE) {
+            viewModel.deletePendingEvent(event)
+        }
+    }
 
 
     val negativeButtonClickListener = DialogInterface.OnClickListener { dialog, which ->

@@ -44,7 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:apiKey="@string/api_key_google_map"
-                    android:backgroundTint="#F06292" />
+                    android:backgroundTint="#71674D" />
 
 
             </androidx.cardview.widget.CardView>

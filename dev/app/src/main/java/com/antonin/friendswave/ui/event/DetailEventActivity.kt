@@ -115,7 +115,19 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
                 bool_linear_inscrit = true
             }
         }
+
+        binding.profilHost.setOnClickListener{
+
+            val intent = Intent(this, ProfilActivity::class.java )
+            intent.putExtra("uid", adminEvent)
+            startActivity(intent)
+        }
+
+
+
     }
+
+
 
 
 

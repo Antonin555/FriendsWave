@@ -89,6 +89,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.6"
                     android:fontFamily="@font/roboto_mono"
+                    android:singleLine="true"
                     android:text="@{item.categorie}"
                     android:textColor="#FF8A65"
                     android:textStyle="bold" />

@@ -29,8 +29,9 @@
         <View
             android:id="@+id/view12"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.02"
+            android:layout_height="3dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:background="#FF4D7167" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -55,8 +56,9 @@
         <View
             android:id="@+id/view13"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.02"
+            android:layout_height="3dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:background="#FF4D7167" />
 
         <androidx.recyclerview.widget.RecyclerView

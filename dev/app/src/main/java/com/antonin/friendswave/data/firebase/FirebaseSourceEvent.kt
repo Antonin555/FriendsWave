@@ -307,9 +307,9 @@ class FirebaseSourceEvent {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (data in dataSnapshot.children){
-                        eventValue = data.value.toString()
-                        hostId = data.key.toString()
-                        eventIdList.put(hostId.toString(),eventValue.toString())
+                        hostId = data.value.toString()
+                        eventValue = data.key.toString()
+                        eventIdList.put(eventValue.toString(),hostId.toString())
 
                     }
 //                    addEventsPrivateToRecyclerConfirm(eventIdList,eventList, onResult)
@@ -322,22 +322,46 @@ class FirebaseSourceEvent {
         })
     }
     // A REVOIR NE FONCTIONNE PAS
-    fun addEventsPrivateToRecyclerNotif(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
+//    fun addEventsPrivateToRecyclerNotif(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
+//        for(i in eventIdList){
+//            firebaseEventPrivate.child(i.value).get().addOnCompleteListener { task ->
+//                if (task.isSuccessful) {
+//                    for (snap in task.result.children) {
+//                        if (snap.exists()) {
+//                            val event = snap.getValue(Event::class.java)
+//                            if(i.key == snap.key){
+//                                eventList.add(event!!)
+//                            }
+//                        }
+//                    }
+//                    onResult(eventList)
+//                }
+//            }
+//        }
+//    }
+
+
+
+    fun addEventsPrivateToRecyclerNotif(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit) {
+
         for(i in eventIdList){
-            firebaseEventPrivate.child(i.value).get().addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    for (snap in task.result.children) {
-                        if (snap.exists()) {
-                            val event = snap.getValue(Event::class.java)
-                            if(i.key == snap.key){
-                                eventList.add(event!!)
-                            }
-                        }
-                    }
-                    onResult(eventList)
+      firebaseEventPrivate.child(i.value).addValueEventListener(object :ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                for (snap in snapshot.children) {
+                    val event = snap.getValue(Event::class.java)
+                    if(i.key == snap.key){
+                        eventList.add(event!!)
                 }
+                onResult(eventList)
             }
         }
+          override fun onCancelled(error: DatabaseError) {
+              TODO("Not yet implemented")
+          }
+      })
+
+    }
     }
 
     //Alex 2eme fonction pour ne pas faire result children

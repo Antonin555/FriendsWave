@@ -175,7 +175,6 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
 
     fun goToYourProfil(view: View){
 
-        // .also permet d'eviter de déclarer une variable :
         var intent = Intent(view.context, ProfilActivity::class.java)
         intent.putExtra("uid", profilUid)
         view.context.startActivity(intent)
@@ -227,12 +226,12 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
 
     fun changeDate(year: Int, month: Int, day: Int) {
 
-
-
         val dayString =  if (day < 10) "0$day" else day.toString()
         val monthString = if (month <= 10) "0${month + 1}" else "${month + 1}"
-
         date = dayString + "/"+monthString +"/"+ year.toString()
+
+
+
 
     }
 
