@@ -122,7 +122,7 @@ class FirebaseSourceEvent {
     fun sendRequestToParticipatePublicEvent(idEvent:String, adminEvent: String){
 
         firebaseEventPublic.child(idEvent).child("pendingRequestEventPublic").child(currentUser()!!.email.hashCode().toString()).setValue(currentUser()!!.email)
-        firebaseUserCurrent.child("pendingRequestEventPublic").child(adminEvent).setValue(idEvent)
+        firebaseUserCurrent.child("pendingRequestEventPublic").child(idEvent).setValue(adminEvent)
         firebaseData.child("user").child(adminEvent).child("hostPendingRequestEventPublic").child(idEvent).setValue(mainUid)
 
     }
@@ -139,9 +139,9 @@ class FirebaseSourceEvent {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (data in dataSnapshot.children){
-                        eventValue = data.value.toString()
-                        hostId = data.key.toString()
-                        eventIdList.put(hostId.toString(),eventValue.toString())
+                        hostId = data.value.toString()
+                        eventValue = data.key.toString()
+                        eventIdList.put(eventValue.toString(),hostId.toString())
 
                     }
                     addPendingEventsToRecyclerNotif(eventIdList,eventList, onResult)
@@ -162,7 +162,7 @@ class FirebaseSourceEvent {
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 for (snap in snapshot.children) {
-                    if(eventIdList.containsValue(snap.key)){
+                    if(eventIdList.containsKey(snap.key)){
                         val event = snap.getValue(Event::class.java)
                         eventList.add(event!!)
                     }

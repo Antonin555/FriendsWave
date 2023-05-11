@@ -97,8 +97,8 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         val layoutManager = LinearLayoutManager(this)
         val layoutManager1 = LinearLayoutManager(this)
 
-        binding.recyclerMyEventInscrits.layoutManager = layoutManager
-        binding.recyclerMyEventInscrits.adapter = adapter1
+        binding.recyclerMyEventInscrit.layoutManager = layoutManager
+        binding.recyclerMyEventInscrit.adapter = adapter1
         binding.recyclerPendingParticipants.layoutManager = layoutManager1
         binding.recyclerPendingParticipants.adapter = adapter2
 

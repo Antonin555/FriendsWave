@@ -22,7 +22,6 @@ import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentEventsSubscribeBinding
 import com.antonin.friendswave.outils.AlertDialog
 import com.antonin.friendswave.ui.chat.GroupChatActivity
-
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import org.kodein.di.Kodein
@@ -68,8 +67,8 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
         binding.recyclerMyEventInscrits.layoutManager = layoutManager
         binding.recyclerMyEventInscrits.adapter = adapter1
 
-        binding.recyclerPendingParticipants.layoutManager = layoutManager1
-        binding.recyclerPendingParticipants.adapter = adapter2
+        binding.recyclerPending.layoutManager = layoutManager1
+        binding.recyclerPending.adapter = adapter2
 
         viewModel.eventListConfirm.observe(this, Observer { eventList ->
             adapter1.addItems(eventList)
@@ -86,8 +85,8 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
                 if(view.id == R.id.btn_delete){
                     val alert = AlertDialog(requireContext())
                     alert.showDialog(requireContext(),
-                        "Suppression d'un participant",
-                        "Etes vous certain de vouloir supprimer ce participant ?",
+                        "Suppression de votre participation",
+                        "Etes vous certain de vouloir supprimer cet event ?",
                         "Confirmer",
                         "Annuler", clickOnPositiveButton(event), negativeButtonClickListener)
 
@@ -97,7 +96,7 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
 
                     val intent = Intent(view.context, GroupChatActivity::class.java)
                     intent.putExtra("eventKey", event!!.key)
-                    intent.putExtra("admin", event!!.admin)
+                    intent.putExtra("admin", event.admin)
                     view.context.startActivity(intent)
                 }
 
@@ -111,8 +110,8 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
             override fun onClick(view: View, position: Int) {
 
                 val event = viewModel.eventPendingPublic.value?.get(position)
-                if(view.id == R.id.recycler_pending_participants) {
-
+                if(view.id == R.id.recycler_pending) {
+                    println("JEEEEEEEEEEEEEE SUIIIIIIIISSSSS    CLLIQUEEEEEEE")
                     val bool = true
                     val intent = Intent(view.context, DetailEventActivity::class.java)
                     intent.putExtra("idEvent", event!!.key)

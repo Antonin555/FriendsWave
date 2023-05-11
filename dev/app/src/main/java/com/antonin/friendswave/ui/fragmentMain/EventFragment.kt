@@ -65,8 +65,6 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
 
         binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_event, container, false)
         binding.viewmodel = viewModel
-
-
         binding.mapView.getMapAsync(this)
         binding.mapView.onCreate(savedInstanceState)
         binding.lifecycleOwner = this

@@ -5,8 +5,6 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
-import android.location.Location
-import android.location.LocationListener
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -18,8 +16,6 @@ import com.antonin.friendswave.R
 import com.antonin.friendswave.databinding.ActivityAddEventBinding
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
@@ -87,10 +83,10 @@ class AddEventActivity : AppCompatActivity(), KodeinAware {
                 Activity.RESULT_OK -> {
                     data?.let {
                         val place = Autocomplete.getPlaceFromIntent(data)
-                        binding.editCities.text = place.address.toString()
+                        binding.editCities.text = place.address!!.toString()
                         val geoCoder = Geocoder(this)
                         try {
-                            addressList = geoCoder.getFromLocationName(place.address.toString(), 1)
+                            addressList = geoCoder.getFromLocationName(place.address!!.toString(), 1)
 
                         } catch (e: IOException) {
                             e.printStackTrace()
