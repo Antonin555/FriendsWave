@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@{item.user_liveProfil.name}"
+                android:text="@{item.user_liveProfil.nickname}"
                 android:textColor="@color/black"
                 android:textSize="24sp" />
 

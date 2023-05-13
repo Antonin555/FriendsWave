@@ -84,6 +84,14 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
         viewModel.fetchUserData()
 
         viewModel.eventList.observe(this, Observer { eventList ->
+
+            if(eventList.isEmpty()){
+                binding.noResultFound.visibility = View.VISIBLE
+
+            }else{
+                binding.noResultFound.visibility = View.GONE
+            }
+
             adapter1.addItems(eventList)
 //
         })
@@ -135,16 +143,25 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
     fun strategyEvent(strategy: Strategy, str:String) {
         var tempList: ArrayList<Event>
         viewModel.eventList.observe(this, Observer { eventList ->
+
             val user = viewModel.user_live.value
             tempList = strategy.search(str, eventList, user!!) as ArrayList<Event>
+
+            if(tempList.isEmpty()){
+                binding.noResultFound.visibility = View.VISIBLE
+
+            }else{
+                binding.noResultFound.visibility = View.GONE
+            }
             adapter1.addItems(tempList)
 
             adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
                 override fun onClick(view: View, position: Int) {
-                    val id_event = tempList.get(position).key
-                    val admin_event = tempList.get(position).admin
-                    goToDetailEvent(id_event,admin_event,position)
-
+                    if (tempList.size >= position){
+                        val id_event = tempList.get(position).key
+                        val admin_event = tempList.get(position).admin
+                        goToDetailEvent(id_event,admin_event,position)
+                    }
                 }
             })
         })

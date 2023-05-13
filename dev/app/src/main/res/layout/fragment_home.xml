@@ -90,7 +90,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:text="@{item.user_live.name}"
+                android:text="@{item.user_live.nickname}"
                 android:textSize="24sp" />
 
             <LinearLayout

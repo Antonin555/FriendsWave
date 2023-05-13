@@ -83,7 +83,7 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
             interfaceAuth?.onSuccess()
         }, {
             //sending a failure callback
-            interfaceAuth?.onFailure("it.message!!")
+            interfaceAuth?.onFailure("Mauvais courriel ou mot de passe")
 
         })
 

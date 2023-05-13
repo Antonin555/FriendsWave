@@ -52,7 +52,7 @@ class AddContactActivity : AppCompatActivity(), KodeinAware, InterfaceAuth {
         //pour les strategies de referencement
         viewModel.fetchAllUser()
         viewModel.fetchUserData()
-
+        binding.noResultFound.visibility = View.GONE
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_contact)
         val layoutManager2 = LinearLayoutManager(this)
         binding.recyclerSuggestion.layoutManager = layoutManager2
@@ -83,6 +83,13 @@ class AddContactActivity : AppCompatActivity(), KodeinAware, InterfaceAuth {
         viewModel.totalUserList.observe(this, Observer { userList ->
             val tempList = strategy.search(viewModel.user_live.value, userList) as ArrayList<User>
             adapter1.addItems(tempList)
+
+            if(tempList.isEmpty()){
+                binding.noResultFound.visibility = View.VISIBLE
+
+            }else{
+                binding.noResultFound.visibility = View.GONE
+            }
 
             adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {
                 override fun onClick(view: View, position: Int) {

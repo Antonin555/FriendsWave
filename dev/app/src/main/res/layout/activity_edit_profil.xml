@@ -180,13 +180,44 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="400dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1.5"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txtPseudoEdit"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/roboto_mono"
+                            android:gravity="center"
+                            android:text="@string/pseudoo"
+                            android:textSize="18sp"
+                            tools:ignore="NestedWeights" />
+
+                        <EditText
+                            android:id="@+id/editPseudo"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"
+                            android:fontFamily="@font/roboto_mono"
+                            android:importantForAutofill="no"
+                            android:text="@={viewmodel.user_live.nickname}"
+                            tools:ignore="TextFields" />
+
+
+                    </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"

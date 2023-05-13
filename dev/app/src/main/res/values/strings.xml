@@ -39,6 +39,7 @@
     <string name="hint_ville">votre ville</string>
     <string name="hint_age">Votre age</string>
     <string name="hint_mail">Votre mail</string>
+    <string name="pseudoo">Pseudo</string>
     <string name="prenom">Prenom</string>
     <string name="langues">Langues</string>
     <string name="centres_interets">centres d""interets</string>
