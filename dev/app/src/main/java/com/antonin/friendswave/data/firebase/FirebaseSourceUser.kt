@@ -231,17 +231,19 @@ class FirebaseSourceUser {
 
     fun requestAlreadySend(email: String, onResult: (Boolean) -> Unit){
         val userRef = firebaseData.child("user/")
+        var requete = false;
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (postSnapshot in snapshot.children) {
                     val currentUser = postSnapshot.getValue(User::class.java)
                     if (email == currentUser?.email) {
                         if(currentUser.friendRequest!!.containsKey(mainUid!!)){
-//                            onResult(true)
+                            onResult(true)
+                            requete = true
                         }
                     }
                 }
-//                onResult(false)
+                if (!requete)onResult(false)
             }
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")

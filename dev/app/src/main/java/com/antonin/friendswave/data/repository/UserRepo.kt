@@ -66,6 +66,7 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
         firebaseUser.requestAlreadySend(email) { bool ->
             doubleRequest.postValue(bool)
         }
+        doubleRequest.value
         return doubleRequest
     }
 

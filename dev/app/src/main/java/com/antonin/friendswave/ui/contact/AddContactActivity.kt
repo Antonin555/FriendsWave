@@ -63,6 +63,10 @@ class AddContactActivity : AppCompatActivity(), KodeinAware, InterfaceAuth {
         val searchAgeFriend = SearchAgeFriend()
         var searchStrategyFriend: StrategyFriend
 
+        viewModel.requete_live.observe(this, Observer {
+            viewModel.addFriendRequestToUser(this, it)
+        })
+
 
         binding.btnHobby.setOnClickListener{
             searchStrategyFriend = StrategyFriend(searchHobbyFriend)

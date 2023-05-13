@@ -11,9 +11,10 @@ import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.outils.AlertDialog
 //import com.antonin.friendswave.strategy.SearchAgeFriend
 //import com.antonin.friendswave.strategy.SearchCityFriend
-import com.antonin.friendswave.strategy.SearchHobbyFriend
 import com.antonin.friendswave.strategy.StrategyFriend
 import com.antonin.friendswave.ui.authentification.InterfaceAuth
+import com.antonin.friendswave.ui.contact.AddContactActivity
+import java.lang.Runnable
 import javax.mail.Transport
 import java.util.*
 import javax.mail.*
@@ -38,6 +39,9 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
     private val _user = MutableLiveData<User>()
     var user_live: LiveData<User> = _user
 
+    private val _requete = MutableLiveData<Boolean>()
+    var requete_live: LiveData<Boolean> = _requete
+
     private val _totalUserList = MutableLiveData<List<User>>()
     val totalUserList: LiveData<List<User>> = _totalUserList
 
@@ -50,36 +54,47 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
         }
     }
 
-    fun addFriendRequestToUser(view: View){
-        val alertDialog: AlertDialog = AlertDialog(view.context)
+    fun verifRequete(){
+
+        repository.requestAlreadySend(email!!).observeForever{ user ->
+            _requete.value = user
+        }
+
+    }
+
+    fun addFriendRequestToUser(view: AddContactActivity, requete: Boolean){
+        val alertDialog = AlertDialog(view)
+        val emailPattern = Regex("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
 
         val positiveButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
             // Code à exécuter si le bouton positif est cliqué
             if (which == DialogInterface.BUTTON_POSITIVE) {
                 //envoyer une demande directement par couriel
                 sendEmail(email!!)
-                Toast.makeText(view.context,"demande envoye par couriel", Toast.LENGTH_LONG).show()
+                Toast.makeText(view,"demande envoye par couriel", Toast.LENGTH_LONG).show()
                 alertDialog.cancel()
             }
         }
-
         val negativeButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
             // Code à exécuter si le bouton négatif est cliqué
             if (which == DialogInterface.BUTTON_NEGATIVE) {
-                Toast.makeText(view.context,"ok on touche a rien", Toast.LENGTH_LONG).show()
+                Toast.makeText(view,"ok on touche a rien", Toast.LENGTH_LONG).show()
                 alertDialog.cancel()
             }
         }
-
         if (email.isNullOrEmpty()) {
             //faire un interface pour indiquer les erreurs
+            interfaceAuth?.onFailure("Please enter a mail")
+            return
+        }
+        if (!emailPattern.matches(email!!)){
             interfaceAuth?.onFailure("Please enter a valid mail")
             return
         }
         if (!emailList.value!!.contains(email!!)){
 //            interfaceAuth?.onFailure("This email match no account, we are sending an invitation via email")
 
-            alertDialog.showDialog(view.context, "Attention", "This email match no account, do you want to make an invitation via email", "yes","no", positiveButtonClickListener, negativeButtonClickListener)
+            alertDialog.showDialog(view, "Attention", "This email match no account, do you want to make an invitation via email", "yes","no", positiveButtonClickListener, negativeButtonClickListener)
 
             return
         }
@@ -87,13 +102,16 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
             interfaceAuth?.onFailure("Already in your contact")
             return
         }
-// verifier qu'une demande na pas deja ete envoye
-//        if(repository.requestAlreadySend(email!!).value!!){
-//            interfaceAuth?.onFailure("Request already sent")
-//            return
-//        }
+        // verifier qu'une demande na pas deja ete envoye
+        // A REVOIR on fait 2 verifications
+        if(requete){
+            interfaceAuth?.onFailure("Request already send")
+            return
+        }
 
-        Toast.makeText(view.context, "Demande envoyee", Toast.LENGTH_SHORT).show()
+
+
+        Toast.makeText(view, "Demande envoyee", Toast.LENGTH_SHORT).show()
         repository.addFriendRequestToUser(email!!)
     }
 
