@@ -11,7 +11,6 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import io.reactivex.Completable
-import java.io.File
 import java.util.Calendar
 
 class FirebaseSourceUser {
@@ -386,8 +385,13 @@ class FirebaseSourceUser {
         })
     }
 
-    fun addMessagetoDatabase(messageEnvoye: String, receiverUid: String, user: User?){
-        val messageObject = Messages(messageEnvoye, mainUid, user?.name)
+    fun addMessagetoDatabase(
+        messageEnvoye: String,
+        receiverUid: String,
+        user: User?,
+        formattedTimestamp: String
+    ){
+        val messageObject = Messages(messageEnvoye, mainUid, user?.name, formattedTimestamp)
         val senderRoom = receiverUid + mainUid
         val receiverRoom = mainUid + receiverUid
 
@@ -398,8 +402,13 @@ class FirebaseSourceUser {
             }
     }
 
-    fun addMessageGrouptoDatabase(messageEnvoye: String, receiverUid: String, userName: String){
-        val messageObject = Messages(messageEnvoye, mainUid, userName)
+    fun addMessageGrouptoDatabase(
+        messageEnvoye: String,
+        receiverUid: String,
+        userName: String,
+        formattedTimestamp: String
+    ){
+        val messageObject = Messages(messageEnvoye, mainUid, userName, formattedTimestamp)
 
         firebaseData.child("chatsGroup").child(receiverUid).child("message").push()
             .setValue(messageObject)

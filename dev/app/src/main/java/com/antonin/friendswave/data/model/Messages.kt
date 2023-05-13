@@ -5,7 +5,8 @@ import com.antonin.friendswave.adapter.ListItemViewModel
 data class Messages (
     var message: String? = "",
     var senderId: String? = "",
-    var senderName: String? = ""
+    var senderName: String? = "",
+    var timeStamp: String? = ""
         ): ListItemViewModel()
 
 

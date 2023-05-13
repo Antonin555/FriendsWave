@@ -180,12 +180,22 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
         return emailList
     }
 
-    fun addMessagetoDatabase(messageEnvoye: String, receiverUid: String, user: User?){
-        firebaseUser.addMessagetoDatabase(messageEnvoye, receiverUid, user)
+    fun addMessagetoDatabase(
+        messageEnvoye: String,
+        receiverUid: String,
+        user: User?,
+        formattedTimestamp: String
+    ){
+        firebaseUser.addMessagetoDatabase(messageEnvoye, receiverUid, user, formattedTimestamp)
     }
 
-    fun addMessageGrouptoDatabase(messageEnvoye: String, receiverUid: String, userName: String){
-        firebaseUser.addMessageGrouptoDatabase(messageEnvoye, receiverUid, userName)
+    fun addMessageGrouptoDatabase(
+        messageEnvoye: String,
+        receiverUid: String,
+        userName: String,
+        formattedTimestamp: String
+    ){
+        firebaseUser.addMessageGrouptoDatabase(messageEnvoye, receiverUid, userName, formattedTimestamp)
     }
 
 

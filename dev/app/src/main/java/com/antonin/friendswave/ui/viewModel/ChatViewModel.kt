@@ -9,7 +9,8 @@ import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
-
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 class ChatViewModel(private val repository: UserRepo, private val repoEvent: EventRepo): ViewModel()  {
     var messageEnvoye: String? = ""
@@ -39,7 +40,10 @@ class ChatViewModel(private val repository: UserRepo, private val repoEvent: Eve
 
         if(messageEnvoye != null){
 
-            repository.addMessagetoDatabase(messageEnvoye!!, receiverUid!!, user_live.value!!)
+            val heureActuelle: LocalTime = LocalTime.now()
+            val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
+            val heureFormatee: String = formatter.format(heureActuelle)
+            repository.addMessagetoDatabase(messageEnvoye!!, receiverUid!!, user_live.value!!, heureFormatee)
 
         }
         messageEnvoye = ""
@@ -50,7 +54,10 @@ class ChatViewModel(private val repository: UserRepo, private val repoEvent: Eve
     fun addMessageGrouptoDatabase(view: View){
 
         if(messageEnvoye != null){
-            repository.addMessageGrouptoDatabase(messageEnvoyeGroup!!, receiverUidGroup!!, user_live.value?.name.toString())
+            val heureActuelle: LocalTime = LocalTime.now()
+            val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
+            val heureFormatee: String = formatter.format(heureActuelle)
+            repository.addMessageGrouptoDatabase(messageEnvoyeGroup!!, receiverUidGroup!!, user_live.value?.name.toString(), heureFormatee)
 
         }
         messageEnvoyeGroup = ""

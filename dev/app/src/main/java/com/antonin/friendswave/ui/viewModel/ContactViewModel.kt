@@ -116,7 +116,7 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
         message.setFrom(InternetAddress("FriendWaveOfficial@hotmail.com"))
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient))
         message.subject = "Venez rejoindre la communaute FriendsWave"
-        message.setText("Bonjour " + user_live.value!!.email + " mieux connu sous le nom de " +  user_live.value!!.name + " vous invite a rejoindre l'application FriendsWave")
+        message.setText("Bonjour " + user_live.value!!.email + " mieux connu(e) sous le nom de " +  user_live.value!!.name + " vous invite a rejoindre l'application FriendsWave")
 
         Thread(Runnable {
             try {
@@ -126,9 +126,6 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
             }
         }).start()
     }
-
-
-
 
     fun fetchAllUser(){
         repository.fetchAllUser().observeForever{ user ->
