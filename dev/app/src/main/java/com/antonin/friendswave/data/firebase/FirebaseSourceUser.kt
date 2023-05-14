@@ -58,6 +58,21 @@ class FirebaseSourceUser {
             })
     }
 
+    fun fetchAdmin(uid: String, onResult: (User?) -> Unit){
+        firebaseData.child("user").child(FirebaseAuth.getInstance().uid!!)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val user = dataSnapshot.getValue(User::class.java)
+                    onResult(user)
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+
+                    onResult(null)
+                }
+            })
+    }
+
 
 
     fun fetchInteret(onResult: (List<String>?) -> Unit) {

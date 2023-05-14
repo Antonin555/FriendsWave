@@ -87,6 +87,16 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
         return userLiveData
     }
 
+    fun fetchAdmin(uid:String): LiveData<User> {
+        val adminLiveData = MutableLiveData<User>()
+
+        firebaseUser.fetchAdmin(uid) { user ->
+            adminLiveData.postValue(user)
+        }
+
+        return adminLiveData
+    }
+
     fun fetchInteret(): LiveData<List<String>?> {
         val interetLiveData = MutableLiveData<List<String>?>()
 

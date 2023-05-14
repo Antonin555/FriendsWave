@@ -3,10 +3,12 @@ package com.antonin.friendswave.ui.viewModel
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.view.View
 import android.widget.AdapterView
 import android.widget.CompoundButton
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,13 +20,15 @@ import com.antonin.friendswave.ui.chat.GroupChatActivity
 import com.antonin.friendswave.ui.event.*
 import com.antonin.friendswave.ui.home.ManageHomeActivity
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
 class EventFragmentViewModel(private val repository:UserRepo,private val repoEvent:EventRepo):ViewModel() {
 
-    var name: String? = null
-    var description: String? = null
+    var name: String? = ""
+    var description: String? = ""
     private var isPublic : Boolean? = false
     var photo: Uri? = null
     var nbrePersonnes : Int? = 0
@@ -40,7 +44,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     var hour:Int? = 0
     var minute: Int? = 0
     var timeStamp : Double = 0.0
-    var email: String? = null
+    var email: String? = ""
     var pseudo:String? = ""
     var keyEvent: String? = ""
 
@@ -54,6 +58,9 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     private val _user = MutableLiveData<User>()
     var user_live: LiveData<User> = _user
+
+    private val _admin = MutableLiveData<User>()
+    var admin_live: LiveData<User> = _admin
 
     private val _guestList = MutableLiveData<List<User>>()
     val guestList: LiveData<List<User>> = _guestList
@@ -117,31 +124,31 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
             repoEvent.sendRequestToParticipatePublicEvent(idEvent,adminEvent)
         }
-
     }
 
-
+    @RequiresApi(Build.VERSION_CODES.O)
     fun addEventUser(view: View) {
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val dateFormat = LocalDate.parse(date, formatter)
 
-            if(name!!.isNotEmpty() && nbrePersonnes!! != null  && user!!.uid.isNotEmpty() && categorie!!.isNotEmpty() && date!!.isNotEmpty() && horaire!!.isNotEmpty() && adress!!.isNotEmpty() &&
-                    description!!.isNotEmpty()){
-
+        if(!name!!.isNullOrEmpty() && nbrePersonnes!! != 0  && !user!!.uid.isNullOrEmpty() &&
+            !categorie!!.isNullOrEmpty() && !date!!.isNullOrEmpty() && !horaire!!.isNullOrEmpty()
+            && !adress!!.isNullOrEmpty() && !description!!.isNullOrEmpty()){
+            if(photo == null)Toast.makeText(view.context,"Veuillez inserer une photo", Toast.LENGTH_LONG).show()
+            if(nbrePersonnes!! > 10)Toast.makeText(view.context,"Il ne peut pas y avoir plus de 10 personnes a un event", Toast.LENGTH_LONG).show()
+            if(dateFormat.isBefore(LocalDate.now()))Toast.makeText(view.context,"La date doit etre antérieure a celle d'aujoud'hui", Toast.LENGTH_LONG).show()
+            else{
                 if(isPublic == true) {
-
                     repoEvent.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!, adress!!,description!!,
                         longitude!!,lattitude!!,photo!!,view.context, user!!.displayName.toString(), timeStamp )
 
-                } else {
-
-                    repoEvent.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid, categorie!!,date!!, horaire!!, adress!!, description!!, longitude!!,lattitude!!, photo!!, view.context, user!!.displayName.toString(), timeStamp)
-                }
-
+                } else repoEvent.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid, categorie!!,date!!, horaire!!, adress!!, description!!, longitude!!,lattitude!!, photo!!, view.context, user!!.displayName.toString(), timeStamp)
                 Toast.makeText(view.context,"Evenement en cours de publication", Toast.LENGTH_LONG).show()
                 Intent(view.context, ManageHomeActivity::class.java).also { view.context.startActivity(it)}
+            }
+        } else Toast.makeText(view.context,"Veuillez remplir tous les champs", Toast.LENGTH_LONG).show()
 
-            } else Toast.makeText(view.context,"Veuillez remplir tous les champs", Toast.LENGTH_LONG).show()
-
-        }
+    }
 
 
     val isChecked: MutableLiveData<Boolean> = MutableLiveData()
@@ -200,6 +207,13 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         repoEvent.fetchGuestConfirmDetailEventPublic(key).observeForever{ user ->
 
             _confirm_guestListPublic.value = user
+        }
+    }
+
+    fun fetchAdmin(uid: String){
+
+        repository.fetchAdmin(uid).observeForever { user ->
+            _admin.value = user
         }
     }
 

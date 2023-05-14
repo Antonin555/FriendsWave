@@ -87,7 +87,6 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="0.4"
-                        android:text="@{event.eventDataPrivate.pseudo}"
                         android:gravity="center"/>
 
 <!--                        android:onClick="@{(v)-> user.goToYourProfil(v)}" />-->

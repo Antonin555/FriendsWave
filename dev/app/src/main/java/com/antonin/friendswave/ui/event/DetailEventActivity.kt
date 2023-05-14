@@ -56,7 +56,6 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
         binding.recyclerConfirmGuest.adapter = adapter1
 
         if(bool) {
-
             binding.btnInscription.visibility = View.INVISIBLE
         }
 
@@ -64,10 +63,17 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
         viewModel.fetchDataEvent(idEvent.toString())
         viewModel.fetchGuestConfirmDetailEventPublic(idEvent)
 
+        viewModel.fetchAdmin(adminEvent.toString())
+
+        viewModel.admin_live.observe(this, Observer {
+            binding.profilHost.text = it.name
+        })
 
         viewModel.confirm_guestListPublic.observe(this, Observer{ confirm_guestList->
             adapter1.addItems(confirm_guestList)
         })
+
+
 
 
         viewModel.eventDataPublic.observe(this, Observer { it ->
