@@ -23,7 +23,16 @@
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/add_event_private"
-            android:textSize="26sp"/>
+            android:textColor="#FF8A65"
+            android:textSize="26sp" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#4D7167" />
 
         <LinearLayout
             android:id="@+id/createYourFirstEvent"
@@ -31,19 +40,16 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/meow" />
-
             <TextView
                 android:id="@+id/textView60"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Create Your First Event" />
+                android:fontFamily="@font/roboto_mono"
+                android:gravity="center"
+                android:text="Create Your First Event"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -61,8 +67,17 @@
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/add_event_public"
-            android:textSize="26sp"/>
+            android:textColor="#FF8A65"
+            android:textSize="26sp" />
 
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#4D7167" />
 
         <LinearLayout
             android:id="@+id/createYourFirstEventPublic"
@@ -70,19 +85,16 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/meow" />
-
             <TextView
                 android:id="@+id/textView61"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:fontFamily="@font/roboto_mono"
+                android:gravity="center"
+                android:text="TextView"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

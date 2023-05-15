@@ -51,15 +51,11 @@ class HomeFragment : Fragment(), KodeinAware {
     private var storeMedia = FirebaseStore()
     override val kodein : Kodein by kodein()
     private val factory : HomeFragmentVMFactory by instance()
-    private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(
-        repository = UserRepo(firebaseUser = FirebaseSourceUser()),
-        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
-    )
+    private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
+        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
     private val factory2 : NotifFragmentVMFactory by instance()
-    private var viewModel2: NotifFragmentViewModel = NotifFragmentViewModel(
-        repository = UserRepo(firebaseUser = FirebaseSourceUser()),
-        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
-    )
+    private var viewModel2: NotifFragmentViewModel = NotifFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
+        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
     private lateinit var binding: FragmentHomeBinding
 
     private lateinit var adapter1 : ListGeneriqueAdapter<User>
@@ -73,13 +69,9 @@ class HomeFragment : Fragment(), KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
         adapter2 = ListGeneriqueAdapter(R.layout.recycler_invite_events)
         adapter3 = ListGeneriqueAdapter(R.layout.recycler_demande_inscription)
-
-
 
 
     }
@@ -88,19 +80,19 @@ class HomeFragment : Fragment(), KodeinAware {
 
 
         initFCM()
-        permissionNotifs()
+        permissionNotifs() // A VOIR SI UTILE
         FirebaseMessaging.getInstance().subscribeToTopic("nom-du-topic")
         FirebaseMessaging.getInstance().subscribeToTopic("nom-du-topic1")
 
 
-        val inte = Intent()
-        if (inte != null && inte.extras != null) {
-            val clickAction = inte.extras!!.getString("click_action")
-            if (clickAction != null && clickAction == "OPEN_ACTIVITY") {
-                val intent = Intent(requireContext(), ProfilActivity::class.java)
-                startActivity(intent)
-            }
-        }
+//        val inte = Intent()
+//        if ( inte.extras != null) {
+//            val clickAction = inte.extras!!.getString("click_action")
+//            if (clickAction != null && clickAction == "OPEN_ACTIVITY") {
+//                val intent = Intent(requireContext(), ProfilActivity::class.java)
+//                startActivity(intent)
+//            }
+//        }
 
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
@@ -207,13 +199,12 @@ class HomeFragment : Fragment(), KodeinAware {
         FirebaseMessaging.getInstance().token
             .addOnCompleteListener { task ->
                 if (!task.isSuccessful) {
-                    Log.w(TAG, "Échec de la récupération du token du dispositif.", task.exception)
+
                     return@addOnCompleteListener
                 }
-
                 // Le token du dispositif
                 val token = task.result
-                Log.d(TAG, "Token du dispositif : $token")
+
             }
 
 

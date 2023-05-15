@@ -52,6 +52,8 @@
     <string name="chat_group">Chat Group</string>
     <string name="add_event">ajouter un event</string>
     <string name="add_friend">ajouter un contact</string>
+    <string name="inscrit">inscrit</string>
+    <string name="desinscrit">desinscrit</string>
 
     <string name="pseudo">pseudo</string>
 

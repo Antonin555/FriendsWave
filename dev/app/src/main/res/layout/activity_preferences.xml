@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+<data>
+    <variable name="viewmodel"
+        type="com.antonin.friendswave.ui.viewModel.EventFragmentViewModel"/>
+
+</data>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.home.PreferencesActivity">
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:fontFamily="@font/roboto_mono"
+        android:textSize="28sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="notifs - messages"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"/>
+
+        <Switch
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:checked="@={viewmodel.isSubscribe()}"
+            android:layout_gravity="center"
+            android:onCheckedChanged="@{viewmodel::executeOnSubscribeChanged}"
+            tools:ignore="NestedWeights,UseSwitchCompatOrMaterialXml" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/roboto_mono"
+            android:gravity="center"
+            android:text="@{viewmodel.isSubscribe() ? @string/inscrit : @string/desinscrit}"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="notifs - messages"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"/>
+
+        <Switch
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:checked="@={viewmodel.isSubscribe()}"
+            android:layout_gravity="center"
+            android:onCheckedChanged="@{viewmodel::executeOnSubscribeChanged}"
+            tools:ignore="NestedWeights,UseSwitchCompatOrMaterialXml" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/roboto_mono"
+            android:gravity="center"
+            android:text="@{viewmodel.isSubscribe() ? @string/inscrit : @string/desinscrit}"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="notifs - messages"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"/>
+
+        <Switch
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:checked="@={viewmodel.isSubscribe()}"
+            android:layout_gravity="center"
+            android:onCheckedChanged="@{viewmodel::executeOnSubscribeChanged}"
+            tools:ignore="NestedWeights,UseSwitchCompatOrMaterialXml" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/roboto_mono"
+            android:gravity="center"
+            android:text="@{viewmodel.isSubscribe() ? @string/inscrit : @string/desinscrit}"
+            android:textSize="16sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="notifs - messages"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"/>
+
+        <Switch
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:checked="@={viewmodel.isSubscribe()}"
+            android:layout_gravity="center"
+            android:onCheckedChanged="@{viewmodel::executeOnSubscribeChanged}"
+            tools:ignore="NestedWeights,UseSwitchCompatOrMaterialXml" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/roboto_mono"
+            android:gravity="center"
+            android:text="@{viewmodel.isSubscribe() ? @string/inscrit : @string/desinscrit}"
+            android:textSize="16sp" />
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save"/>
+</LinearLayout>
+</layout>

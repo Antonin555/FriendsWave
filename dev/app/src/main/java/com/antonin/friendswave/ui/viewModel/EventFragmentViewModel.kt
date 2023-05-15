@@ -1,6 +1,5 @@
 package com.antonin.friendswave.ui.viewModel
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -19,6 +18,7 @@ import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.ui.chat.GroupChatActivity
 import com.antonin.friendswave.ui.event.*
 import com.antonin.friendswave.ui.home.ManageHomeActivity
+import com.google.firebase.messaging.FirebaseMessaging
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -131,9 +131,9 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         val dateFormat = LocalDate.parse(date, formatter)
 
-        if(!name!!.isNullOrEmpty() && nbrePersonnes!! != 0  && !user!!.uid.isNullOrEmpty() &&
-            !categorie!!.isNullOrEmpty() && !date!!.isNullOrEmpty() && !horaire!!.isNullOrEmpty()
-            && !adress!!.isNullOrEmpty() && !description!!.isNullOrEmpty()){
+        if(!name.isNullOrEmpty() && nbrePersonnes!! != 0  && !user!!.uid.isEmpty() &&
+            !categorie!!.isEmpty() && !date!!.isEmpty() && !horaire!!.isEmpty()
+            && !adress!!.isEmpty() && !description!!.isEmpty()){
             if(photo == null)Toast.makeText(view.context,"Veuillez inserer une photo", Toast.LENGTH_LONG).show()
             if(nbrePersonnes!! > 10)Toast.makeText(view.context,"Il ne peut pas y avoir plus de 10 personnes a un event", Toast.LENGTH_LONG).show()
             if(dateFormat.isBefore(LocalDate.now()))Toast.makeText(view.context,"La date doit etre antérieure a celle d'aujoud'hui", Toast.LENGTH_LONG).show()
@@ -152,8 +152,16 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
 
     val isChecked: MutableLiveData<Boolean> = MutableLiveData()
+    val isSubscribe: MutableLiveData<Boolean> = MutableLiveData()
+
     fun executeOnStatusChanged(switch: CompoundButton, isChecked: Boolean) {
         isPublic = isChecked
+    }
+
+    fun executeOnSubscribeChanged(switch: CompoundButton,isSubscribe : Boolean) {
+        if(isSubscribe) FirebaseMessaging.getInstance().subscribeToTopic("nom-du-topic")
+        else FirebaseMessaging.getInstance().unsubscribeFromTopic("nom-du-topic")
+
     }
 
     // pour recuperer la valeur de la categorie dans le spinner :
@@ -275,11 +283,9 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     }
 
     fun sendAnInvitationEvent(key: String){
-
         if (email.isNullOrEmpty()) {
             return
         }
-
         if(eventDataPrivate.value?.key == key){
             repoEvent.sendAnInvitationEvent(email!!, eventDataPrivate.value!!)
         }
@@ -287,14 +293,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
             repoEvent.sendAnInvitationEvent(email!!, eventDataPublic.value!!)
         }
     }
-
-//    fun fetchParticipantAttente(){
-//
-//        repoEvent.fetchParticipantAttente(keyEvent).observeForever{ user ->
-//            _userListAttente.value = user
-//        }
-//
-//    }
 
     fun gotoMesEventsActivity(view: View) {
         Intent(view.context, ManagerFragmentEvent::class.java).also {
@@ -307,7 +305,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
             view.context.startActivity(it)
         }
     }
-
 
     fun editEvent(){
 
@@ -343,9 +340,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
             view.context.startActivity(it)
         }
     }
-
-
-
 
 
 }

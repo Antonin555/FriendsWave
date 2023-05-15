@@ -26,6 +26,9 @@ class FirebaseSourceUser {
     fun currentUser() = firebaseAuth.currentUser
 
 
+    val firebaseCurrentUser = firebaseData.child("user").child(mainUid!!)
+
+
     open fun logout() {
         firebaseAuth.signOut()
         FirebaseDatabase.getInstance().purgeOutstandingWrites()

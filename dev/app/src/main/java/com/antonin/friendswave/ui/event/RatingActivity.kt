@@ -1,5 +1,6 @@
 package com.antonin.friendswave.ui.event
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -42,4 +43,6 @@ class RatingActivity : AppCompatActivity(), KodeinAware {
 
         //fetch les participants de l'event qui ne sont pas nous
     }
+
+
 }

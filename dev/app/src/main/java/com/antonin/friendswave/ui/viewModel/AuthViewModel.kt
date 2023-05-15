@@ -47,14 +47,12 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
         repository.currentUser()
     }
 
-
     fun goToSignup(view: View){
 
         // .also permet d'eviter de déclarer une variable :
         Intent(view.context, SignupActivity::class.java).also {
             view.context.startActivity(it)
         }
-
     }
 
     fun goToLogin(view: View){
@@ -94,27 +92,27 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
     @RequiresApi(Build.VERSION_CODES.O)
     fun signup() {
         if (email.isNullOrEmpty() || password.isNullOrEmpty() || name.isNullOrEmpty() || familyName.isNullOrEmpty() || nickname.isNullOrEmpty() || city.isNullOrEmpty()) {
-            interfaceAuth?.onFailure("Please input all values")
+            interfaceAuth?.onFailure("Veuillez remplir tous les champs")
             return
         }
         if (!pseudoList_live.value.isNullOrEmpty()){
             if(pseudoList_live.value!!.contains(nickname!!)){
-                interfaceAuth?.onFailure("Please choose another pseudo")
+                interfaceAuth?.onFailure("Pseudo déjà utilisé, choisissez en un autre")
                 return
             }
         }
         //regarde si 18+ et si la date est supperieur a la date actuelle
         if(!verificatioAge(date!!)){
-            interfaceAuth?.onFailure("Sorry your date of birth is not valid")
+            interfaceAuth?.onFailure("Désolé pour utiliser cette application vous devez être majeur")
             return
         }
         if(!isEmailValid(email!!)){
-            interfaceAuth?.onFailure("Sorry your email is not valid")
+            interfaceAuth?.onFailure("Désolé votre email n'est pas valide")
             return
         }
         if(!emailList.value.isNullOrEmpty()){
             if(!emailList.value!!.contains(email!!)){
-                interfaceAuth?.onFailure("Sorry you already have an account with this email. Did you forget your password?")
+                interfaceAuth?.onFailure("Désolé, il existe deja un compte avec cette adresse mail, avez vous oublié votre mot de passe?")
                 return
             }
         }

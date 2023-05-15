@@ -65,8 +65,8 @@ class MyEventFragment : Fragment(), KodeinAware {
 
         viewModel.eventList.observe(this, Observer { eventList ->
             adapter1.addItems(eventList)
-            if(adapter1.itemCount == 0){
-                binding.createYourFirstEvent.visibility = View.VISIBLE
+            if(adapter1.itemCount != 0){
+                binding.createYourFirstEvent.visibility = View.INVISIBLE
             }
         })
 

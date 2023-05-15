@@ -9,6 +9,7 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.antonin.friendswave.ui.event.RatingActivity
 import com.antonin.friendswave.ui.fragmentMain.HomeFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -28,16 +29,36 @@ class FirebaseNotificationsService : FirebaseMessagingService() {
         if (message.data != null){
             val title = message.data["title"]!!.toString()
             val body = message.data["body"]!!.toString()
-            sendNotification(title.toString(),body.toString())
+            val intent_action = message.data["click_action"].toString()
+            sendNotification(title.toString(),body.toString(), intent_action)
 
+        }
+
+        if(message.notification != null) {
+
+            val title = message.data["title"]!!.toString()
+            val body = message.data["body"]!!.toString()
+            val intent_action = message.data["click_action"].toString()
+            sendNotification(title.toString(),body.toString(), intent_action)
         }
 
 
     }
 
-    private fun sendNotification(titre: String, body:String ) {
-        val intent = Intent(this, HomeFragment::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+    private fun sendNotification(titre: String, body:String, action: String) {
+
+        var intent :Intent = Intent()
+
+        if(action == "OPEN_ACTIVITY") {
+            intent = Intent(this, RatingActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }
+        if(action != "OPEN_ACTIVITY") {
+            intent = Intent(this, HomeFragment::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+        }
+
 
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
             PendingIntent.FLAG_IMMUTABLE)

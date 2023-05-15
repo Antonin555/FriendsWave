@@ -7,8 +7,6 @@ import android.view.animation.DecelerateInterpolator
 
 class AnimationLayout {
 
-
-
     //https://stackoverflow.com/questions/4946295/android-expand-collapse-animation
     fun expand(view: View, duration:Int, targetHeight:Int) {
 

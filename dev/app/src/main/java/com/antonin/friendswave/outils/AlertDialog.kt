@@ -14,6 +14,8 @@ import androidx.core.content.res.ResourcesCompat.getDrawable
 
 class AlertDialog(private var context: Context): DialogInterface {
 
+
+
     fun showDialog(context: Context, title: String, msg: String,
                    positiveBtnText: String, negativeBtnText: String?,
                    positiveBtnClickListener: DialogInterface.OnClickListener,

@@ -60,6 +60,7 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
         }
 
 
+
         viewModel.fetchDataEvent(idEvent.toString())
         viewModel.fetchGuestConfirmDetailEventPublic(idEvent)
 
@@ -76,8 +77,8 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
 
 
 
-        viewModel.eventDataPublic.observe(this, Observer { it ->
-            val path1 = "photosEvent/" +it.key.toString() +"/"+ it.imgEvent.toString()
+        viewModel.eventDataPrivate.observe(this, Observer { it ->
+            val path1 = "photosEvent/" + it.imgEvent.toString()
             storeMedia.displayImage(binding.imagePreviewEvent, path1 )
         })
 

@@ -8,6 +8,11 @@
         android:id="@+id/edit_profil"
         android:title="Edit Profil"
         />
+
+    <item
+        android:id="@+id/edit_preferences"
+        android:title="Preferences"
+        />
     <item
         android:id="@+id/logout"
         android:title="logout" />

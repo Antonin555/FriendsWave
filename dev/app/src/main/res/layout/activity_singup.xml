@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginBottom="10dp"
-                android:layout_weight="1.2"
+                android:layout_weight="1"
                 app:srcCompat="@drawable/wave1" />
 
             <TextView
@@ -59,7 +59,6 @@
                     android:id="@+id/text_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:drawableLeft="@color/design_default_color_primary"
                     android:drawablePadding="10dp"
@@ -83,7 +82,6 @@
                     android:id="@+id/text_familyName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:drawableLeft="@color/design_default_color_primary"
                     android:drawablePadding="10dp"
@@ -130,7 +128,6 @@
                     android:id="@+id/text_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:drawableLeft="@color/design_default_color_primary"
                     android:drawablePadding="10dp"
@@ -154,7 +151,6 @@
                     android:id="@+id/edit_text_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_marginStart="10dp"
                     android:drawableLeft="@color/black"
                     android:drawablePadding="10dp"
@@ -179,8 +175,8 @@
                 <ImageView
                     android:id="@+id/searchCity"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="right"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
                     android:layout_marginStart="10dp"
                     android:src="@drawable/gnb" />
 
@@ -208,10 +204,10 @@
 
                 <ImageView
                     android:id="@+id/textView13"
-                    android:layout_width="25dp"
+                    android:layout_width="30dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:fontFamily="@font/roboto_mono"
@@ -234,8 +230,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="50dp"
                 android:background="@drawable/custom_shape"
                 android:backgroundTint="#4D7167"
                 android:gravity="center">

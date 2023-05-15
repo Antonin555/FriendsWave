@@ -18,6 +18,7 @@ import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
+import com.antonin.friendswave.data.firebase.FirebaseStore
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
@@ -44,7 +45,7 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein: Kodein by kodein()
     private val factory: EventFragmentVMFactory by instance()
-
+    val storeMedia = FirebaseStore()
     private var viewModel: EventFragmentViewModel = EventFragmentViewModel(
         repository = UserRepo(firebaseUser = FirebaseSourceUser()), repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
     private var adapter1: ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_inscrit_event)
@@ -83,6 +84,10 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
             viewModel.keyEvent = keyPublic
 
+            viewModel.eventDataPublic.observe(this, Observer { it ->
+                val path1 = "photosEvent/" + it.imgEvent.toString()
+                storeMedia.displayImage(binding.imagePreviewEvent, path1 )
+            })
 
         }
         if (keyPrivate != null) {
@@ -91,6 +96,11 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
             viewModel.fetchGuestDetailEvent(keyPrivate)
             viewModel.fetchGuestAttenteEventPrive(keyPrivate)
             viewModel.keyEvent = keyPrivate
+
+            viewModel.eventDataPrivate.observe(this, Observer { it ->
+                val path1 = "photosEvent/" + it.imgEvent.toString()
+                storeMedia.displayImage(binding.imagePreviewEvent, path1 )
+            })
         }
 
 
@@ -111,6 +121,8 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         viewModel.confirm_guestListPublic.observe(this, Observer { confirm_guestList ->
             adapter1.addItems(confirm_guestList)
         })
+
+
 
         binding.btnDeleteMyEvent.setOnClickListener {
 
