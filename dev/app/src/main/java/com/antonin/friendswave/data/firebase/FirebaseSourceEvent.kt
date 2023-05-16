@@ -531,26 +531,37 @@ class FirebaseSourceEvent {
                 if(snapshot.exists()){
                     for (data in snapshot.children){
                         val user = data.getValue(User::class.java)
-                        if(user!!.pendingRequestEventPublic!!.containsKey(mainUid!!)){
-                            if(eventIdList.containsKey(user.pendingRequestEventPublic!!.getValue(mainUid))){
+                        //if(user!!.pendingRequestEventPublic!!.containsKey(mainUid!!)){
+                            if(eventIdList.containsValue(user!!.uid)){
                                 userList.add(user)
                             }
-                        }
+                        //}
                     }
-
+                    onResult(userList)
                 }
             }
             override fun onCancelled(error: DatabaseError) {
 
             }
         })
+    }
 
-        onResult(userList)
+    fun getKeyFromValue(map: HashMap<String, String>, value: String): String? {
+        for ((key, mapValue) in map.entries) {
+            if (mapValue == value) {
+                return key
+            }
+        }
+        return null // Retourne null si la valeur n'est pas trouvée
     }
 
     fun acceptRequestEvent(user: User?){
 
-        var idEvent:String = user!!.pendingRequestEventPublic!!.get(mainUid!!).toString()
+        var idEvent:String = getKeyFromValue(user!!.pendingRequestEventPublic!!, mainUid!!).toString()
+
+//        var idEvent:String = user!!.pendingRequestEventPublic!!.get(mainUid!!).toString()
+
+
         val queryEventPublic = firebaseEventPublic.child(idEvent)
         val queryAcceptHostEventUser = firebaseData.child("user").child(mainUid)
         val queryAcceptGuestEventUser = firebaseData.child("user").child(user.uid.toString())
@@ -561,8 +572,8 @@ class FirebaseSourceEvent {
         queryAcceptHostEventUser.child("hostPendingRequestEventPublic").child(idEvent).removeValue()
         queryAcceptHostEventUser.child("ConfirmHostRequestEventPublic").child(idEvent).setValue(user!!.email)
 
-        queryAcceptGuestEventUser.child("pendingRequestEventPublic").child(mainUid).removeValue()
-        queryAcceptGuestEventUser.child("eventConfirmationList").child(mainUid).setValue(idEvent)
+        queryAcceptGuestEventUser.child("pendingRequestEventPublic").child(idEvent).removeValue()
+        queryAcceptGuestEventUser.child("eventConfirmationList").child(idEvent).setValue(mainUid)
 
     }
 

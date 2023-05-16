@@ -48,8 +48,8 @@ class ContactFragment : Fragment(), KodeinAware {
     private val factory : HomeFragmentVMFactory by instance()
     private lateinit var adapter1 : ListGeneriqueAdapter<User>
     private var viewModel: HomeFragmentViewModel  = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
-    repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
-    )
+    repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
+
     private lateinit var binding: FragmentContactBinding
     private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 1
 
@@ -88,7 +88,6 @@ class ContactFragment : Fragment(), KodeinAware {
             }
 
         })
-
 
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {

@@ -363,7 +363,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:hint="@string/hint_mail"
-                            android:autofillHints="name">
+                            android:autofillHints="name"
+                            android:text="@={viewmodel.email}">
 
                         </EditText>
 

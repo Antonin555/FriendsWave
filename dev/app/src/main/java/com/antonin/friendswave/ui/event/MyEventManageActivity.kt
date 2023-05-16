@@ -153,8 +153,7 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         binding.linearAttenteExpand.setOnClickListener(ecouteur)
 
 
-        adapter1.setOnListItemViewClickListener(
-            object : ListGeneriqueAdapter.OnListItemViewClickListener {
+        adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {
                 override fun onClick(view: View, position: Int) {
 
                     val event = viewModel.eventListConfirm.value?.get(position)

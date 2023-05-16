@@ -39,7 +39,7 @@
                 android:text="@{item.name}" />
 
             <Button
-                android:id="@+id/btn_accept"
+                android:id="@+id/accept_invitation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -51,7 +51,7 @@
                  />
 
             <Button
-                android:id="@+id/btn_delete"
+                android:id="@+id/refuse_invitation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

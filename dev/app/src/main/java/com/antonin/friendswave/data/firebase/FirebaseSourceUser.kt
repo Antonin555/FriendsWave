@@ -26,9 +26,6 @@ class FirebaseSourceUser {
     fun currentUser() = firebaseAuth.currentUser
 
 
-    val firebaseCurrentUser = firebaseData.child("user").child(mainUid!!)
-
-
     open fun logout() {
         firebaseAuth.signOut()
         FirebaseDatabase.getInstance().purgeOutstandingWrites()
@@ -62,7 +59,7 @@ class FirebaseSourceUser {
     }
 
     fun fetchAdmin(uid: String, onResult: (User?) -> Unit){
-        firebaseData.child("user").child(FirebaseAuth.getInstance().uid!!)
+        firebaseData.child("user").child(uid)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val user = dataSnapshot.getValue(User::class.java)

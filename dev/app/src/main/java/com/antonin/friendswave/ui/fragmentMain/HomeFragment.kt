@@ -1,15 +1,13 @@
 package com.antonin.friendswave.ui.fragmentMain
 
 import android.Manifest
-import android.content.ContentValues.TAG
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -27,7 +25,6 @@ import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentHomeBinding
-import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.antonin.friendswave.ui.viewModel.NotifFragmentVMFactory
@@ -59,22 +56,20 @@ class HomeFragment : Fragment(), KodeinAware {
     private lateinit var binding: FragmentHomeBinding
 
     private lateinit var adapter1 : ListGeneriqueAdapter<User>
-    private lateinit var adapter2 : ListGeneriqueAdapter<Event>
-    private lateinit var adapter3 : ListGeneriqueAdapter<User>
+    private lateinit var adapter3 : ListGeneriqueAdapter<Event>
+    private lateinit var adapter2 : ListGeneriqueAdapter<User>
 
     private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 1
     private var firebaseMessaging = FirebaseMessaging.getInstance()
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
-        adapter2 = ListGeneriqueAdapter(R.layout.recycler_invite_events)
-        adapter3 = ListGeneriqueAdapter(R.layout.recycler_demande_inscription)
-
-
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//
+//
+//
+//
+//    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
@@ -85,18 +80,8 @@ class HomeFragment : Fragment(), KodeinAware {
         FirebaseMessaging.getInstance().subscribeToTopic("nom-du-topic1")
 
 
-//        val inte = Intent()
-//        if ( inte.extras != null) {
-//            val clickAction = inte.extras!!.getString("click_action")
-//            if (clickAction != null && clickAction == "OPEN_ACTIVITY") {
-//                val intent = Intent(requireContext(), ProfilActivity::class.java)
-//                startActivity(intent)
-//            }
-//        }
-
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
         viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
-        binding.lifecycleOwner = this
         binding.item = viewModel
 
 
@@ -105,21 +90,8 @@ class HomeFragment : Fragment(), KodeinAware {
         binding.viewmodel = viewModel2
         binding.lifecycleOwner = this
 
-        val layoutManager = LinearLayoutManager(context)
-        val layoutManager2 = LinearLayoutManager(context)
-        val layoutManager3 = LinearLayoutManager(context)
-        binding.recyclerFragmentNotif.layoutManager = layoutManager
-        binding.recyclerFragmentNotif.adapter = adapter1
-        binding.recyclerFragmentNotifEvents.layoutManager = layoutManager2
-        binding.recyclerFragmentNotifEvents.adapter = adapter2
-        binding.recyclerRequestEvent.layoutManager = layoutManager3
-        binding.recyclerRequestEvent.adapter = adapter3
 
         firebaseMessaging = FirebaseMessaging.getInstance()
-
-        viewModel2.fetchUsersRequest()
-        viewModel2.fetchEventsInvitation()
-        viewModel2.fetchDemandeInscriptionEventPublic()
 
         return binding.root
 
@@ -127,17 +99,36 @@ class HomeFragment : Fragment(), KodeinAware {
 
     override fun onResume() {
         super.onResume()
-        try{
+//        try{
+//
+//            viewModel2.fetchUsersRequest()
+//            viewModel2.fetchEventsInvitation()
+//            viewModel2.fetchDemandeInscriptionEventPublic()
+//
+//
+//        } catch(e : Exception){
+//
+//            e.printStackTrace()
+//        }
+        adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
+        adapter3 = ListGeneriqueAdapter(R.layout.recycler_invite_events)
+        adapter2 = ListGeneriqueAdapter(R.layout.recycler_demande_inscription)
 
-            viewModel2.fetchUsersRequest()
-            viewModel2.fetchEventsInvitation()
-            viewModel2.fetchDemandeInscriptionEventPublic()
-            viewModel.fetchUserData()
+        val layoutManager = LinearLayoutManager(context)
+        val layoutManager2 = LinearLayoutManager(context)
+        val layoutManager3 = LinearLayoutManager(context)
 
-        } catch(e : Exception){
+        binding.recyclerFragmentNotif.layoutManager = layoutManager
+        binding.recyclerFragmentNotif.adapter = adapter1
+        binding.recyclerFragmentNotifEvents.layoutManager = layoutManager2
+        binding.recyclerFragmentNotifEvents.adapter = adapter2
+        binding.recyclerRequestEvent.layoutManager = layoutManager3
+        binding.recyclerRequestEvent.adapter = adapter3
 
-            e.printStackTrace()
-        }
+        viewModel2.fetchUsersRequest()
+        viewModel2.fetchEventsInvitation()
+        viewModel2.fetchDemandeInscriptionEventPublic()
+        viewModel.fetchUserData()
 
         viewModel2.friendNotifList.observe(this, Observer { notifUserList ->
             adapter1.addItems(notifUserList)
@@ -146,23 +137,14 @@ class HomeFragment : Fragment(), KodeinAware {
         })
 
         viewModel2.eventList.observe(this,Observer { eventList ->
-            adapter2.addItems(eventList)
-            if( adapter2.itemCount !=0) binding.searchEvents.visibility = View.GONE
+            adapter3.addItems(eventList)
+            if( adapter3.itemCount !=0) binding.tempInvitations.visibility = View.GONE
         })
 
         viewModel2.requestListEvent.observe(this, Observer { userList ->
-            adapter3.addItems(userList)
-            if( adapter3.itemCount != 0){binding.tempInvitations.visibility =View.GONE}
+            adapter2.addItems(userList)
+            if( adapter2.itemCount != 0){binding.searchEvents.visibility =View.GONE}
         })
-
-
-//        adapter1 = ListGeneriqueAdapter(R.layout.recycler_events)
-//        val layoutManager = LinearLayoutManager(context)
-//        binding.recyclerFragmentHome.layoutManager = layoutManager
-//        binding.recyclerFragmentHome.adapter = adapter1
-//
-//        viewModel.fetchStrategieEvent()
-//        viewModel.fetchUserData()
 
 
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -211,12 +193,12 @@ class HomeFragment : Fragment(), KodeinAware {
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
-                if (view.id == R.id.btn_accept){
+                if (view.id == R.id.accept_friend){
                     val userNotif = viewModel2.friendNotifList.value?.get(position)
                     viewModel2.acceptRequest(userNotif)
                 }
 
-                else if (view.id == R.id.btn_delete){
+                else if (view.id == R.id.decline_friend){
                     val userNotif = viewModel2.friendNotifList.value?.get(position)
                     viewModel2.refuseRequest(userNotif)
                 }
@@ -225,17 +207,20 @@ class HomeFragment : Fragment(), KodeinAware {
         })
 
 
+
+
         adapter2.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
-                if (view.id == R.id.btn_accept){
-                    val event = viewModel2.eventList.value?.get(position)
-                    viewModel2.acceptInvitationEvent(event)
 
+                val eventKey = viewModel2.requestListEvent.value?.get(position)!!
+
+
+                if (view.id == R.id.non_event){
+                    viewModel2.declineRequestEvent(eventKey)
                 }
 
-                if (view.id == R.id.btn_delete){
-                    val eventKey = viewModel2.eventList.value?.get(position)
-                    viewModel2.refuseInvitationEvent(eventKey)
+                else if(view.id == R.id.oui_event) {
+                    viewModel2.acceptRequestEvent(eventKey)
 
                 }
             }
@@ -244,15 +229,15 @@ class HomeFragment : Fragment(), KodeinAware {
 
         adapter3.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
-                if (view.id == R.id.btn_accept){
-                    val eventKey = viewModel2.requestListEvent.value?.get(position)!!
-                    viewModel2.acceptRequestEvent(eventKey)
+                if (view.id == R.id.accept_invitation){
+                    val event = viewModel2.eventList.value?.get(position)
+                    viewModel2.acceptInvitationEvent(event)
 
                 }
 
-                if (view.id == R.id.btn_delete){
-                    val eventKey = viewModel2.requestListEvent.value?.get(position)
-                    viewModel2.declineRequestEvent(eventKey)
+                if (view.id == R.id.refuse_invitation){
+                    val eventKey = viewModel2.eventList.value?.get(position)
+                    viewModel2.refuseInvitationEvent(eventKey)
 
                 }
             }

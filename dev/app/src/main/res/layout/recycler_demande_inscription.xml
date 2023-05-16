@@ -17,7 +17,6 @@
         android:layout_marginBottom="5dp"
         android:background="@drawable/custom_shape"
         android:orientation="vertical">
-        <!--        android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,20 +89,20 @@
                 android:text="@{item.name}" />
 
             <ImageView
-                android:id="@+id/btn_accept"
+                android:id="@+id/oui_event"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_gravity="center"
                 android:src="@drawable/check"
                 android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }' />
 
             <ImageView
-                android:id="@+id/btn_delete"
+                android:id="@+id/non_event"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
                 android:src="@drawable/close" />
         </LinearLayout>

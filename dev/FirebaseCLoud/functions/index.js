@@ -68,6 +68,10 @@ function moderateSwearwords(message) {
   return message.replace(new RegExp(badWordsList.join('|'), 'gi'), '***');
 }
 
+
+
+// Envoie une notification a l'admin de l'event lorsqu'il recoit une demande
+
 exports.notifHostSubscribeEventPublic = functions.database.ref(`/user/{userid}/hostPendingRequestEventPublic`).onUpdate((change, context) => {
   const host_token_ref = admin.database().ref(`/user/${context.params.userid}/token`);
 
@@ -86,6 +90,9 @@ exports.notifHostSubscribeEventPublic = functions.database.ref(`/user/{userid}/h
     return admin.messaging().sendToDevice(host_token, payload);
   });
 });
+
+// envoie une notif lorsqu'on recoit une demande d'ami, 
+// A tester a distance
 
 exports.sendNotifFriendRequest = functions.database.ref(`/user/{userid}/friendRequest`).onUpdate((change, context) => {
 
@@ -109,6 +116,9 @@ exports.sendNotifFriendRequest = functions.database.ref(`/user/{userid}/friendRe
 
 
 });
+
+// Fonctionne
+// ENVOIE UNE NOTIF LORSQU'UN NOUVEAU INNSCRIT REJOINT L'EVENT ou le quitte ou tout changement dans ListInscrit
 
 exports.sendNotificationToSpecificUser = functions.database.ref(`/event/eventPrivate/{userid}/{eventId}`)
     .onUpdate((snapshot, context) => {
@@ -150,21 +160,20 @@ exports.sendNotificationToSpecificUser = functions.database.ref(`/event/eventPri
 
 
 
-
-    exports.sendNotification = functions.database.ref('/event/eventPublic/{eventPublicId}').onUpdate(async (change, context) => {
+    // Envoi une notif a tous les users lorsqu'un event Public est crée 
+    exports.sendNotification = functions.database.ref('/event/eventPublic/{eventPublicId}').onCreate(async (change, context) => {
         const eventData = change.after.val();
-        const topic = "nom-du-topic";
-        console.log("TEEEEEEEEEEEEEEEEEEEEEESSSTTTTTTTTTTTTTTTT ::: " + change.after.val())
+        const topic = "notif_event_public";
         const postData = change.after.val(); //3
-        console.log("HHHHHHHEEYYY POSTDATA : " + postData.description)
-        
+      
+      
         const message = {
   
             data: {
                 title: "TTTTTTTTTTTTTEEEEST 2222 ",
                 body:"Decouvrez l'evenement : " + postData.name,
                 message: "HEEEEEEEEEEEEEEEEEEEEEEEEEEEE",
-                click_action: "OPEN_ACTIVITY"
+                click_action: "HOME_ACTIVITY"
               }
 
 
@@ -188,7 +197,7 @@ exports.scheduledFunction = functions.pubsub
   function deleteOldItems() {
     const ref = admin.database().ref('/event/eventPublic');
     const now = Date.now();
-    const date_expiration = now + (24 * 3600 * 1000);
+    const date_expiration = now + (96 * 3600 * 1000);
     const oldItemsQuery = ref.orderByChild('timeStamp').endAt(date_expiration);
     oldItemsQuery.once('value', function(snapshot) {
       const updates = {};
@@ -201,26 +210,82 @@ exports.scheduledFunction = functions.pubsub
 
 
 
-  exports.sendNotifAdminEventPublic = functions.database.ref(`/event/eventPublic/{eventId}/pendingRequestEventPublic`)
-    .onUpdate((snapshot, context) => {
-        const child_mail = [];
+  //exports.sendNotifAdminEventPublic = functions.database.ref(`/event/eventPublic/{eventId}/pendingRequestEventPublic`)
+  //  .onUpdate((snapshot, context) => {
+  //      const child_mail = [];
 
-        const admin_event = database().ref(`/event/eventPublic/${context.params.eventId}/admin`);
+  //      const admin_event = database().ref(`/event/eventPublic/${context.params.eventId}/admin`);
 
-        const userRef = admin.database().ref('/user').orderByChild('uid').equalTo(admin_event);
-        const recipientDeviceToken = userRef.child('token').val();
-
+  //      const userRef = admin.database().ref('/user').orderByChild('uid').equalTo(admin_event);
+  //      const recipientDeviceToken = userRef.child('token').val();
+//
                 // Send the notification
-                const payload = {
-                    notification: {
-                        title: 'Votre event a du succés',
-                        body: 'Une nouvelle personne souhaite rejoindre votre event'
-                    }
-                };
-                const response = admin.messaging().sendToTopic(topic, message);
-                promises.push(admin.messaging().sendToDevice(recipientDeviceToken, payload));
-    });
+   //             const payload = {
+  //                  notification: {
+   //                     title: 'Votre event a du succés',
+    //                    body: 'Une nouvelle personne souhaite rejoindre votre event'
+   //                 }
+   //             };
+   //             const response = admin.messaging().sendToTopic(topic, message);
+   //             promises.push(admin.messaging().sendToDevice(recipientDeviceToken, payload));
+   // });
         
 
 
-
+    exports.checkExpiredEvents = functions.pubsub.schedule('every 24 hours').onRun((context) => {
+      const ref = admin.database().ref('/event/eventPublic');
+      const now = Date.now();
+    
+      const dateExpiration = now + (24 * 3600 * 1000);
+      const expiredEventsQuery = ref.orderByChild('timeStamp').endAt(dateExpiration);
+    
+      return expiredEventsQuery.once('value').then((snapshot) => {
+        const promises = [];
+    
+        snapshot.forEach((childSnapshot) => {
+          const eventId = childSnapshot.key;
+          const eventData = childSnapshot.val();
+    
+          // Check if the event is expired
+          if (eventData && eventData.timeStamp <= now) {
+            const listInscritsRef = admin.database().ref(`/event/eventPublic/${eventId}/listInscrits`);
+    
+            const promise = listInscritsRef.once('value').then((inscritsSnapshot) => {
+              const notificationPromises = [];
+    
+              inscritsSnapshot.forEach((inscritSnapshot) => {
+                const email = inscritSnapshot.val();
+                const userRef = admin.database().ref('/user').orderByChild('email').equalTo(email);
+    
+                const notificationPromise = userRef.once('value').then((userSnapshot) => {
+                  userSnapshot.forEach((userChildSnapshot) => {
+                    const recipientDeviceToken = userChildSnapshot.child('token').val();
+    
+                    // Send the notification
+                    const payload = {
+                      data: {
+                        title: 'Event Expired',
+                        body: 'The event you registered for has expired',
+                        click_action: 'HOME_FRAGMENT'
+                      }
+                    };
+    
+                    notificationPromises.push(admin.messaging().sendToDevice(recipientDeviceToken, payload));
+                  });
+                });
+    
+                notificationPromises.push(notificationPromise);
+              });
+    
+              return Promise.all(notificationPromises);
+            });
+    
+            promises.push(promise);
+          }
+        });
+    
+        return Promise.all(promises);
+      });
+    });
+    
+  
