@@ -374,7 +374,7 @@
                             android:layout_height="35dp"
                             android:layout_weight="0.3"
                             android:src="@drawable/envoi"
-                            android:onClick="@{() -> viewmodel.sendAnInvitationEvent(clef)}" />
+                            android:onClick="@{(v) -> viewmodel.sendAnInvitationEvent(v,clef)}" />
                     </LinearLayout>
 
 

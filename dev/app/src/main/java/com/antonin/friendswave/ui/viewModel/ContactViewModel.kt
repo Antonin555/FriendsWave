@@ -11,6 +11,9 @@ import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.outils.AlertDialog
 //import com.antonin.friendswave.strategy.SearchAgeFriend
 //import com.antonin.friendswave.strategy.SearchCityFriend
+
+
+import com.antonin.friendswave.outils.sendEmail
 import com.antonin.friendswave.strategy.StrategyFriend
 import com.antonin.friendswave.ui.authentification.InterfaceAuth
 import com.antonin.friendswave.ui.contact.AddContactActivity
@@ -70,15 +73,17 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
             // Code à exécuter si le bouton positif est cliqué
             if (which == DialogInterface.BUTTON_POSITIVE) {
                 //envoyer une demande directement par couriel
-                sendEmail(email!!)
-                Toast.makeText(view,"demande envoye par couriel", Toast.LENGTH_LONG).show()
+
+                sendEmail(email!!,user_live.value!!.name!!, user_live.value!!.email!!)
+
+                Toast.makeText(view,"demande envoye par couriel", Toast.LENGTH_SHORT).show()
                 alertDialog.cancel()
             }
         }
         val negativeButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
             // Code à exécuter si le bouton négatif est cliqué
             if (which == DialogInterface.BUTTON_NEGATIVE) {
-                Toast.makeText(view,"ok on touche a rien", Toast.LENGTH_LONG).show()
+                Toast.makeText(view,"ok on touche a rien", Toast.LENGTH_SHORT).show()
                 alertDialog.cancel()
             }
         }
@@ -116,34 +121,34 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
     }
 
     // Fonction pour envoyer un e-mail
-    fun sendEmail(recipient: String) {
-        val props = Properties()
-        props.setProperty("mail.smtp.host", "smtp-mail.outlook.com")
-        props.setProperty("mail.smtp.port", "587")
-        props.setProperty("mail.smtp.auth", "true")
-        props.setProperty("mail.smtp.starttls.enable", "true")
-        props.setProperty("mail.smtp.ssl.trust", "smtp-mail.outlook.com")
-
-        val session = Session.getInstance(props, object : Authenticator() {
-            override fun getPasswordAuthentication(): PasswordAuthentication {
-                return PasswordAuthentication("FriendWaveOfficial@hotmail.com", "Friend12Wave12")
-            }
-        })
-
-        val message = MimeMessage(session)
-        message.setFrom(InternetAddress("FriendWaveOfficial@hotmail.com"))
-        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient))
-        message.subject = "Venez rejoindre la communaute FriendsWave"
-        message.setText("Bonjour " + user_live.value!!.email + " mieux connu(e) sous le nom de " +  user_live.value!!.name + " vous invite a rejoindre l'application FriendsWave")
-
-        Thread(Runnable {
-            try {
-                Transport.send(message)
-            } catch (e: MessagingException) {
-                e.printStackTrace()
-            }
-        }).start()
-    }
+//    fun sendEmail(recipient: String) {
+//        val props = Properties()
+//        props.setProperty("mail.smtp.host", "smtp-mail.outlook.com")
+//        props.setProperty("mail.smtp.port", "587")
+//        props.setProperty("mail.smtp.auth", "true")
+//        props.setProperty("mail.smtp.starttls.enable", "true")
+//        props.setProperty("mail.smtp.ssl.trust", "smtp-mail.outlook.com")
+//
+//        val session = Session.getInstance(props, object : Authenticator() {
+//            override fun getPasswordAuthentication(): PasswordAuthentication {
+//                return PasswordAuthentication("FriendWaveOfficial@hotmail.com", "Friend12Wave12")
+//            }
+//        })
+//
+//        val message = MimeMessage(session)
+//        message.setFrom(InternetAddress("FriendWaveOfficial@hotmail.com"))
+//        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient))
+//        message.subject = "Venez rejoindre la communaute FriendsWave"
+//        message.setText("Bonjour " + user_live.value!!.email + " mieux connu(e) sous le nom de " +  user_live.value!!.name + " vous invite a rejoindre l'application FriendsWave")
+//
+//        Thread(Runnable {
+//            try {
+//                Transport.send(message)
+//            } catch (e: MessagingException) {
+//                e.printStackTrace()
+//            }
+//        }).start()
+//    }
 
     fun fetchAllUser(){
         repository.fetchAllUser().observeForever{ user ->

@@ -1,5 +1,6 @@
 package com.antonin.friendswave.ui.viewModel
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -15,6 +16,7 @@ import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
+import com.antonin.friendswave.outils.AlertDialog
 import com.antonin.friendswave.ui.chat.GroupChatActivity
 import com.antonin.friendswave.ui.event.*
 import com.antonin.friendswave.ui.home.ManageHomeActivity
@@ -22,6 +24,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import com.antonin.friendswave.outils.sendEmail
 import java.util.*
 
 
@@ -96,6 +99,16 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     private val _userListAttentePrivate = MutableLiveData<List<User>>()
     val userListAttentePrivate: LiveData<List<User>> = _userListAttentePrivate
+
+
+    private val _emailList = MutableLiveData<List<String>>()
+    val emailList: LiveData<List<String>> = _emailList
+
+    fun fetchEmail() {
+        repository.fetchfetchEmail().observeForever{ email ->
+            _emailList.value = email
+        }
+    }
 
     fun fetchUserData() {
         repository.getUserData().observeForever { user ->
@@ -282,16 +295,48 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         }
     }
 
-    fun sendAnInvitationEvent(key: String){
-        if (email.isNullOrEmpty()) {
+    fun sendAnInvitationEvent(view:View, key: String){
+
+        val alertDialog = AlertDialog(view.context)
+
+        val emailPattern = Regex("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
+
+        val positiveButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
+            // Code à exécuter si le bouton positif est cliqué
+            if (which == DialogInterface.BUTTON_POSITIVE) {
+                sendEmail(email!!, user_live.value!!.email!!,user_live.value!!.name!!)
+                Toast.makeText(view.context,"demande envoye par couriel", Toast.LENGTH_SHORT).show()
+                alertDialog.cancel()
+            }
+        }
+        val negativeButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
+            // Code à exécuter si le bouton négatif est cliqué
+            if (which == DialogInterface.BUTTON_NEGATIVE) {
+                Toast.makeText(view.context,"ok on touche a rien", Toast.LENGTH_SHORT).show()
+                alertDialog.cancel()
+            }
+        }
+
+
+        if (email.isNullOrEmpty() || !email!!.matches(emailPattern)) {
+            Toast.makeText(view.context, "Mail vide ou non valide", Toast.LENGTH_SHORT).show()
             return
         }
+
+        if(_emailList.value!!.contains(email)) {
+
+            alertDialog.showDialog(view.context, "Attention", "This email match no account, do you want to make an invitation via email", "yes","no", positiveButtonClickListener, negativeButtonClickListener)
+
+        }
+
         if(eventDataPrivate.value?.key == key){
             repoEvent.sendAnInvitationEvent(email!!, eventDataPrivate.value!!)
         }
         if(eventDataPublic.value?.key == key){
             repoEvent.sendAnInvitationEvent(email!!, eventDataPublic.value!!)
         }
+        Toast.makeText(view.context,"Invitation envoyée", Toast.LENGTH_SHORT).show()
+        email = ""
     }
 
     fun gotoMesEventsActivity(view: View) {

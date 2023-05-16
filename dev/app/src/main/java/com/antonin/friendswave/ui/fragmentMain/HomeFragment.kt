@@ -99,17 +99,7 @@ class HomeFragment : Fragment(), KodeinAware {
 
     override fun onResume() {
         super.onResume()
-//        try{
-//
-//            viewModel2.fetchUsersRequest()
-//            viewModel2.fetchEventsInvitation()
-//            viewModel2.fetchDemandeInscriptionEventPublic()
-//
-//
-//        } catch(e : Exception){
-//
-//            e.printStackTrace()
-//        }
+
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
         adapter3 = ListGeneriqueAdapter(R.layout.recycler_invite_events)
         adapter2 = ListGeneriqueAdapter(R.layout.recycler_demande_inscription)

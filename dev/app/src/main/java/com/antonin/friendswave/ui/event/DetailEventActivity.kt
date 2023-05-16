@@ -15,6 +15,8 @@ import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.databinding.ActivityDetailEventBinding
 import com.antonin.friendswave.outils.AnimationLayout
 import com.antonin.friendswave.ui.home.ProfilActivity
+import com.antonin.friendswave.ui.viewModel.ContactViewModel
+import com.antonin.friendswave.ui.viewModel.ContactViewModelFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import org.kodein.di.KodeinAware
@@ -43,7 +45,6 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
         val binding: ActivityDetailEventBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail_event)
         viewModel = ViewModelProviders.of(this, factory).get(EventFragmentViewModel::class.java)
 
-
         binding.event = viewModel
         binding.idEvent = idEvent
         binding.adminEvent = adminEvent
@@ -63,7 +64,7 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
 
         viewModel.fetchDataEvent(idEvent.toString())
         viewModel.fetchGuestConfirmDetailEventPublic(idEvent)
-
+        viewModel.fetchEmail()
         viewModel.fetchAdmin(adminEvent.toString())
 
         viewModel.admin_live.observe(this, Observer {
