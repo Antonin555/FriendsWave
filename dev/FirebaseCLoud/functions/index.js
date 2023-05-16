@@ -231,12 +231,12 @@ exports.scheduledFunction = functions.pubsub
    // });
         
 
-
+// envoyer vers rating activity lorsque l'event est terminé :
     exports.checkExpiredEvents = functions.pubsub.schedule('every 24 hours').onRun((context) => {
       const ref = admin.database().ref('/event/eventPublic');
       const now = Date.now();
     
-      const dateExpiration = now + (24 * 3600 * 1000);
+      const dateExpiration = now;
       const expiredEventsQuery = ref.orderByChild('timeStamp').endAt(dateExpiration);
     
       return expiredEventsQuery.once('value').then((snapshot) => {

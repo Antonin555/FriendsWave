@@ -444,8 +444,7 @@ class FirebaseSourceEvent {
 
         val listGuest : ArrayList<String> = ArrayList()
 
-        firebaseEventPublic.child(key!!)
-            .child("listInscrits").addValueEventListener( object :ValueEventListener {
+        firebaseEventPublic.child(key!!).child("listInscrits").addValueEventListener( object :ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     if (dataSnapshot.exists()) {
                         for(data in dataSnapshot.children){
