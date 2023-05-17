@@ -38,7 +38,7 @@ import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
-
+import com.antonin.friendswave.data.dataStructure.LinkedList
 
 class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallback, LocationListener {
 
@@ -51,6 +51,7 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
     private var adapter1 : ListGeneriqueAdapter<Event> = ListGeneriqueAdapter<Event>(R.layout.recycler_events)
     private lateinit var loc : GoogleLocation
     private lateinit var googleMap: GoogleMap
+    private var linkedList: LinkedList = LinkedList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,8 +71,6 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
         binding.lifecycleOwner = this
 
         return binding.root
-
-
     }
 
 
@@ -83,6 +82,7 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
         viewModel.fetchEventsPublic1()
         viewModel.fetchUserData()
 
+
         viewModel.eventList.observe(this, Observer { eventList ->
 
             if(eventList.isEmpty()){
@@ -93,14 +93,16 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
             }
 
             adapter1.addItems(eventList)
-//
+
+            for (i in eventList){
+                linkedList.add(i)
+            }
+
         })
 
-//        var tempList : ArrayList<Event> = ArrayList()
         val searchCategory = SearchCategory()
         val searchByCities = SearchByCities()
         val searchByName = SearchByName()
-//        var searchStrategy : Strategy
 
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerFragmentEvent.layoutManager = layoutManager

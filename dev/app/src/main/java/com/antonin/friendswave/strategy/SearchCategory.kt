@@ -11,7 +11,7 @@ class SearchCategory: InterfaceSearch {
         val tempListEvent : ArrayList<Event> = ArrayList()
 
         for(data in event!!) {
-            if(data.categorie == str) {
+            if(str.contains(data.categorie!!) || data.categorie!!.contains(str)) {
                 tempListEvent.add(data)
             }
         }
@@ -27,7 +27,7 @@ class SearchByName : InterfaceSearch {
 
         for(data in event!!) {
 
-            if(data.name!!.contains(str)) {
+            if(data.name!!.contains(str) || data.description!!.contains(str)) {
                 tempListEvent.add(data)
             }
         }

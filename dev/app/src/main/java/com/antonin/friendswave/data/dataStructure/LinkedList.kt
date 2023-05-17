@@ -22,7 +22,7 @@ class LinkedList {
     fun find(name: String): Event? {
         var current = head
         while (current != null) {
-            if (current.event.name == name) {
+            if (current.event.name!!.contains(name) || current.event.name == name) {
                 return current.event
             }
             current = current.next

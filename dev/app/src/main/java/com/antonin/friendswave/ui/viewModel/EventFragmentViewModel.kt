@@ -26,7 +26,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import com.antonin.friendswave.outils.sendEmail
 import java.util.*
-
+//import com.antonin.friendswave.data.dataStructure.LinkedList
 
 class EventFragmentViewModel(private val repository:UserRepo,private val repoEvent:EventRepo):ViewModel() {
 
@@ -52,6 +52,9 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     var keyEvent: String? = ""
 
     var strCategory = MutableLiveData<String>()
+
+//    var linkedList: LinkedList = LinkedList()
+
 
 //    val currentDate = formatter.parse(dateFormat.toString())
 
@@ -163,7 +166,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     }
 
-
     val isChecked: MutableLiveData<Boolean> = MutableLiveData()
     val isSubscribe: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -257,6 +259,12 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         _eventList.value = event
         }
     }
+//
+//    fun addToLinkedList(){
+//        for (i in eventList.value!!){
+//            linkedList.add(i)
+//        }
+//    }
 
     fun fetchEventsPrivateUser() {
         repoEvent.fetchEventsPrivateUser().observeForever{ event ->
