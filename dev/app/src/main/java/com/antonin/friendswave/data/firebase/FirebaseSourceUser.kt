@@ -294,12 +294,14 @@ class FirebaseSourceUser {
                 if (dataSnapshot.exists()) {
                     val currentUser = dataSnapshot.getValue(User::class.java)
                     currentUser?.friendList?.remove(uid)
+                    currentUser?.friends = currentUser?.friends?.minus(1);
                     firebaseData.child("user").child(mainUid).setValue(currentUser)
                     firebaseData.child("user").child(uid!!).addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             if (dataSnapshot.exists()) {
                                 val currentUser2 = dataSnapshot.getValue(User::class.java)
                                 currentUser2?.friendList?.remove(mainUid)
+                                currentUser2?.friends = currentUser2?.friends?.minus(1);
                                 firebaseData.child("user").child(uid).setValue(currentUser2)
 
                             }
