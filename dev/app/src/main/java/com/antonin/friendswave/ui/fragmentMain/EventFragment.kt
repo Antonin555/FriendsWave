@@ -56,10 +56,13 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loc = GoogleLocation()
 
+        loc = GoogleLocation()
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
         viewModel.interfaceEvent = this
+        viewModel.fetchEvents()
+        viewModel.fetchUserData()
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -79,20 +82,14 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
         binding.mapView.onResume()
         super.onResume()
 
-        viewModel.fetchEventsPublic1()
-        viewModel.fetchUserData()
-
-
         viewModel.eventList.observe(this, Observer { eventList ->
-
+            adapter1.addItems(eventList)
             if(eventList.isEmpty()){
                 binding.noResultFound.visibility = View.VISIBLE
 
             }else{
                 binding.noResultFound.visibility = View.GONE
             }
-
-            adapter1.addItems(eventList)
 
             for (i in eventList){
                 linkedList.add(i)
@@ -167,7 +164,6 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
                 }
             })
         })
-
     }
 
     fun goToDetailEvent(id_event:String?, admin_event:String , position:Int){

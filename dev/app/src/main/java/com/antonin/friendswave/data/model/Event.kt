@@ -7,7 +7,7 @@ data class Event(
 
     var key : String? = "",
     var name: String? = "",
-    var isPublic : Boolean? = true,
+    var public : Boolean? = true,
     var nbrePersonnes : Int? = 0,
     var admin:String = "",
     var categorie : String? = "",

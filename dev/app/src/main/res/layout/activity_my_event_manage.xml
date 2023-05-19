@@ -99,7 +99,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -305,6 +305,8 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
                         android:layout_alignParentTop="true"
                         android:text="@={viewmodel.eventDataPublic.description}" />
 
@@ -467,7 +469,7 @@
                     android:orientation="vertical">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_my_event_inscrit"
+                        android:id="@+id/recycler_event_inscrit"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_alignParentTop="true" />

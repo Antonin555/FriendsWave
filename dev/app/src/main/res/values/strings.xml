@@ -80,8 +80,8 @@
     <string name="activity_manage_my_event_manage">gestion :</string>
 
     <string name="fragment_notifs_demande_de_suivi">demande d""ami(e)s</string>
-    <string name="fragment_notifs_demande_events">demande event</string>
-    <string name="fragment_notifs_invitations">invitation</string>
+    <string name="fragment_notifs_demande_events">demande de participations a mes events</string>
+    <string name="fragment_notifs_invitations">invitation pour un event</string>
 
     <string name="rating_participants">Liste des participants</string>
     <string name="rating_valider">valider</string>

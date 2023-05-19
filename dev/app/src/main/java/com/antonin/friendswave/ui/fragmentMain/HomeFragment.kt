@@ -63,13 +63,13 @@ class HomeFragment : Fragment(), KodeinAware {
     private var firebaseMessaging = FirebaseMessaging.getInstance()
 
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//
-//
-//
-//
-//    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
+        viewModel2 = ViewModelProviders.of(this,factory2).get(NotifFragmentViewModel::class.java)
+
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
@@ -81,12 +81,12 @@ class HomeFragment : Fragment(), KodeinAware {
 
 
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
-        viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
+
         binding.item = viewModel
 
 
 //        binding2  = inflate(inflater, R.layout.fragment_notifs, container, false)
-        viewModel2 = ViewModelProviders.of(this,factory2).get(NotifFragmentViewModel::class.java)
+
         binding.viewmodel = viewModel2
         binding.lifecycleOwner = this
 
@@ -123,17 +123,20 @@ class HomeFragment : Fragment(), KodeinAware {
         viewModel2.friendNotifList.observe(this, Observer { notifUserList ->
             adapter1.addItems(notifUserList)
             if(adapter1.itemCount !=0 ) binding.makefriends.visibility= View.GONE
+            else binding.makefriends.visibility = View.VISIBLE
 
         })
 
         viewModel2.eventList.observe(this,Observer { eventList ->
             adapter3.addItems(eventList)
             if( adapter3.itemCount !=0) binding.tempInvitations.visibility = View.GONE
+            else binding.tempInvitations.visibility = View.VISIBLE
         })
 
         viewModel2.requestListEvent.observe(this, Observer { userList ->
             adapter2.addItems(userList)
-            if( adapter2.itemCount != 0){binding.searchEvents.visibility =View.GONE}
+            if(adapter2.itemCount != 0)  binding.searchEvents.visibility = View.GONE
+            else binding.searchEvents.visibility = View.VISIBLE
         })
 
 
@@ -142,21 +145,13 @@ class HomeFragment : Fragment(), KodeinAware {
         }
 
         viewModel.user_live.observe(this, Observer { it ->
-
             val path1 = "photos/" + it.img.toString()
             val path2 = "photosCover/" + it.imgCover.toString()
 
-
             if(it.imgCover != null) storeMedia.displayImage(binding.imageCover,path2)
-
             storeMedia.displayImage(binding.imgProfil,path1)
 
-
         })
-
-
-
-
 
 //        binding.btnCategory.setOnClickListener{
 //            var type = "Mars"
@@ -171,15 +166,11 @@ class HomeFragment : Fragment(), KodeinAware {
         FirebaseMessaging.getInstance().token
             .addOnCompleteListener { task ->
                 if (!task.isSuccessful) {
-
                     return@addOnCompleteListener
                 }
                 // Le token du dispositif
                 val token = task.result
-
             }
-
-
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
@@ -196,22 +187,15 @@ class HomeFragment : Fragment(), KodeinAware {
 
         })
 
-
-
-
         adapter2.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
 
                 val eventKey = viewModel2.requestListEvent.value?.get(position)!!
-
-
                 if (view.id == R.id.non_event){
                     viewModel2.declineRequestEvent(eventKey)
                 }
-
                 else if(view.id == R.id.oui_event) {
                     viewModel2.acceptRequestEvent(eventKey)
-
                 }
             }
 
@@ -276,7 +260,6 @@ class HomeFragment : Fragment(), KodeinAware {
         val token = FirebaseInstanceId.getInstance().token
         sendRegistrationToServer(token!!)
     }
-
 
 }
 

@@ -9,6 +9,8 @@ import android.widget.AdapterView
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -32,9 +34,9 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     var name: String? = ""
     var description: String? = ""
-    private var isPublic : Boolean? = false
     var photo: Uri? = null
     var nbrePersonnes : Int? = 0
+    var isPublic :Boolean = false
     var categorie: String? = ""
     var adress: String? = ""
     var lattitude: String? = ""
@@ -50,8 +52,11 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     var email: String? = ""
     var pseudo:String? = ""
     var keyEvent: String? = ""
-
+    val isSubscribe: MutableLiveData<Boolean> = MutableLiveData()
+    val isPublicChecked: MutableLiveData<Boolean> = MutableLiveData()
     var strCategory = MutableLiveData<String>()
+
+
 
 //    var linkedList: LinkedList = LinkedList()
 
@@ -146,7 +151,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     fun addEventUser(view: View) {
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         val dateFormat = LocalDate.parse(date, formatter)
-
+        isPublicChecked.value = isPublic
         if(!name.isNullOrEmpty() && nbrePersonnes!! != 0  && !user!!.uid.isEmpty() &&
             !categorie!!.isEmpty() && !date!!.isEmpty() && !horaire!!.isEmpty()
             && !adress!!.isEmpty() && !description!!.isEmpty()){
@@ -154,24 +159,24 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
             if(nbrePersonnes!! > 10)Toast.makeText(view.context,"Il ne peut pas y avoir plus de 10 personnes a un event", Toast.LENGTH_LONG).show()
             if(dateFormat.isBefore(LocalDate.now()))Toast.makeText(view.context,"La date doit etre antérieure a celle d'aujoud'hui", Toast.LENGTH_LONG).show()
             else{
-                if(isPublic == true) {
-                    repoEvent.addEventUserPublic(name!!, isPublic!!,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!, adress!!,description!!,
+                    repoEvent.addEventUser(name!!, isPublic!!,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!, adress!!,description!!,
                         longitude!!,lattitude!!,photo!!,view.context, user!!.displayName.toString(), timeStamp )
 
-                } else repoEvent.addEventUserPrivate(name!!, isPublic=false, nbrePersonnes!!, user!!.uid, categorie!!,date!!, horaire!!, adress!!, description!!, longitude!!,lattitude!!, photo!!, view.context, user!!.displayName.toString(), timeStamp)
+                }
                 Toast.makeText(view.context,"Evenement en cours de publication", Toast.LENGTH_LONG).show()
                 Intent(view.context, ManageHomeActivity::class.java).also { view.context.startActivity(it)}
             }
-        } else Toast.makeText(view.context,"Veuillez remplir tous les champs", Toast.LENGTH_LONG).show()
+         else Toast.makeText(view.context,"Veuillez remplir tous les champs", Toast.LENGTH_LONG).show()
 
     }
 
-    val isChecked: MutableLiveData<Boolean> = MutableLiveData()
-    val isSubscribe: MutableLiveData<Boolean> = MutableLiveData()
 
-    fun executeOnStatusChanged(switch: CompoundButton, isChecked: Boolean) {
+
+    fun executeOnStatusChanged(isChecked: Boolean) {
         isPublic = isChecked
+        isPublicChecked.value = isChecked
     }
+
 
     fun executeOnSubscribeChanged(switch: CompoundButton,isSubscribe : Boolean) {
         if(isSubscribe) FirebaseMessaging.getInstance().subscribeToTopic("nom-du-topic")
@@ -254,8 +259,8 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     }
 
-    fun fetchEventsPublic1() {
-        repoEvent.fetchEventsPublic1().observeForever{ event ->
+    fun fetchEvents() {
+        repoEvent.fetchEvents().observeForever{ event ->
         _eventList.value = event
         }
     }
@@ -331,7 +336,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
             return
         }
 
-        if(_emailList.value!!.contains(email)) {
+        if(!emailList.value!!.contains(email)) {
 
             alertDialog.showDialog(view.context, "Attention", "This email match no account, do you want to make an invitation via email", "yes","no", positiveButtonClickListener, negativeButtonClickListener)
 

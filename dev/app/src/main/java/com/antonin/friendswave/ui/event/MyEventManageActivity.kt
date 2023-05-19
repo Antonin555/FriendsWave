@@ -70,6 +70,7 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         viewModel = ViewModelProviders.of(this, factory).get(EventFragmentViewModel::class.java)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
+        viewModel.fetchEmail()
 
 
         if (!Places.isInitialized()) {
@@ -107,8 +108,8 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         val layoutManager = LinearLayoutManager(this)
         val layoutManager1 = LinearLayoutManager(this)
 
-        binding.recyclerMyEventInscrit.layoutManager = layoutManager
-        binding.recyclerMyEventInscrit.adapter = adapter1
+        binding.recyclerEventInscrit.layoutManager = layoutManager
+        binding.recyclerEventInscrit.adapter = adapter1
         binding.recyclerPendingParticipants.layoutManager = layoutManager1
         binding.recyclerPendingParticipants.adapter = adapter2
 
@@ -152,24 +153,36 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         binding.linearInscrit.setOnClickListener(ecouteur)
         binding.linearAttenteExpand.setOnClickListener(ecouteur)
 
-
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {
-                override fun onClick(view: View, position: Int) {
+            override fun onClick(view: View, position: Int) {
 
-                    val event = viewModel.eventListConfirm.value?.get(position)
-                    val idGuest = viewModel.guestList.value!!.get(position).uid
 
-                    if(view.id == R.id.btn_delete_guest){
+                val event = viewModel.eventListPublicUser.value!!.get(position)
+                val idGuest = viewModel.confirm_guestListPublic.value!!.get(position).uid
 
-                        viewModel.deleteConfirmationGuest(event,idGuest!!)
-                    }
+                if(view.id == R.id.btn_delete_guest){
+
+                    viewModel.deleteConfirmationGuest(event,idGuest!!)
+                }else {
 
                     val intent = Intent(view.context, ProfilActivity::class.java)
                     intent.putExtra("uid", idGuest)
                     startActivity(intent)
 
                 }
-            })
+
+
+
+            }
+        })
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+
+
     }
 
     val positiveButtonClickListener = DialogInterface.OnClickListener { dialog, which ->

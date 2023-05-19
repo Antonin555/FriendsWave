@@ -116,9 +116,9 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="0.2"
-                        android:checked="@={viewmodel.isChecked()}"
+                        android:checked="@={viewmodel.isPublicChecked}"
                         android:gravity="center"
-                        android:onCheckedChanged="@{viewmodel::executeOnStatusChanged}"
+                        android:onCheckedChanged="@{(compoundButton, isChecked) -> viewmodel.executeOnStatusChanged(isChecked)}"
                         tools:ignore="NestedWeights,UseSwitchCompatOrMaterialXml" />
 
                     <TextView
@@ -128,7 +128,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/roboto_mono"
                         android:gravity="center"
-                        android:text="@{viewmodel.isChecked() ? @string/add_event_public : @string/add_event_private}"
+                        android:text="@{viewmodel.isPublicChecked() ? @string/add_event_public : @string/add_event_private}"
                         android:textSize="16sp" />
 
                 </LinearLayout>
