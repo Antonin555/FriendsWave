@@ -196,22 +196,21 @@ class FirebaseSourceEvent {
                 }
                 onResult(tempList)
             }
-
             override fun onCancelled(error: DatabaseError) {
-
             }
-
         })
 
     }
-    // POUR NOTIF FRAGMENT
+    // POUR NOTIF FRAGMENT HOME
+
+    // cherche les invitations reçus :
     fun fetchInvitationEvents( onResult: (List<Event>) -> Unit) {
 
         var eventId: Any?
         var eventValue: Any?
         val eventIdList = HashMap<String,String>()
         val eventList: ArrayList<Event> = ArrayList()
-        firebaseUserCurrent.child("invitations").addListenerForSingleValueEvent(object : ValueEventListener {
+         firebaseUserCurrent.child("invitations").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (data in dataSnapshot.children){
@@ -220,11 +219,53 @@ class FirebaseSourceEvent {
                         eventIdList.put(eventId.toString(),eventValue.toString())
 
                     }
-//                    addEventsPrivateToRecyclerNotif(eventIdList,eventList, onResult)
-//                    addEventsPublicToRecyclerNotif(eventIdList,eventList, onResult)
+                    searchEventsWithKey(eventIdList,eventList, onResult)
                 }
             }
             override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
+    // FRAGMENT EVENT SUBSCRIBE OR IN PENDING :
+
+    // cherche les events confirmés par l'admin de l'event :
+    fun fetchConfirmationEvents( onResult: (List<Event>) -> Unit) {
+        var hostId: Any?
+        var eventValue: Any?
+        val eventIdList = HashMap<String,String>()
+        val eventList: ArrayList<Event> = ArrayList()
+        firebaseUserCurrent.child("eventConfirmationList").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (data in dataSnapshot.children){
+                        hostId = data.value.toString()
+                        eventValue = data.key.toString()
+                        eventIdList.put(eventValue.toString(),hostId.toString())
+                    }
+                    searchEventsWithKey(eventIdList,eventList,onResult)
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
+
+
+    // méthode commune à fetchInvitationEvents et fetchConfirmationEvents pour récupérer les events :
+    fun searchEventsWithKey(eventIdList: HashMap<String, String>, eventList: ArrayList<Event>, onResult: (List<Event>) -> Unit){
+
+        firebaseEvent.addValueEventListener(object :ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (snap in snapshot.children) {
+                    val event = snap.getValue(Event::class.java)
+                    if(eventIdList.containsKey(event!!.key)){
+                        eventList.add(event!!)
+                    }
+                }
+                onResult(eventList)
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
             }
         })
     }
@@ -249,78 +290,8 @@ class FirebaseSourceEvent {
 
     }
 
-    fun fetchConfirmationEvents( onResult: (List<Event>) -> Unit) {
-        var hostId: Any?
-        var eventValue: Any?
-        val eventIdList = HashMap<String,String>()
-        val eventList: ArrayList<Event> = ArrayList()
-        firebaseUserCurrent.child("eventConfirmationList").addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (data in dataSnapshot.children){
-                        hostId = data.value.toString()
-                        eventValue = data.key.toString()
-                        eventIdList.put(eventValue.toString(),hostId.toString())
-                    }
-
-                    findConfirmInEvent(eventIdList,eventList,onResult)
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
-    }
-
-    fun findConfirmInEvent(eventListId: HashMap<String,String>, eventList: ArrayList<Event>, onResult: (List<Event>) -> Unit)  {
-      firebaseEvent.addValueEventListener(object :ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-
-                for (snap in snapshot.children) {
-                    val event = snap.getValue(Event::class.java)
-                    if(eventListId.containsKey(event!!.key)){
-                        eventList.add(event!!)
-                    }
-                }
-                onResult(eventList)
-        }
-          override fun onCancelled(error: DatabaseError) {
-              TODO("Not yet implemented")
-          }
-
-      })
-
-    }
 
 
-
-
-
-
-    //Alex 2eme fonction pour ne pas faire result children
-    fun addEventsPublicToRecyclerNotif2(eventIdList:HashMap<String,String>, eventList:ArrayList<Event>, onResult: (List<Event>) -> Unit){
-
-        firebaseEvent.addValueEventListener(object :ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-
-
-                for (snap in snapshot.children) {
-
-                    val event = snap.getValue(Event::class.java)
-                    if(eventIdList.containsValue(snap.key)){
-                        eventList.add(event!!)
-                    }
-
-                }
-                onResult(eventList)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-
-        })
-    }
 
     // POUR MY EVENT : RECHERCHE DES PARTICIPANTS INVITATIONS PRIVATE :
 
