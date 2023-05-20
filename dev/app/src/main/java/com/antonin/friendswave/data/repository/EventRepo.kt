@@ -222,6 +222,7 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
         val requestEvent = MutableLiveData<List<User>>()
         firebaseEvent.fetchDemandeInscriptionEventPublic { user ->
             requestEvent.postValue(user)
+
         }
         return requestEvent
 

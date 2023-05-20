@@ -1,6 +1,7 @@
 package com.antonin.friendswave.ui.fragmentMain
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -25,6 +26,7 @@ import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentHomeBinding
+import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.antonin.friendswave.ui.viewModel.NotifFragmentVMFactory
@@ -174,14 +176,19 @@ class HomeFragment : Fragment(), KodeinAware {
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
+                val userNotif = viewModel2.friendNotifList.value?.get(position)
                 if (view.id == R.id.accept_friend){
-                    val userNotif = viewModel2.friendNotifList.value?.get(position)
                     viewModel2.acceptRequest(userNotif)
                 }
 
                 else if (view.id == R.id.decline_friend){
-                    val userNotif = viewModel2.friendNotifList.value?.get(position)
                     viewModel2.refuseRequest(userNotif)
+                }
+                else if(view.id == R.id.imageProfil) {
+                    val intent = Intent(context, ProfilActivity::class.java)
+                    intent.putExtra("uid", userNotif?.uid)
+                    startActivity(intent)
+
                 }
             }
 
@@ -190,12 +197,17 @@ class HomeFragment : Fragment(), KodeinAware {
         adapter2.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
 
-                val eventKey = viewModel2.requestListEvent.value?.get(position)!!
+                val user = viewModel2.requestListEvent.value?.get(position)!!
                 if (view.id == R.id.non_event){
-                    viewModel2.declineRequestEvent(eventKey)
+                    viewModel2.declineRequestEvent(user)
                 }
                 else if(view.id == R.id.oui_event) {
-                    viewModel2.acceptRequestEvent(eventKey)
+                    viewModel2.acceptRequestEvent(user)
+                }
+                else if(view.id == R.id.profil_potential_guest) {
+                    val intent = Intent(context, ProfilActivity::class.java)
+                    intent.putExtra("uid", user?.uid)
+                    startActivity(intent)
                 }
             }
 
@@ -203,16 +215,13 @@ class HomeFragment : Fragment(), KodeinAware {
 
         adapter3.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
+
+                val event = viewModel2.eventList.value?.get(position)
                 if (view.id == R.id.accept_invitation){
-                    val event = viewModel2.eventList.value?.get(position)
                     viewModel2.acceptInvitationEvent(event)
-
                 }
-
                 if (view.id == R.id.refuse_invitation){
-                    val eventKey = viewModel2.eventList.value?.get(position)
-                    viewModel2.refuseInvitationEvent(eventKey)
-
+                    viewModel2.refuseInvitationEvent(event)
                 }
             }
 

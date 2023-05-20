@@ -1,15 +1,11 @@
 package com.antonin.friendswave.adapter
 
 import android.annotation.SuppressLint
-import android.graphics.Color
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.annotation.LayoutRes
-import androidx.core.view.children
-import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
@@ -18,17 +14,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.antonin.friendswave.R
 import com.antonin.friendswave.data.firebase.FirebaseStore
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
+
 
 class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int) :
         ListAdapter<T, ListGeneriqueAdapter.GenericViewHolder<T>>(WordsComparator()) {
 
         private val items = mutableListOf<T>()
-        var storage: FirebaseStorage = Firebase.storage
+        private val items_dico = mutableMapOf<T,T>()
         private val store = FirebaseStore()
         private var inflater: LayoutInflater? = null
         private var onListItemViewClickListener: OnListItemViewClickListener? = null
@@ -37,6 +29,15 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
             this.items.clear()
             this.items.addAll(items)
             notifyDataSetChanged()
+        }
+
+        fun addItems_dico(items_dico:HashMap<T,T>){
+
+
+            this.items_dico.clear()
+            this.items_dico.putAll(items_dico)
+            notifyDataSetChanged()
+
         }
 
         fun setOnListItemViewClickListener(onListItemViewClickListener: OnListItemViewClickListener?){
@@ -62,11 +63,12 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
 
             val image_event = holder.itemView.findViewById<ImageView>(R.id.imageEvent)
             val image_profil = holder.itemView.findViewById<ImageView>(R.id.imageProfil)
+            val image_profil_potential_guest = holder.itemView.findViewById<ImageView>(R.id.profil_potential_guest)
 
 
 
             if(image_profil != null){
-                var path_profil = "photos/"+ itemViewModel.img.toString()
+                val path_profil = "photos/"+ itemViewModel.img.toString()
                 store.displayImage(image_profil,path_profil)
 
             }
@@ -75,6 +77,10 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
                 store.displayImage(image_event,path_event)
             }
 
+            if(image_profil_potential_guest != null){
+                val path_profil = "photos/"+ itemViewModel.img.toString()
+                store.displayImage(image_profil_potential_guest,path_profil)
+            }
 
         }
 

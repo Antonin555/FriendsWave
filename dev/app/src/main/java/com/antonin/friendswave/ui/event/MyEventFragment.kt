@@ -63,7 +63,7 @@ class MyEventFragment : Fragment(), KodeinAware {
         binding.recyclerMyEventPublic.layoutManager = layoutManager1
         binding.recyclerMyEventPublic.adapter = adapter2
 
-        viewModel.eventList.observe(this, Observer { eventList ->
+        viewModel.eventListPrivateUser.observe(this, Observer { eventList ->
             adapter1.addItems(eventList)
             if(adapter1.itemCount != 0){
                 binding.createYourFirstEvent.visibility = View.INVISIBLE

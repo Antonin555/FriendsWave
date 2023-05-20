@@ -98,7 +98,7 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
             viewModel.fetchGuestAttenteEventPrive(keyPrivate)
             viewModel.keyEvent = keyPrivate
 
-            viewModel.eventDataPrivate.observe(this, Observer { it ->
+            viewModel.eventData.observe(this, Observer { it ->
                 val path1 = "photosEvent/" + it.imgEvent.toString()
                 storeMedia.displayImage(binding.imagePreviewEvent, path1 )
             })

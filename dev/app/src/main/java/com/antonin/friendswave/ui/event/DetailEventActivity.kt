@@ -78,7 +78,7 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
 
 
 
-        viewModel.eventDataPrivate.observe(this, Observer { it ->
+        viewModel.eventData.observe(this, Observer { it ->
             val path1 = "photosEvent/" + it.imgEvent.toString()
             storeMedia.displayImage(binding.imagePreviewEvent, path1 )
         })

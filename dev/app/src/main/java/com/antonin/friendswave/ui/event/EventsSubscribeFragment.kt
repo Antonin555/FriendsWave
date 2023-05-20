@@ -121,6 +121,7 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
                    val intent = Intent(view.context, DetailEventActivity::class.java)
                    intent.putExtra("idEvent", event!!.key)
                    intent.putExtra("inscrit_ou_non", bool)
+                   intent.putExtra("adminEvent", event.admin)
                    view.context.startActivity(intent)
 
                 }

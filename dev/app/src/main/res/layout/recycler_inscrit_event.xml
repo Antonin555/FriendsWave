@@ -44,6 +44,7 @@
                     android:id="@+id/imageProfil"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
+                    android:scaleType="fitXY"
                     android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
 
                     />
@@ -92,6 +93,8 @@
                 android:backgroundTint="#E57373"
                 android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
                  />
+
+
 
         </LinearLayout>
 

@@ -3,9 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
-        <variable
-            name="item"
+
+        <variable name="viewM"
+            type="com.antonin.friendswave.ui.viewModel.ContactViewModel" />
+
+        <variable name="item"
             type="com.antonin.friendswave.data.model.User" />
+
+        <variable name="event"
+            type="com.antonin.friendswave.ui.viewModel.EventFragmentViewModel" />
+        <variable
+            name="imageUrl"
+            type="String" />
+
+
     </data>
 
     <LinearLayout
@@ -15,70 +26,84 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_height="70dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+            android:layout_marginRight="10dp">
 
-            <TextView
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3"
-                android:textSize="12sp"
-                android:fontFamily="@font/roboto_mono"
-                android:text="@string/pseudo" />
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.7"
+                app:cardCornerRadius="10dp">
 
-            <TextView
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageProfil"
+                    android:layout_width="70dp"
+                    android:layout_height="60dp"
+                    android:scaleType="fitXY"
+                    android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
+
+                    />
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/layoutChat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.6"
-                android:fontFamily="@font/roboto_mono"
-                android:text="@{item.nickname}" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="2"
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/decline_friend"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/btn_decline"
-                android:fontFamily="@font/roboto_mono"
-                android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
-                android:text="Decline"/>
+                <TextView
+                    android:id="@+id/nomProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/roboto_mono"
+                    android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
+                    android:text="@{item.name}"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-            <Button
+                <TextView
+                    android:id="@+id/timeProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/roboto_mono"
+                    android:text="@{item.email}"
+                    android:textSize="13sp" />
+                <!--            android:text="@{item.lastMessage.get(`CdbacBmIaHdqhqpBcV7bXKKHs4o2`)}"-->
+
+            </LinearLayout>
+
+            <ImageView
                 android:id="@+id/accept_friend"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
                 android:layout_marginEnd="5dp"
-                android:background="@drawable/btn_accept"
-                android:fontFamily="@font/roboto_mono"
-                android:text="ACCEPT"
+                android:src="@drawable/check"
                 android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
-               />
-        </LinearLayout>
+                />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
-            <TextView
-                android:id="@+id/event_name"
+            <ImageView
+                android:id="@+id/decline_friend"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:fontFamily="@font/roboto_mono"
-                android:text="@string/add_event_name" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.6"
-                android:fontFamily="@font/roboto_mono"
-                android:text="@{item.name}" />
-
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:src="@drawable/close"
+                android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
+                />
 
         </LinearLayout>
 

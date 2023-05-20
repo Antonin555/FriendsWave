@@ -84,8 +84,8 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     var interfaceEvent: InterfaceEvent? = null
 
-    private val _eventDataPrivate = MutableLiveData<Event>()
-    val eventDataPrivate: LiveData<Event> = _eventDataPrivate
+    private val _eventData = MutableLiveData<Event>()
+    val eventData: LiveData<Event> = _eventData
 
     private val _eventPublicUser = MutableLiveData<Event>()
     val eventPublicUser: LiveData<Event> = _eventPublicUser
@@ -98,6 +98,9 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     private val _eventList = MutableLiveData<List<Event>>()
     val eventList: LiveData<List<Event>> = _eventList
+
+    private val _eventListPrivateUser = MutableLiveData<List<Event>>()
+    val eventListPrivateUser: LiveData<List<Event>> = _eventListPrivateUser
 
     private val _eventListPublicUser = MutableLiveData<List<Event>>()
     val eventListPublicUser : LiveData<List<Event>> = _eventListPublicUser
@@ -126,7 +129,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     fun fetchDataEvent(key: String) {
         repoEvent.getEventData(key).observeForever { event ->
-            _eventDataPrivate.value = event
+            _eventData.value = event
         }
     }
 
@@ -273,7 +276,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     fun fetchEventsPrivateUser() {
         repoEvent.fetchEventsPrivateUser().observeForever{ event ->
-            _eventList.value = event
+            _eventListPrivateUser.value = event
         }
 
     }
@@ -342,8 +345,8 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
         }
 
-        if(eventDataPrivate.value?.key == key){
-            repoEvent.sendAnInvitationEvent(email!!, eventDataPrivate.value!!)
+        if(eventData.value?.key == key){
+            repoEvent.sendAnInvitationEvent(email!!, eventData.value!!)
         }
         if(eventDataPublic.value?.key == key){
             repoEvent.sendAnInvitationEvent(email!!, eventDataPublic.value!!)
