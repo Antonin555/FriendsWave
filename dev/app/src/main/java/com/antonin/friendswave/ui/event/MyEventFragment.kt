@@ -79,7 +79,7 @@ class MyEventFragment : Fragment(), KodeinAware {
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
-               var eventKeyPrivate = viewModel.eventList.value!!.get(position).key.toString()
+               var eventKeyPrivate = viewModel.eventListPrivateUser.value!!.get(position).key.toString()
                 val intent = Intent(context,MyEventManageActivity::class.java)
                 intent.putExtra("clefPrivate", eventKeyPrivate)
                 intent.putExtra("position", position)
