@@ -11,25 +11,19 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
-import com.antonin.friendswave.outils.startHomeActivity
 import com.antonin.friendswave.outils.startLoginActivity
 import com.antonin.friendswave.strategy.*
 import com.antonin.friendswave.ui.contact.AddContactActivity
 import com.antonin.friendswave.ui.home.ManageHomeActivity
-import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.home.SignalementActivity
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.*
-
 
 class HomeFragmentViewModel(private val repository: UserRepo, private val repoEvent:EventRepo):ViewModel() {
 
@@ -39,17 +33,12 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
     var month: Int? = 0
     var year:Int? = 0
     var date: String? = ""
-
-    val searchCategory = SearchCategory()
-    val searchByCities = SearchByCities()
-    val searchByName = SearchByName()
-    private lateinit var searchStrategy : Strategy
-
-    private val _user = MutableLiveData<User>()
-    var user_live: LiveData<User> = _user
-
     var etudes : String? = ""
     var langue :String? = ""
+
+    //DEUX USER LIVE***
+    private val _user = MutableLiveData<User>()
+    var user_live: LiveData<User> = _user
 
     private val _userProfil = MutableLiveData<User>()
     var user_liveProfil: LiveData<User> = _userProfil
@@ -59,16 +48,6 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
 
     private val _emailUserList = MutableLiveData<List<User>>()
     val emailUserList: LiveData<List<User>> = _emailUserList
-
-    private val _categorieEventList = MutableLiveData<List<Event>>()
-    val categorieEventList: LiveData<List<Event>> = _categorieEventList
-
-    private val _totalUserList = MutableLiveData<List<User>>()
-    val totalUserList: LiveData<List<User>> = _totalUserList
-
-    val user by lazy {
-        repository.currentUser()
-    }
 
     private val _interetList = MutableLiveData<List<String>>()
     val interetList: LiveData<List<String>> = _interetList
@@ -107,11 +86,11 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
                 view.context.startActivity(it)
             }
         }
-
     }
 
     fun fetchUserProfilData(profilUid: String?) {
         repository.getUserProfilData(profilUid).observeForever { user ->
+            //Alex pour n'avoir qu'une seul live data
             _userProfil.value = user
         }
     }
@@ -129,7 +108,6 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
         else if (ami_live.value == false){
             repository.addFriendRequestToUserByUid(profilUid)
         }
-
         verifAmitier(profilUid)
     }
 
@@ -144,7 +122,6 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
         if (!messSignalement.equals("")){
             repository.sendSignalement(profilUid, messSignalement)
         }
-
     }
 
     fun logout(view: View){
@@ -155,10 +132,6 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
         view.context.startLoginActivity() // va chercher les fonctions utiles pour les Intent
     }
 
-//    fun fetchUsers() {
-//        repository.fetchUsers()
-//    }
-
     fun fetchUsersFriends() {
         repository.fetchUsersFriends().observeForever{ user ->
             _emailUserList.value = user
@@ -166,19 +139,10 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
     }
 
     fun goToAddContact(view: View){
-
         // .also permet d'eviter de déclarer une variable :
         Intent(view.context, AddContactActivity::class.java).also {
             view.context.startActivity(it)
         }
-    }
-
-    fun goToYourProfil(view: View){
-
-        var intent = Intent(view.context, ProfilActivity::class.java)
-        intent.putExtra("uid", profilUid)
-        view.context.startActivity(intent)
-
     }
 
     fun onSelectItem(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
@@ -195,44 +159,10 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
         }
     }
 
-
-
-    ////////////////////////////////////////////////  Strategie
-
-    fun fetchStrategieEvent(){
-
-        repoEvent.fetchStrategieEvent().observeForever{ event ->
-            _categorieEventList.value = event
-        }
-
-    }
-
-    fun fetchAllUser(){
-        repository.fetchAllUser().observeForever{ user ->
-            _totalUserList.value = user
-        }
-    }
-
-
-//    fun strategyByCategory() : List<Event> {
-//
-//        var tempList : List<Event>?
-//        var type = "Mars"
-//        searchStrategy = Strategy(searchCategory)
-//        tempList = searchStrategy.searchByCategory(type, CategorieEventList.value)
-//
-//        return tempList
-//    }
-
     fun changeDate(year: Int, month: Int, day: Int) {
-
         val dayString =  if (day < 10) "0$day" else day.toString()
         val monthString = if (month <= 10) "0${month + 1}" else "${month + 1}"
         date = dayString + "/"+monthString +"/"+ year.toString()
-
-
-
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -244,19 +174,12 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
         return estMajeur
     }
 
-
-    fun fetchUserByMail(mail:String){
-
-        repository.fetchUserByMail(mail)
-    }
-
     fun registerPhoto(photo: Uri, context: Context){
         user_live.value?.img = repository.registerPhoto(photo, context)
 
     }
     fun registerPhotoCover(photo: Uri, context: Context){
         user_live.value?.imgCover = repository.registerPhotoCover(photo, context)
-
     }
 
 }

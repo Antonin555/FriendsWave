@@ -60,8 +60,6 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
             binding.btnInscription.visibility = View.INVISIBLE
         }
 
-
-
         viewModel.fetchDataEvent(idEvent.toString())
         viewModel.fetchGuestConfirmDetailEventPublic(idEvent)
         viewModel.fetchEmail()

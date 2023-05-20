@@ -13,10 +13,6 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
 
     fun currentUser() = firebaseUser.currentUser()
 
-    fun login(email: String, password: String) = firebaseUser.login(email, password)
-
-
-
     fun register(
         name: String,
         email: String,
@@ -27,17 +23,19 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
         date: String
     ) = firebaseUser.register(name,email, password, familyName, nickname, city, date)
 
+    fun login(email: String, password: String) = firebaseUser.login(email, password)
+
+    fun logout() = firebaseUser.logout()
+
+
     fun fetchAllPseudo():LiveData<List<String>> {
         val pseudoList = MutableLiveData<List<String>>()
 
         firebaseUser.fetchAllPseudo(){ pseudo ->
             pseudoList.postValue(pseudo)
         }
-
         return pseudoList
     }
-
-    fun logout() = firebaseUser.logout()
 
     fun fetchUsersFriends():LiveData<List<User>> {
         val emailUserList = MutableLiveData<List<User>>()
@@ -90,7 +88,7 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
     fun fetchAdmin(uid:String): LiveData<User> {
         val adminLiveData = MutableLiveData<User>()
 
-        firebaseUser.fetchAdmin(uid) { user ->
+        firebaseUser.getUserProfilData(uid) { user ->
             adminLiveData.postValue(user)
         }
 

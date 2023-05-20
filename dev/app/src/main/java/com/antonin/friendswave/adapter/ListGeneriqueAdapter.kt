@@ -32,12 +32,9 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
         }
 
         fun addItems_dico(items_dico:HashMap<T,T>){
-
-
             this.items_dico.clear()
             this.items_dico.putAll(items_dico)
             notifyDataSetChanged()
-
         }
 
         fun setOnListItemViewClickListener(onListItemViewClickListener: OnListItemViewClickListener?){

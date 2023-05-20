@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.antonin.friendswave.R
 import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
@@ -16,25 +15,18 @@ import com.antonin.friendswave.databinding.ActivityProfilBinding
 import com.antonin.friendswave.outils.AnimationLayout
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
-
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-
 class ProfilActivity : AppCompatActivity(), KodeinAware {
 
-    val storeMedia = FirebaseStore()
-
+    private val storeMedia = FirebaseStore()
     override val kodein : Kodein by kodein()
     private val factory : HomeFragmentVMFactory by instance()
-    private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
+    private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(
+        repository = UserRepo(firebaseUser = FirebaseSourceUser()),
         repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
     )
     private lateinit var binding: ActivityProfilBinding
@@ -48,8 +40,7 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
         val profilUid = intent.getStringExtra("uid")
 
         binding= DataBindingUtil.setContentView(this, R.layout.activity_profil)
-        viewModel = ViewModelProviders.of(this, factory).get(HomeFragmentViewModel::class.java)
-
+        viewModel = ViewModelProviders.of(this, factory)[HomeFragmentViewModel::class.java]
         binding.item = viewModel
         binding.lifecycleOwner = this
         binding.item?.profilUid = profilUid
@@ -62,35 +53,27 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
 
         viewModel.fetchUserData()
 
-        viewModel.ami_live.observe(this, Observer { message ->
-            if(viewModel.ami_live.value == true){
-
-//                val addIcon = resources.getDrawable(android.R.drawable.ic_delete)
+        viewModel.ami_live.observe(this) {
+            if (viewModel.ami_live.value == true) {
                 binding.floatingActionButton.setText(R.string.recycler_delete)
-
             }
-            if(viewModel.ami_live.value == false){
-
-//                val addIcon = resources.getDrawable(android.R.drawable.ic_input_add)
+            if (viewModel.ami_live.value == false) {
                 binding.floatingActionButton.setText(R.string.add)
                 binding.floatingActionButton.setBackgroundColor(Color.CYAN)
             }
-        })
+        }
 
-
-        viewModel.user_liveProfil.observe(this, Observer { it ->
-
+        viewModel.user_liveProfil.observe(this) {
             val path1 = "photos/" + it.img.toString()
             val path2 = "photosCover/" + it.imgCover.toString()
 
-            storeMedia.displayImage(binding.imgProfil, path1 )
-            storeMedia.displayImage(binding.imageCover, path2 )
-
-        })
+            storeMedia.displayImage(binding.imgProfil, path1)
+            storeMedia.displayImage(binding.imageCover, path2)
+        }
 
         binding.linearDescriptionProfil.setOnClickListener{
 
-            if(bool == true){
+            if(bool){
 
                 anim.expand(binding.linearDescriptionProfil, 1000,500)
                 bool = false
@@ -99,13 +82,6 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
                 anim.collapse(binding.linearDescriptionProfil,1000, 40)
                 bool = true
             }
-
         }
-
     }
-
-
-
-
-
 }

@@ -23,9 +23,7 @@ class FirebaseSourceEvent {
     val firebaseData : DatabaseReference = FirebaseDatabase.getInstance().getReference()
     val mainUid = FirebaseAuth.getInstance().currentUser?.uid
     fun currentUser() = firebaseAuth.currentUser
-
     val firebaseEvent = firebaseData.child("event")
-
     val firebaseUserCurrent = firebaseData.child("user").child(mainUid!!)
 
     fun editEvent(event: Event?){
