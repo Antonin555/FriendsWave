@@ -64,6 +64,7 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
         viewModel.fetchGuestConfirmDetailEventPublic(idEvent)
         viewModel.fetchEmail()
         viewModel.fetchAdmin(adminEvent.toString())
+        viewModel.fetchUserData()
 
         viewModel.admin_live.observe(this, Observer {
             binding.profilHost.text = it.name

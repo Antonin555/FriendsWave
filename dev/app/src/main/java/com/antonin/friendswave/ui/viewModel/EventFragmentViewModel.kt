@@ -9,8 +9,6 @@ import android.widget.AdapterView
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.databinding.BaseObservable
-import androidx.databinding.Bindable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -56,11 +54,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     val isPublicChecked: MutableLiveData<Boolean> = MutableLiveData()
     var strCategory = MutableLiveData<String>()
 
-
-
 //    var linkedList: LinkedList = LinkedList()
-
-
 //    val currentDate = formatter.parse(dateFormat.toString())
 
     val user by lazy {
@@ -140,14 +134,14 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         }
     }
 
-    fun sendRequestToParticipatePublicEvent(idEvent:String, adminEvent:String){
-
+    fun sendRequestToParticipatePublicEvent(idEvent:String, adminEvent:String, view: View){
+        if(user_live.value!!.pendingRequestEventPublic!!.containsKey(idEvent))Toast.makeText(view.context,"Demande deja envoye", Toast.LENGTH_LONG).show()
         // Si user est different de l'admin de l'event, il peut faire une demande :
-
-        if(adminEvent != user!!.uid){
-
+        else if(adminEvent != user!!.uid){
             repoEvent.sendRequestToParticipatePublicEvent(idEvent,adminEvent)
+            Toast.makeText(view.context,"Demande envoyee", Toast.LENGTH_LONG).show()
         }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -162,7 +156,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
             if(nbrePersonnes!! > 10)Toast.makeText(view.context,"Il ne peut pas y avoir plus de 10 personnes a un event", Toast.LENGTH_LONG).show()
             if(dateFormat.isBefore(LocalDate.now()))Toast.makeText(view.context,"La date doit etre antérieure a celle d'aujoud'hui", Toast.LENGTH_LONG).show()
             else{
-                    repoEvent.addEventUser(name!!, isPublic!!,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!, adress!!,description!!,
+                    repoEvent.addEventUser(name!!, isPublic,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!, adress!!,description!!,
                         longitude!!,lattitude!!,photo!!,view.context, user!!.displayName.toString(), timeStamp )
 
                 }

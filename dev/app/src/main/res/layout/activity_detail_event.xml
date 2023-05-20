@@ -367,7 +367,7 @@
                     android:layout_marginBottom="20dp"
                     android:fontFamily="@font/roboto_mono"
                     android:gravity="center"
-                    android:onClick="@{(v)-> event.sendRequestToParticipatePublicEvent(idEvent,adminEvent)}"
+                    android:onClick="@{(v)-> event.sendRequestToParticipatePublicEvent(idEvent,adminEvent,v)}"
                     android:text="@string/detail_event_inscription"
                     android:textColor="#FDFCFC"
                     android:textColorHighlight="#525E5E"
