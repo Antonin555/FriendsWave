@@ -126,7 +126,6 @@ class HomeFragment : Fragment(), KodeinAware {
             adapter1.addItems(notifUserList)
             if(adapter1.itemCount !=0 ) binding.makefriends.visibility= View.GONE
             else binding.makefriends.visibility = View.VISIBLE
-
         })
 
         viewModel2.eventList.observe(this,Observer { eventList ->

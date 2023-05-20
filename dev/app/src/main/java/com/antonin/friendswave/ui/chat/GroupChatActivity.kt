@@ -1,13 +1,10 @@
 package com.antonin.friendswave.ui.chat
 
-import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
@@ -43,8 +40,8 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
         repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
     )
     private lateinit var binding : ActivityGroupChatBinding
-    var eventKey: String = ""
-    var admin: String = ""
+    private var eventKey: String = ""
+    private var admin: String = ""
     private  lateinit var messageAdapter : MessageAdapter
     private lateinit var adapter1 : ListGeneriqueAdapter<User>
     private val animation = AnimationLayout()
@@ -59,8 +56,8 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
         eventKey = intent.getStringExtra("eventKey").toString()
         admin = intent.getStringExtra("admin").toString()
 
-        viewModel = ViewModelProviders.of(this,factory).get(ChatViewModel::class.java)
-        viewModel2 = ViewModelProviders.of(this,factory2).get(HomeFragmentViewModel::class.java)
+        viewModel = ViewModelProviders.of(this,factory)[ChatViewModel::class.java]
+        viewModel2 = ViewModelProviders.of(this,factory2)[HomeFragmentViewModel::class.java]
         binding = DataBindingUtil.setContentView(this, R.layout.activity_group_chat)
         binding.viewmodel = viewModel
         binding.item = viewModel2
@@ -68,24 +65,24 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
         viewModel.receiverUidGroup = admin + eventKey
 
         val layoutManager = LinearLayoutManager(this)
-        layoutManager.stackFromEnd = true;
+        layoutManager.stackFromEnd = true
         binding.chatRecyclerViewGroup.layoutManager = layoutManager
 
-        viewModel.groupMessageList.observe(this, Observer { messageList ->
+        viewModel.groupMessageList.observe(this) { messageList ->
             messageAdapter = MessageAdapter(this, messageList)
             messageAdapter.addItems(messageList)
             binding.chatRecyclerViewGroup.adapter = messageAdapter
-        })
+        }
 
-        viewModel.messageGroup.observe(this, Observer { message ->
+        viewModel.messageGroup.observe(this) { message ->
             binding.messageBoxGroup.setText(message)
-        })
+        }
 
 //        binding.teest.visibility = View.GONE
 
         binding.linearExpand.setOnClickListener{
 
-            if(bool == true){
+            if(bool){
                 bool = false
                 animation.expand(binding.linearExpand,1000,500)
             }
@@ -104,24 +101,24 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
         viewModel.fetchDiscussionGroup()
 
 
-        viewModel.mainEvent.observe(this, Observer {
+        viewModel.mainEvent.observe(this) {
             viewModel.fetchParticipant(it)
-        })
+        }
 
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_contact)
         val layoutManager2 = LinearLayoutManager(this)
         binding.chatRecyclerViewGroupParticipant.layoutManager = layoutManager2
         binding.chatRecyclerViewGroupParticipant.adapter = adapter1
 
-        viewModel.participantList.observe(this, Observer {
+        viewModel.participantList.observe(this) {
             adapter1.addItems(it)
-        })
+        }
 
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
 
-                val userChoisi = viewModel.participantList.value!!.get(position)
+                val userChoisi = viewModel.participantList.value!![position]
 
                 if(view.id == R.id.imageProfil){
                     val intent = Intent(view.context, ProfilActivity::class.java)

@@ -26,7 +26,6 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import com.antonin.friendswave.outils.sendEmail
 import java.util.*
-//import com.antonin.friendswave.data.dataStructure.LinkedList
 
 class EventFragmentViewModel(private val repository:UserRepo,private val repoEvent:EventRepo):ViewModel() {
 
@@ -54,9 +53,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     val isPublicChecked: MutableLiveData<Boolean> = MutableLiveData()
     var strCategory = MutableLiveData<String>()
 
-//    var linkedList: LinkedList = LinkedList()
-//    val currentDate = formatter.parse(dateFormat.toString())
-
     val user by lazy {
         repository.currentUser()
     }
@@ -81,8 +77,8 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     private val _eventData = MutableLiveData<Event>()
     val eventData: LiveData<Event> = _eventData
 
-    private val _eventPublicUser = MutableLiveData<Event>()
-    val eventPublicUser: LiveData<Event> = _eventPublicUser
+//    private val _eventPublicUser = MutableLiveData<Event>()
+//    val eventPublicUser: LiveData<Event> = _eventPublicUser
 
     private val _eventDataPublic = MutableLiveData<Event>()
     val eventDataPublic: LiveData<Event> = _eventDataPublic
@@ -355,11 +351,11 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         }
     }
 
-    fun goToGroupChat(view: View){
-        Intent(view.context, GroupChatActivity::class.java).also {
-            view.context.startActivity(it)
-        }
-    }
+//    fun goToGroupChat(view: View){
+//        Intent(view.context, GroupChatActivity::class.java).also {
+//            view.context.startActivity(it)
+//        }
+//    }
 
     fun editEvent(){
 
@@ -395,8 +391,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
             view.context.startActivity(it)
         }
     }
-
-
 }
 
 

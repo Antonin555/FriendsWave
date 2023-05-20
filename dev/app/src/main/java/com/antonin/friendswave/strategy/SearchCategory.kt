@@ -63,10 +63,7 @@ class SearchByCities : InterfaceSearch {
                 foundEvents.add(event)
             }
         }
-
         return foundEvents
-
-
     }
 
 }

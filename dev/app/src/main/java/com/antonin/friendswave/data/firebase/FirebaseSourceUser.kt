@@ -391,7 +391,7 @@ class FirebaseSourceUser {
     ){
         val messageObject = Messages(messageEnvoye, mainUid, userName, formattedTimestamp)
 
-        firebaseData.child("chatsGroup").child(receiverUid).child("message").push()
+        firebaseData.child("chats").child(receiverUid).child("message").push()
             .setValue(messageObject)
     }
 
@@ -413,21 +413,21 @@ class FirebaseSourceUser {
         }
     }
 
-    fun fetchDiscussionGroup(receiverUid: String, onResult:(List<Messages>) -> Unit){
-        firebaseData.child("chatsGroup").child(receiverUid).child("message").get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val messageList = ArrayList<Messages>()
-                for (snap in task.result.children) {
-                    if (snap.exists()) {
-                        val message = snap.getValue(Messages::class.java)
-                        messageList.add(message!!)
-
-                    }
-                }
-                onResult(messageList)
-            }
-        }
-    }
+//    fun fetchDiscussionGroup(receiverUid: String, onResult:(List<Messages>) -> Unit){
+//        firebaseData.child("chatsGroup").child(receiverUid).child("message").get().addOnCompleteListener { task ->
+//            if (task.isSuccessful) {
+//                val messageList = ArrayList<Messages>()
+//                for (snap in task.result.children) {
+//                    if (snap.exists()) {
+//                        val message = snap.getValue(Messages::class.java)
+//                        messageList.add(message!!)
+//
+//                    }
+//                }
+//                onResult(messageList)
+//            }
+//        }
+//    }
 
     fun fetchParticipant(event: Event?, onResult:(List<User>) -> Unit){
 

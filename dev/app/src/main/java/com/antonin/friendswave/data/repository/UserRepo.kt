@@ -163,7 +163,7 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
     fun fetchDiscussionGroup(receiverUid: String):LiveData<List<Messages>>{
         val messageList = MutableLiveData<List<Messages>>()
 
-        firebaseUser.fetchDiscussionGroup(receiverUid) { message ->
+        firebaseUser.fetchDiscussion(receiverUid) { message ->
             messageList.postValue(message)
         }
         return messageList
