@@ -13,12 +13,12 @@ import com.antonin.friendswave.data.firebase.FirebaseSourceUser
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityChatBinding
-import com.antonin.friendswave.ui.viewModel.ChatVMFactory
 import com.antonin.friendswave.ui.viewModel.ChatViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+import com.antonin.friendswave.ui.viewModel.ChatVMFactory
 
 class ChatActivity : AppCompatActivity(), KodeinAware {
 

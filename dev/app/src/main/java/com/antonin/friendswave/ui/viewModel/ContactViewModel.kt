@@ -33,12 +33,6 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
         repository.currentUser()
     }
 
-//    val searchHobbyFriend = SearchHobbyFriend()
-////    val searchCityFriend = SearchCityFriend()
-////    val searchAgeFriend = SearchAgeFriend()
-
-    private lateinit var searchFriendStrategy : StrategyFriend
-
     private val _user = MutableLiveData<User>()
     var user_live: LiveData<User> = _user
 

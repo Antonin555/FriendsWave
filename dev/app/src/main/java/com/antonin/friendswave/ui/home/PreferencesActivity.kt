@@ -8,7 +8,6 @@ import com.antonin.friendswave.R
 import com.antonin.friendswave.databinding.ActivityPreferencesBinding
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
-import com.google.firebase.messaging.FirebaseMessaging
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance

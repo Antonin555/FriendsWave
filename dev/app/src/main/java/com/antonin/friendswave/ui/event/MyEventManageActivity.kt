@@ -27,7 +27,6 @@ import com.antonin.friendswave.databinding.ActivityMyEventManageBinding
 import com.antonin.friendswave.outils.AlertDialog
 import com.antonin.friendswave.outils.AnimationLayout
 import com.antonin.friendswave.ui.home.ProfilActivity
-import com.antonin.friendswave.ui.viewModel.ContactViewModel
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import com.google.android.libraries.places.api.Places

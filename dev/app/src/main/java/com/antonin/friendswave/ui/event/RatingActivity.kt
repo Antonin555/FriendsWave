@@ -1,6 +1,5 @@
 package com.antonin.friendswave.ui.event
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -8,10 +7,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.data.model.User
-import com.antonin.friendswave.databinding.ActivityAddContactBinding
 import com.antonin.friendswave.databinding.ActivityRatingBinding
-import com.antonin.friendswave.ui.viewModel.ContactViewModel
-import com.antonin.friendswave.ui.viewModel.ContactViewModelFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import org.kodein.di.Kodein

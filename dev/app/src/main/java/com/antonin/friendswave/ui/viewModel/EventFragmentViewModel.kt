@@ -134,7 +134,8 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     }
 
     fun sendRequestToParticipatePublicEvent(idEvent:String, adminEvent:String, view: View){
-        if(user_live.value!!.pendingRequestEventPublic!!.containsKey(idEvent))Toast.makeText(view.context,"Demande deja envoye", Toast.LENGTH_LONG).show()
+        if(user_live.value!!.eventConfirmationList!!.containsKey(idEvent))Toast.makeText(view.context,"Vous participez deja a cette evenement", Toast.LENGTH_LONG).show()
+        else if(user_live.value!!.pendingRequestEventPublic!!.containsKey(idEvent))Toast.makeText(view.context,"Demande deja envoye", Toast.LENGTH_LONG).show()
         // Si user est different de l'admin de l'event, il peut faire une demande :
         else if(adminEvent != user!!.uid){
             repoEvent.sendRequestToParticipatePublicEvent(idEvent,adminEvent)
@@ -152,8 +153,8 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
             !categorie!!.isEmpty() && !date!!.isEmpty() && !horaire!!.isEmpty()
             && !adress!!.isEmpty() && !description!!.isEmpty()){
             if(photo == null)Toast.makeText(view.context,"Veuillez inserer une photo", Toast.LENGTH_LONG).show()
-            if(nbrePersonnes!! > 10)Toast.makeText(view.context,"Il ne peut pas y avoir plus de 10 personnes a un event", Toast.LENGTH_LONG).show()
-            if(dateFormat.isBefore(LocalDate.now()))Toast.makeText(view.context,"La date doit etre antérieure a celle d'aujoud'hui", Toast.LENGTH_LONG).show()
+            else if(nbrePersonnes!! > 10)Toast.makeText(view.context,"Il ne peut pas y avoir plus de 10 personnes a un event", Toast.LENGTH_LONG).show()
+            else if(dateFormat.isBefore(LocalDate.now()))Toast.makeText(view.context,"La date doit etre antérieure a celle d'aujoud'hui", Toast.LENGTH_LONG).show()
             else{
                     repoEvent.addEventUser(name!!, isPublic,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!, adress!!,description!!,
                         longitude!!,lattitude!!,photo!!,view.context, user!!.displayName.toString(), timeStamp )

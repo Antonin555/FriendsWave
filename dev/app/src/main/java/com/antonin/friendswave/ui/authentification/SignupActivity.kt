@@ -9,15 +9,12 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 
 import com.antonin.friendswave.R
-import com.antonin.friendswave.databinding.ActivityEditProfilBinding
 import com.antonin.friendswave.databinding.ActivitySingupBinding
 import com.antonin.friendswave.outils.startHomeActivity
 
 import com.antonin.friendswave.ui.viewModel.AuthViewModel
-import com.antonin.friendswave.ui.viewModel.AuthViewModelFactory
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.TypeFilter
@@ -28,8 +25,7 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import com.antonin.friendswave.ui.viewModel.AuthViewModelFactory
 
 
 class SignupActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {

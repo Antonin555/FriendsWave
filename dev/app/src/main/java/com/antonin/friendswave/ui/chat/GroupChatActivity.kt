@@ -18,14 +18,14 @@ import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityGroupChatBinding
 import com.antonin.friendswave.outils.AnimationLayout
 import com.antonin.friendswave.ui.home.ProfilActivity
-import com.antonin.friendswave.ui.viewModel.ChatVMFactory
 import com.antonin.friendswave.ui.viewModel.ChatViewModel
-import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+import com.antonin.friendswave.ui.viewModel.ChatVMFactory
+import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 
 class GroupChatActivity : AppCompatActivity(),KodeinAware {
 

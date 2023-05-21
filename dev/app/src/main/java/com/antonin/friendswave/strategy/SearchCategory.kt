@@ -6,18 +6,16 @@ import com.antonin.friendswave.data.model.User
 
 class SearchCategory: InterfaceSearch {
 
-
     override fun sortedEvent(str: String, event: List<Event>?, user: User): List<Event> {
         val tempListEvent : ArrayList<Event> = ArrayList()
 
         for(data in event!!) {
-            if(str.contains(data.categorie!!) || data.categorie!!.contains(str)) {
+            if(str.lowercase().contains(data.categorie!!.lowercase()) || data.categorie!!.lowercase().contains(str.lowercase())) {
                 tempListEvent.add(data)
             }
         }
         return tempListEvent
     }
-
 }
 
 class SearchByName : InterfaceSearch {
@@ -27,13 +25,12 @@ class SearchByName : InterfaceSearch {
 
         for(data in event!!) {
 
-            if(data.name!!.contains(str) || data.description!!.contains(str)) {
+            if(data.name!!.lowercase().contains(str.lowercase()) || data.description!!.lowercase().contains(str.lowercase())) {
                 tempListEvent.add(data)
             }
         }
         return tempListEvent
     }
-
 }
 
 class SearchByCities : InterfaceSearch {

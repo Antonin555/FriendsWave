@@ -15,13 +15,11 @@ import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.databinding.ActivityDetailEventBinding
 import com.antonin.friendswave.outils.AnimationLayout
 import com.antonin.friendswave.ui.home.ProfilActivity
-import com.antonin.friendswave.ui.viewModel.ContactViewModel
-import com.antonin.friendswave.ui.viewModel.ContactViewModelFactory
-import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 
 class DetailEventActivity : AppCompatActivity(), KodeinAware {
 
