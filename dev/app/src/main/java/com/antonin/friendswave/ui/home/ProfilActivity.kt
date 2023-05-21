@@ -47,7 +47,6 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
         if(profilUid != null){
             viewModel.fetchUserProfilData(profilUid)
             binding.item?.verifAmitier(profilUid)
-
         }
 
         viewModel.fetchUserData()

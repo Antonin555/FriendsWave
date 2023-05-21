@@ -2,6 +2,10 @@ package com.antonin.friendswave.strategy
 
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 
 class SearchCategory: InterfaceSearch {
@@ -49,10 +53,10 @@ class SearchByCities : InterfaceSearch {
             val dLat = Math.toRadians(eventLatitude - user.lattitude as Double)
             val dLon = Math.toRadians(eventLongitude - user.longitude as Double)
 
-            val a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                    Math.cos(Math.toRadians(user.lattitude as Double)) * Math.cos(Math.toRadians(eventLatitude)) *
-                    Math.sin(dLon / 2) * Math.sin(dLon / 2)
-            val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+            val a = sin(dLat / 2) * sin(dLat / 2) +
+                    cos(Math.toRadians(user.lattitude as Double)) * cos(Math.toRadians(eventLatitude)) *
+                    sin(dLon / 2) * sin(dLon / 2)
+            val c = 2 * atan2(sqrt(a), sqrt(1 - a))
 
             val distance = earthRadius * c
 

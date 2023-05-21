@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
@@ -37,7 +36,7 @@ class AddContactActivity : AppCompatActivity(), KodeinAware, InterfaceAuth {
         setContentView(R.layout.activity_add_contact)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_contact)
-        viewModel = ViewModelProviders.of(this, factory).get(ContactViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, factory)[ContactViewModel::class.java]
 
         binding.viewmodel = viewModel
         viewModel.interfaceAuth = this
@@ -63,9 +62,9 @@ class AddContactActivity : AppCompatActivity(), KodeinAware, InterfaceAuth {
         val searchAgeFriend = SearchAgeFriend()
         var searchStrategyFriend: StrategyFriend
 
-        viewModel.requete_live.observe(this, Observer {
+        viewModel.requete_live.observe(this) {
             viewModel.addFriendRequestToUser(this, it)
-        })
+        }
 
 
         binding.btnHobby.setOnClickListener{
@@ -84,18 +83,19 @@ class AddContactActivity : AppCompatActivity(), KodeinAware, InterfaceAuth {
 
     fun strategyUser(strategy: StrategyFriend) {
 
-        viewModel.totalUserList.observe(this, Observer { userList ->
+        viewModel.totalUserList.observe(this) { userList ->
             val tempList = strategy.search(viewModel.user_live.value, userList) as ArrayList<User>
             adapter1.addItems(tempList)
 
-            if(tempList.isEmpty()){
+            if (tempList.isEmpty()) {
                 binding.noResultFound.visibility = View.VISIBLE
 
-            }else{
+            } else {
                 binding.noResultFound.visibility = View.GONE
             }
 
-            adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {
+            adapter1.setOnListItemViewClickListener(object :
+                ListGeneriqueAdapter.OnListItemViewClickListener {
                 override fun onClick(view: View, position: Int) {
                     val userChoisi = tempList.get(position)
                     val intent = Intent(view.context, ProfilActivity::class.java)
@@ -103,7 +103,7 @@ class AddContactActivity : AppCompatActivity(), KodeinAware, InterfaceAuth {
                     startActivity(intent)
                 }
             })
-        })
+        }
     }
 
     override fun onSuccess() {

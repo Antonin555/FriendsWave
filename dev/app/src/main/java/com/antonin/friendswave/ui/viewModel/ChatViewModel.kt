@@ -1,6 +1,8 @@
 package com.antonin.friendswave.ui.viewModel
 
+import android.os.Build
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -36,6 +38,7 @@ class ChatViewModel(private val repository: UserRepo, private val repoEvent: Eve
     private val _participantList = MutableLiveData<List<User>>()
     val participantList: LiveData<List<User>> = _participantList
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun addMessagetoDatabase(view: View){
 
         if(messageEnvoye != null){
@@ -51,6 +54,7 @@ class ChatViewModel(private val repository: UserRepo, private val repoEvent: Eve
         fetchDiscussion()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun addMessageGrouptoDatabase(view: View){
 
         if(messageEnvoye != null){
@@ -69,7 +73,7 @@ class ChatViewModel(private val repository: UserRepo, private val repoEvent: Eve
     fun fetchDiscussion() {
         repository.fetchDiscussion(receiverUid!!).observeForever{ message ->
             _messageList.value = message
-            var lastMess : Messages = Messages()
+            var lastMess = Messages()
             val iterator = message.listIterator(message.size)
 
             while (iterator.hasPrevious()) {
@@ -96,7 +100,7 @@ class ChatViewModel(private val repository: UserRepo, private val repoEvent: Eve
 
     fun fetchParticipant(event: Event)
     {
-        repository.fetchParticipant(event!!).observeForever{ participant ->
+        repository.fetchParticipant(event).observeForever{ participant ->
             _participantList.value = participant
         }
 

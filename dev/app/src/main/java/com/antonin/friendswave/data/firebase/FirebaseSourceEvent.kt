@@ -20,7 +20,7 @@ class FirebaseSourceEvent {
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
-    val firebaseData : DatabaseReference = FirebaseDatabase.getInstance().getReference()
+    val firebaseData : DatabaseReference = FirebaseDatabase.getInstance().reference
     val mainUid = FirebaseAuth.getInstance().currentUser?.uid
     fun currentUser() = firebaseAuth.currentUser
     val firebaseEvent = firebaseData.child("event")
@@ -54,7 +54,7 @@ class FirebaseSourceEvent {
     fun deletePendingEvent(event:Event?){
 
         firebaseEvent.child(event!!.key.toString()).child("pendingRequestEventPublic").child(currentUser()!!.uid).removeValue()
-        firebaseUserCurrent.child("pendingRequestEventPublic").child(event!!.key.toString()).removeValue()
+        firebaseUserCurrent.child("pendingRequestEventPublic").child(event.key.toString()).removeValue()
 
     }
 
@@ -235,7 +235,7 @@ class FirebaseSourceEvent {
                 for (snap in snapshot.children) {
                     val event = snap.getValue(Event::class.java)
                     if(eventIdList.containsKey(event!!.key)){
-                        eventList.add(event!!)
+                        eventList.add(event)
                     }
                 }
                 onResult(eventList)
@@ -248,7 +248,6 @@ class FirebaseSourceEvent {
 
 
     fun fetchSpecificEvents( hostId: String, eventValue: String, onResult: (Event) -> Unit) {
-        val hostId = hostId
         val eventValue = eventValue
 
         firebaseEvent.get().addOnCompleteListener { task ->
@@ -405,7 +404,7 @@ class FirebaseSourceEvent {
                                 // Effectuer les autres opérations
                                 queryEvent.child("listInscrits").child(user.uid.toString()).setValue(user.email)
                                 queryUser.child("eventConfirmationList").child(idEvent).setValue(mainUid)
-                                queryAcceptHostEventUser.child("ConfirmHostRequestEventPublic").child(idEvent).setValue(user!!.email)
+                                queryAcceptHostEventUser.child("ConfirmHostRequestEventPublic").child(idEvent).setValue(user.email)
                             }
                         }
                     })
@@ -416,7 +415,7 @@ class FirebaseSourceEvent {
 
     // REFUSER
     fun declineRequestEvent(user: User?){
-        var idEvent:String = user!!.pendingRequestEventPublic!!.get(mainUid!!).toString()
+        val idEvent:String = user!!.pendingRequestEventPublic!!.get(mainUid!!).toString()
         val queryEventPublic = firebaseEvent.child(idEvent)
         val queryAcceptGuestEventUser = firebaseData.child("user").child(user.uid.toString())
 
@@ -460,7 +459,7 @@ class FirebaseSourceEvent {
                 for (snap in snapshot.children) {
                     val event = snap.getValue(Event::class.java)
                     if(event!!.public == true){
-                        eventsList.add(event!!)
+                        eventsList.add(event)
                     }
                 }
                 onResult(eventsList)
@@ -480,7 +479,7 @@ class FirebaseSourceEvent {
                 for (snap in task.result.children) {
                     if (snap.exists()) {
                         val event = snap.getValue(Event::class.java)
-                        if(event!!.admin == mainUid && event!!.public == false)
+                        if(event!!.admin == mainUid && event.public == false)
                             eventsList.add(event)
                     }
                 }
@@ -500,7 +499,7 @@ class FirebaseSourceEvent {
                 for (snap in task.result.children) {
                     if (snap.exists()) {
                         val event = snap.getValue(Event::class.java)
-                        if(event!!.admin == mainUid && event!!.public == true)
+                        if(event!!.admin == mainUid && event.public == true)
                             eventsList.add(event)
                     }
                 }
@@ -556,9 +555,9 @@ class FirebaseSourceEvent {
 
     fun registerPhotoEvent(photo: Uri,context:Context ,key:String) : String{
 
-        var storage: FirebaseStorage = Firebase.storage
-        var currentTime = Calendar.getInstance().timeInMillis
-        var storageRef = storage.reference.child("photosEvent/").child(key).child(currentTime.toString())
+        val storage: FirebaseStorage = Firebase.storage
+        val currentTime = Calendar.getInstance().timeInMillis
+        val storageRef = storage.reference.child("photosEvent/").child(key).child(currentTime.toString())
         val path = storageRef.toString().substringAfter("photosEvent/")
         Firebase.database.getReference("event/" + key).child("imgEvent").setValue(path)
         val inputStream = context.contentResolver.openInputStream(photo)

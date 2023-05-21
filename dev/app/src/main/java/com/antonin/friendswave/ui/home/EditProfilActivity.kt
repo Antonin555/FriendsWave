@@ -14,7 +14,6 @@ import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.MyGridViewAdapter
@@ -41,17 +40,16 @@ import java.time.format.DateTimeFormatter
 
 class EditProfilActivity : AppCompatActivity(), KodeinAware {
 
-
     override val kodein : Kodein by kodein()
     private val factory : HomeFragmentVMFactory by instance()
-    private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
+    private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(
+        repository = UserRepo(firebaseUser = FirebaseSourceUser()),
         repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
     )
     var addressList: List<Address>? = null
     lateinit var address : Address
     private lateinit var binding: ActivityEditProfilBinding
     private lateinit var adapter: MyGridViewAdapter
-
     private val AUTOCOMPLETE_REQUEST_CODE = 1
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -60,10 +58,9 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
         setContentView(R.layout.activity_edit_profil)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_profil)
-        viewModel = ViewModelProviders.of(this, factory).get(HomeFragmentViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, factory)[HomeFragmentViewModel::class.java]
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
-
 
 //        val apiKey = getString(R.string.api_key_google_map)
 
@@ -76,28 +73,22 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
         actualiserSpinner()
         afficheInteret()
 
-        viewModel.user_live.observe(this, Observer {
-
+        viewModel.user_live.observe(this) {
             val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
             val date = LocalDate.parse(it.date, formatter)
             viewModel.day = date.dayOfMonth
             viewModel.month = date.monthValue
             viewModel.year = date.year
-        })
+        }
 
         binding.pictureProfil.setOnClickListener {
             val img = Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-
             getResult.launch(img)
-
         }
 
         binding.pictureCover.setOnClickListener{
-
             val img = Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-
             getResultCover.launch(img)
-
         }
 
         binding.searchCity.setOnClickListener {
@@ -139,7 +130,7 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
         val mySpinnerL = binding.spinnerLangues
         val mySpinnerE = binding.spinnerEtudes
         //pour inserer les donnees actuelles de l'user dans les spinners
-        binding.viewmodel!!.user_live.observe(this, Observer {
+        binding.viewmodel!!.user_live.observe(this){
             for (i in 0 until mySpinnerL.count) {
                 if (mySpinnerL.getItemAtPosition(i).toString() == it?.langue) {
                     positionToSelect = i
@@ -155,18 +146,18 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
                 }
             }
             mySpinnerE.setSelection(positionToSelect)
-        })
+        }
     }
 
     fun afficheInteret(){
-        binding.viewmodel!!.interetList.observe(this, Observer{
-            adapter = MyGridViewAdapter(this, it, viewModel!!)
+        binding.viewmodel!!.interetList.observe(this){
+            adapter = MyGridViewAdapter(this, it, viewModel)
             binding.gridView.adapter = adapter
-        })
-
+        }
     }
 
     // methode de Google dans la doc:
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             when (resultCode) {

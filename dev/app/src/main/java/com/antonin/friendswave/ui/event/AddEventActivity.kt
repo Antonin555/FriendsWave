@@ -77,6 +77,7 @@ class AddEventActivity : AppCompatActivity(), KodeinAware {
         }
 
     // methode de Google dans la doc:
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             when (resultCode) {

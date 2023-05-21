@@ -2,8 +2,6 @@ package com.antonin.friendswave.data.model
 
 import com.antonin.friendswave.adapter.ListItemViewModel
 
-
-
 data class User (
     var name: String? = "",
     var email: String? = "",

@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
@@ -70,13 +69,13 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
         binding.recyclerPending.layoutManager = layoutManager1
         binding.recyclerPending.adapter = adapter2
 
-        viewModel.eventListConfirm.observe(this, Observer { eventList ->
+        viewModel.eventListConfirm.observe(this){ eventList ->
             adapter1.addItems(eventList)
-        })
+        }
 
-        viewModel.eventPendingPublic.observe(this,Observer{ eventList ->
+        viewModel.eventPendingPublic.observe(this){ eventList ->
             adapter2.addItems(eventList)
-        })
+        }
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
@@ -130,20 +129,20 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
     }
 
 
-    fun clickOnPositiveButton(event:Event?) = DialogInterface.OnClickListener { dialog, which ->
+    fun clickOnPositiveButton(event:Event?) = DialogInterface.OnClickListener { _, which ->
             if (which == DialogInterface.BUTTON_POSITIVE) {
                 viewModel.deleteConfirmation(event)
             }
         }
 
-    fun cliclPositiveButtonPendingEvent(event:Event?) = DialogInterface.OnClickListener { dialog,which ->
+    fun cliclPositiveButtonPendingEvent(event:Event?) = DialogInterface.OnClickListener { _, which ->
         if(which == DialogInterface.BUTTON_POSITIVE) {
             viewModel.deletePendingEvent(event)
         }
     }
 
 
-    val negativeButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
+    val negativeButtonClickListener = DialogInterface.OnClickListener { _, which ->
         // Code à exécuter si le bouton négatif est cliqué
         if (which == DialogInterface.BUTTON_NEGATIVE) {
             Toast.makeText(requireContext(), "ok on touche a rien", Toast.LENGTH_LONG).show()

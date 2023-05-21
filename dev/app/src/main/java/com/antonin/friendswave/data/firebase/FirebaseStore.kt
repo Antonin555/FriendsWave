@@ -1,9 +1,6 @@
 package com.antonin.friendswave.data.firebase
 
 import android.widget.ImageView
-import com.antonin.friendswave.R
-import com.antonin.friendswave.data.model.Event
-import com.antonin.friendswave.data.model.User
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.ktx.Firebase
@@ -18,7 +15,7 @@ class FirebaseStore {
     fun displayImage(imgView:ImageView, path: String){
 
         val storageRef = storage.reference.child(path)
-        println("PHHHHHHHHHHHHHHHHHHHHHHOOOOOOOOOOOOOOOOOOTOOOOOOOOOOOO : " + storage.reference.child(path))
+//        println("PHHHHHHHHHHHHHHHHHHHHHHOOOOOOOOOOOOOOOOOOTOOOOOOOOOOOO : " + storage.reference.child(path))
 
         storageRef.downloadUrl.addOnSuccessListener {
             Glide.with(imgView.context)

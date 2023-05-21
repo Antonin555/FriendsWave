@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
@@ -46,9 +45,10 @@ class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListe
     override val kodein : Kodein by kodein()
     private val factory : EventFragmentVMFactory by instance()
     private lateinit var binding : FragmentEventBinding
-    private var viewModel: EventFragmentViewModel = EventFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
+    private var viewModel: EventFragmentViewModel = EventFragmentViewModel(
+        repository = UserRepo(firebaseUser = FirebaseSourceUser()),
         repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
-    private var adapter1 : ListGeneriqueAdapter<Event> = ListGeneriqueAdapter<Event>(R.layout.recycler_events)
+    private var adapter1 : ListGeneriqueAdapter<Event> = ListGeneriqueAdapter(R.layout.recycler_events)
     private lateinit var loc : GoogleLocation
     private lateinit var googleMap: GoogleMap
     private var linkedList: LinkedList = LinkedList()
@@ -58,7 +58,7 @@ class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListe
         super.onCreate(savedInstanceState)
 
         loc = GoogleLocation()
-        viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
+        viewModel = ViewModelProviders.of(this,factory)[EventFragmentViewModel::class.java]
         viewModel.fetchEvents()
         viewModel.fetchUserData()
 
@@ -81,7 +81,7 @@ class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListe
         binding.mapView.onResume()
         super.onResume()
 
-        viewModel.eventList.observe(this, Observer { eventList ->
+        viewModel.eventList.observe(this){ eventList ->
             adapter1.addItems(eventList)
             if(eventList.isEmpty()){
                 binding.noResultFound.visibility = View.VISIBLE
@@ -89,12 +89,10 @@ class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListe
             }else{
                 binding.noResultFound.visibility = View.GONE
             }
-
             for (i in eventList){
                 linkedList.add(i)
             }
-
-        })
+        }
 
         val searchCategory = SearchCategory()
         val searchByCities = SearchByCities()
@@ -140,7 +138,7 @@ class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListe
 
     fun strategyEvent(strategy: Strategy, str:String) {
         var tempList: ArrayList<Event>
-        viewModel.eventList.observe(this, Observer { eventList ->
+        viewModel.eventList.observe(this){ eventList ->
 
             val user = viewModel.user_live.value
             tempList = strategy.search(str, eventList, user!!) as ArrayList<Event>
@@ -162,7 +160,7 @@ class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListe
                     }
                 }
             })
-        })
+        }
     }
 
     fun goToDetailEvent(id_event:String?, admin_event:String , position:Int){
@@ -172,7 +170,6 @@ class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListe
         intent.putExtra("idEvent", id_event)
         intent.putExtra("adminEvent", admin_event)
         startActivity(intent)
-
     }
 
 
@@ -192,15 +189,11 @@ class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListe
     }
 
     override fun onMapReady(p0: GoogleMap) {
-
         googleMap = p0
-//        loc.getLocation(requireContext(),binding.mapView,requireActivity())
-//        googleMap.addMarker(MarkerOptions().position(LatLng(-73.4220, 45.0841)).title("Marker à Mountain View"))
-        viewModel.eventList.observe(requireActivity(), Observer { eventList ->
+        viewModel.eventList.observe(requireActivity()){ eventList ->
 
             loc.getAllLocationsEvent(googleMap,eventList,binding.mapView, requireActivity(),requireContext())
-        })
-//
+        }
     }
 
     override fun onLocationChanged(p0: Location) {

@@ -31,7 +31,7 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
     fun fetchAllPseudo():LiveData<List<String>> {
         val pseudoList = MutableLiveData<List<String>>()
 
-        firebaseUser.fetchAllPseudo(){ pseudo ->
+        firebaseUser.fetchAllPseudo { pseudo ->
             pseudoList.postValue(pseudo)
         }
         return pseudoList
@@ -40,7 +40,7 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
     fun fetchUsersFriends():LiveData<List<User>> {
         val emailUserList = MutableLiveData<List<User>>()
 
-        firebaseUser.fetchUsersFriend() { user ->
+        firebaseUser.fetchUsersFriend { user ->
             emailUserList.postValue(user)
         }
         return emailUserList
@@ -183,7 +183,7 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
     fun fetchfetchEmail():LiveData<List<String>>{
         val emailList = MutableLiveData<List<String>>()
 
-        firebaseUser.fetchEmail() { message ->
+        firebaseUser.fetchEmail { message ->
             emailList.postValue(message)
         }
         return emailList
@@ -218,13 +218,11 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
 
 
     fun fetchUserByMail(mail:String):LiveData<User> {
-
         val userLiveData = MutableLiveData<User>()
 
         firebaseUser.fetchUserByMail(mail) { user ->
             userLiveData.postValue(user)
         }
-
         return userLiveData
     }
 

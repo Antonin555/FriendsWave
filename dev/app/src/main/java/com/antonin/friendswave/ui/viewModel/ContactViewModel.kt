@@ -1,7 +1,7 @@
 package com.antonin.friendswave.ui.viewModel
 
 import android.content.DialogInterface
-import android.view.View
+
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,21 +9,10 @@ import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.outils.AlertDialog
-//import com.antonin.friendswave.strategy.SearchAgeFriend
-//import com.antonin.friendswave.strategy.SearchCityFriend
 import com.antonin.friendswave.outils.emailPattern
-
 import com.antonin.friendswave.outils.sendEmail
-import com.antonin.friendswave.strategy.StrategyFriend
 import com.antonin.friendswave.ui.authentification.InterfaceAuth
 import com.antonin.friendswave.ui.contact.AddContactActivity
-import java.lang.Runnable
-import javax.mail.Transport
-import java.util.*
-import javax.mail.*
-import javax.mail.internet.InternetAddress
-import javax.mail.internet.MimeMessage
-import javax.mail.Message
 
 class ContactViewModel(private val repository: UserRepo) : ViewModel() {
 
@@ -63,7 +52,7 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
         val alertDialog = AlertDialog()
 //        val emailPattern = Regex("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
 
-        val positiveButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
+        val positiveButtonClickListener = DialogInterface.OnClickListener { _, which ->
             // Code à exécuter si le bouton positif est cliqué
             if (which == DialogInterface.BUTTON_POSITIVE) {
                 //envoyer une demande directement par couriel
@@ -74,7 +63,7 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
                 alertDialog.cancel()
             }
         }
-        val negativeButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
+        val negativeButtonClickListener = DialogInterface.OnClickListener { _, which ->
             // Code à exécuter si le bouton négatif est cliqué
             if (which == DialogInterface.BUTTON_NEGATIVE) {
                 Toast.makeText(view,"ok on touche a rien", Toast.LENGTH_SHORT).show()

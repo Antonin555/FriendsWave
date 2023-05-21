@@ -151,8 +151,8 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
     fun changeDate(year: Int, month: Int, day: Int) {
 
 
-        var dayString : String = ""
-        var monthString : String = ""
+        val dayString: String
+        val monthString: String
 
         if(day < 10) {
             dayString = "0" + day.toString()
@@ -177,8 +177,7 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         val dateNaissance = LocalDate.parse(date, formatter)
         val age = ChronoUnit.YEARS.between(dateNaissance, LocalDate.now())
-        val estMajeur = age >= 18 && dateNaissance.isBefore(LocalDate.now())
-        return estMajeur
+        return age >= 18 && dateNaissance.isBefore(LocalDate.now())
     }
 
 

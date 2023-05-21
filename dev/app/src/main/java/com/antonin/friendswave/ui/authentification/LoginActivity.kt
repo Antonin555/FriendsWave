@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.antonin.friendswave.R
 import com.antonin.friendswave.databinding.ActivityLoginBinding
@@ -14,8 +13,6 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import com.antonin.friendswave.ui.viewModel.AuthViewModelFactory
-
-
 
 class LoginActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
 
@@ -33,9 +30,9 @@ class LoginActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
 
         viewModel.interfaceAuth = this
 
-        viewModel.toastMessage.observe(this, Observer { message ->
+        viewModel.toastMessage.observe(this) { message ->
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-        })
+        }
 
     }
 

@@ -11,23 +11,19 @@ import com.antonin.friendswave.data.repository.UserRepo
 
 class NotifFragmentViewModel (private val repository: UserRepo, private val repoEvent:EventRepo): ViewModel() {
 
-
     private val _eventList = MutableLiveData <List<Event>>()
     val eventList: LiveData<List<Event>> = _eventList
 
     private val _friendNotifList = MutableLiveData <List<User>>()
     val friendNotifList: LiveData<List<User>> = _friendNotifList
 
-
     private val _requestListEvent = MutableLiveData<List<User>>()
     val requestListEvent : LiveData<List<User>> = _requestListEvent
-
 
     fun fetchUsersRequest(){
         repository.fetchUsersRequest().observeForever{ notifUser ->
             _friendNotifList.value = notifUser
         }
-
     }
 
 //    fun fetchEventsInvitationByKey(){
@@ -47,8 +43,6 @@ class NotifFragmentViewModel (private val repository: UserRepo, private val repo
     fun refuseRequest(userNotif: User?){
         repository.refuseRequest(userNotif)
     }
-
-
 
     fun refuseInvitationEvent(event:Event?){
         repoEvent.refuseInvitationEvent(event)
@@ -81,8 +75,4 @@ class NotifFragmentViewModel (private val repository: UserRepo, private val repo
 
         }
     }
-
-
-
-
 }

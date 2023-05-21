@@ -3,7 +3,6 @@ package com.antonin.friendswave.ui.chat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
@@ -34,27 +33,27 @@ class ChatActivity : AppCompatActivity(), KodeinAware {
         setContentView(R.layout.activity_chat)
 
         val reveiverUid = intent.getStringExtra("uid")
-        viewModel = ViewModelProviders.of(this,factory).get(ChatViewModel::class.java)
+        viewModel = ViewModelProviders.of(this,factory)[ChatViewModel::class.java]
         viewModel.receiverUid = reveiverUid
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
         val layoutManager = LinearLayoutManager(this)
-        layoutManager.stackFromEnd = true;
+        layoutManager.stackFromEnd = true
         binding.chatRecyclerView.layoutManager = layoutManager
 
 
-        viewModel.messageList.observe(this, Observer { messageList ->
+        viewModel.messageList.observe(this) { messageList ->
             messageAdapter = MessageAdapter(this, messageList)
             messageAdapter.addItems(messageList)
             //viewModel.user_live.value?.lastMessage?.put(reveiverUid.toString(), messageList.lastOrNull().toString())
             binding.chatRecyclerView.adapter = messageAdapter
-        })
+        }
 
-        viewModel.message.observe(this, Observer { message ->
+        viewModel.message.observe(this) { message ->
             binding.messageBox.setText(message)
-        })
+        }
 
     }
 

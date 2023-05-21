@@ -12,7 +12,6 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
 
     fun currentUser() = firebaseEvent.currentUser()
 
-
     fun fetchConfirmationEvents(): LiveData<List<Event>> {
 
         val eventListConfirm = MutableLiveData<List<Event>>()
@@ -22,7 +21,6 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
         }
         return eventListConfirm
     }
-
 
     ///////////////////////////////////Strategie
     fun fetchStrategieEvent():LiveData<List<Event>>{

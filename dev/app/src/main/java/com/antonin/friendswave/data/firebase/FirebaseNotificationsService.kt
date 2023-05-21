@@ -7,7 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
-import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.antonin.friendswave.ui.event.RatingActivity
 import com.antonin.friendswave.ui.fragmentMain.HomeFragment
@@ -19,10 +19,8 @@ import com.google.firebase.R
 
 class FirebaseNotificationsService : FirebaseMessagingService() {
 
-
-    private lateinit var firebase: FirebaseSourceUser
-
-
+//    private lateinit var firebase: FirebaseSourceUser
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
 
@@ -35,19 +33,17 @@ class FirebaseNotificationsService : FirebaseMessagingService() {
         }
 
         if(message.notification != null) {
-
             val title = message.data["title"]!!.toString()
             val body = message.data["body"]!!.toString()
             val intent_action = message.data["click_action"].toString()
             sendNotification(title.toString(),body.toString(), intent_action)
         }
-
-
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun sendNotification(titre: String, body:String, action: String) {
 
-        var intent :Intent = Intent()
+        var intent = Intent()
 
         if(action == "OPEN_ACTIVITY") {
             intent = Intent(this, RatingActivity::class.java)
@@ -56,7 +52,6 @@ class FirebaseNotificationsService : FirebaseMessagingService() {
         if(action != "OPEN_ACTIVITY") {
             intent = Intent(this, HomeFragment::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-
         }
 
 
@@ -99,6 +94,4 @@ class FirebaseNotificationsService : FirebaseMessagingService() {
             .child("token")
             .setValue(token)
     }
-
-
 }

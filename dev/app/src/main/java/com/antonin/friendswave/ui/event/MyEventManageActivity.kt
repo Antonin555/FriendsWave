@@ -11,7 +11,6 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
@@ -48,8 +47,8 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
     val storeMedia = FirebaseStore()
     private var viewModel: EventFragmentViewModel = EventFragmentViewModel(
         repository = UserRepo(firebaseUser = FirebaseSourceUser()), repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
-    private var adapter1: ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_inscrit_event)
-    private var adapter2: ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
+    private var adapter1: ListGeneriqueAdapter<User> = ListGeneriqueAdapter(R.layout.recycler_inscrit_event)
+    private var adapter2: ListGeneriqueAdapter<User> = ListGeneriqueAdapter(R.layout.recycler_contact)
     private val AUTOCOMPLETE_REQUEST_CODE = 1
     private val ecouteur = Ecouteur()
     private lateinit var binding: ActivityMyEventManageBinding
@@ -61,11 +60,9 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         setContentView(R.layout.activity_my_event_manage)
 
         val key_event = intent.getStringExtra("clef")
-
-        val pos = intent.getIntExtra("position", 0)
-
+//        val pos = intent.getIntExtra("position", 0)
         val binding: ActivityMyEventManageBinding = DataBindingUtil.setContentView(this, R.layout.activity_my_event_manage)
-        viewModel = ViewModelProviders.of(this, factory).get(EventFragmentViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, factory)[EventFragmentViewModel::class.java]
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
         viewModel.fetchEmail()
@@ -83,11 +80,10 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
             viewModel.keyEvent = key_event
 
-            viewModel.eventDataPublic.observe(this, Observer { it ->
+            viewModel.eventDataPublic.observe(this) {
                 val path1 = "photosEvent/" + it.imgEvent.toString()
                 storeMedia.displayImage(binding.imagePreviewEvent, path1 )
-            })
-
+            }
         }
 
         val layoutManager = LinearLayoutManager(this)
@@ -98,18 +94,18 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         binding.recyclerPendingParticipants.layoutManager = layoutManager1
         binding.recyclerPendingParticipants.adapter = adapter2
 
-        viewModel.guestList.observe(this, Observer { guestList ->
+        viewModel.guestList.observe(this){ guestList ->
             adapter1.addItems(guestList)
-        })
+        }
 
 
-        viewModel.confirm_guestListPublic.observe(this, Observer { confirm_guestList ->
+        viewModel.confirm_guestListPublic.observe(this) { confirm_guestList ->
             adapter1.addItems(confirm_guestList)
-        })
+        }
 
-        viewModel.pending_guest_list.observe(this, Observer{ pending_guest_list ->
+        viewModel.pending_guest_list.observe(this){ pending_guest_list ->
             adapter2.addItems(pending_guest_list)
-        })
+        }
 
         binding.btnDeleteMyEvent.setOnClickListener {
 
@@ -126,9 +122,9 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
             startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
         }
 
-        viewModel.guestListPublic.observe(this, Observer { attente_guestList ->
+        viewModel.guestListPublic.observe(this){ attente_guestList ->
             adapter2.addItems(attente_guestList)
-        })
+        }
 
 
         binding.linearInvitation.setOnClickListener(ecouteur)
@@ -160,22 +156,14 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-
-
-
-    }
-
-    fun positiveDeleteGuest(event: Event?, idGuest:String) = DialogInterface.OnClickListener { dialog, which ->
+    fun positiveDeleteGuest(event: Event?, idGuest:String) = DialogInterface.OnClickListener { _, which ->
         if(which == DialogInterface.BUTTON_POSITIVE) {
-
             viewModel.deleteConfirmationGuest(event!!,idGuest)
             finish()
         }
     }
 
-    val positiveButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
+    val positiveButtonClickListener = DialogInterface.OnClickListener { _, which ->
         // Code à exécuter si le bouton positif est cliqué
         if (which == DialogInterface.BUTTON_POSITIVE) {
 
@@ -184,7 +172,7 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         }
     }
 
-    val negativeButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
+    val negativeButtonClickListener = DialogInterface.OnClickListener { _, which ->
         // Code à exécuter si le bouton négatif est cliqué
         if (which == DialogInterface.BUTTON_NEGATIVE) {
             Toast.makeText(this, "ok on touche a rien", Toast.LENGTH_LONG).show()
@@ -192,6 +180,7 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
     }
 
     // methode de Google dans la doc:
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             when (resultCode) {
@@ -244,36 +233,27 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         override fun onClick(view: View?) {
 
             if(view!!.id == R.id.linearAttenteExpand){
-                if (bool_linear_attente == true) {
+                if (bool_linear_attente) {
                     bool_linear_attente = false
-
                     animation.expand(view.rootView.findViewById(R.id.linearAttenteExpand), 1000, 800)
                 } else {
                     animation.collapse(view.rootView.findViewById(R.id.linearAttenteExpand), 1000, 40)
                     bool_linear_attente = true
-
                 }
-
             }
-
             if(view.id == R.id.linearInscrit){
-
-                if (bool_linear_inscrit == true) {
+                if (bool_linear_inscrit) {
                     bool_linear_inscrit = false
 
                     animation.expand(view.rootView.findViewById(R.id.linearInscrit), 1000, 800)
                 } else {
                     animation.collapse(view.rootView.findViewById(R.id.linearInscrit), 1000, 40)
                     bool_linear_inscrit = true
-
                 }
-
             }
-
-
             if(view.id == R.id.linear_description){
 
-                if (bool_linear_description == true) {
+                if (bool_linear_description) {
                     bool_linear_description = false
 
                     animation.expand(view.rootView.findViewById(R.id.linear_description), 1000, 800)
@@ -284,23 +264,20 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
                 }
 
             }
-
             if(view.id == R.id.linear_invitation){
 
-                if (bool_linear_invitation == true) {
+                if (bool_linear_invitation) {
                     bool_linear_invitation= false
 
                     animation.expand(view.rootView.findViewById(R.id.linear_invitation), 1000, 800)
                 } else {
                     animation.collapse(view.rootView.findViewById(R.id.linear_invitation), 1000, 40)
                     bool_linear_invitation = true
-
                 }
-
             }
         }
 
-        }
+    }
 
 
 

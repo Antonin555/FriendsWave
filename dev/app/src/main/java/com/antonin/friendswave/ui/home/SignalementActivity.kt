@@ -31,7 +31,7 @@ class SignalementActivity : AppCompatActivity(), KodeinAware {
 
         val profilUid = intent.getStringExtra("uid")
         binding = DataBindingUtil.setContentView(this, R.layout.activity_signalement)
-        viewModel = ViewModelProviders.of(this, factory).get(HomeFragmentViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, factory)[HomeFragmentViewModel::class.java]
 //        val view = binding.root
         binding.view = viewModel
         binding.lifecycleOwner = this

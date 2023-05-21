@@ -14,7 +14,6 @@ import org.kodein.di.generic.instance
 
 class PreferencesActivity : AppCompatActivity() , KodeinAware  {
 
-
     override val kodein by kodein()
     private val factory : EventFragmentVMFactory by instance()
     private lateinit var binding : ActivityPreferencesBinding

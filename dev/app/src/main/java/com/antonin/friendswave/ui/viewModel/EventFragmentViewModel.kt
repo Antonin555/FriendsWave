@@ -49,12 +49,12 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     var minute: Int? = 0
     var timeStamp : Double = 0.0
     var email: String? = ""
-    var pseudo:String? = ""
+//    var pseudo:String? = ""
     var keyEvent: String? = ""
     val isSubscribe: MutableLiveData<Boolean> = MutableLiveData()
     val isPublicChecked: MutableLiveData<Boolean> = MutableLiveData()
     var strCategory = MutableLiveData<String>()
-    var nbreInscrits : Int? = 0
+//    var nbreInscrits : Int? = 0
 
     val user by lazy {
         repository.currentUser()
@@ -196,19 +196,16 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         date = dayString + "/"+monthString +"/"+ year.toString()
 
         val sdf = SimpleDateFormat("dd/MM/yyyy")
-        var strDate: Date? = null
-        strDate = sdf.parse(date)
-        timeStamp = strDate.time.toDouble()
-
+        var strDate: Date? = sdf.parse(date.toString())
+        if (strDate != null) {
+            timeStamp = strDate.time.toDouble()
+        }
         if (Date().after(strDate)) {
             Toast.makeText(view.context,"Impossible de remonter dans le temps",Toast.LENGTH_SHORT).show()
-
         }
-
     }
 
     fun changeHour(hour:Int, minute:Int) {
-
         val hourString = if (hour < 10) "0$hour" else hour.toString()
         val minuteString = if (minute < 10) "0$minute" else minute.toString()
         horaire = hourString + ":" + minuteString
@@ -216,7 +213,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
 
     fun fetchGuestConfirmDetailEventPublic(key: String?){
-
         repoEvent.fetchGuestConfirmDetailEventPublic(key).observeForever{ user ->
 
             _confirm_guestListPublic.value = user
@@ -224,14 +220,12 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     }
 
     fun fetchAdmin(uid: String){
-
         repository.fetchAdmin(uid).observeForever { user ->
             _admin.value = user
         }
     }
 
     fun getAllEventsPendingRequestPublic(){
-
         repoEvent.getAllEventsPendingRequestPublic().observeForever{ event ->
             _eventPendingPublic.value= event
         }
@@ -241,14 +235,12 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         repoEvent.fetchGuestDetailEventPublic(key).observeForever{ event->
             _guestListPublic.value = event
         }
-
     }
 
     fun fetchPendingGuestEventPublic(key:String?){
         repoEvent.fetchPendingGuestEventPublic(key).observeForever{ event->
             _pending_guest_list.value = event
         }
-
     }
 
     fun fetchEvents() {
@@ -261,33 +253,27 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         repoEvent.fetchEventsPrivateUser().observeForever{ event ->
             _eventListPrivateUser.value = event
         }
-
     }
 
     fun fetchEventsPublicUser() {
         repoEvent.fetchEventsPublicUser().observeForever{ event ->
             _eventListPublicUser.value = event
         }
-
     }
 
     fun fetchConfirmationEvents() {
-
         repoEvent.fetchConfirmationEvents().observeForever{event ->
             _eventListConfirm.value = event
         }
-
     }
 
     fun fetchDetailEventPublicUser(key:String?) {
         repoEvent.fetchDetailEventPublicUser(key).observeForever{ event->
             _eventDataPublic.value = event
-
         }
     }
 
     fun sendAnInvitationEvent(view:View, key: String){
-
         val alertDialog = AlertDialog()
 
         val positiveButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
@@ -311,9 +297,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
             Toast.makeText(view.context, "Mail vide ou non valide", Toast.LENGTH_SHORT).show()
             return
         }
-
-        if(!emailList.value!!.contains(email)) {
-
+        else if(!emailList.value!!.contains(email)) {
             alertDialog.showDialog(view.context,
                 "Attention",
                 "This email match no account, do you want to make an invitation via email",
@@ -323,7 +307,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
                 negativeButtonClickListener)
 
         }
-
         if(eventData.value?.key == key){
             repoEvent.sendAnInvitationEvent(email!!, eventData.value!!)
         }
@@ -341,9 +324,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     }
 
     fun editEvent(){
-
-
-
 //        val patternDate = Regex("\\d{2}/\\d{2}/\\d{4}")
         if(_eventDataPublic.value!!.date!!.matches(patternDate)){
 

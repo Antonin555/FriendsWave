@@ -9,13 +9,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil.inflate
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
@@ -29,7 +26,6 @@ import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentHomeBinding
 import com.antonin.friendswave.outils.AlertDialog
-import com.antonin.friendswave.outils.sendEmail
 import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
@@ -69,8 +65,8 @@ class HomeFragment : Fragment(), KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this,factory).get(HomeFragmentViewModel::class.java)
-        viewModel2 = ViewModelProviders.of(this,factory2).get(NotifFragmentViewModel::class.java)
+        viewModel = ViewModelProviders.of(this,factory)[HomeFragmentViewModel::class.java]
+        viewModel2 = ViewModelProviders.of(this,factory2)[NotifFragmentViewModel::class.java]
 
     }
 
@@ -116,36 +112,34 @@ class HomeFragment : Fragment(), KodeinAware {
 
 
 
-        viewModel2.friendNotifList.observe(this, Observer { notifUserList ->
+        viewModel2.friendNotifList.observe(this){ notifUserList ->
             adapter1.addItems(notifUserList)
             if(adapter1.itemCount !=0 ) binding.makefriends.visibility= View.GONE
             else binding.makefriends.visibility = View.VISIBLE
-        })
+        }
 
-        viewModel2.eventList.observe(this,Observer { eventList ->
+        viewModel2.eventList.observe(this){ eventList ->
             adapter3.addItems(eventList)
             if( adapter3.itemCount !=0) binding.tempInvitations.visibility = View.GONE
             else binding.tempInvitations.visibility = View.VISIBLE
-        })
+        }
 
-        viewModel2.requestListEvent.observe(this, Observer { userList ->
+        viewModel2.requestListEvent.observe(this){ userList ->
             adapter2.addItems(userList)
             if(adapter2.itemCount != 0)  binding.searchEvents.visibility = View.GONE
             else binding.searchEvents.visibility = View.VISIBLE
-        })
+        }
 
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_PERMISSION_READ_EXTERNAL_STORAGE)
         }
 
-        viewModel.user_live.observe(this, Observer { it ->
+        viewModel.user_live.observe(this) {
             val path1 = "photos/" + it.img.toString()
             val path2 = "photosCover/" + it.imgCover.toString()
-
             if(it.imgCover != null) storeMedia.displayImage(binding.imageCover,path2)
             storeMedia.displayImage(binding.imgProfil,path1)
-
-        })
+        }
 
         FirebaseMessaging.getInstance().token
             .addOnCompleteListener { task ->
@@ -199,7 +193,7 @@ class HomeFragment : Fragment(), KodeinAware {
                 }
                 else if(view.id == R.id.profil_potential_guest) {
                     val intent = Intent(context, ProfilActivity::class.java)
-                    intent.putExtra("uid", user?.uid)
+                    intent.putExtra("uid", user.uid)
                     startActivity(intent)
                 }
             }
@@ -223,7 +217,7 @@ class HomeFragment : Fragment(), KodeinAware {
 
     }
 
-    fun positiveButtonClickListener(user:User) = DialogInterface.OnClickListener { dialog, which ->
+    fun positiveButtonClickListener(user:User) = DialogInterface.OnClickListener { _, which ->
         // Code à exécuter si le bouton positif est cliqué
         if (which == DialogInterface.BUTTON_POSITIVE) {
             viewModel2.acceptRequestEvent(user)
@@ -232,13 +226,14 @@ class HomeFragment : Fragment(), KodeinAware {
             alertDialog.cancel()
         }
     }
-    val negativeButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
+    val negativeButtonClickListener = DialogInterface.OnClickListener { _, which ->
         // Code à exécuter si le bouton négatif est cliqué
         if (which == DialogInterface.BUTTON_NEGATIVE) {
             alertDialog.cancel()
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 

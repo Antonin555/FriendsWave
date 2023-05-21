@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
@@ -27,7 +26,7 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
     private lateinit var viewModel: EventFragmentViewModel
     private val factory : EventFragmentVMFactory by instance()
     val storeMedia = FirebaseStore()
-    private var adapter1 : ListGeneriqueAdapter<User> = ListGeneriqueAdapter<User>(R.layout.recycler_contact)
+    private var adapter1 : ListGeneriqueAdapter<User> = ListGeneriqueAdapter(R.layout.recycler_contact)
     private var bool_linear_inscrit = true
     private var bool_linear_description_event = true
     private val animeLayout = AnimationLayout()
@@ -41,7 +40,7 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
         val adminEvent = intent.getStringExtra("adminEvent")
 
         val binding: ActivityDetailEventBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail_event)
-        viewModel = ViewModelProviders.of(this, factory).get(EventFragmentViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, factory)[EventFragmentViewModel::class.java]
 
         binding.event = viewModel
         binding.idEvent = idEvent
@@ -64,18 +63,18 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
         viewModel.fetchAdmin(adminEvent.toString())
         viewModel.fetchUserData()
 
-        viewModel.admin_live.observe(this, Observer {
+        viewModel.admin_live.observe(this) {
             binding.profilHost.text = it.name
-        })
+        }
 
-        viewModel.confirm_guestListPublic.observe(this, Observer{ confirm_guestList->
+        viewModel.confirm_guestListPublic.observe(this) { confirm_guestList->
             adapter1.addItems(confirm_guestList)
-        })
+        }
 
-        viewModel.eventData.observe(this, Observer { it ->
+        viewModel.eventData.observe(this){
             val path1 = "photosEvent/" + it.imgEvent.toString()
             storeMedia.displayImage(binding.imagePreviewEvent, path1 )
-        })
+        }
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
@@ -91,7 +90,7 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
 
         binding.linearDescriptionEvent.setOnClickListener{
 
-            if(bool_linear_description_event == true){
+            if(bool_linear_description_event){
 
                 animeLayout.expand(binding.linearDescriptionEvent, 1000,500)
                 bool_linear_description_event = false
@@ -107,7 +106,7 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
         binding.linearInscritEvent.setOnClickListener{
 
 
-            if(bool_linear_inscrit == true) {
+            if(bool_linear_inscrit) {
 
                 animeLayout.expand(binding.linearInscritEvent, 1000, 500)
                 bool_linear_inscrit = false

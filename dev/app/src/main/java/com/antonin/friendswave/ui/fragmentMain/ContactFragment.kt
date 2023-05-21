@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
@@ -71,7 +70,7 @@ class ContactFragment : Fragment(), KodeinAware {
 
         viewModel.fetchUsersFriends()
 
-        viewModel.emailUserList.observe(this, Observer { userList ->
+        viewModel.emailUserList.observe(this) { userList ->
             adapter1.addItems(userList)
             if(userList.isEmpty()){
                 binding.recoContact.visibility = View.VISIBLE
@@ -82,7 +81,7 @@ class ContactFragment : Fragment(), KodeinAware {
                 binding.contactImg.visibility = View.GONE
             }
 
-        })
+        }
 
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {

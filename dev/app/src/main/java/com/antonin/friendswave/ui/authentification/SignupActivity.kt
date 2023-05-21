@@ -49,7 +49,7 @@ class SignupActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
 
 //        progressbar = findViewById(R.id.progressbar)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_singup)
-        viewModel = ViewModelProviders.of(this, factory).get(AuthViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, factory)[AuthViewModel::class.java]
         binding.viewmodel = viewModel
 
         viewModel.interfaceAuth = this
@@ -93,6 +93,7 @@ class SignupActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
 //    }
 
     // methode de Google dans la doc:
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             when (resultCode) {

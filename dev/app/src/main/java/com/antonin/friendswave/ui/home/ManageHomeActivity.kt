@@ -13,11 +13,9 @@ import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
-import com.antonin.friendswave.ui.event.RatingActivity
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-
 
 class ManageHomeActivity : AppCompatActivity() {
 

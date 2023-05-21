@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antonin.friendswave.R
@@ -34,12 +33,12 @@ class MyEventFragment : Fragment(), KodeinAware {
     private lateinit var binding : FragmentMyEventBinding
     private var viewModel: EventFragmentViewModel = EventFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
         repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
-    private var adapter1 : ListGeneriqueAdapter<Event> = ListGeneriqueAdapter<Event>(R.layout.recycler_events)
-    private var adapter2 : ListGeneriqueAdapter<Event> = ListGeneriqueAdapter<Event>(R.layout.recycler_events)
+    private var adapter1 : ListGeneriqueAdapter<Event> = ListGeneriqueAdapter(R.layout.recycler_events)
+    private var adapter2 : ListGeneriqueAdapter<Event> = ListGeneriqueAdapter(R.layout.recycler_events)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
+        viewModel = ViewModelProviders.of(this,factory)[EventFragmentViewModel::class.java]
         viewModel.fetchEventsPrivateUser()
         viewModel.fetchEventsPublicUser()
     }
@@ -63,23 +62,23 @@ class MyEventFragment : Fragment(), KodeinAware {
         binding.recyclerMyEventPublic.layoutManager = layoutManager1
         binding.recyclerMyEventPublic.adapter = adapter2
 
-        viewModel.eventListPrivateUser.observe(this, Observer { eventList ->
+        viewModel.eventListPrivateUser.observe(this){ eventList ->
             adapter1.addItems(eventList)
             if(adapter1.itemCount != 0){
                 binding.createYourFirstEvent.visibility = View.GONE
             }
-        })
+        }
 
-        viewModel.eventListPublicUser.observe(this, Observer { eventList ->
+        viewModel.eventListPublicUser.observe(this){ eventList ->
             adapter2.addItems(eventList)
             if(adapter2.itemCount != 0){
                 binding.createYourFirstEventPublic.visibility = View.GONE
             }
-        })
+        }
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
-               var eventKey = viewModel.eventListPrivateUser.value!!.get(position).key.toString()
+               val eventKey = viewModel.eventListPrivateUser.value!!.get(position).key.toString()
                 val intent = Intent(context,MyEventManageActivity::class.java)
                 intent.putExtra("clef", eventKey)
                 intent.putExtra("position", position)
@@ -90,7 +89,7 @@ class MyEventFragment : Fragment(), KodeinAware {
 
         adapter2.setOnListItemViewClickListener(object:ListGeneriqueAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
-                var eventKey = viewModel.eventListPublicUser.value!!.get(position).key.toString()
+                val eventKey = viewModel.eventListPublicUser.value!!.get(position).key.toString()
                 val intent  = Intent(context,MyEventManageActivity::class.java)
                 intent.putExtra("clef", eventKey)
                 intent.putExtra("pos", position)
