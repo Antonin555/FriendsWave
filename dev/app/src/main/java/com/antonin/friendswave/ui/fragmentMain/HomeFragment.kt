@@ -1,6 +1,7 @@
 package com.antonin.friendswave.ui.fragmentMain
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -26,6 +28,8 @@ import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentHomeBinding
+import com.antonin.friendswave.outils.AlertDialog
+import com.antonin.friendswave.outils.sendEmail
 import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
@@ -60,7 +64,7 @@ class HomeFragment : Fragment(), KodeinAware {
     private lateinit var adapter2 : ListGeneriqueAdapter<User>
     private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 1
     private var firebaseMessaging = FirebaseMessaging.getInstance()
-
+    val alertDialog = AlertDialog(requireContext())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,11 +86,18 @@ class HomeFragment : Fragment(), KodeinAware {
         binding.viewmodel = viewModel2
         binding.lifecycleOwner = this
         firebaseMessaging = FirebaseMessaging.getInstance()
+
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
+
+
+        viewModel2.fetchUsersRequest()
+        viewModel2.fetchEventsInvitation()
+        viewModel2.fetchDemandeInscriptionEventPublic()
+        viewModel.fetchUserData()
 
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
         adapter3 = ListGeneriqueAdapter(R.layout.recycler_invite_events)
@@ -103,10 +114,7 @@ class HomeFragment : Fragment(), KodeinAware {
         binding.recyclerRequestEvent.layoutManager = layoutManager3
         binding.recyclerRequestEvent.adapter = adapter3
 
-        viewModel2.fetchUsersRequest()
-        viewModel2.fetchEventsInvitation()
-        viewModel2.fetchDemandeInscriptionEventPublic()
-        viewModel.fetchUserData()
+
 
         viewModel2.friendNotifList.observe(this, Observer { notifUserList ->
             adapter1.addItems(notifUserList)
@@ -173,10 +181,21 @@ class HomeFragment : Fragment(), KodeinAware {
 
                 val user = viewModel2.requestListEvent.value?.get(position)!!
                 if (view.id == R.id.non_event){
+
+
                     viewModel2.declineRequestEvent(user)
                 }
                 else if(view.id == R.id.oui_event) {
-                    viewModel2.acceptRequestEvent(user)
+
+                    alertDialog.showDialog(view.context,
+                        "Attention",
+                        "This email match no account, do you want to make an invitation via email",
+                        "yes",
+                        "no",
+                        positiveButtonClickListener(user),
+                        negativeButtonClickListener)
+
+
                 }
                 else if(view.id == R.id.profil_potential_guest) {
                     val intent = Intent(context, ProfilActivity::class.java)
@@ -202,6 +221,21 @@ class HomeFragment : Fragment(), KodeinAware {
 
         })
 
+    }
+
+    fun positiveButtonClickListener(user:User) = DialogInterface.OnClickListener { dialog, which ->
+        // Code à exécuter si le bouton positif est cliqué
+        if (which == DialogInterface.BUTTON_POSITIVE) {
+            viewModel2.acceptRequestEvent(user)
+
+            alertDialog.cancel()
+        }
+    }
+    val negativeButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
+        // Code à exécuter si le bouton négatif est cliqué
+        if (which == DialogInterface.BUTTON_NEGATIVE) {
+            alertDialog.cancel()
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

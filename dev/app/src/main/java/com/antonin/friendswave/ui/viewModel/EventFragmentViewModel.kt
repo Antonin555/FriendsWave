@@ -78,8 +78,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     private val _confirm_guestListPublic = MutableLiveData<List<User>>()
     val confirm_guestListPublic: LiveData<List<User>> = _confirm_guestListPublic
 
-    var interfaceEvent: InterfaceEvent? = null
-
     private val _eventData = MutableLiveData<Event>()
     val eventData: LiveData<Event> = _eventData
 

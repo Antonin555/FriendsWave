@@ -30,7 +30,6 @@ import com.antonin.friendswave.strategy.SearchCategory
 import com.antonin.friendswave.strategy.Strategy
 import com.antonin.friendswave.ui.event.DetailEventActivity
 import com.antonin.friendswave.ui.event.GoogleLocation
-import com.antonin.friendswave.ui.event.InterfaceEvent
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import com.google.android.gms.maps.*
@@ -40,7 +39,7 @@ import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 import com.antonin.friendswave.data.dataStructure.LinkedList
 
-class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallback, LocationListener {
+class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListener {
 
 
     override val kodein : Kodein by kodein()
@@ -59,7 +58,6 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
 
         loc = GoogleLocation()
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
-        viewModel.interfaceEvent = this
         viewModel.fetchEvents()
         viewModel.fetchUserData()
 
@@ -176,17 +174,6 @@ class EventFragment : Fragment(), KodeinAware, InterfaceEvent, OnMapReadyCallbac
 
     }
 
-    override fun saveOn() {
-        TODO("Not yet implemented")
-    }
-
-    override fun saveOff() {
-        TODO("Not yet implemented")
-    }
-
-    override fun checkContent() {
-
-    }
 
     override fun onPause() {
         super.onPause()

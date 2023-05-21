@@ -353,43 +353,59 @@ class FirebaseSourceEvent {
         return null // Retourne null si la valeur n'est pas trouvée
     }
 
-    fun acceptRequestEvent(user: User?){
+    fun acceptRequestEvent(user: User?) {
+        val idEvent: String = getKeyFromValue(user!!.pendingRequestEventPublic!!, mainUid!!).toString()
 
-        var idEvent:String = getKeyFromValue(user!!.pendingRequestEventPublic!!, mainUid!!).toString()
-
-        firebaseEvent.child(idEvent).addValueEventListener(object :ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                firebaseEvent.child(idEvent).child("pendingRequestEventPublic").child(user.uid!!).removeValue()
-                firebaseEvent.child(idEvent).child("listInscrits").child(user.uid.toString()).setValue(user.email)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
-
-        firebaseData.child("user").child(user.uid.toString()).addValueEventListener(object :ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                firebaseData.child("user").child(user.uid.toString()).child("pendingRequestEventPublic").child(idEvent).removeValue()
-                firebaseData.child("user").child(user.uid.toString()).child("eventConfirmationList").child(idEvent).setValue(mainUid)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
-
+        val queryEvent = firebaseEvent.child(idEvent)
+        val queryUser = firebaseData.child("user").child(user.uid.toString())
         val queryAcceptHostEventUser = firebaseData.child("user").child(mainUid)
-//        queryEventPublic.child("pendingRequestEventPublic").child(user.uid!!).removeValue()
-//        queryEventPublic.child("listInscrits").child(user.uid.toString()).setValue(user.email)
 
-        queryAcceptHostEventUser.child("ConfirmHostRequestEventPublic").child(idEvent).setValue(user!!.email)
+        firebaseEvent.child(idEvent).child("pendingRequestEventPublic").child(user.uid!!)
+            .removeValue()
+            .addOnSuccessListener {
+                queryEvent.child("listInscrits").child(user.uid.toString()).setValue(user.email)
+                    .addOnSuccessListener {
+                        // Opération terminée avec succès
+                        // Continuez avec les prochaines étapes
+                    }
+                    .addOnFailureListener { exception ->
+                        // Échec de l'écriture
+                        // Traitez l'erreur ou annulez l'opération en cours
+                    }
+            }
+            .addOnFailureListener { exception ->
+                // Échec de l'écriture
+                // Traitez l'erreur ou annulez l'opération en cours
+            }
 
-//        queryAcceptGuestEventUser.child("pendingRequestEventPublic").child(idEvent).removeValue()
-//        queryAcceptGuestEventUser.child("eventConfirmationList").child(idEvent).setValue(mainUid)
+        firebaseData.child("user").child(user.uid.toString()).child("pendingRequestEventPublic")
+            .child(idEvent).removeValue()
+            .addOnSuccessListener {
+                queryUser.child("eventConfirmationList").child(idEvent).setValue(mainUid)
+                    .addOnSuccessListener {
+                        // Opération terminée avec succès
+                        // Continuez avec les prochaines étapes
+                    }
+                    .addOnFailureListener { exception ->
+                        // Échec de l'écriture
+                        // Traitez l'erreur ou annulez l'opération en cours
+                    }
+            }
+            .addOnFailureListener { exception ->
+                // Échec de l'écriture
+                // Traitez l'erreur ou annulez l'opération en cours
+            }
 
-
-
+        queryAcceptHostEventUser.child("ConfirmHostRequestEventPublic").child(idEvent)
+            .setValue(user!!.email)
+            .addOnSuccessListener {
+                println("Opération terminée avec succès")
+                // Continuez avec les prochaines étapes
+            }
+            .addOnFailureListener { exception ->
+                // Échec de l'écriture
+                // Traitez l'erreur ou annulez l'opération en cours
+            }
     }
 
     // REFUSER

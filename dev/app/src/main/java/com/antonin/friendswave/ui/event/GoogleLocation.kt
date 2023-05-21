@@ -64,11 +64,7 @@ class GoogleLocation  {
 
         }
 
-
-
     }
-
-
 
     fun getAllLocationsEvent(googleMap:GoogleMap,viewModel: List<Event>, mapView: MapView, requireActivity: Activity,requireContext: Context) {
 

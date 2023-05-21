@@ -143,8 +143,8 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
                 val idGuest = viewModel.confirm_guestListPublic.value!!.get(position).uid
 
                 if(view.id == R.id.btn_delete_guest){
-                    val alert = AlertDialog(applicationContext)
-                    alert.showDialog(applicationContext,
+                    val alert = AlertDialog(this@MyEventManageActivity)
+                    alert.showDialog(this@MyEventManageActivity,
                         "Etes vous sur de supprimer ce participant",
                         "Attention, vous êtes sur le point de supprimer ce participant a cet event",
                         " je confirme",

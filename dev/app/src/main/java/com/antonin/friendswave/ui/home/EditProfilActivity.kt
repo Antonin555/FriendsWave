@@ -214,9 +214,6 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-
-
-
 }
 
 
