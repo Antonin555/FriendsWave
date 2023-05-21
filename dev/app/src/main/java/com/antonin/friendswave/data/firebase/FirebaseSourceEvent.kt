@@ -78,7 +78,9 @@ class FirebaseSourceEvent {
     // 1/ L'UTILISATEUR ENVOIE UNE DEMANDE AUPRES D'UN EVENT PUBLIC :
     fun sendRequestToParticipatePublicEvent(idEvent:String, adminEvent: String){
 
-        firebaseEvent.child(idEvent).child("pendingRequestEventPublic").child(currentUser()!!.uid).setValue(currentUser()!!.email)
+        firebaseEvent.child(idEvent).child("pendingRequestEventPublic").child(currentUser()!!.uid).setValue(currentUser()!!.email).addOnSuccessListener {
+
+        }
         firebaseUserCurrent.child("pendingRequestEventPublic").child(idEvent).setValue(adminEvent)
 
     }
@@ -360,62 +362,65 @@ class FirebaseSourceEvent {
         val queryUser = firebaseData.child("user").child(user.uid.toString())
         val queryAcceptHostEventUser = firebaseData.child("user").child(mainUid)
 
-        firebaseEvent.child(idEvent).child("pendingRequestEventPublic").child(user.uid!!)
-            .removeValue()
-            .addOnSuccessListener {
-                queryEvent.child("listInscrits").child(user.uid.toString()).setValue(user.email)
-                    .addOnSuccessListener {
-                        // Opération terminée avec succès
-                        // Continuez avec les prochaines étapes
-                    }
-                    .addOnFailureListener { exception ->
-                        // Échec de l'écriture
-                        // Traitez l'erreur ou annulez l'opération en cours
-                    }
-            }
-            .addOnFailureListener { exception ->
-                // Échec de l'écriture
-                // Traitez l'erreur ou annulez l'opération en cours
+        // Utiliser une transaction pour supprimer les nœuds "pendingRequestEventPublic"
+        firebaseEvent.runTransaction(object : Transaction.Handler {
+            override fun doTransaction(currentData: MutableData): Transaction.Result {
+                val eventNode = currentData.child(idEvent)
+                val pendingRequestNode = eventNode.child("pendingRequestEventPublic").child(user.uid!!)
+                pendingRequestNode.value = null // Supprimer le nœud "pendingRequestEventPublic" dans firebaseEvent
+                return Transaction.success(currentData)
             }
 
-        firebaseData.child("user").child(user.uid.toString()).child("pendingRequestEventPublic")
-            .child(idEvent).removeValue()
-            .addOnSuccessListener {
-                queryUser.child("eventConfirmationList").child(idEvent).setValue(mainUid)
-                    .addOnSuccessListener {
-                        // Opération terminée avec succès
-                        // Continuez avec les prochaines étapes
-                    }
-                    .addOnFailureListener { exception ->
-                        // Échec de l'écriture
-                        // Traitez l'erreur ou annulez l'opération en cours
-                    }
-            }
-            .addOnFailureListener { exception ->
-                // Échec de l'écriture
-                // Traitez l'erreur ou annulez l'opération en cours
-            }
+            override fun onComplete(
+                error: DatabaseError?,
+                committed: Boolean,
+                currentData: DataSnapshot?
+            ) {
+                if (error != null) {
+                    // La suppression a échoué
+                    // Gérer les erreurs
+                } else if (committed) {
+                    // La suppression est réussie dans firebaseEvent
 
-        queryAcceptHostEventUser.child("ConfirmHostRequestEventPublic").child(idEvent)
-            .setValue(user!!.email)
-            .addOnSuccessListener {
-                println("Opération terminée avec succès")
-                // Continuez avec les prochaines étapes
+                    // Utiliser une autre transaction pour supprimer le nœud "pendingRequestEventPublic" dans firebaseData
+                    firebaseData.runTransaction(object : Transaction.Handler {
+                        override fun doTransaction(currentData: MutableData): Transaction.Result {
+                            val userNode = currentData.child("user").child(user.uid.toString())
+                            val pendingRequestNode = userNode.child("pendingRequestEventPublic").child(idEvent)
+                            pendingRequestNode.value = null // Supprimer le nœud "pendingRequestEventPublic" dans firebaseData
+                            return Transaction.success(currentData)
+                        }
+
+                        override fun onComplete(
+                            error: DatabaseError?,
+                            committed: Boolean,
+                            currentData: DataSnapshot?
+                        ) {
+                            if (error != null) {
+                                // La suppression a échoué
+                                // Gérer les erreurs
+                            } else if (committed) {
+                                // La suppression est réussie dans firebaseData
+
+                                // Effectuer les autres opérations
+                                queryEvent.child("listInscrits").child(user.uid.toString()).setValue(user.email)
+                                queryUser.child("eventConfirmationList").child(idEvent).setValue(mainUid)
+                                queryAcceptHostEventUser.child("ConfirmHostRequestEventPublic").child(idEvent).setValue(user!!.email)
+                            }
+                        }
+                    })
+                }
             }
-            .addOnFailureListener { exception ->
-                // Échec de l'écriture
-                // Traitez l'erreur ou annulez l'opération en cours
-            }
+        })
     }
 
     // REFUSER
     fun declineRequestEvent(user: User?){
         var idEvent:String = user!!.pendingRequestEventPublic!!.get(mainUid!!).toString()
         val queryEventPublic = firebaseEvent.child(idEvent)
-        val queryAcceptHostEventUser = firebaseData.child("user").child(mainUid)
         val queryAcceptGuestEventUser = firebaseData.child("user").child(user.uid.toString())
 
-        queryEventPublic.child("pendingRequestEventPublic").child(user.email.hashCode().toString()).removeValue()
+        queryEventPublic.child("pendingRequestEventPublic").child(user.uid.toString()).removeValue()
         queryAcceptGuestEventUser.child("pendingRequestEventPublic").child(idEvent).removeValue()
 
     }
@@ -426,12 +431,12 @@ class FirebaseSourceEvent {
         val queryEvent = firebaseEvent.child(event!!.key.toString())
         val queryAcceptEventUser = firebaseData.child("user").child(mainUid!!)
 
-        if(event.public == true){
 
-            queryEvent.child("invitation").child(mainUid).removeValue()
-            queryEvent.child("listInscrits").child(mainUid).setValue(currentUser()!!.email.toString())
 
-        }
+        queryEvent.child("invitation").child(mainUid).removeValue()
+        queryEvent.child("listInscrits").child(mainUid).setValue(currentUser()!!.email.toString())
+
+
         queryAcceptEventUser.child("invitations").child(event.key!!).removeValue()
         queryAcceptEventUser.child("eventConfirmationList").child(event.key!!).setValue(event.admin)
 

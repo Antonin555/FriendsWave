@@ -227,7 +227,8 @@ class HomeFragment : Fragment(), KodeinAware {
         // Code à exécuter si le bouton positif est cliqué
         if (which == DialogInterface.BUTTON_POSITIVE) {
             viewModel2.acceptRequestEvent(user)
-
+//            val dataList = viewModel2.requestListEvent.value ?: emptyList()
+//            adapter2.addItems(dataList)
             alertDialog.cancel()
         }
     }
