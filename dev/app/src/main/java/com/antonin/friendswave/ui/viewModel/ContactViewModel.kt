@@ -11,7 +11,7 @@ import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.outils.AlertDialog
 //import com.antonin.friendswave.strategy.SearchAgeFriend
 //import com.antonin.friendswave.strategy.SearchCityFriend
-
+import com.antonin.friendswave.outils.emailPattern
 
 import com.antonin.friendswave.outils.sendEmail
 import com.antonin.friendswave.strategy.StrategyFriend
@@ -60,8 +60,8 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
     }
 
     fun addFriendRequestToUser(view: AddContactActivity, requete: Boolean){
-        val alertDialog = AlertDialog(view)
-        val emailPattern = Regex("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
+        val alertDialog = AlertDialog()
+//        val emailPattern = Regex("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
 
         val positiveButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
             // Code à exécuter si le bouton positif est cliqué
@@ -114,36 +114,6 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
         repository.addFriendRequestToUser(email!!)
     }
 
-    // Fonction pour envoyer un e-mail
-//    fun sendEmail(recipient: String) {
-//        val props = Properties()
-//        props.setProperty("mail.smtp.host", "smtp-mail.outlook.com")
-//        props.setProperty("mail.smtp.port", "587")
-//        props.setProperty("mail.smtp.auth", "true")
-//        props.setProperty("mail.smtp.starttls.enable", "true")
-//        props.setProperty("mail.smtp.ssl.trust", "smtp-mail.outlook.com")
-//
-//        val session = Session.getInstance(props, object : Authenticator() {
-//            override fun getPasswordAuthentication(): PasswordAuthentication {
-//                return PasswordAuthentication("FriendWaveOfficial@hotmail.com", "Friend12Wave12")
-//            }
-//        })
-//
-//        val message = MimeMessage(session)
-//        message.setFrom(InternetAddress("FriendWaveOfficial@hotmail.com"))
-//        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient))
-//        message.subject = "Venez rejoindre la communaute FriendsWave"
-//        message.setText("Bonjour " + user_live.value!!.email + " mieux connu(e) sous le nom de " +  user_live.value!!.name + " vous invite a rejoindre l'application FriendsWave")
-//
-//        Thread(Runnable {
-//            try {
-//                Transport.send(message)
-//            } catch (e: MessagingException) {
-//                e.printStackTrace()
-//            }
-//        }).start()
-//    }
-
     fun fetchAllUser(){
         repository.fetchAllUser().observeForever{ user ->
             _totalUserList.value = user
@@ -156,11 +126,5 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
         }
     }
 
-
-
-//    fun strategyByAge(): List<User>{
-//        searchFriendStrategy = StrategyFriend(searchHobbyFriend)
-//        return searchFriendStrategy.search(user_live.value, totalUserList.value)
-//    }
 
 }

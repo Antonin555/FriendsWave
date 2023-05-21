@@ -12,7 +12,7 @@ import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.core.content.res.ResourcesCompat.getDrawable
 
-class AlertDialog(private var context: Context): DialogInterface {
+class AlertDialog: DialogInterface {
 
 
 

@@ -64,7 +64,7 @@ class HomeFragment : Fragment(), KodeinAware {
     private lateinit var adapter2 : ListGeneriqueAdapter<User>
     private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 1
     private var firebaseMessaging = FirebaseMessaging.getInstance()
-    val alertDialog = AlertDialog(requireContext())
+    val alertDialog = AlertDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

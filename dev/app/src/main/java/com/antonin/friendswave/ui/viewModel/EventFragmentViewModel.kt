@@ -288,9 +288,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     fun sendAnInvitationEvent(view:View, key: String){
 
-        val alertDialog = AlertDialog(view.context)
-
-//        val emailPattern = Regex("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
+        val alertDialog = AlertDialog()
 
         val positiveButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
             // Code à exécuter si le bouton positif est cliqué

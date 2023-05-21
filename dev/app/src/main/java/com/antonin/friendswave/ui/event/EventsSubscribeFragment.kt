@@ -83,7 +83,7 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
 
                 val event = viewModel.eventListConfirm.value?.get(position)
                 if(view.id == R.id.refuse_event){
-                    val alert = AlertDialog(requireContext())
+                    val alert = AlertDialog()
                     alert.showDialog(requireContext(),
                         "Suppression de votre participation",
                         "Etes vous certain de vouloir supprimer cet event ?",
@@ -108,7 +108,7 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
                 val event = viewModel.eventPendingPublic.value?.get(position)
                if(view.id == R.id.img_refuse_event) {
 
-                   val alert = AlertDialog(requireContext())
+                   val alert = AlertDialog()
                    alert.showDialog(requireContext(),
                        "Annuler votre participation",
                        "Etes vous certain de vouloir annuler votre demande de participation ?",

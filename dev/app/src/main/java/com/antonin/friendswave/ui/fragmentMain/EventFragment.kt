@@ -38,7 +38,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 import com.antonin.friendswave.data.dataStructure.LinkedList
-import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
+
 
 class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListener {
 
