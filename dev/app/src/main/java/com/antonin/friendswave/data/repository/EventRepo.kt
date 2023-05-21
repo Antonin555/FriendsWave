@@ -83,16 +83,6 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
     }
 
 
-    fun fetchEventUser(position: Int) : LiveData<Event> {
-
-        val eventList = MutableLiveData<Event>()
-
-        firebaseEvent.fetchEventUser(position) { event ->
-            eventList.postValue(event)
-        }
-
-        return eventList
-    }
 
     fun addEventUser(name: String, isPublic: Boolean, nbrePersonnes:Int, uid: String, category:String, date: String, horaire:String, adress:String,
         description:String, longitude: String, latitude: String, photo:Uri, context: Context, host:String, timeStamp : Double) =
@@ -160,27 +150,6 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
 
     }
 
-    fun fetchGuestDetailEvent(key:String?): LiveData<List<User>> {
-
-        val guestList = MutableLiveData<List<User>>()
-
-        firebaseEvent.fetchGuestDetailEvent(key) { user ->
-            guestList.postValue(user)
-        }
-        return guestList
-    }
-
-    fun fetchGuestAttenteEventPrive(key:String?): LiveData<List<User>> {
-
-        val guestList = MutableLiveData<List<User>>()
-
-        firebaseEvent.fetchGuestAttenteEventPrive(key) { user ->
-            guestList.postValue(user)
-        }
-        return guestList
-    }
-
-
 
     fun fetchGuestConfirmDetailEventPublic(key: String?): LiveData<List<User>> {
 
@@ -203,7 +172,15 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
         return guestList
     }
 
+    fun fetchPendingGuestEventPublic(key:String?): LiveData<List<User>> {
 
+        val guestList = MutableLiveData<List<User>>()
+
+        firebaseEvent.fetchPendingGuestEventPublic(key) { user ->
+            guestList.postValue(user)
+        }
+        return guestList
+    }
     fun fetchDetailEventPublicUser(key:String?): LiveData<Event> {
 
         val eventPublicUser = MutableLiveData<Event>()

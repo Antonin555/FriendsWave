@@ -33,7 +33,6 @@ class RatingActivity : AppCompatActivity(), KodeinAware {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_rating)
         viewModel = ViewModelProviders.of(this, factory).get(EventFragmentViewModel::class.java)
-        val view = binding.root
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
     }

@@ -24,6 +24,8 @@ fun Context.startLoginActivity() =
     }
 
 
+val patternDate = Regex("\\d{2}/\\d{2}/\\d{4}")
+val emailPattern = Regex("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
 
 fun sendEmail(recipient: String, name:String, email:String) {
     val props = Properties()

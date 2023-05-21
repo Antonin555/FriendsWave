@@ -17,13 +17,12 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/add_event_private"
-            android:textColor="#FF8A65"
+            android:textColor="@color/black"
             android:textSize="26sp" />
 
         <View
@@ -37,7 +36,8 @@
         <LinearLayout
             android:id="@+id/createYourFirstEvent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
             <TextView
@@ -55,19 +55,20 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_my_event_private"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1" />
 
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/add_event_public"
-            android:textColor="#FF8A65"
+            android:textColor="@color/black"
             android:textSize="26sp" />
 
 
@@ -82,7 +83,8 @@
         <LinearLayout
             android:id="@+id/createYourFirstEventPublic"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
             <TextView
@@ -100,8 +102,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_my_event_public"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1" />
 
 
     </LinearLayout>

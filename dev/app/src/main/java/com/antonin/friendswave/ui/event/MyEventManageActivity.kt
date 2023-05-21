@@ -19,6 +19,7 @@ import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
 import com.antonin.friendswave.data.firebase.FirebaseStore
+import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
@@ -60,30 +61,28 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_event_manage)
 
+        val key_event = intent.getStringExtra("clef")
 
-        val keyPrivate = intent.getStringExtra("clefPrivate")
-        val keyPublic = intent.getStringExtra("clefPublic")
         val pos = intent.getIntExtra("position", 0)
 
-        val binding: ActivityMyEventManageBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_my_event_manage)
+        val binding: ActivityMyEventManageBinding = DataBindingUtil.setContentView(this, R.layout.activity_my_event_manage)
         viewModel = ViewModelProviders.of(this, factory).get(EventFragmentViewModel::class.java)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
         viewModel.fetchEmail()
 
-
         if (!Places.isInitialized()) {
             Places.initialize(applicationContext, getString(R.string.api_key_google_map))
         }
 
-        if (keyPublic != null) {
-            binding.clef = keyPublic
-            viewModel.fetchDetailEventPublicUser(keyPublic) // event public
-            viewModel.fetchGuestDetailEventPublic(keyPublic) // chercher les invitations dans l'event Public
-            viewModel.fetchGuestConfirmDetailEventPublic(keyPublic)
+        if (key_event != null) {
+            binding.clef = key_event
+            viewModel.fetchDetailEventPublicUser(key_event) // event public
+            viewModel.fetchGuestDetailEventPublic(key_event) // chercher les invitations dans l'event Public
+            viewModel.fetchGuestConfirmDetailEventPublic(key_event)
+            viewModel.fetchPendingGuestEventPublic(key_event)
 
-            viewModel.keyEvent = keyPublic
+            viewModel.keyEvent = key_event
 
             viewModel.eventDataPublic.observe(this, Observer { it ->
                 val path1 = "photosEvent/" + it.imgEvent.toString()
@@ -91,19 +90,6 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
             })
 
         }
-        if (keyPrivate != null) {
-            binding.clef = keyPrivate
-            viewModel.fetchEventUserPrivate(pos)
-            viewModel.fetchGuestDetailEvent(keyPrivate)
-            viewModel.fetchGuestAttenteEventPrive(keyPrivate)
-            viewModel.keyEvent = keyPrivate
-
-            viewModel.eventData.observe(this, Observer { it ->
-                val path1 = "photosEvent/" + it.imgEvent.toString()
-                storeMedia.displayImage(binding.imagePreviewEvent, path1 )
-            })
-        }
-
 
         val layoutManager = LinearLayoutManager(this)
         val layoutManager1 = LinearLayoutManager(this)
@@ -112,7 +98,6 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         binding.recyclerEventInscrit.adapter = adapter1
         binding.recyclerPendingParticipants.layoutManager = layoutManager1
         binding.recyclerPendingParticipants.adapter = adapter2
-
 
         viewModel.guestList.observe(this, Observer { guestList ->
             adapter1.addItems(guestList)
@@ -123,7 +108,9 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
             adapter1.addItems(confirm_guestList)
         })
 
-
+        viewModel.pending_guest_list.observe(this, Observer{ pending_guest_list ->
+            adapter2.addItems(pending_guest_list)
+        })
 
         binding.btnDeleteMyEvent.setOnClickListener {
 
@@ -144,9 +131,6 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
             adapter2.addItems(attente_guestList)
         })
 
-        viewModel.userListAttentePrivate.observe(this, Observer { attente_guestList ->
-            adapter2.addItems(attente_guestList)
-        })
 
         binding.linearInvitation.setOnClickListener(ecouteur)
         binding.linearDescription.setOnClickListener(ecouteur)
@@ -155,24 +139,23 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
-
-
-                val event = viewModel.eventListPublicUser.value!!.get(position)
+                val event = viewModel.eventDataPublic.value!!
                 val idGuest = viewModel.confirm_guestListPublic.value!!.get(position).uid
 
                 if(view.id == R.id.btn_delete_guest){
-
-                    viewModel.deleteConfirmationGuest(event,idGuest!!)
+                    val alert = AlertDialog(applicationContext)
+                    alert.showDialog(applicationContext,
+                        "Etes vous sur de supprimer ce participant",
+                        "Attention, vous êtes sur le point de supprimer ce participant a cet event",
+                        " je confirme",
+                        "Annuler", positiveDeleteGuest(event,idGuest!!), negativeButtonClickListener)
+//                    viewModel.deleteConfirmationGuest()
                 }else {
 
                     val intent = Intent(view.context, ProfilActivity::class.java)
                     intent.putExtra("uid", idGuest)
                     startActivity(intent)
-
                 }
-
-
-
             }
         })
 
@@ -183,6 +166,14 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
 
 
+    }
+
+    fun positiveDeleteGuest(event: Event?, idGuest:String) = DialogInterface.OnClickListener { dialog, which ->
+        if(which == DialogInterface.BUTTON_POSITIVE) {
+
+            viewModel.deleteConfirmationGuest(event!!,idGuest)
+            finish()
+        }
     }
 
     val positiveButtonClickListener = DialogInterface.OnClickListener { dialog, which ->

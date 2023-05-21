@@ -22,6 +22,7 @@ data class Event(
     var timeStamp: Double? = 0.0,
     var listInscrits : HashMap<String, String> = HashMap(),
     var invitations : HashMap<String, String> = HashMap(),
-    var pendingRequestEventPublic : HashMap<String, String> = HashMap()
+    var pendingRequestEventPublic : HashMap<String, String> = HashMap(),
+    var nbreInscrit : Int? = 0
 
 ):ListItemViewModel()

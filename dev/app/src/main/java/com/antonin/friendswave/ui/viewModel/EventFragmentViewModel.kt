@@ -8,6 +8,8 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.CompoundButton
 import android.widget.Toast
+import com.antonin.friendswave.outils.patternDate
+import com.antonin.friendswave.outils.emailPattern
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -52,6 +54,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     val isSubscribe: MutableLiveData<Boolean> = MutableLiveData()
     val isPublicChecked: MutableLiveData<Boolean> = MutableLiveData()
     var strCategory = MutableLiveData<String>()
+    var nbreInscrits : Int? = 0
 
     val user by lazy {
         repository.currentUser()
@@ -69,6 +72,9 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     private val _guestListPublic = MutableLiveData<List<User>>()
     val guestListPublic: LiveData<List<User>> = _guestListPublic
 
+    private val _pending_guest_list = MutableLiveData<List<User>>()
+    val pending_guest_list: LiveData<List<User>> = _pending_guest_list
+
     private val _confirm_guestListPublic = MutableLiveData<List<User>>()
     val confirm_guestListPublic: LiveData<List<User>> = _confirm_guestListPublic
 
@@ -82,6 +88,8 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     private val _eventDataPublic = MutableLiveData<Event>()
     val eventDataPublic: LiveData<Event> = _eventDataPublic
+
+
 
     private val _eventPendingPublic = MutableLiveData<List<Event>>()
     val eventPendingPublic: LiveData<List<Event>> = _eventPendingPublic
@@ -97,9 +105,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     private val _eventListConfirm = MutableLiveData<List<Event>>()
     val eventListConfirm: LiveData<List<Event>> = _eventListConfirm
-
-    private val _userListAttentePrivate = MutableLiveData<List<User>>()
-    val userListAttentePrivate: LiveData<List<User>> = _userListAttentePrivate
 
 
     private val _emailList = MutableLiveData<List<String>>()
@@ -210,18 +215,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         horaire = hourString + ":" + minuteString
     }
 
-    fun fetchGuestDetailEvent(key:String?){
-        repoEvent.fetchGuestDetailEvent(key).observeForever{ event ->
-            _guestList.value = event
-        }
-
-    }
-
-    fun fetchGuestAttenteEventPrive(key:String?){
-        repoEvent.fetchGuestAttenteEventPrive(key).observeForever{ event ->
-            _userListAttentePrivate.value = event
-        }
-    }
 
     fun fetchGuestConfirmDetailEventPublic(key: String?){
 
@@ -252,17 +245,18 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     }
 
+    fun fetchPendingGuestEventPublic(key:String?){
+        repoEvent.fetchPendingGuestEventPublic(key).observeForever{ event->
+            _pending_guest_list.value = event
+        }
+
+    }
+
     fun fetchEvents() {
         repoEvent.fetchEvents().observeForever{ event ->
         _eventList.value = event
         }
     }
-//
-//    fun addToLinkedList(){
-//        for (i in eventList.value!!){
-//            linkedList.add(i)
-//        }
-//    }
 
     fun fetchEventsPrivateUser() {
         repoEvent.fetchEventsPrivateUser().observeForever{ event ->
@@ -270,7 +264,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         }
 
     }
-
 
     fun fetchEventsPublicUser() {
         repoEvent.fetchEventsPublicUser().observeForever{ event ->
@@ -287,13 +280,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     }
 
-    fun fetchEventUserPrivate(pos: Int) {
-        repoEvent.fetchEventUser(pos).observeForever{ event ->
-            _eventDataPublic.value = event
-        }
-    }
-
-
     fun fetchDetailEventPublicUser(key:String?) {
         repoEvent.fetchDetailEventPublicUser(key).observeForever{ event->
             _eventDataPublic.value = event
@@ -305,7 +291,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
         val alertDialog = AlertDialog(view.context)
 
-        val emailPattern = Regex("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
+//        val emailPattern = Regex("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
 
         val positiveButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
             // Code à exécuter si le bouton positif est cliqué
@@ -331,7 +317,13 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
         if(!emailList.value!!.contains(email)) {
 
-            alertDialog.showDialog(view.context, "Attention", "This email match no account, do you want to make an invitation via email", "yes","no", positiveButtonClickListener, negativeButtonClickListener)
+            alertDialog.showDialog(view.context,
+                "Attention",
+                "This email match no account, do you want to make an invitation via email",
+                "yes",
+                "no",
+                positiveButtonClickListener,
+                negativeButtonClickListener)
 
         }
 
@@ -351,15 +343,11 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         }
     }
 
-//    fun goToGroupChat(view: View){
-//        Intent(view.context, GroupChatActivity::class.java).also {
-//            view.context.startActivity(it)
-//        }
-//    }
-
     fun editEvent(){
 
-        val patternDate = Regex("\\d{2}/\\d{2}/\\d{4}")
+
+
+//        val patternDate = Regex("\\d{2}/\\d{2}/\\d{4}")
         if(_eventDataPublic.value!!.date!!.matches(patternDate)){
 
             repoEvent.editEvent(_eventDataPublic.value)
@@ -371,6 +359,8 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     }
 
     fun deleteConfirmation(event:Event?) {
+
+        _eventData.value!!.nbreInscrit?.minus(1)
         repoEvent.deleteConfirmation(event)
     }
 

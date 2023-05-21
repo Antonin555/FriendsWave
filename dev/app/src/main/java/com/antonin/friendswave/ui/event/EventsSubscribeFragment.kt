@@ -106,12 +106,12 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
         adapter2.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
                 val event = viewModel.eventPendingPublic.value?.get(position)
-               if(view.id == R.id.refuse_event) {
+               if(view.id == R.id.img_refuse_event) {
 
                    val alert = AlertDialog(requireContext())
                    alert.showDialog(requireContext(),
-                       "Suppression de votre participation",
-                       "Etes vous certain de vouloir supprimer cet event ?",
+                       "Annuler votre participation",
+                       "Etes vous certain de vouloir annuler votre demande de participation ?",
                        "Confirmer",
                        "Annuler", cliclPositiveButtonPendingEvent(event), negativeButtonClickListener)
 

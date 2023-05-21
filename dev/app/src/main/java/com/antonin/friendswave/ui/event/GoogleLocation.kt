@@ -49,7 +49,6 @@ class GoogleLocation  {
                 mapView.getMapAsync { googleMap ->
 
                     val latLng = LatLng(location.latitude, location.longitude)
-
                     val markerOptions = MarkerOptions()
                         .position(latLng)
                         .title("My Marker")
@@ -81,15 +80,7 @@ class GoogleLocation  {
             return
         }
 
-
-
-
-
-        // Create a LatLngBounds.Builder to calculate the bounds of all markers
-        val builder = LatLngBounds.Builder()
         for (i in viewModel) {
-
-
             mapView.getMapAsync { googleMap ->
 
                 val latLng = LatLng(i.lattitude!!.toDouble(), i.longitude!!.toDouble())
@@ -99,34 +90,9 @@ class GoogleLocation  {
                     .snippet(i.adress)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
                 googleMap.addMarker(markerOptions)
-//                builder.include(latLng)
-//
-//                if (viewModel.indexOf(i) == viewModel.size - 1) {
-//                    var bounds = builder.build()
-//                    val cameraUpdate = CameraUpdateFactory.newLatLngBounds( bounds,100) // 100 is the padding in pixels
-//                    googleMap.moveCamera(cameraUpdate)
-//                }
 
             }
 
-//                val latLng1 = LatLng(i.lattitude!!.toDouble(), i.longitude!!.toDouble())
-//                val markerOptions = MarkerOptions()
-//                    .position(latLng1)
-//                    .title(i.name)
-//                    .snippet(i.adress)
-//                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
-//                googleMap.addMarker(markerOptions)
-////                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom( latLng, 10f))
-////                 Include the marker position in the LatLngBounds.Builder
-//                builder.include(latLng1)
-//                // Move the camera only once after all markers are added
-//                if (viewModel.indexOf(i) == viewModel.size - 1) {
-//                    var bounds = builder.build()
-//                    val cameraUpdate = CameraUpdateFactory.newLatLngBounds( bounds,100) // 100 is the padding in pixels
-//                    googleMap.moveCamera(cameraUpdate)
-//                }
-
-//
             val latLng = LatLng(45.508888,-73.561668 )
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom( latLng, 10f))
 

@@ -246,7 +246,15 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/roboto_mono"
-                        android:text="@{event.eventData.nbrePersonnes.toString()}" />
+                        android:text="@{event.eventData.nbreInscrit.toString()}" />
+
+                    <TextView
+                        android:id="@+id/textView311"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_mono"
+                        android:text="@{ event.eventData.nbrePersonnes.toString()}" />
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/linear_description_event"

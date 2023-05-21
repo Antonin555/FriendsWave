@@ -74,9 +74,6 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
             adapter1.addItems(confirm_guestList)
         })
 
-
-
-
         viewModel.eventData.observe(this, Observer { it ->
             val path1 = "photosEvent/" + it.imgEvent.toString()
             storeMedia.displayImage(binding.imagePreviewEvent, path1 )

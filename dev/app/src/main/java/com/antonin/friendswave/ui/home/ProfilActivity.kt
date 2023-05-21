@@ -27,8 +27,7 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
     private val factory : HomeFragmentVMFactory by instance()
     private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(
         repository = UserRepo(firebaseUser = FirebaseSourceUser()),
-        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
-    )
+        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
     private lateinit var binding: ActivityProfilBinding
     private var bool = true
     private var anim = AnimationLayout()

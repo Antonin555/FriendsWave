@@ -37,6 +37,8 @@ class FirebaseSourceEvent {
         firebaseData.child("chatsGroup").child(mainUid!!+ event.key.toString()).removeValue()
     }
 
+    // Fragment SUBSCRIBE EVENTS or pending :
+
     fun deleteConfirmation(event:Event?){
 
         firebaseEvent.child(event!!.key.toString()).child("listInscrits").child(mainUid!!).removeValue()
@@ -52,7 +54,7 @@ class FirebaseSourceEvent {
     fun deletePendingEvent(event:Event?){
 
         firebaseEvent.child(event!!.key.toString()).child("pendingRequestEventPublic").child(currentUser()!!.uid).removeValue()
-        firebaseUserCurrent.child("pendingRequestEventPublic").child(mainUid!!).removeValue()
+        firebaseUserCurrent.child("pendingRequestEventPublic").child(event!!.key.toString()).removeValue()
 
     }
 
@@ -263,47 +265,8 @@ class FirebaseSourceEvent {
 
     // POUR MY EVENT : RECHERCHE DES PARTICIPANTS INVITATIONS PRIVATE :
 
-    @SuppressLint("SuspiciousIndentation")
     // PRIVATE EVENT : LIST DES CONFIRMÉS
-    fun fetchGuestDetailEvent(key:String?, onResult: (List<User>) -> Unit){
 
-        val listGuest : ArrayList<String> = ArrayList()
-
-        firebaseEvent.child(key!!)
-            .child("listInscrits").addValueEventListener( object :ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        for(data in dataSnapshot.children){
-                            listGuest.add(data!!.value.toString())
-                        }
-                        searchGuest(listGuest, onResult)
-                    }
-                }
-                override fun onCancelled(error: DatabaseError) {
-                }
-            })
-    }
-
-    @SuppressLint("SuspiciousIndentation")
-    // PRIVATE EVENT : LIST DES CONFIRMÉS
-    fun fetchGuestAttenteEventPrive(key:String?, onResult: (List<User>) -> Unit){
-
-        val listGuest : ArrayList<String> = ArrayList()
-
-        firebaseEvent.child(key!!)
-            .child("invitation").addValueEventListener( object :ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        for(data in dataSnapshot.children){
-                            listGuest.add(data!!.value.toString())
-                        }
-                        searchGuest(listGuest, onResult)
-                    }
-                }
-                override fun onCancelled(error: DatabaseError) {
-                }
-            })
-    }
 
     // POUR MY EVENT : RECHERCHE DES PARTICIPANTS INVITATIONS PUBLICS : ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -325,25 +288,43 @@ class FirebaseSourceEvent {
             })
     }
 
-    // ON VA CHERCHER LES INVITATIONS EVENT PUBLIC
+    // on recupere la liste des inscrits dans son event public :
     @SuppressLint("SuspiciousIndentation")
     fun fetchGuestDetailEventPublic(key:String?, onResult: (List<User>) -> Unit){
 
         val listGuest : ArrayList<String> = ArrayList()
 
-        firebaseEvent.child(key!!)
-            .child("invitation").addValueEventListener( object :ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        for(data in dataSnapshot.children){
-                            listGuest.add(data!!.value.toString())
-                        }
-                        searchGuest(listGuest, onResult)
+        firebaseEvent.child(key!!).child("invitation").addValueEventListener( object :ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for(data in dataSnapshot.children){
+                        listGuest.add(data!!.value.toString())
                     }
+                    searchGuest(listGuest, onResult)
                 }
-                override fun onCancelled(error: DatabaseError) {
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
+
+
+    fun fetchPendingGuestEventPublic(key:String?, onResult: (List<User>) -> Unit){
+
+        val listGuest : ArrayList<String> = ArrayList()
+
+        firebaseEvent.child(key!!).child("pendingRequestEventPublic").addValueEventListener( object :ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for(data in dataSnapshot.children){
+                        listGuest.add(data!!.value.toString())
+                    }
+                    searchGuest(listGuest, onResult)
                 }
-            })
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
     }
 
     fun searchGuest(listGuest:ArrayList<String>, onResult: (List<User>) -> Unit){
@@ -376,17 +357,38 @@ class FirebaseSourceEvent {
 
         var idEvent:String = getKeyFromValue(user!!.pendingRequestEventPublic!!, mainUid!!).toString()
 
-        val queryEventPublic = firebaseEvent.child(idEvent)
-        val queryAcceptHostEventUser = firebaseData.child("user").child(mainUid)
-        val queryAcceptGuestEventUser = firebaseData.child("user").child(user.uid.toString())
+        firebaseEvent.child(idEvent).addValueEventListener(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                firebaseEvent.child(idEvent).child("pendingRequestEventPublic").child(user.uid!!).removeValue()
+                firebaseEvent.child(idEvent).child("listInscrits").child(user.uid.toString()).setValue(user.email)
+            }
 
-        queryEventPublic.child("pendingRequestEventPublic").child(user.uid!!).removeValue()
-        queryEventPublic.child("listInscrits").child(user.email.hashCode().toString()).setValue(user.email)
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+        firebaseData.child("user").child(user.uid.toString()).addValueEventListener(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                firebaseData.child("user").child(user.uid.toString()).child("pendingRequestEventPublic").child(idEvent).removeValue()
+                firebaseData.child("user").child(user.uid.toString()).child("eventConfirmationList").child(idEvent).setValue(mainUid)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+        val queryAcceptHostEventUser = firebaseData.child("user").child(mainUid)
+//        queryEventPublic.child("pendingRequestEventPublic").child(user.uid!!).removeValue()
+//        queryEventPublic.child("listInscrits").child(user.uid.toString()).setValue(user.email)
 
         queryAcceptHostEventUser.child("ConfirmHostRequestEventPublic").child(idEvent).setValue(user!!.email)
 
-        queryAcceptGuestEventUser.child("pendingRequestEventPublic").child(idEvent).removeValue()
-        queryAcceptGuestEventUser.child("eventConfirmationList").child(idEvent).setValue(mainUid)
+//        queryAcceptGuestEventUser.child("pendingRequestEventPublic").child(idEvent).removeValue()
+//        queryAcceptGuestEventUser.child("eventConfirmationList").child(idEvent).setValue(mainUid)
+
+
 
     }
 
@@ -446,8 +448,6 @@ class FirebaseSourceEvent {
             override fun onCancelled(error: DatabaseError) {
 
             }
-
-
         })
     }
 
@@ -486,27 +486,6 @@ class FirebaseSourceEvent {
                 onResult(eventsList)
             }
         }
-    }
-
-    fun fetchEventUser(position: Int,onResult: (Event) -> Unit) {
-        firebaseEvent.addValueEventListener(object :ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var i = 0
-                for (snap in snapshot.children) {
-                    val event = snap.getValue(Event::class.java)
-                    if (snap.exists() && event!!.admin == mainUid) {
-                        if(position == i){
-                            onResult(event)
-                        }
-                    }
-                    i+=1
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
     }
 
     // ON RAMENE JUSTE LEVENT en DETAIL pour MY EVENT

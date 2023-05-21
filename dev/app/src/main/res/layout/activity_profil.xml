@@ -269,10 +269,10 @@
 
                         <ImageView
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.6"
+                            android:layout_height="30dp"
+                            android:layout_weight="0.3"
                             android:gravity="center"
-                            app:srcCompat="@android:drawable/ic_menu_more" />
+                            app:srcCompat="@drawable/arrow" />
 
                     </LinearLayout>
 

@@ -46,7 +46,6 @@ import org.kodein.di.android.x.kodein
 
 class HomeFragment : Fragment(), KodeinAware {
 
-
     private var storeMedia = FirebaseStore()
     override val kodein : Kodein by kodein()
     private val factory : HomeFragmentVMFactory by instance()
@@ -56,11 +55,9 @@ class HomeFragment : Fragment(), KodeinAware {
     private var viewModel2: NotifFragmentViewModel = NotifFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
         repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
     private lateinit var binding: FragmentHomeBinding
-
     private lateinit var adapter1 : ListGeneriqueAdapter<User>
     private lateinit var adapter3 : ListGeneriqueAdapter<Event>
     private lateinit var adapter2 : ListGeneriqueAdapter<User>
-
     private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 1
     private var firebaseMessaging = FirebaseMessaging.getInstance()
 
@@ -75,28 +72,17 @@ class HomeFragment : Fragment(), KodeinAware {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
-
         initFCM()
         permissionNotifs() // A VOIR SI UTILE
         FirebaseMessaging.getInstance().subscribeToTopic("nom-du-topic")
         FirebaseMessaging.getInstance().subscribeToTopic("nom-du-topic1")
 
-
         binding  = inflate(inflater, R.layout.fragment_home, container, false)
-
         binding.item = viewModel
-
-
-//        binding2  = inflate(inflater, R.layout.fragment_notifs, container, false)
-
         binding.viewmodel = viewModel2
         binding.lifecycleOwner = this
-
-
         firebaseMessaging = FirebaseMessaging.getInstance()
-
         return binding.root
-
     }
 
     override fun onResume() {
@@ -140,7 +126,6 @@ class HomeFragment : Fragment(), KodeinAware {
             else binding.searchEvents.visibility = View.VISIBLE
         })
 
-
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_PERMISSION_READ_EXTERNAL_STORAGE)
         }
@@ -153,16 +138,6 @@ class HomeFragment : Fragment(), KodeinAware {
             storeMedia.displayImage(binding.imgProfil,path1)
 
         })
-
-//        binding.btnCategory.setOnClickListener{
-//            var type = "Mars"
-//            searchStrategy = Strategy(searchCategory)
-//            strategyEvent(searchStrategy,type)
-//
-//            binding.chatlogo.visibility = View.GONE
-//
-//
-//        }
 
         FirebaseMessaging.getInstance().token
             .addOnCompleteListener { task ->
@@ -217,6 +192,7 @@ class HomeFragment : Fragment(), KodeinAware {
 
                 val event = viewModel2.eventList.value?.get(position)
                 if (view.id == R.id.accept_invitation){
+                    event!!.nbreInscrit?.plus(1)
                     viewModel2.acceptInvitationEvent(event)
                 }
                 if (view.id == R.id.refuse_invitation){

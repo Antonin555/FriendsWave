@@ -84,13 +84,13 @@
 
             </LinearLayout>
 
-            <Button
+            <ImageView
                 android:id="@+id/btn_delete_guest"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_weight="0.5"
-                android:backgroundTint="#E57373"
+                android:src="@drawable/close"
                 android:onClick='@{(v)-> item.onListItemViewClickListener.onClick(v, item.adapterPosition) }'
                  />
 

@@ -5,7 +5,7 @@ const badWordsList = require('french-badwords-list').array;
 
 admin.initializeApp(functions.config().firebase);
 
-exports.moderatorEvent = functions.database.ref('/event/eventPublic/{eventId}').onWrite((change) => {
+exports.moderatorEvent = functions.database.ref('/event/{eventId}').onWrite((change) => {
   const message = change.after.val();
   console.log(message.description)
 
@@ -120,11 +120,11 @@ exports.sendNotifFriendRequest = functions.database.ref(`/user/{userid}/friendRe
 // Fonctionne
 // ENVOIE UNE NOTIF LORSQU'UN NOUVEAU INNSCRIT REJOINT L'EVENT ou le quitte ou tout changement dans ListInscrit
 
-exports.sendNotificationToSpecificUser = functions.database.ref(`/event/eventPrivate/{userid}/{eventId}`)
+exports.sendNotificationToSpecificUser = functions.database.ref(`/event/{eventId}`)
     .onUpdate((snapshot, context) => {
         const child_mail = [];
 
-        const listInscritsRef = admin.database().ref(`/event/eventPrivate/${context.params.userid}/${context.params.eventId}/listInscrits`);
+        const listInscritsRef = admin.database().ref(`/event/${context.params.eventId}/listInscrits`);
 
         listInscritsRef.once('value', (snapshot) => {
             snapshot.forEach((childSnapshot) => {
@@ -161,7 +161,7 @@ exports.sendNotificationToSpecificUser = functions.database.ref(`/event/eventPri
 
 
     // Envoi une notif a tous les users lorsqu'un event Public est crée 
-    exports.sendNotification = functions.database.ref('/event/eventPublic/{eventPublicId}').onCreate(async (change, context) => {
+    exports.sendNotification = functions.database.ref('/event/{eventPublicId}').onCreate(async (change, context) => {
         const eventData = change.after.val();
         const topic = "notif_event_public";
         const postData = change.after.val(); //3
@@ -195,7 +195,7 @@ exports.scheduledFunction = functions.pubsub
     });
   
   function deleteOldItems() {
-    const ref = admin.database().ref('/event/eventPublic');
+    const ref = admin.database().ref('/event');
     const now = Date.now();
     const date_expiration = now + (96 * 3600 * 1000);
     const oldItemsQuery = ref.orderByChild('timeStamp').endAt(date_expiration);
@@ -233,7 +233,7 @@ exports.scheduledFunction = functions.pubsub
 
 // envoyer vers rating activity lorsque l'event est terminé :
     exports.checkExpiredEvents = functions.pubsub.schedule('every 24 hours').onRun((context) => {
-      const ref = admin.database().ref('/event/eventPublic');
+      const ref = admin.database().ref('/event');
       const now = Date.now();
     
       const dateExpiration = now;
@@ -248,7 +248,7 @@ exports.scheduledFunction = functions.pubsub
     
           // Check if the event is expired
           if (eventData && eventData.timeStamp <= now) {
-            const listInscritsRef = admin.database().ref(`/event/eventPublic/${eventId}/listInscrits`);
+            const listInscritsRef = admin.database().ref(`/event/${eventId}/listInscrits`);
     
             const promise = listInscritsRef.once('value').then((inscritsSnapshot) => {
               const notificationPromises = [];
