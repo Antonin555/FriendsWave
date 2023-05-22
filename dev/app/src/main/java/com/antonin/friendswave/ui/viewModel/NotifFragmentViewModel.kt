@@ -26,17 +26,9 @@ class NotifFragmentViewModel (private val repository: UserRepo, private val repo
         }
     }
 
-//    fun fetchEventsInvitationByKey(){
-//
-//        repository.fetchEventsInvitationByKey().observeForever { event->
-//            _eventList.value = event
-//        }
-//    }
-
     //pour les notifs p-e faire un NotifFragementViewModel
     fun acceptRequest(userNotif: User?){
         repository.acceptRequest1(userNotif)
-//        repository.acceptRequest2(key!!, email!!)
 
     }
 

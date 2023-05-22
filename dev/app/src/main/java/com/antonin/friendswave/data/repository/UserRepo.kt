@@ -146,10 +146,7 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
         firebaseUser.refuseRequest(userNotif)
     }
 
-    fun declineRequestEvent(user:User?){
 
-        firebaseUser.declineRequestEvent(user)
-    }
 
     fun fetchDiscussion(receiverUid: String):LiveData<List<Messages>>{
         val messageList = MutableLiveData<List<Messages>>()

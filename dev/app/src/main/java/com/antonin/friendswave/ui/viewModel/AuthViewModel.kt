@@ -7,7 +7,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-
+import com.antonin.friendswave.outils.emailRegex
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.ui.authentification.InterfaceAuth
 import com.antonin.friendswave.ui.authentification.LoginActivity
@@ -150,26 +150,10 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
 
     fun changeDate(year: Int, month: Int, day: Int) {
 
-
-        val dayString: String
-        val monthString: String
-
-        if(day < 10) {
-            dayString = "0" + day.toString()
-        } else
-            dayString = day.toString()
-
-        if(month < 10) {
-            monthString = "0"+(month + 1).toString()
-        } else
-            monthString = (month+1).toString()
-
+        val dayString =  if (day < 10) "0$day" else day.toString()
+        val monthString = if (month <= 10) "0${month + 1}" else "${month + 1}"
         date = dayString + "/"+monthString +"/"+ year.toString()
-//        if(dateEvent.before(currentDate)){
-//
-//            println("Impossible de revenir dans le passé")
-//
-//        }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -182,7 +166,6 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
 
 
     fun isEmailValid(email: String): Boolean {
-        val emailRegex = Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
         return emailRegex.matches(email)
     }
 

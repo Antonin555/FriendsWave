@@ -17,6 +17,7 @@ import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityGroupChatBinding
 import com.antonin.friendswave.outils.AnimationLayout
+import com.antonin.friendswave.outils.goToActivityWithArgs
 import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.ChatViewModel
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
@@ -121,9 +122,7 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
                 val userChoisi = viewModel.participantList.value!![position]
 
                 if(view.id == R.id.imageProfil){
-                    val intent = Intent(view.context, ProfilActivity::class.java)
-                    intent.putExtra("uid", userChoisi.uid)
-                    startActivity(intent)
+                    goToActivityWithArgs(view.context,ProfilActivity::class.java,"uid" to userChoisi.uid.toString())
                 }
             }
         })

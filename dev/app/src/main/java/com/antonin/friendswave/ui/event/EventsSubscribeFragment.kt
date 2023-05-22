@@ -7,7 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+
+import com.antonin.friendswave.outils.toastShow
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,7 @@ import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentEventsSubscribeBinding
 import com.antonin.friendswave.outils.AlertDialog
+import com.antonin.friendswave.outils.goToActivityWithArgs
 import com.antonin.friendswave.ui.chat.GroupChatActivity
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
@@ -91,11 +93,11 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
 
                 }
                 else {
-
-                    val intent = Intent(view.context, GroupChatActivity::class.java)
-                    intent.putExtra("eventKey", event!!.key)
-                    intent.putExtra("admin", event.admin)
-                    view.context.startActivity(intent)
+                    goToActivityWithArgs(view.context,GroupChatActivity::class.java,"eventKey" to event!!.key.toString(), "admin" to event.admin)
+//                    val intent = Intent(view.context, GroupChatActivity::class.java)
+//                    intent.putExtra("eventKey", event!!.key)
+//                    intent.putExtra("admin", event.admin)
+//                    view.context.startActivity(intent)
                 }
 
             }
@@ -117,11 +119,9 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
                } else {
 
                    val bool = true
-                   val intent = Intent(view.context, DetailEventActivity::class.java)
-                   intent.putExtra("idEvent", event!!.key)
-                   intent.putExtra("inscrit_ou_non", bool)
-                   intent.putExtra("adminEvent", event.admin)
-                   view.context.startActivity(intent)
+                   goToActivityWithArgs(view.context,DetailEventActivity::class.java,"idEvent" to event!!.key.toString(),
+                   "inscrit_ou_non" to bool, "adminEvent" to event.admin)
+
 
                 }
             }
@@ -145,7 +145,7 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
     val negativeButtonClickListener = DialogInterface.OnClickListener { _, which ->
         // Code à exécuter si le bouton négatif est cliqué
         if (which == DialogInterface.BUTTON_NEGATIVE) {
-            Toast.makeText(requireContext(), "ok on touche a rien", Toast.LENGTH_LONG).show()
+            toastShow(requireContext(),"ok on ne touche à rien")
         }
     }
 

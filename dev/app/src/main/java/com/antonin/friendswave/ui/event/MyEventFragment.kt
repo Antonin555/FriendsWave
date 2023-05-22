@@ -1,6 +1,5 @@
 package com.antonin.friendswave.ui.event
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,6 +16,7 @@ import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentMyEventBinding
+import com.antonin.friendswave.outils.goToActivityWithArgs
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import org.kodein.di.Kodein
@@ -79,10 +79,7 @@ class MyEventFragment : Fragment(), KodeinAware {
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
                val eventKey = viewModel.eventListPrivateUser.value!!.get(position).key.toString()
-                val intent = Intent(context,MyEventManageActivity::class.java)
-                intent.putExtra("clef", eventKey)
-                intent.putExtra("position", position)
-                startActivity(intent)
+                goToActivityWithArgs(view.context,MyEventManageActivity::class.java,"clef" to eventKey, "pos" to position )
 
             }
         })
@@ -90,14 +87,14 @@ class MyEventFragment : Fragment(), KodeinAware {
         adapter2.setOnListItemViewClickListener(object:ListGeneriqueAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
                 val eventKey = viewModel.eventListPublicUser.value!!.get(position).key.toString()
-                val intent  = Intent(context,MyEventManageActivity::class.java)
-                intent.putExtra("clef", eventKey)
-                intent.putExtra("pos", position)
-                startActivity(intent)
+                goToActivityWithArgs(view.context,MyEventManageActivity::class.java,"clef" to eventKey, "pos" to position )
+
             }
 
         })
 
     }
+
+
 
 }

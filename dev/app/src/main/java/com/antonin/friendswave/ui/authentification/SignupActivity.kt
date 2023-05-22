@@ -6,14 +6,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.DataBindingUtil
-
 import com.antonin.friendswave.R
 import com.antonin.friendswave.databinding.ActivitySingupBinding
 import com.antonin.friendswave.outils.startHomeActivity
-
+import com.antonin.friendswave.outils.toastShow
 import com.antonin.friendswave.ui.viewModel.AuthViewModel
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
@@ -21,7 +19,6 @@ import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
-
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -76,21 +73,8 @@ class SignupActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
     }
 
     override fun onFailure(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        toastShow(this,message)
     }
-
-//    override fun onStarted() {
-////        progressbar.visibility = View.VISIBLE
-//        Intent(this, HomeActivity::class.java).also {
-//            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//            startActivity(it)
-//        }
-//    }
-////
-//    override fun onSuccess() {
-////        progressbar.visibility = View.GONE
-//        startHomeActivity()
-//    }
 
     // methode de Google dans la doc:
     @Deprecated("Deprecated in Java")

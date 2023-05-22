@@ -1,8 +1,6 @@
 package com.antonin.friendswave.ui.fragmentMain
 
 import android.annotation.SuppressLint
-import android.content.Intent
-
 import android.location.Location
 import android.location.LocationListener
 import android.os.Bundle
@@ -10,7 +8,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -37,6 +34,8 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 import com.antonin.friendswave.data.dataStructure.LinkedList
+import com.antonin.friendswave.outils.goToActivityWithArgs
+import com.antonin.friendswave.outils.toastShow
 
 
 class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListener {
@@ -108,7 +107,7 @@ class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListe
 
             if(viewModel.categorie == "(km) Autour de toi"){
                 if(!type.isDigitsOnly()){
-                    Toast.makeText(context, "Vous devez inscrire un nombre", Toast.LENGTH_SHORT).show()
+                    toastShow(context,"Vous devez inscrire un nombre")
                     return@setOnClickListener
                 }
                 searchStrategy = Strategy(searchByCities)
@@ -128,9 +127,15 @@ class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListe
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
+
                 val id_event = viewModel.eventList.value!!.get(position).key
                 val admin_event = viewModel.eventList.value!!.get(position).admin
-                goToDetailEvent(id_event,admin_event, position)
+
+                goToActivityWithArgs(view.context,DetailEventActivity::class.java,
+                    "position" to position,
+                    "idEvent" to id_event.toString(),
+                    "adminEvent" to admin_event)
+
             }
         })
     }
@@ -153,25 +158,21 @@ class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListe
 
             adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
                 override fun onClick(view: View, position: Int) {
+
                     if (tempList.size >= position){
                         val id_event = tempList.get(position).key
                         val admin_event = tempList.get(position).admin
-                        goToDetailEvent(id_event,admin_event,position)
+
+                        goToActivityWithArgs(view.context,DetailEventActivity::class.java,
+                            "position" to position,
+                            "idEvent" to id_event.toString(),
+                            "adminEvent" to admin_event)
+
                     }
                 }
             })
         }
     }
-
-    fun goToDetailEvent(id_event:String?, admin_event:String , position:Int){
-
-        val intent = Intent(context, DetailEventActivity::class.java )
-        intent.putExtra("position", position)
-        intent.putExtra("idEvent", id_event)
-        intent.putExtra("adminEvent", admin_event)
-        startActivity(intent)
-    }
-
 
     override fun onPause() {
         super.onPause()

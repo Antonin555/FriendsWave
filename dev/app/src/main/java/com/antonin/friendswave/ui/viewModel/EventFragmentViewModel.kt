@@ -7,9 +7,6 @@ import android.os.Build
 import android.view.View
 import android.widget.AdapterView
 import android.widget.CompoundButton
-import android.widget.Toast
-import com.antonin.friendswave.outils.patternDate
-import com.antonin.friendswave.outils.emailPattern
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,7 +15,7 @@ import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
-import com.antonin.friendswave.outils.AlertDialog
+import com.antonin.friendswave.outils.*
 import com.antonin.friendswave.ui.chat.GroupChatActivity
 import com.antonin.friendswave.ui.event.*
 import com.antonin.friendswave.ui.home.ManageHomeActivity
@@ -26,7 +23,6 @@ import com.google.firebase.messaging.FirebaseMessaging
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import com.antonin.friendswave.outils.sendEmail
 import java.util.*
 
 class EventFragmentViewModel(private val repository:UserRepo,private val repoEvent:EventRepo):ViewModel() {
@@ -47,6 +43,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     var year:Int? = 0
     var hour:Int? = 0
     var minute: Int? = 0
+    var duree: Int? = 0
     var timeStamp : Double = 0.0
     var email: String? = ""
 //    var pseudo:String? = ""
@@ -81,13 +78,8 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     private val _eventData = MutableLiveData<Event>()
     val eventData: LiveData<Event> = _eventData
 
-//    private val _eventPublicUser = MutableLiveData<Event>()
-//    val eventPublicUser: LiveData<Event> = _eventPublicUser
-
     private val _eventDataPublic = MutableLiveData<Event>()
     val eventDataPublic: LiveData<Event> = _eventDataPublic
-
-
 
     private val _eventPendingPublic = MutableLiveData<List<Event>>()
     val eventPendingPublic: LiveData<List<Event>> = _eventPendingPublic
@@ -127,48 +119,64 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     }
 
     fun goToAddEvent(view: View){
-        // .also permet d'eviter de déclarer une variable :
-        Intent(view.context, AddEventActivity::class.java).also {
-            view.context.startActivity(it)
-        }
+        goToActivityWithoutArgs(view.context,AddEventActivity::class.java)
     }
 
     fun sendRequestToParticipatePublicEvent(idEvent:String, adminEvent:String, view: View){
-        if(user_live.value!!.eventConfirmationList!!.containsKey(idEvent))Toast.makeText(view.context,"Vous participez deja a cette evenement", Toast.LENGTH_LONG).show()
-        else if(user_live.value!!.pendingRequestEventPublic!!.containsKey(idEvent))Toast.makeText(view.context,"Demande deja envoye", Toast.LENGTH_LONG).show()
+
+        if(user_live.value!!.eventConfirmationList!!.containsKey(idEvent))
+            toastShow(view.context,"Vous participez dejà à cet évenement")
+
+        else if(user_live.value!!.pendingRequestEventPublic!!.containsKey(idEvent))
+            toastShow(view.context,"Demande dejà envoyée")
+
         // Si user est different de l'admin de l'event, il peut faire une demande :
         else if(adminEvent != user!!.uid){
             repoEvent.sendRequestToParticipatePublicEvent(idEvent,adminEvent)
-            Toast.makeText(view.context,"Demande envoyee", Toast.LENGTH_LONG).show()
+            toastShow(view.context,"Demande envoyée")
         }
 
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun addEventUser(view: View) {
+
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         val dateFormat = LocalDate.parse(date, formatter)
         isPublicChecked.value = isPublic
-        if(!name.isNullOrEmpty() && nbrePersonnes!! != 0  && !user!!.uid.isEmpty() &&
-            !categorie!!.isEmpty() && !date!!.isEmpty() && !horaire!!.isEmpty()
-            && !adress!!.isEmpty() && !description!!.isEmpty()){
-            if(photo == null)Toast.makeText(view.context,"Veuillez inserer une photo", Toast.LENGTH_LONG).show()
-            else if(nbrePersonnes!! > 10)Toast.makeText(view.context,"Il ne peut pas y avoir plus de 10 personnes a un event", Toast.LENGTH_LONG).show()
-            else if(dateFormat.isBefore(LocalDate.now()))Toast.makeText(view.context,"La date doit etre antérieure a celle d'aujoud'hui", Toast.LENGTH_LONG).show()
+
+        if (name?.isNotEmpty() == true
+            && nbrePersonnes != 0
+            && user?.uid?.isNotEmpty() == true
+            && categorie?.isNotEmpty() == true
+            && date?.isNotEmpty() == true
+            && horaire?.isNotEmpty() == true
+            && adress?.isNotEmpty() == true
+            && description?.isNotEmpty() == true
+            && duree != 0)
+        {
+            if(photo == null)
+                toastShow(view.context,"Veuillez insérer une photo")
+            else if(nbrePersonnes!! > 10)
+                toastShow(view.context,"Il ne peut pas y avoir plus de 10 personnes a un event")
+            else if(dateFormat.isBefore(LocalDate.now()))
+                toastShow(view.context,"La date doit etre supérieure a celle d'aujoud'hui")
             else{
-                    repoEvent.addEventUser(name!!, isPublic,nbrePersonnes!!, user!!.uid, categorie!!, date!!, horaire!!, adress!!,description!!,
-                        longitude!!,lattitude!!,photo!!,view.context, user!!.displayName.toString(), timeStamp )
-
+                repoEvent.addEventUser(name!!, isPublic,nbrePersonnes!!,
+                    user!!.uid, categorie!!,
+                    date!!, horaire!!,
+                    adress!!,description!!,
+                    longitude!!,lattitude!!,
+                    photo!!,view.context, user!!.displayName.toString(),
+                    timeStamp, duree!!)
                 }
-                Toast.makeText(view.context,"Evenement en cours de publication", Toast.LENGTH_LONG).show()
-                Intent(view.context, ManageHomeActivity::class.java).also { view.context.startActivity(it)}
-            }
-         else Toast.makeText(view.context,"Veuillez remplir tous les champs", Toast.LENGTH_LONG).show()
+            toastShow(view.context,"Evenement en cours de publication")
+            goToActivityWithoutArgs(view.context,ManageHomeActivity::class.java)
 
+        }
+         else toastShow(view.context,"Veuillez remplir tous les champs")
     }
-
-
-
+    // Vérifie la condition du switch, soit sur true (event public) ou false (event private)
     fun executeOnStatusChanged(isChecked: Boolean) {
         isPublic = isChecked
         isPublicChecked.value = isChecked
@@ -187,7 +195,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     }
 
     // ViewModel pour MyEvent :
-
     fun changeDate(view: View,year: Int, month: Int, day: Int) {
 
         val dayString =  if (day < 10) "0$day" else day.toString()
@@ -197,12 +204,11 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
         val sdf = SimpleDateFormat("dd/MM/yyyy")
         var strDate: Date? = sdf.parse(date.toString())
-        if (strDate != null) {
-            timeStamp = strDate.time.toDouble()
-        }
-        if (Date().after(strDate)) {
-            Toast.makeText(view.context,"Impossible de remonter dans le temps",Toast.LENGTH_SHORT).show()
-        }
+
+        if (strDate != null)  timeStamp = strDate.time.toDouble()
+        if (Date().after(strDate))  toastShow(view.context,"Impossible de remonter dans le temps")
+
+
     }
 
     fun changeHour(hour:Int, minute:Int) {
@@ -214,7 +220,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     fun fetchGuestConfirmDetailEventPublic(key: String?){
         repoEvent.fetchGuestConfirmDetailEventPublic(key).observeForever{ user ->
-
             _confirm_guestListPublic.value = user
         }
     }
@@ -276,25 +281,27 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     fun sendAnInvitationEvent(view:View, key: String){
         val alertDialog = AlertDialog()
 
+
         val positiveButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
             // Code à exécuter si le bouton positif est cliqué
             if (which == DialogInterface.BUTTON_POSITIVE) {
                 sendEmail(email!!, user_live.value!!.email!!,user_live.value!!.name!!)
-                Toast.makeText(view.context,"demande envoye par couriel", Toast.LENGTH_SHORT).show()
+                toastShow(view.context,"demande envoyée par courriel")
                 alertDialog.cancel()
             }
         }
         val negativeButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
             // Code à exécuter si le bouton négatif est cliqué
             if (which == DialogInterface.BUTTON_NEGATIVE) {
-                Toast.makeText(view.context,"ok on touche a rien", Toast.LENGTH_SHORT).show()
+                toastShow(view.context,"ok on ne touche à rien")
                 alertDialog.cancel()
             }
         }
 
 
+
         if (email.isNullOrEmpty() || !email!!.matches(emailPattern)) {
-            Toast.makeText(view.context, "Mail vide ou non valide", Toast.LENGTH_SHORT).show()
+            toastShow(view.context,"Courriel vide ou non valide")
             return
         }
         else if(!emailList.value!!.contains(email)) {
@@ -313,20 +320,18 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         if(eventDataPublic.value?.key == key){
             repoEvent.sendAnInvitationEvent(email!!, eventDataPublic.value!!)
         }
-        Toast.makeText(view.context,"Invitation envoyée", Toast.LENGTH_SHORT).show()
+        toastShow(view.context,"Invitation envoyée")
         email = ""
     }
 
+
+
     fun gotoMesEventsActivity(view: View) {
-        Intent(view.context, ManagerFragmentEvent::class.java).also {
-            view.context.startActivity(it)
-        }
+        goToActivityWithoutArgs(view.context,ManagerFragmentEvent::class.java)
     }
 
     fun editEvent(){
-//        val patternDate = Regex("\\d{2}/\\d{2}/\\d{4}")
         if(_eventDataPublic.value!!.date!!.matches(patternDate)){
-
             repoEvent.editEvent(_eventDataPublic.value)
         }
     }
@@ -352,11 +357,8 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     }
 
     fun startGroupChat(view: View, eventKey: String, admin: String){
-        Intent(view.context, GroupChatActivity::class.java).also{
-            it.putExtra("eventKey", eventKey)
-            it.putExtra("admin", admin)
-            view.context.startActivity(it)
-        }
+        goToActivityWithArgs(view.context,GroupChatActivity::class.java,"eventKey" to eventKey, "admin" to admin)
+
     }
 }
 

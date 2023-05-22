@@ -164,11 +164,11 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
                 Activity.RESULT_OK -> {
                     data?.let {
                         val place = Autocomplete.getPlaceFromIntent(data)
-                        binding.editLieu.setText(place.address.toString().split(",")[0])
+                        binding.editLieu.setText(place.address!!.toString().split(",")[0])
                         //Ajout Alex pour avoir longitude latitude du user
                         val geoCoder = Geocoder(this)
                         try {
-                            addressList = geoCoder.getFromLocationName(place.address.toString(), 1)
+                            addressList = geoCoder.getFromLocationName(place.address!!.toString(), 1)
 
                         } catch (e: IOException) {
                             e.printStackTrace()

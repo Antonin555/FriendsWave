@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
+import com.antonin.friendswave.outils.toastShow
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -175,7 +175,8 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
     val negativeButtonClickListener = DialogInterface.OnClickListener { _, which ->
         // Code à exécuter si le bouton négatif est cliqué
         if (which == DialogInterface.BUTTON_NEGATIVE) {
-            Toast.makeText(this, "ok on touche a rien", Toast.LENGTH_LONG).show()
+            toastShow(this,"ok on ne touche à rien")
+
         }
     }
 

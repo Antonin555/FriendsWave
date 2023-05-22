@@ -2,7 +2,6 @@ package com.antonin.friendswave.ui.fragmentMain
 
 import android.Manifest
 import android.content.DialogInterface
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -26,6 +25,7 @@ import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentHomeBinding
 import com.antonin.friendswave.outils.AlertDialog
+import com.antonin.friendswave.outils.goToActivityWithArgs
 import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
@@ -89,11 +89,11 @@ class HomeFragment : Fragment(), KodeinAware {
     override fun onResume() {
         super.onResume()
 
-
         viewModel2.fetchUsersRequest()
         viewModel2.fetchEventsInvitation()
         viewModel2.fetchDemandeInscriptionEventPublic()
         viewModel.fetchUserData()
+
 
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
         adapter3 = ListGeneriqueAdapter(R.layout.recycler_invite_events)
@@ -112,19 +112,19 @@ class HomeFragment : Fragment(), KodeinAware {
 
 
 
-        viewModel2.friendNotifList.observe(this){ notifUserList ->
+        viewModel2.friendNotifList.observe(this@HomeFragment){ notifUserList ->
             adapter1.addItems(notifUserList)
             if(adapter1.itemCount !=0 ) binding.makefriends.visibility= View.GONE
             else binding.makefriends.visibility = View.VISIBLE
         }
 
-        viewModel2.eventList.observe(this){ eventList ->
+        viewModel2.eventList.observe(this@HomeFragment){ eventList ->
             adapter3.addItems(eventList)
             if( adapter3.itemCount !=0) binding.tempInvitations.visibility = View.GONE
             else binding.tempInvitations.visibility = View.VISIBLE
         }
 
-        viewModel2.requestListEvent.observe(this){ userList ->
+        viewModel2.requestListEvent.observe(this@HomeFragment){ userList ->
             adapter2.addItems(userList)
             if(adapter2.itemCount != 0)  binding.searchEvents.visibility = View.GONE
             else binding.searchEvents.visibility = View.VISIBLE
@@ -134,7 +134,7 @@ class HomeFragment : Fragment(), KodeinAware {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_PERMISSION_READ_EXTERNAL_STORAGE)
         }
 
-        viewModel.user_live.observe(this) {
+        viewModel.user_live.observe(this@HomeFragment) {
             val path1 = "photos/" + it.img.toString()
             val path2 = "photosCover/" + it.imgCover.toString()
             if(it.imgCover != null) storeMedia.displayImage(binding.imageCover,path2)
@@ -161,9 +161,7 @@ class HomeFragment : Fragment(), KodeinAware {
                     viewModel2.refuseRequest(userNotif)
                 }
                 else if(view.id == R.id.imageProfil) {
-                    val intent = Intent(context, ProfilActivity::class.java)
-                    intent.putExtra("uid", userNotif?.uid)
-                    startActivity(intent)
+                    goToActivityWithArgs(context,ProfilActivity::class.java,"uid" to userNotif?.uid.toString())
 
                 }
             }
@@ -192,9 +190,8 @@ class HomeFragment : Fragment(), KodeinAware {
 
                 }
                 else if(view.id == R.id.profil_potential_guest) {
-                    val intent = Intent(context, ProfilActivity::class.java)
-                    intent.putExtra("uid", user.uid)
-                    startActivity(intent)
+                    goToActivityWithArgs(context,ProfilActivity::class.java,"uid" to user.uid.toString())
+
                 }
             }
 
@@ -221,8 +218,7 @@ class HomeFragment : Fragment(), KodeinAware {
         // Code à exécuter si le bouton positif est cliqué
         if (which == DialogInterface.BUTTON_POSITIVE) {
             viewModel2.acceptRequestEvent(user)
-//            val dataList = viewModel2.requestListEvent.value ?: emptyList()
-//            adapter2.addItems(dataList)
+
             alertDialog.cancel()
         }
     }

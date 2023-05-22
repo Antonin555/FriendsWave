@@ -1,11 +1,10 @@
 package com.antonin.friendswave.ui.contact
 
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import com.antonin.friendswave.outils.toastShow
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +12,7 @@ import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.ListGeneriqueAdapter
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.databinding.ActivityAddContactBinding
+import com.antonin.friendswave.outils.goToActivityWithArgs
 import com.antonin.friendswave.strategy.*
 import com.antonin.friendswave.ui.authentification.InterfaceAuth
 import com.antonin.friendswave.ui.home.ProfilActivity
@@ -98,9 +98,11 @@ class AddContactActivity : AppCompatActivity(), KodeinAware, InterfaceAuth {
                 ListGeneriqueAdapter.OnListItemViewClickListener {
                 override fun onClick(view: View, position: Int) {
                     val userChoisi = tempList.get(position)
-                    val intent = Intent(view.context, ProfilActivity::class.java)
-                    intent.putExtra("uid", userChoisi.uid)
-                    startActivity(intent)
+
+                    goToActivityWithArgs(view.context,ProfilActivity::class.java,"uid" to userChoisi.uid.toString())
+//                    val intent = Intent(view.context, ProfilActivity::class.java)
+//                    intent.putExtra("uid", userChoisi.uid)
+//                    startActivity(intent)
                 }
             })
         }
@@ -112,7 +114,8 @@ class AddContactActivity : AppCompatActivity(), KodeinAware, InterfaceAuth {
 
 
     override fun onFailure(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        toastShow(this,message)
+
     }
 
 

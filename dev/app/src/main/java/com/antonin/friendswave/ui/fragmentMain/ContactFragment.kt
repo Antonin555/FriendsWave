@@ -2,7 +2,6 @@ package com.antonin.friendswave.ui.fragmentMain
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -22,6 +21,7 @@ import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentContactBinding
+import com.antonin.friendswave.outils.goToActivityWithArgs
 import com.antonin.friendswave.ui.chat.ChatActivity
 import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
@@ -83,26 +83,20 @@ class ContactFragment : Fragment(), KodeinAware {
 
         }
 
-
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {
                 val userChoisi = binding.viewmodel!!.emailUserList.value?.get(position)
 
                 if(view.id == R.id.imageProfil){
-                    val intent = Intent(context, ProfilActivity::class.java)
-                    intent.putExtra("uid", userChoisi?.uid)
-                    startActivity(intent)
+                    goToActivityWithArgs(view.context,ProfilActivity::class.java,"uid" to userChoisi?.uid.toString())
+
                 } else {
-                    val intent = Intent(context, ChatActivity::class.java)
-                    intent.putExtra("uid", userChoisi?.uid)
-                    startActivity(intent)
+                    goToActivityWithArgs(view.context,ChatActivity::class.java,"uid" to userChoisi?.uid.toString())
 
                 }
             }
         })
-
     }
-
 
 }
 

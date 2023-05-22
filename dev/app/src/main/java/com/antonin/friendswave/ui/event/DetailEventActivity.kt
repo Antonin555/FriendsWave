@@ -13,6 +13,7 @@ import com.antonin.friendswave.data.firebase.FirebaseStore
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.databinding.ActivityDetailEventBinding
 import com.antonin.friendswave.outils.AnimationLayout
+import com.antonin.friendswave.outils.goToActivityWithArgs
 import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import org.kodein.di.KodeinAware
@@ -80,9 +81,10 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
             override fun onClick(view: View, position: Int) {
 
                 val idGuest = viewModel.confirm_guestListPublic.value!!.get(position).uid
-                val intent = Intent(view.context, ProfilActivity::class.java )
-                intent.putExtra("uid", idGuest)
-                startActivity(intent)
+                goToActivityWithArgs(view.context,ProfilActivity::class.java,"uid" to idGuest.toString())
+//                val intent = Intent(view.context, ProfilActivity::class.java )
+//                intent.putExtra("uid", idGuest)
+//                startActivity(intent)
 
             }
 
@@ -119,9 +121,10 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
 
         binding.profilHost.setOnClickListener{
 
-            val intent = Intent(this, ProfilActivity::class.java )
-            intent.putExtra("uid", adminEvent)
-            startActivity(intent)
+            goToActivityWithArgs(this, ProfilActivity::class.java,"uid" to adminEvent.toString())
+//            val intent = Intent(this, ProfilActivity::class.java )
+//            intent.putExtra("uid", adminEvent)
+//            startActivity(intent)
         }
 
 

@@ -157,18 +157,6 @@ class FirebaseSourceUser {
             })
     }
 
-    // REFUSER
-    fun declineRequestEvent(user:User?){
-        val idEvent:String = user!!.pendingRequestEventPublic!!.get(mainUid!!).toString()
-        val queryEventPublic = firebaseData.child("event/eventPublic").child(idEvent)
-        val queryAcceptHostEventUser = firebaseData.child("user").child(mainUid)
-        val queryAcceptGuestEventUser = firebaseData.child("user").child(user.uid.toString())
-
-        queryEventPublic.child("pendingRequestEventPublic").child(user.email.hashCode().toString()).removeValue()
-        queryAcceptHostEventUser.child("hostPendingRequestEventPublic").child(idEvent).removeValue()
-        queryAcceptGuestEventUser.child("pendingRequestEventPublic").child(idEvent).removeValue()
-    }
-
     fun fetchUsersFriend(onResult: (List<User>) -> Unit){
         val userList = ArrayList<User>()
         val mainUid = firebaseAuth.currentUser?.uid

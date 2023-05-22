@@ -79,7 +79,6 @@ class ChatViewModel(private val repository: UserRepo, private val repoEvent: Eve
             while (iterator.hasPrevious()) {
                 val message = iterator.previous()
                 if (message.senderId == user_live.value?.uid) {
-
                     lastMess = message
                     break
                 }
@@ -88,7 +87,6 @@ class ChatViewModel(private val repository: UserRepo, private val repoEvent: Eve
             val sender = user_live.value?.uid
             user_live.value?.lastMessage?.put(sender.toString(), lastMess.message!!)
             repository.editProfil(user_live.value!!)
-
         }
     }
     //a changer repetission

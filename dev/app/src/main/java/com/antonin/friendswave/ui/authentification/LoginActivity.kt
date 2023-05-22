@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.antonin.friendswave.R
 import com.antonin.friendswave.databinding.ActivityLoginBinding
 import com.antonin.friendswave.outils.startHomeActivity
+import com.antonin.friendswave.outils.toastShow
 import com.antonin.friendswave.ui.viewModel.AuthViewModel
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -31,7 +32,7 @@ class LoginActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
         viewModel.interfaceAuth = this
 
         viewModel.toastMessage.observe(this) { message ->
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            toastShow(this,message)
         }
 
     }
@@ -42,7 +43,7 @@ class LoginActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
     }
 
     override fun onFailure(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        toastShow(this,message)
     }
 
     // Permet d'accéder directement a l'app sans remettre son login :

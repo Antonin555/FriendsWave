@@ -15,7 +15,10 @@ import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
+import com.antonin.friendswave.outils.goToActivityWithArgs
+import com.antonin.friendswave.outils.goToActivityWithoutArgs
 import com.antonin.friendswave.outils.startLoginActivity
+import com.antonin.friendswave.outils.toastShow
 import com.antonin.friendswave.strategy.*
 import com.antonin.friendswave.ui.contact.AddContactActivity
 import com.antonin.friendswave.ui.home.ManageHomeActivity
@@ -72,19 +75,13 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
     fun editProfil(view: View){
 
         if(!verificatioAge(user_live.value!!.date!!)){
-            val toast = Toast.makeText(view.context, "Votre date de naissance n'est pas valide", Toast.LENGTH_SHORT)
-            toast.show()
+            toastShow(view.context,"Votre date de naissance n'est pas valide")
         }
         else{
             repository.editProfil(user_live.value)
+            toastShow(view.context,"Votre profil a bien été modifié")
+            goToActivityWithoutArgs(view.context,ManageHomeActivity::class.java)
 
-            val toast = Toast.makeText(view.context, "Votre profil a bien été modifié!", Toast.LENGTH_SHORT)
-            toast.show()
-
-            Intent(view.context, ManageHomeActivity::class.java).also {
-                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                view.context.startActivity(it)
-            }
         }
     }
 
@@ -112,10 +109,8 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
     }
 
     fun signaler(view: View){
-        Intent(view.context, SignalementActivity::class.java).also{
-            it.putExtra("uid", profilUid)
-            view.context.startActivity(it)
-        }
+        goToActivityWithArgs(view.context,SignalementActivity::class.java,"uid" to profilUid.toString())
+
     }
 
     fun sendSignalement(){
@@ -139,10 +134,8 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
     }
 
     fun goToAddContact(view: View){
-        // .also permet d'eviter de déclarer une variable :
-        Intent(view.context, AddContactActivity::class.java).also {
-            view.context.startActivity(it)
-        }
+        goToActivityWithoutArgs(view.context,AddContactActivity::class.java)
+
     }
 
     fun onSelectItem(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
