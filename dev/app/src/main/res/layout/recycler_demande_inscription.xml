@@ -32,12 +32,13 @@
             android:text="@string/add_event_name" />
 
         <TextView
+            android:id="@+id/nom_event_request"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.6"
             android:layout_gravity="center"
             android:fontFamily="@font/roboto_mono"
-            android:text="@{item.name}" />
+             />
 
     </LinearLayout>
 

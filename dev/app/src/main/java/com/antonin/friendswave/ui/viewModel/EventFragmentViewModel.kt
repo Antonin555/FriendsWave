@@ -1,7 +1,6 @@
 package com.antonin.friendswave.ui.viewModel
 
 import android.content.DialogInterface
-import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.view.View
@@ -199,7 +198,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
         val dayString =  if (day < 10) "0$day" else day.toString()
         val monthString = if (month <= 10) "0${month + 1}" else "${month + 1}"
-
         date = dayString + "/"+monthString +"/"+ year.toString()
 
         val sdf = SimpleDateFormat("dd/MM/yyyy")
@@ -290,7 +288,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
                 alertDialog.cancel()
             }
         }
-        val negativeButtonClickListener = DialogInterface.OnClickListener { dialog, which ->
+        val negativeButtonClickListener= DialogInterface.OnClickListener { dialog, which ->
             // Code à exécuter si le bouton négatif est cliqué
             if (which == DialogInterface.BUTTON_NEGATIVE) {
                 toastShow(view.context,"ok on ne touche à rien")
@@ -342,7 +340,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     fun deleteConfirmation(event:Event?) {
 
-        _eventData.value!!.nbreInscrit?.minus(1)
+//        _eventData.value!!.nbreInscrit?.minus(1)
         repoEvent.deleteConfirmation(event)
     }
 

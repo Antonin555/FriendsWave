@@ -48,6 +48,9 @@ fun toastShow(context: Context?,message:String) = Toast.makeText(context,message
 val patternDate = Regex("\\d{2}/\\d{2}/\\d{4}")
 val emailPattern = Regex("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
 val emailRegex = Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
+
+
+
 fun sendEmail(recipient: String, name:String, email:String) {
     val props = Properties()
     props.setProperty("mail.smtp.host", "smtp-mail.outlook.com")
@@ -77,14 +80,7 @@ fun sendEmail(recipient: String, name:String, email:String) {
     }).start()
 }
 
-//
-//
-//fun Context.startContactActivity() =
-//    Intent(this, ContactActivity::class.java).also {
-//        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//        startActivity(it)
-//    }
-//
+
 
 
 

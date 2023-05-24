@@ -26,6 +26,9 @@ import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentHomeBinding
 import com.antonin.friendswave.outils.AlertDialog
 import com.antonin.friendswave.outils.goToActivityWithArgs
+import com.antonin.friendswave.outils.goToActivityWithoutArgs
+import com.antonin.friendswave.ui.event.DetailEventActivity
+import com.antonin.friendswave.ui.home.ManageHomeActivity
 import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
@@ -61,6 +64,9 @@ class HomeFragment : Fragment(), KodeinAware {
     private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 1
     private var firebaseMessaging = FirebaseMessaging.getInstance()
     val alertDialog = AlertDialog()
+    private var isObservingRequestList = true
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,6 +89,8 @@ class HomeFragment : Fragment(), KodeinAware {
         binding.lifecycleOwner = this
         firebaseMessaging = FirebaseMessaging.getInstance()
 
+
+
         return binding.root
     }
 
@@ -96,8 +104,8 @@ class HomeFragment : Fragment(), KodeinAware {
 
 
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
-        adapter3 = ListGeneriqueAdapter(R.layout.recycler_invite_events)
         adapter2 = ListGeneriqueAdapter(R.layout.recycler_demande_inscription)
+        adapter3 = ListGeneriqueAdapter(R.layout.recycler_invite_events)
 
         val layoutManager = LinearLayoutManager(context)
         val layoutManager2 = LinearLayoutManager(context)
@@ -110,22 +118,25 @@ class HomeFragment : Fragment(), KodeinAware {
         binding.recyclerRequestEvent.layoutManager = layoutManager3
         binding.recyclerRequestEvent.adapter = adapter3
 
-
-
-        viewModel2.friendNotifList.observe(this@HomeFragment){ notifUserList ->
+        viewModel2.friendNotifList.observe(this){ notifUserList ->
             adapter1.addItems(notifUserList)
             if(adapter1.itemCount !=0 ) binding.makefriends.visibility= View.GONE
             else binding.makefriends.visibility = View.VISIBLE
         }
 
-        viewModel2.eventList.observe(this@HomeFragment){ eventList ->
+        viewModel2.eventList.observe(this){ eventList ->
             adapter3.addItems(eventList)
             if( adapter3.itemCount !=0) binding.tempInvitations.visibility = View.GONE
             else binding.tempInvitations.visibility = View.VISIBLE
         }
 
-        viewModel2.requestListEvent.observe(this@HomeFragment){ userList ->
-            adapter2.addItems(userList)
+        viewModel2.requestListEvent.observe(this){ userList ->
+            println(userList)
+            if(isObservingRequestList) {
+
+                adapter2.addItems(userList)
+            }
+
             if(adapter2.itemCount != 0)  binding.searchEvents.visibility = View.GONE
             else binding.searchEvents.visibility = View.VISIBLE
         }
@@ -134,11 +145,11 @@ class HomeFragment : Fragment(), KodeinAware {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_PERMISSION_READ_EXTERNAL_STORAGE)
         }
 
-        viewModel.user_live.observe(this@HomeFragment) {
+        viewModel.user_live.observe(this) {
             val path1 = "photos/" + it.img.toString()
             val path2 = "photosCover/" + it.imgCover.toString()
             if(it.imgCover != null) storeMedia.displayImage(binding.imageCover,path2)
-            storeMedia.displayImage(binding.imgProfil,path1)
+            if(it.img != null) storeMedia.displayImage(binding.imgProfil,path1)
         }
 
         FirebaseMessaging.getInstance().token
@@ -154,11 +165,14 @@ class HomeFragment : Fragment(), KodeinAware {
             override fun onClick(view: View, position: Int) {
                 val userNotif = viewModel2.friendNotifList.value?.get(position)
                 if (view.id == R.id.accept_friend){
+
                     viewModel2.acceptRequest(userNotif)
+
                 }
 
                 else if (view.id == R.id.decline_friend){
                     viewModel2.refuseRequest(userNotif)
+
                 }
                 else if(view.id == R.id.imageProfil) {
                     goToActivityWithArgs(context,ProfilActivity::class.java,"uid" to userNotif?.uid.toString())
@@ -172,20 +186,19 @@ class HomeFragment : Fragment(), KodeinAware {
             override fun onClick(view: View, position: Int) {
 
                 val user = viewModel2.requestListEvent.value?.get(position)!!
+
+                isObservingRequestList = false
                 if (view.id == R.id.non_event){
 
-
                     viewModel2.declineRequestEvent(user)
+//                    goToActivityWithoutArgs(requireContext(), ManageHomeActivity::class.java)
                 }
                 else if(view.id == R.id.oui_event) {
 
-                    alertDialog.showDialog(view.context,
-                        "Attention",
-                        "This email match no account, do you want to make an invitation via email",
-                        "yes",
-                        "no",
-                        positiveButtonClickListener(user),
-                        negativeButtonClickListener)
+                    viewModel2.acceptRequestEvent(user)
+                        isObservingRequestList = true
+
+//                    goToActivityWithoutArgs(requireContext(), ManageHomeActivity::class.java)
 
 
                 }
@@ -193,6 +206,7 @@ class HomeFragment : Fragment(), KodeinAware {
                     goToActivityWithArgs(context,ProfilActivity::class.java,"uid" to user.uid.toString())
 
                 }
+
             }
 
         })
@@ -201,33 +215,28 @@ class HomeFragment : Fragment(), KodeinAware {
             override fun onClick(view: View, position: Int) {
 
                 val event = viewModel2.eventList.value?.get(position)
-                if (view.id == R.id.accept_invitation){
+                val bool = true
+                if (view.id == R.id.img_accept_invitation){
                     event!!.nbreInscrit?.plus(1)
                     viewModel2.acceptInvitationEvent(event)
+//                    goToActivityWithoutArgs(requireContext(), ManageHomeActivity::class.java)
                 }
-                if (view.id == R.id.refuse_invitation){
+                else if (view.id == R.id.img_refuse_invitation){
                     viewModel2.refuseInvitationEvent(event)
+//                    goToActivityWithoutArgs(requireContext(), ManageHomeActivity::class.java)
                 }
+                else
+                    goToActivityWithArgs(view.context,DetailEventActivity::class.java,
+                        "inscrit_ou_non" to bool,
+                        "idEvent" to event!!.key.toString(),
+                        "adminEvent" to event.admin)
+
             }
 
         })
 
     }
 
-    fun positiveButtonClickListener(user:User) = DialogInterface.OnClickListener { _, which ->
-        // Code à exécuter si le bouton positif est cliqué
-        if (which == DialogInterface.BUTTON_POSITIVE) {
-            viewModel2.acceptRequestEvent(user)
-
-            alertDialog.cancel()
-        }
-    }
-    val negativeButtonClickListener = DialogInterface.OnClickListener { _, which ->
-        // Code à exécuter si le bouton négatif est cliqué
-        if (which == DialogInterface.BUTTON_NEGATIVE) {
-            alertDialog.cancel()
-        }
-    }
 
     @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

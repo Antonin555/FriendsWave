@@ -152,6 +152,14 @@
             tools:ignore="UselessParent">
 
 
+            <View
+                android:id="@+id/view8"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="#FF4D7167" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -175,7 +183,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/batiment" />
+                        android:src="@drawable/ville" />
 
                     <TextView
                         android:id="@+id/textView46"
@@ -195,7 +203,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/age" />
+                        android:src="@drawable/birthday" />
 
                     <TextView
                         android:id="@+id/textView48"

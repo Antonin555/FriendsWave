@@ -39,15 +39,13 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
     private var viewModel: EventFragmentViewModel = EventFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
         repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
     private var adapter1 : ListGeneriqueAdapter<Event> = ListGeneriqueAdapter(R.layout.recycler_my_event_inscrits)
-    private var adapter2 : ListGeneriqueAdapter<Event> = ListGeneriqueAdapter(R.layout.recycler_my_event_pending_participants)
-
+    private var adapter2 : ListGeneriqueAdapter<Event> = ListGeneriqueAdapter(R.layout.recycler_my_event_inscrits)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
-        viewModel.fetchConfirmationEvents()
-        viewModel.getAllEventsPendingRequestPublic()
+
 
     }
 
@@ -62,7 +60,8 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
 
     override fun onResume() {
         super.onResume()
-
+        viewModel.fetchConfirmationEvents()
+        viewModel.getAllEventsPendingRequestPublic()
         val layoutManager = LinearLayoutManager(context)
         val layoutManager1 = LinearLayoutManager(context)
         binding.recyclerMyEventInscrits.layoutManager = layoutManager
@@ -83,7 +82,7 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
             override fun onClick(view: View, position: Int) {
 
                 val event = viewModel.eventListConfirm.value?.get(position)
-                if(view.id == R.id.refuse_event){
+                if(view.id == R.id.img_refuse_event){
                     val alert = AlertDialog()
                     alert.showDialog(requireContext(),
                         "Suppression de votre participation",
@@ -93,16 +92,13 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
 
                 }
                 else {
-                    goToActivityWithArgs(view.context,GroupChatActivity::class.java,"eventKey" to event!!.key.toString(), "admin" to event.admin)
-//                    val intent = Intent(view.context, GroupChatActivity::class.java)
-//                    intent.putExtra("eventKey", event!!.key)
-//                    intent.putExtra("admin", event.admin)
-//                    view.context.startActivity(intent)
-                }
+                    goToActivityWithArgs(view.context,GroupChatActivity::class.java,
+                        "eventKey" to event!!.key.toString(),
+                        "admin" to event.admin)
 
+                }
             }
         })
-
 
         adapter2.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
@@ -117,11 +113,10 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
                        "Annuler", cliclPositiveButtonPendingEvent(event), negativeButtonClickListener)
 
                } else {
-
                    val bool = true
-                   goToActivityWithArgs(view.context,DetailEventActivity::class.java,"idEvent" to event!!.key.toString(),
-                   "inscrit_ou_non" to bool, "adminEvent" to event.admin)
-
+                   goToActivityWithArgs(view.context,DetailEventActivity::class.java,
+                       "idEvent" to event!!.key.toString(),
+                        "inscrit_ou_non" to bool, "adminEvent" to event.admin)
 
                 }
             }

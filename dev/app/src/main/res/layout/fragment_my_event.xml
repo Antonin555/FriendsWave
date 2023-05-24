@@ -22,7 +22,6 @@
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/add_event_private"
-            android:textColor="@color/black"
             android:textSize="26sp" />
 
         <View
@@ -37,14 +36,14 @@
             android:id="@+id/createYourFirstEvent"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_marginTop="20dp"
+            android:layout_weight="0.5"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView60"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:fontFamily="@font/roboto_mono"
                 android:gravity="center"
                 android:text="Create Your First Event"
@@ -68,7 +67,6 @@
             android:fontFamily="@font/roboto_mono"
             android:gravity="center"
             android:text="@string/add_event_public"
-            android:textColor="@color/black"
             android:textSize="26sp" />
 
 
@@ -84,7 +82,8 @@
             android:id="@+id/createYourFirstEventPublic"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_marginTop="20dp"
+            android:layout_weight="0.5"
             android:orientation="horizontal">
 
             <TextView

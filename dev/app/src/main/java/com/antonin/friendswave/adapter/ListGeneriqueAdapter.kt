@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -61,6 +62,8 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
             val image_event = holder.itemView.findViewById<ImageView>(R.id.imageEvent)
             val image_profil = holder.itemView.findViewById<ImageView>(R.id.imageProfil)
             val image_profil_potential_guest = holder.itemView.findViewById<ImageView>(R.id.profil_potential_guest)
+            val event_request = holder.itemView.findViewById<TextView>(R.id.nom_event_request)
+
 
 
 
