@@ -19,6 +19,8 @@ import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import com.antonin.friendswave.ui.viewModel.ChatVMFactory
 
+//Tutoriel pour faire le chat: https://www.youtube.com/watch?v=8Pv96bvBJL4
+
 class ChatActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein : Kodein by kodein()

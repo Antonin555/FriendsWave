@@ -7,6 +7,8 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 
+//Documentation https://firebase.google.com/docs/storage/android/create-reference?hl=fr
+
 class FirebaseStore {
 
 
@@ -15,7 +17,6 @@ class FirebaseStore {
     fun displayImage(imgView:ImageView, path: String){
 
         val storageRef = storage.reference.child(path)
-//        println("PHHHHHHHHHHHHHHHHHHHHHHOOOOOOOOOOOOOOOOOOTOOOOOOOOOOOO : " + storage.reference.child(path))
 
         storageRef.downloadUrl.addOnSuccessListener {
             Glide.with(imgView.context)

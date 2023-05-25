@@ -15,6 +15,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
+//Documentation sur les requetes https://firebase.google.com/docs/reference/kotlin/com/google/firebase/database/Query
+
 class FirebaseSourceEvent {
 
     private val firebaseAuth: FirebaseAuth by lazy {

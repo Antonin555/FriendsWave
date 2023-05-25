@@ -17,6 +17,8 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.firebase.R
 
+//Documentation https://firebase.google.com/docs/cloud-messaging/android/client?hl=fr
+
 class FirebaseNotificationsService : FirebaseMessagingService() {
 
 //    private lateinit var firebase: FirebaseSourceUser

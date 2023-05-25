@@ -37,6 +37,8 @@ class SearchByName : InterfaceSearch {
     }
 }
 
+//Documentation pour la formule d'Haversine https://www.geeksforgeeks.org/haversine-formula-to-find-distance-between-two-points-on-a-sphere/
+
 class SearchByCities : InterfaceSearch {
 
     override fun sortedEvent(str: String, events: List<Event>?, user: User): List<Event> {

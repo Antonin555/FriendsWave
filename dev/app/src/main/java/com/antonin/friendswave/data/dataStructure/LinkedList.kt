@@ -2,6 +2,8 @@ package com.antonin.friendswave.data.dataStructure
 
 import com.antonin.friendswave.data.model.Event
 
+//Documentation https://www.kodeco.com/books/data-structures-algorithms-in-kotlin/v1.0/chapters/3-linked-list et avec l'aide de ChatGPT
+
 class LinkedList {
     private var head: Node? = null
     private var tail: Node? = null

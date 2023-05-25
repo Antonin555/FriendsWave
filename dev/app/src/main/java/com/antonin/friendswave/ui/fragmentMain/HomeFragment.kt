@@ -39,13 +39,12 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import org.kodein.di.Kodein
-
-
 import org.kodein.di.KodeinAware
-
 import org.kodein.di.generic.instance
 import org.kodein.di.android.x.kodein
 
+//Documentation https://www.kodeco.com/27690200-advanced-data-binding-in-android-observables
+//On s'en ai inspiré mais nous l'avons vraiment adapté a nos besoins
 
 class HomeFragment : Fragment(), KodeinAware {
 

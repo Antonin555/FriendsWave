@@ -12,9 +12,9 @@ import androidx.core.content.ContextCompat
 import com.antonin.friendswave.R
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 
+//Documentation https://www.geeksforgeeks.org/gridview-using-baseadapter-in-android-with-example/
+
 class MyGridViewAdapter(private val context: Context, private val values: List<String>, private val viewModel: HomeFragmentViewModel) : BaseAdapter() {
-
-
 
     private var selectedPositions = mutableListOf<Int>()
 

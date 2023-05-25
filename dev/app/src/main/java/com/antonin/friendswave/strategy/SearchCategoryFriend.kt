@@ -7,6 +7,8 @@ import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
 
+//Documentation sur Jaccard https://www.geeksforgeeks.org/find-the-jaccard-index-and-jaccard-distance-between-the-two-given-sets/
+
 class SearchHobbyFriend: InterfaceSearchFriend {
 
     override fun sortedUser(mainUser: User?, totalUser: List<User>?): List<User> {

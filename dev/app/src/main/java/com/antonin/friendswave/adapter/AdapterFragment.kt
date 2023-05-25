@@ -7,6 +7,8 @@ import com.antonin.friendswave.ui.fragmentMain.ContactFragment
 import com.antonin.friendswave.ui.fragmentMain.EventFragment
 import com.antonin.friendswave.ui.fragmentMain.HomeFragment
 
+// Documentation https://developer.android.com/reference/androidx/fragment/app/FragmentPagerAdapter
+
 class AdapterFragment(fa: FragmentActivity) : FragmentStateAdapter(fa) {
     override fun getItemCount(): Int = 3
     override fun createFragment(position: Int): Fragment {

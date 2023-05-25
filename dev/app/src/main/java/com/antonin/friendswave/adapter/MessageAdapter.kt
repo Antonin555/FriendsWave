@@ -10,7 +10,7 @@ import com.antonin.friendswave.R
 import com.antonin.friendswave.data.model.Messages
 import com.google.firebase.auth.FirebaseAuth
 
-
+//Documentation https://www.youtube.com/watch?v=8Pv96bvBJL4
 
 class MessageAdapter(val context: Context, val messageList: List<Messages>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {

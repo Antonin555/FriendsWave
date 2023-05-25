@@ -6,6 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.antonin.friendswave.ui.event.EventsSubscribeFragment
 import com.antonin.friendswave.ui.event.MyEventFragment
 
+// Documentation https://developer.android.com/reference/androidx/fragment/app/FragmentPagerAdapter
 
 class AdapterFragmentEvent(fa: FragmentActivity) : FragmentStateAdapter(fa) {
     override fun getItemCount(): Int = 2

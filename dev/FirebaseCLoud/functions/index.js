@@ -3,6 +3,8 @@ const admin = require('firebase-admin');
 const capitalizeSentence = require('capitalize-sentence');
 const badWordsList = require('french-badwords-list').array;
 
+//Concernant les triggers functions https://github.com/firebase/functions-samples
+
 admin.initializeApp(functions.config().firebase);
 
 exports.moderatorEvent = functions.database.ref('/event/{eventId}').onWrite((change) => {

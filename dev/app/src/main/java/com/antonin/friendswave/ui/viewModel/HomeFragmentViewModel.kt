@@ -28,6 +28,9 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.*
 
+//Concernant l'architecture MVVM https://www.simplifiedcoding.net/firebase-mvvm-example/
+//Concernant le LiveData https://developer.android.com/topic/libraries/architecture/livedata?hl=fr
+
 class HomeFragmentViewModel(private val repository: UserRepo, private val repoEvent:EventRepo):ViewModel() {
 
     var profilUid: String? = ""

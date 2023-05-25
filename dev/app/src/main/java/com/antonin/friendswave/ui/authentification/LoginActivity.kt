@@ -15,6 +15,8 @@ import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import com.antonin.friendswave.ui.viewModel.AuthViewModelFactory
 
+//Documentation https://openclassrooms.com/fr/courses/4872916-creez-un-backend-scalable-et-performant-sur-firebase/4982767-creez-votre-premier-systeme-dauthentification  // tuto pour faire le login signup
+
 class LoginActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
 
     override val kodein by kodein()
