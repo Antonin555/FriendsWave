@@ -1,16 +1,12 @@
 package com.antonin.friendswave.outils
 
-import android.app.Dialog
-import android.os.Bundle
-import androidx.fragment.app.DialogFragment
-import com.antonin.friendswave.R
+
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
-import android.widget.Toast
-import androidx.appcompat.content.res.AppCompatResources.getDrawable
-import androidx.core.content.ContextCompat.getDrawable
-import androidx.core.content.res.ResourcesCompat.getDrawable
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: C'est une classe permettant d'afficher des alert Dialog
 
 class AlertDialog: DialogInterface {
 

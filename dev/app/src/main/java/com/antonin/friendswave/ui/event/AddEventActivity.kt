@@ -28,6 +28,8 @@ import java.io.IOException
 
 
 
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Activité qui permet d'ajouter un event
 class AddEventActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein by kodein()

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -17,26 +16,29 @@ import com.antonin.friendswave.R
 import com.antonin.friendswave.data.firebase.FirebaseStore
 
 
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: permet d'avoir un view Holder pour les recycler View de facon générique. Le but est de pouvoir afficher différentes données dans plusieurs recycler View.
+
+
+// nous avons pris ce code pour s'inspirer https://proandroiddev.com/generic-listadapter-with-kotlin-write-once-use-more-recyclerview-viewpager-6314cbdced36
+// nous l'avons adapter à notre code
+
 class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int) :
         ListAdapter<T, ListGeneriqueAdapter.GenericViewHolder<T>>(WordsComparator()) {
 
         private val items = mutableListOf<T>()
-        private val items_dico = mutableMapOf<T,T>()
         private val store = FirebaseStore()
         private var inflater: LayoutInflater? = null
         private var onListItemViewClickListener: OnListItemViewClickListener? = null
 
+        @SuppressLint("NotifyDataSetChanged")
         fun addItems(items: List<T>) {
             this.items.clear()
             this.items.addAll(items)
             notifyDataSetChanged()
         }
 
-        fun addItems_dico(items_dico:HashMap<T,T>){
-            this.items_dico.clear()
-            this.items_dico.putAll(items_dico)
-            notifyDataSetChanged()
-        }
+
 
         fun setOnListItemViewClickListener(onListItemViewClickListener: OnListItemViewClickListener?){
             this.onListItemViewClickListener = onListItemViewClickListener
@@ -62,10 +64,6 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
             val image_event = holder.itemView.findViewById<ImageView>(R.id.imageEvent)
             val image_profil = holder.itemView.findViewById<ImageView>(R.id.imageProfil)
             val image_profil_potential_guest = holder.itemView.findViewById<ImageView>(R.id.profil_potential_guest)
-            val event_request = holder.itemView.findViewById<TextView>(R.id.nom_event_request)
-
-
-
 
             if(image_profil != null){
                 val path_profil = "photos/"+ itemViewModel.img.toString()
@@ -101,7 +99,7 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
     }
 
 
-class WordsComparator <T>: DiffUtil.ItemCallback<T>() {
+class WordsComparator <T : Any>: DiffUtil.ItemCallback<T>() {
     override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
         return oldItem == newItem
     }

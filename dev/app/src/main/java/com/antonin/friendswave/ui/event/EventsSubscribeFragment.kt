@@ -22,7 +22,9 @@ import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentEventsSubscribeBinding
 import com.antonin.friendswave.outils.AlertDialog
 import com.antonin.friendswave.outils.goToActivityWithArgs
+import com.antonin.friendswave.outils.goToActivityWithoutArgs
 import com.antonin.friendswave.ui.chat.GroupChatActivity
+import com.antonin.friendswave.ui.home.ManageHomeActivity
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import org.kodein.di.Kodein
@@ -30,6 +32,9 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Activité qui permet de voir les events pour lesquels on est inscrit
 
 class EventsSubscribeFragment : Fragment(), KodeinAware{
 
@@ -43,9 +48,7 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         viewModel = ViewModelProviders.of(this,factory).get(EventFragmentViewModel::class.java)
-
 
     }
 
@@ -62,6 +65,7 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
         super.onResume()
         viewModel.fetchConfirmationEvents()
         viewModel.getAllEventsPendingRequestPublic()
+
         val layoutManager = LinearLayoutManager(context)
         val layoutManager1 = LinearLayoutManager(context)
         binding.recyclerMyEventInscrits.layoutManager = layoutManager
@@ -127,12 +131,14 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
     fun clickOnPositiveButton(event:Event?) = DialogInterface.OnClickListener { _, which ->
             if (which == DialogInterface.BUTTON_POSITIVE) {
                 viewModel.deleteConfirmation(event)
+                goToActivityWithoutArgs(requireContext(), ManagerFragmentEvent::class.java)
             }
         }
 
     fun cliclPositiveButtonPendingEvent(event:Event?) = DialogInterface.OnClickListener { _, which ->
         if(which == DialogInterface.BUTTON_POSITIVE) {
             viewModel.deletePendingEvent(event)
+            goToActivityWithoutArgs(requireContext(), ManagerFragmentEvent::class.java)
         }
     }
 

@@ -12,6 +12,10 @@ import androidx.core.content.ContextCompat
 import com.antonin.friendswave.R
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: L'adapteur du grid view pour permettre d'avoir un interaction avec le grid View (couleur qui change lorsqu'on clique)
+
 //Documentation https://www.geeksforgeeks.org/gridview-using-baseadapter-in-android-with-example/
 
 class MyGridViewAdapter(private val context: Context, private val values: List<String>, private val viewModel: HomeFragmentViewModel) : BaseAdapter() {
@@ -44,11 +48,9 @@ class MyGridViewAdapter(private val context: Context, private val values: List<S
         textView.text = values[position]
 
         if (selectedPositions.contains(position)) {
-//            textView.setBackgroundColor(ContextCompat.getColor(context, R.color.teal_200))
             textView.setBackground(ContextCompat.getDrawable(context,R.drawable.custom_shape))
         }
         else if(viewModel.user_live.value!!.interet!!.contains(values[position])){
-//            textView.setBackgroundColor(ContextCompat.getColor(context, R.color.teal_200))
             textView.setBackground(ContextCompat.getDrawable(context,R.drawable.custom_shape))
             selectedPositions.add(position)
         }
@@ -66,7 +68,6 @@ class MyGridViewAdapter(private val context: Context, private val values: List<S
             } else {
                 selectedPositions.add(position)
                 viewModel.user_live.value!!.interet = getSelectedValues()
-//                Toast.makeText(context, "Vous avez cliqué sur l'élément ${viewModel.user_live.value!!.interet}", Toast.LENGTH_SHORT).show()
             }
             notifyDataSetChanged()
         }
@@ -74,7 +75,6 @@ class MyGridViewAdapter(private val context: Context, private val values: List<S
         return textView
     }
 
-// a tester
     fun getSelectedValues(): ArrayList<String> {
         return selectedPositions.map { values[it] } as ArrayList<String>
     }

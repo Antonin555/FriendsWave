@@ -21,6 +21,10 @@ import com.antonin.friendswave.ui.viewModel.ChatVMFactory
 
 //Tutoriel pour faire le chat: https://www.youtube.com/watch?v=8Pv96bvBJL4
 
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Activité qui permet de chatter
+
 class ChatActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein : Kodein by kodein()
@@ -64,10 +68,5 @@ class ChatActivity : AppCompatActivity(), KodeinAware {
         viewModel.fetchUserData()
         viewModel.fetchDiscussion()
     }
-//
-//    fun onSendButtonClick(view: View) {
-//        viewModel.addMessagetoDatabase(view)
-//        // Réinitialisation du texte de l'EditText
-//        binding.messageBox.setText("")
-//    }
+
 }

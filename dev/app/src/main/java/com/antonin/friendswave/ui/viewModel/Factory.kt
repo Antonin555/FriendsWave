@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Classes représentant les factory pour nos View Models.
+
 class AuthViewModelFactory( private val repository: UserRepo) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

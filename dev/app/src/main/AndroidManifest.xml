@@ -20,13 +20,6 @@
         android:theme="@style/Theme.FriendsWave"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".ui.home.PreferencesActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
 
         <uses-library
             android:name="org.apache.http.legacy"

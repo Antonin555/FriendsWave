@@ -11,11 +11,19 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 //Documentation sur les requetes https://firebase.google.com/docs/reference/kotlin/com/google/firebase/database/Query
+
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: C'est le lien entre la base de donnée Firebase et notre application, elle recupere ou enregistre des données. Elle est dédiée en majorité aux évents.
 
 class FirebaseSourceEvent {
 
@@ -132,35 +140,35 @@ class FirebaseSourceEvent {
                         }
                     }
                 }
-                getUserFromUidList(userList, tempList, onResult)
-            }
-            }
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
-    }
 
-    fun getUserFromUidList(userList: ArrayList<String> , tempList: ArrayList<User> , onResult: (List<User>) -> Unit){
+                    firebaseData.child("user").addValueEventListener(object:ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
 
-        firebaseData.child("user").addValueEventListener(object:ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-
-                while (userList.isNotEmpty()) {
-                    for(snap in snapshot.children) {
-                        val user = snap.getValue(User::class.java)
-                        if(userList.contains(user!!.uid)){
-                            tempList.add(user)
-                            userList.remove(user.uid)
+                            while (userList.isNotEmpty()) {
+                                for(snap in snapshot.children) {
+                                    val user = snap.getValue(User::class.java)
+                                    if(userList.contains(user!!.uid)){
+                                        tempList.add(user)
+                                        userList.remove(user.uid)
+                                    }
+                                }
+                            }
+                            onResult(tempList)
                         }
-                    }
-                }
-                onResult(tempList)
+                        override fun onCancelled(error: DatabaseError) {
+                        }
+                    })
+
+
+//                getUserFromUidList(userList, tempList, onResult)
+            }
             }
             override fun onCancelled(error: DatabaseError) {
             }
         })
-
     }
+
+
 
     fun getAllEventsPendingRequestPublic(onResult: (List<Event>) -> Unit){
 
@@ -178,7 +186,6 @@ class FirebaseSourceEvent {
 
                     }
                     searchEventsWithKey(eventIdList,eventList, onResult)
-//                    addEventsPublicToRecyclerNotif(eventIdList,eventList, onResult)
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -186,7 +193,6 @@ class FirebaseSourceEvent {
         })
     }
 
-    // POUR NOTIF FRAGMENT HOME
 
     // cherche les invitations reçus :
     fun fetchInvitationEvents( onResult: (List<Event>) -> Unit) {
@@ -237,8 +243,8 @@ class FirebaseSourceEvent {
 
 
     // méthode commune à fetchInvitationEvents et fetchConfirmationEvents pour récupérer les events :
-    fun searchEventsWithKey(eventIdList: HashMap<String, String>, eventList: ArrayList<Event>, onResult: (List<Event>) -> Unit){
 
+    fun searchEventsWithKey(eventIdList: HashMap<String, String>, eventList: ArrayList<Event>, onResult: (List<Event>) -> Unit){
         firebaseEvent.addValueEventListener(object :ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (snap in snapshot.children) {
@@ -255,10 +261,8 @@ class FirebaseSourceEvent {
         })
     }
 
-
     fun fetchSpecificEvents( hostId: String, eventValue: String, onResult: (Event) -> Unit) {
         val eventValue = eventValue
-
         firebaseEvent.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                     for (snap in task.result.children) {
@@ -273,12 +277,6 @@ class FirebaseSourceEvent {
             }
     }
 
-    // POUR MY EVENT : RECHERCHE DES PARTICIPANTS INVITATIONS PRIVATE :
-
-    // PRIVATE EVENT : LIST DES CONFIRMÉS
-
-
-    // POUR MY EVENT : RECHERCHE DES PARTICIPANTS INVITATIONS PUBLICS : ///////////////////////////////////////////////////////////////////////////////////////
 
     fun fetchGuestConfirmDetailEventPublic(key:String?, onResult: (List<User>) -> Unit){
 
@@ -297,6 +295,7 @@ class FirebaseSourceEvent {
                 }
             })
     }
+
 
     // on recupere la liste des inscrits dans son event public :
     @SuppressLint("SuspiciousIndentation")
@@ -363,120 +362,62 @@ class FirebaseSourceEvent {
         return null // Retourne null si la valeur n'est pas trouvée
     }
 
-//    fun acceptRequestEvent(user: User?) {
-//        val idEvent: String = getKeyFromValue(user!!.pendingRequestEventPublic!!, mainUid!!).toString()
-//
-//        val queryEvent = firebaseEvent.child(idEvent)
-//        val queryUser = firebaseData.child("user").child(user.uid.toString())
-//        val queryAcceptHostEventUser = firebaseData.child("user").child(mainUid)
-//
-//        // Utiliser une transaction pour supprimer les nœuds "pendingRequestEventPublic"
-//        firebaseEvent.runTransaction(object : Transaction.Handler {
-//            override fun doTransaction(currentData: MutableData): Transaction.Result {
-//                val eventNode = currentData.child(idEvent)
-//                val pendingRequestNode = eventNode.child("pendingRequestEventPublic").child(user.uid!!)
-//                pendingRequestNode.value = null // Supprimer le nœud "pendingRequestEventPublic" dans firebaseEvent
-//                return Transaction.success(currentData)
-//            }
-//
-//            override fun onComplete(
-//                error: DatabaseError?,
-//                committed: Boolean,
-//                currentData: DataSnapshot?
-//            ) {
-//                if (error != null) {
-//                    // La suppression a échoué
-//                    // Gérer les erreurs
-//                } else if (committed) {
-//                    // La suppression est réussie dans firebaseEvent
-//
-//                    // Utiliser une autre transaction pour supprimer le nœud "pendingRequestEventPublic" dans firebaseData
-//                    firebaseData.runTransaction(object : Transaction.Handler {
-//                        override fun doTransaction(currentData: MutableData): Transaction.Result {
-//                            val userNode = currentData.child("user").child(user.uid.toString())
-//                            val pendingRequestNode = userNode.child("pendingRequestEventPublic").child(idEvent)
-//                            pendingRequestNode.value = null // Supprimer le nœud "pendingRequestEventPublic" dans firebaseData
-//                            return Transaction.success(currentData)
-//                        }
-//
-//                        override fun onComplete(
-//                            error: DatabaseError?,
-//                            committed: Boolean,
-//                            currentData: DataSnapshot?
-//                        ) {
-//                            if (error != null) {
-//                                // La suppression a échoué
-//                                // Gérer les erreurs
-//                            } else if (committed) {
-//                                // La suppression est réussie dans firebaseData
-//
-//                                // Effectuer les autres opérations
-//                                queryEvent.child("listInscrits").child(user.uid.toString()).setValue(user.email)
-//                                queryUser.child("eventConfirmationList").child(idEvent).setValue(mainUid)
-//                                queryAcceptHostEventUser.child("ConfirmHostRequestEventPublic").child(idEvent).setValue(user!!.email)
-//                            }
-//                        }
-//                    })
-//                }
-//            }
-//        })
-//    }
+    fun acceptRequestEvent(user: User?) {
+        // Utilisation d'une coroutine pour effectuer des opérations asynchrones
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                // Effectuer la requête de suppression de la demande de l'utilisateur dans l'événement
+                withContext(Dispatchers.IO) {
+                    firebaseEvent.child(getKeyFromValue(user!!.pendingRequestEventPublic!!, mainUid!!).toString())
+                        .child("pendingRequestEventPublic")
+                        .child(user.uid.toString())
+                        .removeValue()
+                }
 
+                // Effectuer la requête d'ajout de l'utilisateur dans la liste des inscrits de l'événement
+                withContext(Dispatchers.IO) {
+                    firebaseEvent.child(getKeyFromValue(user!!.pendingRequestEventPublic!!, mainUid!!).toString())
+                        .child("listInscrits")
+                        .child(user!!.uid.toString())
+                        .setValue(user.email.toString())
+                }
 
-    fun acceptRequestEvent(user: User?){
+                // Effectuer la requête de suppression de la demande d'événement chez l'utilisateur
+                withContext(Dispatchers.IO) {
+                    firebaseData.child("user")
+                        .child(user!!.uid.toString())
+                        .child("pendingRequestEventPublic")
+                        .child(getKeyFromValue(user.pendingRequestEventPublic!!, mainUid!!).toString())
+                        .removeValue()
+                }
 
+                // Effectuer la requête d'ajout de l'événement dans la liste de confirmation de l'utilisateur
+                withContext(Dispatchers.IO) {
+                    firebaseData.child("user")
+                        .child(user!!.uid.toString())
+                        .child("eventConfirmationList")
+                        .child(getKeyFromValue(user!!.pendingRequestEventPublic!!, mainUid!!).toString())
+                        .setValue(mainUid)
+                }
 
-        val idEvent: String = getKeyFromValue(user!!.pendingRequestEventPublic!!, mainUid!!).toString()
-        val queryEvent = firebaseEvent.child(idEvent)
+                // Effectuer la requête d'ajout de l'utilisateur dans la liste de confirmation de l'hôte
+                withContext(Dispatchers.IO) {
+                    firebaseData.child("user")
+                        .child(mainUid!!)
+                        .child("confirmHostRequestEventPublic")
+                        .child(getKeyFromValue(user!!.pendingRequestEventPublic!!, mainUid!!).toString())
+                        .setValue(user.email)
+                }
 
-//        val queryAcceptHostEventUser = firebaseData.child("user").child(mainUid)
-        queryEvent.addListenerForSingleValueEvent(object :ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                queryEvent.child("pendingRequestEventPublic").child(user.uid.toString()).removeValue()
-                queryEvent.child("listInscrits").child(user.uid.toString()).setValue(user.email.toString())
+                // Mettre à jour le RecyclerView ici ou émettre un événement pour notifier les changements
+
+            } catch (e: Exception) {
+                // Gérer les erreurs
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-
-        })
-
-        acceptEventForUser(user, idEvent)
-
-    }
-
-    fun acceptEventForUser(user:User?,idEvent: String){
-
-        val queryUser = firebaseData.child("user").child(user!!.uid.toString())
-        queryUser.addListenerForSingleValueEvent(object :ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                TODO("Not yet implemented")
-                queryUser.child("pendingRequestEventPublic").child(idEvent).removeValue()
-                queryUser.child("eventConfirmationList").child(idEvent).setValue(mainUid)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-
-        })
-
-//        queryUser.get().addOnSuccessListener {
-//
-//
-//        }
-//
-//
-//        queryUser.get().addOnSuccessListener { queryUser.child("eventConfirmationList").child(idEvent).setValue(mainUid) }
-
-        firebaseData.child("user").child(mainUid!!).get().addOnSuccessListener {
-            firebaseData.child("user").child(mainUid!!).child("ConfirmHostRequestEventPublic").child(idEvent).setValue(user!!.email)
         }
-
     }
+
+
 
     // REFUSER
     fun declineRequestEvent(user: User?){

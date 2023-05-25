@@ -1,5 +1,6 @@
 package com.antonin.friendswave.data.firebase
 
+
 import android.content.Context
 import android.net.Uri
 import com.antonin.friendswave.data.model.Event
@@ -12,6 +13,9 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import io.reactivex.Completable
 import java.util.Calendar
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: C'est le lien entre la base de donnée Firebase et notre application, elle recupere ou enregistre des données. Elle est dédiée en majorité aux users.
 
 class FirebaseSourceUser {
 
@@ -26,10 +30,11 @@ class FirebaseSourceUser {
 
     fun currentUser() = firebaseAuth.currentUser
 
-    open fun logout() {
+    fun logout() {
+
         firebaseAuth.signOut()
-        FirebaseDatabase.getInstance().purgeOutstandingWrites()
         FirebaseDatabase.getInstance().goOffline()
+
     }
 
     fun login(email: String, password: String) = Completable.create { emitter ->
@@ -221,7 +226,7 @@ class FirebaseSourceUser {
                 if (!requete)onResult(false)
             }
             override fun onCancelled(error: DatabaseError) {
-                val error = error
+
             }
 
         })
@@ -401,21 +406,21 @@ class FirebaseSourceUser {
         }
     }
 
-//    fun fetchDiscussionGroup(receiverUid: String, onResult:(List<Messages>) -> Unit){
-//        firebaseData.child("chatsGroup").child(receiverUid).child("message").get().addOnCompleteListener { task ->
-//            if (task.isSuccessful) {
-//                val messageList = ArrayList<Messages>()
-//                for (snap in task.result.children) {
-//                    if (snap.exists()) {
-//                        val message = snap.getValue(Messages::class.java)
-//                        messageList.add(message!!)
-//
-//                    }
-//                }
-//                onResult(messageList)
-//            }
-//        }
-//    }
+    fun fetchDiscussionGroup(receiverUid: String, onResult:(List<Messages>) -> Unit){
+        firebaseData.child("chats").child(receiverUid).child("message").get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val messageList = ArrayList<Messages>()
+                for (snap in task.result.children) {
+                    if (snap.exists()) {
+                        val message = snap.getValue(Messages::class.java)
+                        messageList.add(message!!)
+
+                    }
+                }
+                onResult(messageList)
+            }
+        }
+    }
 
     fun fetchParticipant(event: Event?, onResult:(List<User>) -> Unit){
 
@@ -493,31 +498,19 @@ class FirebaseSourceUser {
         })
     }
 
-    fun registerPhoto(photo: Uri, context: Context) : String{
+    fun registerPhoto(photo: Uri, context: Context, path : String) : String{
+
         val currentTime = Calendar.getInstance().timeInMillis
-        val storageRef = storage.reference.child("photos/").child(mainUid!!).child(currentTime.toString())
-        val path = storageRef.toString().substringAfter("photos/")
+        val storageRef = storage.reference.child(path).child(mainUid!!).child(currentTime.toString())
+        val path_img = storageRef.toString().substringAfter(path)
         val inputStream = context.contentResolver.openInputStream(photo)
         val uploadTask = storageRef.putStream(inputStream!!)
         uploadTask.addOnSuccessListener {
         }.addOnFailureListener {
             // Une erreur s'est produite lors du chargement de la photo
         }
-        return path
+        return path_img
     }
 
-
-    fun registerPhotoCover(photo: Uri, context: Context) : String{
-        val currentTime = Calendar.getInstance().timeInMillis
-        val storageRef = storage.reference.child("photosCover/").child(mainUid!!).child(currentTime.toString())
-        val path = storageRef.toString().substringAfter("photosCover/")
-        val inputStream = context.contentResolver.openInputStream(photo)
-        val uploadTask = storageRef.putStream(inputStream!!)
-        uploadTask.addOnSuccessListener {
-        }.addOnFailureListener {
-            // Une erreur s'est produite lors du chargement de la photo
-        }
-        return path
-    }
 
 }

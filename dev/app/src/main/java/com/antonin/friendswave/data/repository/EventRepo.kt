@@ -8,6 +8,10 @@ import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: C'est le pont entre FirebaseSource et le View Model, ici c'est les events
+
 class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
 
     fun currentUser() = firebaseEvent.currentUser()
@@ -22,15 +26,6 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
         return eventListConfirm
     }
 
-    ///////////////////////////////////Strategie
-    fun fetchStrategieEvent():LiveData<List<Event>>{
-        val eventList = MutableLiveData<List<Event>>()
-        firebaseEvent.fetchStrategieEvent { event ->
-            eventList.postValue(event)
-        }
-        return eventList
-
-    }
     fun fetchSpecificEvents(hostId: String, eventKey: String):LiveData<Event>{
         val event = MutableLiveData<Event>()
         firebaseEvent.fetchSpecificEvents(hostId, eventKey) { user ->
@@ -62,6 +57,12 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
 
         firebaseEvent.acceptRequestEvent(user)
     }
+
+//    fun acceptRequestEventSideUser(user: User?)
+//    {
+//
+//        firebaseEvent.acceptRequestEventSideUser(user)
+//    }
 
     fun declineRequestEvent(user:User?){
 
@@ -126,15 +127,7 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
 
     fun sendAnInvitationEvent(email: String, event: Event) = firebaseEvent.sendAnInvitationEvent(event,email)
 
-    fun fetchParticipantAttente(key:  String): LiveData<List<User>>{
-        val usertList = MutableLiveData<List<User>>()
 
-//        firebaseEvent.fetchParticipantAttente(key) { user ->
-//            usertList.postValue(user as List<User>?)
-//        }
-
-        return usertList
-    }
 
     fun fetchEventsPublicUser() : LiveData<List<Event>> {
 

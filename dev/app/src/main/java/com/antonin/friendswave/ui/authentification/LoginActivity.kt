@@ -1,14 +1,14 @@
 package com.antonin.friendswave.ui.authentification
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.antonin.friendswave.R
 import com.antonin.friendswave.databinding.ActivityLoginBinding
-import com.antonin.friendswave.outils.startHomeActivity
+import com.antonin.friendswave.outils.goToActivityWithoutArgs
 import com.antonin.friendswave.outils.toastShow
+import com.antonin.friendswave.ui.home.ManageHomeActivity
 import com.antonin.friendswave.ui.viewModel.AuthViewModel
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -16,6 +16,9 @@ import org.kodein.di.generic.instance
 import com.antonin.friendswave.ui.viewModel.AuthViewModelFactory
 
 //Documentation https://openclassrooms.com/fr/courses/4872916-creez-un-backend-scalable-et-performant-sur-firebase/4982767-creez-votre-premier-systeme-dauthentification  // tuto pour faire le login signup
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Activité qui permet de se logguer
 
 class LoginActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
 
@@ -41,7 +44,8 @@ class LoginActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
 
 
     override fun onSuccess() {
-        startHomeActivity()
+        goToActivityWithoutArgs(this,ManageHomeActivity::class.java)
+//        startHomeActivity()
     }
 
     override fun onFailure(message: String) {
@@ -52,7 +56,8 @@ class LoginActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
     override fun onStart() {
         super.onStart()
         viewModel.user?.let {
-            startHomeActivity()
+            goToActivityWithoutArgs(this,ManageHomeActivity::class.java)
+//            startHomeActivity()
         }
     }
 }

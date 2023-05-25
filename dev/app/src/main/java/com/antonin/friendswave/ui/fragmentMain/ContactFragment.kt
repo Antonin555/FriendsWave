@@ -35,6 +35,10 @@ import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
 
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Fragment permettant de voir ses contacts
+
 class ContactFragment : Fragment(), KodeinAware {
 
     override val kodein : Kodein by kodein()

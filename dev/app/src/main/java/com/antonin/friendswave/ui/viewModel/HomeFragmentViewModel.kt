@@ -12,17 +12,18 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.outils.goToActivityWithArgs
 import com.antonin.friendswave.outils.goToActivityWithoutArgs
-import com.antonin.friendswave.outils.startLoginActivity
 import com.antonin.friendswave.outils.toastShow
 import com.antonin.friendswave.strategy.*
 import com.antonin.friendswave.ui.contact.AddContactActivity
 import com.antonin.friendswave.ui.home.ManageHomeActivity
 import com.antonin.friendswave.ui.home.SignalementActivity
+
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
@@ -30,6 +31,9 @@ import java.util.*
 
 //Concernant l'architecture MVVM https://www.simplifiedcoding.net/firebase-mvvm-example/
 //Concernant le LiveData https://developer.android.com/topic/libraries/architecture/livedata?hl=fr
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Classe permettant de gerer le ViewModel pour la page d'accueil
 
 class HomeFragmentViewModel(private val repository: UserRepo, private val repoEvent:EventRepo):ViewModel() {
 
@@ -41,6 +45,7 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
     var date: String? = ""
     var etudes : String? = ""
     var langue :String? = ""
+
 
     //DEUX USER LIVE***
     private val _user = MutableLiveData<User>()
@@ -124,10 +129,11 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
 
     fun logout(view: View){
         repository.logout()
-        //Alex pour gerer le cycle de vie des activity
         val activity = view.context as Activity
+
+        activity.finishAffinity()
         activity.finish()
-        view.context.startLoginActivity() // va chercher les fonctions utiles pour les Intent
+
     }
 
     fun fetchUsersFriends() {
@@ -170,12 +176,10 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
         return estMajeur
     }
 
-    fun registerPhoto(photo: Uri, context: Context){
-        user_live.value?.img = repository.registerPhoto(photo, context)
+    fun registerPhoto(photo: Uri, context: Context, path : String){
+        user_live.value?.img = repository.registerPhoto(photo, context, path)
 
     }
-    fun registerPhotoCover(photo: Uri, context: Context){
-        user_live.value?.imgCover = repository.registerPhotoCover(photo, context)
-    }
+
 
 }

@@ -9,6 +9,10 @@ import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.model.User
 
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: C'est le pont entre FirebaseSource et le View Model, ici c'est les utilisateurs
+
 class UserRepo( private val firebaseUser: FirebaseSourceUser) {
 
     fun currentUser() = firebaseUser.currentUser()
@@ -160,7 +164,7 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
     fun fetchDiscussionGroup(receiverUid: String):LiveData<List<Messages>>{
         val messageList = MutableLiveData<List<Messages>>()
 
-        firebaseUser.fetchDiscussion(receiverUid) { message ->
+        firebaseUser.fetchDiscussionGroup(receiverUid) { message ->
             messageList.postValue(message)
         }
         return messageList
@@ -214,24 +218,14 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
     }
 
 
-    fun fetchUserByMail(mail:String):LiveData<User> {
-        val userLiveData = MutableLiveData<User>()
 
-        firebaseUser.fetchUserByMail(mail) { user ->
-            userLiveData.postValue(user)
-        }
-        return userLiveData
-    }
 
-    fun registerPhoto(photo: Uri, context: Context): String{
+    fun registerPhoto(photo: Uri, context: Context, path : String): String{
 
-        return firebaseUser.registerPhoto(photo, context)
+        return firebaseUser.registerPhoto(photo, context, path)
     }
 
 
-    fun registerPhotoCover(photo: Uri, context: Context): String{
 
-        return firebaseUser.registerPhotoCover(photo, context)
-    }
 
 }

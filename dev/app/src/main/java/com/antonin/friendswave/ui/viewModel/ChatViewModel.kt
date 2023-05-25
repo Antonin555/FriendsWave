@@ -14,6 +14,9 @@ import com.antonin.friendswave.data.repository.UserRepo
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Classe permettant de gerer le ViewModel pour le Chat
+
 class ChatViewModel(private val repository: UserRepo, private val repoEvent: EventRepo): ViewModel()  {
     var messageEnvoye: String? = ""
     var receiverUid: String? = ""

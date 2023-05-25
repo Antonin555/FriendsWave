@@ -7,11 +7,14 @@ import androidx.lifecycle.ViewModel
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.outils.AlertDialog
-import com.antonin.friendswave.outils.emailPattern
+import com.antonin.friendswave.outils.emailRegex
 import com.antonin.friendswave.outils.sendEmail
 import com.antonin.friendswave.outils.toastShow
 import com.antonin.friendswave.ui.authentification.InterfaceAuth
 import com.antonin.friendswave.ui.contact.AddContactActivity
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Classe permettant de gerer le ViewModel pour les contacts
 
 class ContactViewModel(private val repository: UserRepo) : ViewModel() {
 
@@ -71,7 +74,7 @@ class ContactViewModel(private val repository: UserRepo) : ViewModel() {
             interfaceAuth?.onFailure("Please enter a mail")
             return
         }
-        if (!emailPattern.matches(email!!)){
+        if (!emailRegex.matches(email!!)){
             interfaceAuth?.onFailure("Please enter a valid mail")
             return
         }

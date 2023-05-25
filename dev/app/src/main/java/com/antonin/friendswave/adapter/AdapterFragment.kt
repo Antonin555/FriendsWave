@@ -1,3 +1,7 @@
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: un adapter pour afficher les fragments
+
+
 package com.antonin.friendswave.adapter
 
 import androidx.fragment.app.Fragment

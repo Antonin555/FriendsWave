@@ -1,5 +1,6 @@
 package com.antonin.friendswave.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.antonin.friendswave.R
 import com.antonin.friendswave.data.model.Messages
 import com.google.firebase.auth.FirebaseAuth
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Autre type d'adapter pour un recycler View pour avoir le format d'un Chat. Il permet de différencier les messages envoyés de ceux reçus.
 
 //Documentation https://www.youtube.com/watch?v=8Pv96bvBJL4
 
@@ -33,6 +37,7 @@ class MessageAdapter(val context: Context, val messageList: List<Messages>):
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun addItems(items: List<Messages>) {
         this.items.clear()
         this.items.addAll(items)
@@ -44,14 +49,12 @@ class MessageAdapter(val context: Context, val messageList: List<Messages>):
         val currentMessage = messageList[position]
         if(holder.javaClass == SentViewHoler::class.java){
 
-            val viewHoler = holder as SentViewHoler
+            holder as SentViewHoler
             holder.sentMessage.text = currentMessage.message
-//            holder.sentUid.text = currentMessage.senderName + ":"
             if(currentMessage.timeStamp != null) holder.sendTimeStamp.text = currentMessage.timeStamp
         }
         else{
-            //do stuff for receive view holder
-            val viewHoler = holder as ReceiveViewHoler
+            holder as ReceiveViewHoler
             holder.receiveMessage.text = currentMessage.message
             holder.reveiveUid.text = currentMessage.senderName + ":"
             if(currentMessage.timeStamp != null) holder.reveiveTimeStamp.text = currentMessage.timeStamp
@@ -80,7 +83,6 @@ class MessageAdapter(val context: Context, val messageList: List<Messages>):
     class SentViewHoler(itemView: View): RecyclerView.ViewHolder(itemView)
     {
         val sentMessage = itemView.findViewById<TextView>(R.id.txt_sent_message)
-//        val sentUid = itemView.findViewById<TextView>(R.id.txt_sent_uid)
         val sendTimeStamp = itemView.findViewById<TextView>(R.id.txt_send_timestamp)
     }
 

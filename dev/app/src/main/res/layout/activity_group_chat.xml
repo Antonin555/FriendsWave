@@ -138,7 +138,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.4"
-                        app:srcCompat="@android:drawable/ic_menu_more"
+                        app:srcCompat="@drawable/arrow"
                         tools:ignore="ContentDescription" />
                 </LinearLayout>
 

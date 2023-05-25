@@ -40,6 +40,10 @@ import org.kodein.di.generic.instance
 import java.io.IOException
 
 
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Activité qui permet d"éditer son event"
+
 class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein: Kodein by kodein()
@@ -91,6 +95,7 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
 
         binding.recyclerEventInscrit.layoutManager = layoutManager
         binding.recyclerEventInscrit.adapter = adapter1
+
         binding.recyclerPendingParticipants.layoutManager = layoutManager1
         binding.recyclerPendingParticipants.adapter = adapter2
 
@@ -98,21 +103,17 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
             adapter1.addItems(guestList)
         }
 
-
         viewModel.confirm_guestListPublic.observe(this) { confirm_guestList ->
             adapter1.addItems(confirm_guestList)
         }
-
         viewModel.pending_guest_list.observe(this){ pending_guest_list ->
             adapter2.addItems(pending_guest_list)
         }
 
         binding.btnDeleteMyEvent.setOnClickListener {
-
             val alert = AlertDialog()
             alert.showDialog(this, "title", "message", "OK",
                 "Cancel", positiveButtonClickListener, negativeButtonClickListener)
-
         }
 
         binding.editCity.setOnClickListener {
@@ -125,7 +126,6 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         viewModel.guestListPublic.observe(this){ attente_guestList ->
             adapter2.addItems(attente_guestList)
         }
-
 
         binding.linearInvitation.setOnClickListener(ecouteur)
         binding.linearDescription.setOnClickListener(ecouteur)
@@ -197,11 +197,8 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
                         } catch (e: IOException) {
                             e.printStackTrace()
                         }
-
                         address = addressList!![0]
-
                     }
-
                     viewModel.longitude = address.longitude.toString()
                     viewModel.lattitude = address.latitude.toString()
                 }
@@ -216,13 +213,11 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
                     // The user canceled the operation.
                 }
             }
-
             return
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
 }
-
     private class Ecouteur : View.OnClickListener {
 
         private var bool_linear_attente: Boolean = true

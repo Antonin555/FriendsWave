@@ -15,9 +15,11 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
 
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Classe permettant de gerer l'application et les dépendances pour les View Model
+// https://medium.com/@RedthLight/kodein-viewmodels-4023b7bf4920
+
 class FriendWaveApp : Application(), KodeinAware {
-
-
 
     override val kodein = Kodein.lazy {
         import(androidXModule(this@FriendWaveApp))

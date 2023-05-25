@@ -2,6 +2,9 @@ package com.antonin.friendswave.data.dataStructure
 
 import com.antonin.friendswave.data.model.Event
 
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: C'est une liste chainée qui permet de stocker des events, chaque event est un noeud et permet de faire des recherches plus rapides.
+
 //Documentation https://www.kodeco.com/books/data-structures-algorithms-in-kotlin/v1.0/chapters/3-linked-list et avec l'aide de ChatGPT
 
 class LinkedList {

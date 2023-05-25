@@ -38,6 +38,10 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Activité qui permet d'éditer son profil'
+
 class EditProfilActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein : Kodein by kodein()
@@ -91,7 +95,7 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
             getResultCover.launch(img)
         }
 
-        binding.searchCity.setOnClickListener {
+        binding.txtLieuEdit.setOnClickListener {
             val fields = listOf(Place.Field.ID, Place.Field.ADDRESS)
 //            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).setTypeFilter(
 //                TypeFilter.CITIES).build(this)
@@ -107,7 +111,8 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
 
                 val img_uri = it?.data?.data!!
                 binding.imgProfil.setImageURI(img_uri)
-                viewModel.registerPhoto(img_uri, this)
+                val path = "photos/"
+                viewModel.registerPhoto(img_uri, this, path)
 
             }
         }
@@ -120,7 +125,8 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
 
                 val img_uri = it?.data?.data!!
                 binding.imageCover.setImageURI(img_uri)
-                viewModel.registerPhotoCover(img_uri, this)
+                val path = "photosCover/"
+                viewModel.registerPhoto(img_uri, this, path)
 
             }
         }

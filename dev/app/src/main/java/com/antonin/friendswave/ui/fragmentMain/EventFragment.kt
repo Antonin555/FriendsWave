@@ -38,6 +38,9 @@ import com.antonin.friendswave.outils.goToActivityWithArgs
 import com.antonin.friendswave.outils.toastShow
 
 
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Fragment permettant de voir les events publics
+
 class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListener {
 
 

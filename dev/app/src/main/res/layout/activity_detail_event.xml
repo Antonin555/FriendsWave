@@ -129,7 +129,7 @@
                     <ImageView
                         android:id="@+id/detail_adress"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="35dp"
                         android:layout_marginBottom="10dp"
                         android:src="@drawable/gnb"
                         tools:ignore="ContentDescription" />
@@ -139,7 +139,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="10dp"
-                        android:layout_weight="0.5"
+                        android:layout_weight="0.6"
                         android:fontFamily="@font/roboto_mono"
                         android:gravity="center"
                         android:text="@{event.eventData.adress.toString()}" />
@@ -245,14 +245,19 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:fontFamily="@font/roboto_mono"
                         android:text="@{event.eventData.nbreInscrit.toString()}" />
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/"/>
                     <TextView
                         android:id="@+id/textView311"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="center"
                         android:fontFamily="@font/roboto_mono"
                         android:text="@{ event.eventData.nbrePersonnes.toString()}" />
                 </LinearLayout>

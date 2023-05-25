@@ -9,6 +9,9 @@ import java.time.format.DateTimeFormatter
 
 //Documentation sur Jaccard https://www.geeksforgeeks.org/find-the-jaccard-index-and-jaccard-distance-between-the-two-given-sets/
 
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Les classes permettant d'implémenter les interfaces de strategies et definir chaque stratégie pour les utilisateurs
 class SearchHobbyFriend: InterfaceSearchFriend {
 
     override fun sortedUser(mainUser: User?, totalUser: List<User>?): List<User> {

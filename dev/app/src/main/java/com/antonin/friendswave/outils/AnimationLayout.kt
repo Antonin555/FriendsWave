@@ -5,6 +5,9 @@ import android.content.res.Resources
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: C'est une classe permettant d'afficher des animations
 class AnimationLayout {
 
     //https://stackoverflow.com/questions/4946295/android-expand-collapse-animation

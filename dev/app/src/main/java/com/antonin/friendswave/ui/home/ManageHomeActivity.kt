@@ -1,5 +1,6 @@
 package com.antonin.friendswave.ui.home
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,9 +14,14 @@ import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
+import com.antonin.friendswave.ui.event.ManagerFragmentEvent
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Activité qui permet de gérer les fragments contenus dans FragmentMain
 
 class ManageHomeActivity : AppCompatActivity() {
 
@@ -72,12 +78,6 @@ class ManageHomeActivity : AppCompatActivity() {
             return true
         }
 
-        if(item.itemId == R.id.edit_preferences){
-
-            val intent = Intent(this@ManageHomeActivity, PreferencesActivity::class.java)
-            startActivity(intent)
-
-        }
 
         if(item.itemId == R.id.edit_profil) {
             val intent = Intent(this@ManageHomeActivity, EditProfilActivity::class.java)
@@ -87,10 +87,10 @@ class ManageHomeActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        finish()
-    }
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        finish()
+//    }
 
 
 }

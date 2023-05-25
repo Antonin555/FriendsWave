@@ -344,7 +344,6 @@
                         android:layout_height="0dp"
                         android:layout_weight="2"
                         android:orientation="horizontal"
-
                         >
 
                         <ImageView
@@ -352,7 +351,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:src="@drawable/batiment"
+                            android:src="@drawable/gnb"
                             tools:ignore="ContentDescription,NestedWeights" />
 
                         <EditText
@@ -366,15 +365,7 @@
                             android:importantForAutofill="no"
                             tools:ignore="TextFields" />
 
-                        <ImageView
-                            android:id="@+id/searchCity"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="end"
-                            android:layout_marginStart="20dp"
-                            android:layout_weight="1"
-                            android:src="@drawable/map"
-                            tools:ignore="ContentDescription" />
+
 
 
                     </LinearLayout>

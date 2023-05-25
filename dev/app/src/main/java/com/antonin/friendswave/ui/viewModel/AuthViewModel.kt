@@ -19,6 +19,11 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
+
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Classe permettant de gerer le ViewModel pour l'authentification et le login
+
 class AuthViewModel(private val repository: UserRepo) : ViewModel() {
 
     var name: String? = null

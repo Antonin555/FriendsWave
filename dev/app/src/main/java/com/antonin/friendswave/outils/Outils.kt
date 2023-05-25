@@ -10,25 +10,16 @@ import javax.mail.*
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMessage
 
-fun Context.startHomeActivity() =
-    Intent(this, ManageHomeActivity::class.java).also {
-        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(it)
 
-    }
-
-fun Context.startLoginActivity() =
-    Intent(this, LoginActivity::class.java).also {
-        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(it)
-    }
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: C'est un fichier permettant de regrouper les actions ou les verifications communes à toutes les activités. Exemple passer d'une activité à une autre.
 
 fun goToActivityWithoutArgs(context: Context, activityClass: Class<*>) {
     val intent = Intent(context, activityClass)
     context.startActivity(intent)
 }
 
-
+// Méthode trouvé avec chatGPT :
 fun goToActivityWithArgs(context: Context?, activityClass: Class<*>, vararg arguments: Pair<String, Any>) {
     val intent = Intent(context, activityClass)
     for (argument in arguments) {
@@ -46,7 +37,6 @@ fun goToActivityWithArgs(context: Context?, activityClass: Class<*>, vararg argu
 fun toastShow(context: Context?,message:String) = Toast.makeText(context,message,Toast.LENGTH_SHORT).show()
 
 val patternDate = Regex("\\d{2}/\\d{2}/\\d{4}")
-val emailPattern = Regex("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
 val emailRegex = Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
 
 //Documentation https://gist.github.com/BlackthornYugen/1b3e1ff4426294e7054c9a7190e8f2cd

@@ -10,8 +10,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.databinding.DataBindingUtil
 import com.antonin.friendswave.R
 import com.antonin.friendswave.databinding.ActivitySingupBinding
-import com.antonin.friendswave.outils.startHomeActivity
+import com.antonin.friendswave.outils.goToActivityWithoutArgs
 import com.antonin.friendswave.outils.toastShow
+import com.antonin.friendswave.ui.home.ManageHomeActivity
 import com.antonin.friendswave.ui.viewModel.AuthViewModel
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
@@ -25,6 +26,9 @@ import org.kodein.di.generic.instance
 import com.antonin.friendswave.ui.viewModel.AuthViewModelFactory
 
 //Documentation https://openclassrooms.com/fr/courses/4872916-creez-un-backend-scalable-et-performant-sur-firebase/4982767-creez-votre-premier-systeme-dauthentification  // tuto pour faire le login signup
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Activité qui permet de s'inscire'
 
 class SignupActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
 
@@ -70,7 +74,8 @@ class SignupActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
 
 
     override fun onSuccess() {
-        startHomeActivity()
+        goToActivityWithoutArgs(this, ManageHomeActivity::class.java)
+//        startHomeActivity()
     }
 
     override fun onFailure(message: String) {

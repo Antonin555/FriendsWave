@@ -20,6 +20,10 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Activité qui permet de voir le profil des autres utilisateurs
+
 class ProfilActivity : AppCompatActivity(), KodeinAware {
 
     private val storeMedia = FirebaseStore()

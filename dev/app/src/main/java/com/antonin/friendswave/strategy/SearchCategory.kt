@@ -8,6 +8,12 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Les classes permettant d'implémenter les interfaces de strategies et definir chaque stratégie pour les events
+
+
+
+// Refactoring guru pour le modele de la strategie :
 class SearchCategory: InterfaceSearch {
 
     override fun sortedEvent(str: String, event: List<Event>?, user: User): List<Event> {

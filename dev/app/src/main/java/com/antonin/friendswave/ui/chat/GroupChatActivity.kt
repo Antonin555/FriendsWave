@@ -28,6 +28,10 @@ import org.kodein.di.generic.instance
 import com.antonin.friendswave.ui.viewModel.ChatVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Activité qui permet de chatter en groupe
+
 class GroupChatActivity : AppCompatActivity(),KodeinAware {
 
     override val kodein : Kodein by kodein()

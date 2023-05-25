@@ -1,6 +1,7 @@
 package com.antonin.friendswave.ui.event
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.antonin.friendswave.R
@@ -10,8 +11,13 @@ import com.antonin.friendswave.data.firebase.FirebaseSourceUser
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
+import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Activité qui de gérer les fragments pour Mes Events
 
 class ManagerFragmentEvent : AppCompatActivity() {
 
@@ -22,6 +28,7 @@ class ManagerFragmentEvent : AppCompatActivity() {
     private lateinit var adapterFragment : AdapterFragmentEvent
 
     private lateinit var viewModel : EventFragmentViewModel
+    private lateinit var viewModel2 : HomeFragmentViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +36,9 @@ class ManagerFragmentEvent : AppCompatActivity() {
         setContentView(R.layout.activity_manager_fragment_event)
 
         viewModel = EventFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
+            repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
+
+        viewModel2 = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
             repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
 
         val tabLayoutArray = arrayOf(
@@ -57,6 +67,13 @@ class ManagerFragmentEvent : AppCompatActivity() {
             tab.text = tabLayoutArray[position]
         }.attach()
 
+    }
+
+
+
+        override fun onDestroy() {
+        super.onDestroy()
+        finish()
     }
 
 

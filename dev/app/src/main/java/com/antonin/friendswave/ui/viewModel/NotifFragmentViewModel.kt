@@ -8,6 +8,13 @@ import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Classe permettant de gerer le ViewModel pour lees notifs de la page d'accueil
 
 class NotifFragmentViewModel (private val repository: UserRepo, private val repoEvent:EventRepo): ViewModel() {
 
@@ -19,6 +26,8 @@ class NotifFragmentViewModel (private val repository: UserRepo, private val repo
 
     private val _requestListEvent = MutableLiveData<List<User>>()
     val requestListEvent : LiveData<List<User>> = _requestListEvent
+
+
 
     fun fetchUsersRequest(){
         repository.fetchUsersRequest().observeForever{ notifUser ->
@@ -44,10 +53,21 @@ class NotifFragmentViewModel (private val repository: UserRepo, private val repo
         repoEvent.acceptInvitationEvent(event)
     }
 
+
+
+
     fun acceptRequestEvent(user:User?){
 
         repoEvent.acceptRequestEvent(user)
+        fetchDemandeInscriptionEventPublic()
     }
+
+
+//    fun acceptRequestEventSideUser(user:User?){
+//
+//        repoEvent.acceptRequestEventSideUser(user)
+//
+//    }
 
     fun declineRequestEvent(user:User?){
 
@@ -64,6 +84,7 @@ class NotifFragmentViewModel (private val repository: UserRepo, private val repo
 
         repoEvent.fetchDemandeInscriptionEventPublic().observeForever { user->
             _requestListEvent.value = user
+
 
         }
     }

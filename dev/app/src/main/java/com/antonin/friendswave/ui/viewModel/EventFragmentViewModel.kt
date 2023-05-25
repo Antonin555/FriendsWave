@@ -24,6 +24,9 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Classe permettant de gerer le ViewModel pour les events'
+
 class EventFragmentViewModel(private val repository:UserRepo,private val repoEvent:EventRepo):ViewModel() {
 
     var name: String? = ""
@@ -45,12 +48,9 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     var duree: Int? = 0
     var timeStamp : Double = 0.0
     var email: String? = ""
-//    var pseudo:String? = ""
     var keyEvent: String? = ""
-    val isSubscribe: MutableLiveData<Boolean> = MutableLiveData()
     val isPublicChecked: MutableLiveData<Boolean> = MutableLiveData()
     var strCategory = MutableLiveData<String>()
-//    var nbreInscrits : Int? = 0
 
     val user by lazy {
         repository.currentUser()
@@ -298,7 +298,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
 
 
-        if (email.isNullOrEmpty() || !email!!.matches(emailPattern)) {
+        if (email.isNullOrEmpty() || !email!!.matches(emailRegex)) {
             toastShow(view.context,"Courriel vide ou non valide")
             return
         }

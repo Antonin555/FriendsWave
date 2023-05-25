@@ -21,6 +21,10 @@ import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 
+
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Activité qui permet de voir un event en détail
 class DetailEventActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein by kodein()

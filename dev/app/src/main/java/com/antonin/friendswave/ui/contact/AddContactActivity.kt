@@ -23,6 +23,10 @@ import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
 
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Activité qui permet d'ajouter un contact'
+
 class AddContactActivity : AppCompatActivity(), KodeinAware, InterfaceAuth {
 
     override val kodein : Kodein by kodein()

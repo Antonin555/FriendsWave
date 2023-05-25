@@ -1,7 +1,6 @@
 package com.antonin.friendswave.ui.fragmentMain
 
 import android.Manifest
-import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -24,7 +23,6 @@ import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.FragmentHomeBinding
-import com.antonin.friendswave.outils.AlertDialog
 import com.antonin.friendswave.outils.goToActivityWithArgs
 import com.antonin.friendswave.outils.goToActivityWithoutArgs
 import com.antonin.friendswave.ui.event.DetailEventActivity
@@ -46,6 +44,10 @@ import org.kodein.di.android.x.kodein
 //Documentation https://www.kodeco.com/27690200-advanced-data-binding-in-android-observables
 //On s'en ai inspiré mais nous l'avons vraiment adapté a nos besoins
 
+
+//Auteur: Alexandre Caron et Antonin Lenoir
+//Contexte: Fragment permettant de voir ses notifs et quelques infos perso
+
 class HomeFragment : Fragment(), KodeinAware {
 
     private var storeMedia = FirebaseStore()
@@ -62,17 +64,12 @@ class HomeFragment : Fragment(), KodeinAware {
     private lateinit var adapter2 : ListGeneriqueAdapter<User>
     private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 1
     private var firebaseMessaging = FirebaseMessaging.getInstance()
-    val alertDialog = AlertDialog()
-    private var isObservingRequestList = true
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewModel = ViewModelProviders.of(this,factory)[HomeFragmentViewModel::class.java]
         viewModel2 = ViewModelProviders.of(this,factory2)[NotifFragmentViewModel::class.java]
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -87,10 +84,8 @@ class HomeFragment : Fragment(), KodeinAware {
         binding.viewmodel = viewModel2
         binding.lifecycleOwner = this
         firebaseMessaging = FirebaseMessaging.getInstance()
-
-
-
         return binding.root
+
     }
 
     override fun onResume() {
@@ -100,7 +95,6 @@ class HomeFragment : Fragment(), KodeinAware {
         viewModel2.fetchEventsInvitation()
         viewModel2.fetchDemandeInscriptionEventPublic()
         viewModel.fetchUserData()
-
 
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_requete)
         adapter2 = ListGeneriqueAdapter(R.layout.recycler_demande_inscription)
@@ -131,10 +125,12 @@ class HomeFragment : Fragment(), KodeinAware {
 
         viewModel2.requestListEvent.observe(this){ userList ->
             println(userList)
-            if(isObservingRequestList) {
 
                 adapter2.addItems(userList)
-            }
+//                adapter2.notifyDataSetChanged()
+
+//            adapter2.submitList(userList)
+
 
             if(adapter2.itemCount != 0)  binding.searchEvents.visibility = View.GONE
             else binding.searchEvents.visibility = View.VISIBLE
@@ -186,19 +182,16 @@ class HomeFragment : Fragment(), KodeinAware {
 
                 val user = viewModel2.requestListEvent.value?.get(position)!!
 
-                isObservingRequestList = false
-                if (view.id == R.id.non_event){
+//                isObservingRequestList = false
 
+                if (view.id == R.id.non_event){
                     viewModel2.declineRequestEvent(user)
-//                    goToActivityWithoutArgs(requireContext(), ManageHomeActivity::class.java)
+                    goToActivityWithoutArgs(requireContext(), ManageHomeActivity::class.java)
                 }
                 else if(view.id == R.id.oui_event) {
 
                     viewModel2.acceptRequestEvent(user)
-                        isObservingRequestList = true
-
-//                    goToActivityWithoutArgs(requireContext(), ManageHomeActivity::class.java)
-
+                   goToActivityWithoutArgs(requireContext(), ManageHomeActivity::class.java)
 
                 }
                 else if(view.id == R.id.profil_potential_guest) {
@@ -207,6 +200,7 @@ class HomeFragment : Fragment(), KodeinAware {
                 }
 
             }
+
 
         })
 
@@ -218,11 +212,11 @@ class HomeFragment : Fragment(), KodeinAware {
                 if (view.id == R.id.img_accept_invitation){
                     event!!.nbreInscrit?.plus(1)
                     viewModel2.acceptInvitationEvent(event)
-//                    goToActivityWithoutArgs(requireContext(), ManageHomeActivity::class.java)
+                    goToActivityWithoutArgs(requireContext(), ManageHomeActivity::class.java)
                 }
                 else if (view.id == R.id.img_refuse_invitation){
                     viewModel2.refuseInvitationEvent(event)
-//                    goToActivityWithoutArgs(requireContext(), ManageHomeActivity::class.java)
+                    goToActivityWithoutArgs(requireContext(), ManageHomeActivity::class.java)
                 }
                 else
                     goToActivityWithArgs(view.context,DetailEventActivity::class.java,
