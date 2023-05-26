@@ -2,19 +2,15 @@ package com.antonin.friendswave.ui.viewModel
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.net.Uri
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-
 import com.antonin.friendswave.data.model.User
-import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.outils.goToActivityWithArgs
 import com.antonin.friendswave.outils.goToActivityWithoutArgs
@@ -23,7 +19,6 @@ import com.antonin.friendswave.strategy.*
 import com.antonin.friendswave.ui.contact.AddContactActivity
 import com.antonin.friendswave.ui.home.ManageHomeActivity
 import com.antonin.friendswave.ui.home.SignalementActivity
-
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
@@ -35,7 +30,7 @@ import java.util.*
 //Concernant l'architecture MVVM https://www.simplifiedcoding.net/firebase-mvvm-example/
 //Concernant le LiveData https://developer.android.com/topic/libraries/architecture/livedata?hl=fr
 
-class HomeFragmentViewModel(private val repository: UserRepo, private val repoEvent:EventRepo):ViewModel() {
+class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
 
     var profilUid: String? = ""
     var messSignalement: String? = ""
@@ -184,10 +179,6 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
         if(path == "photosCover/") {
             user_live.value?.imgCover = repository.registerPhoto(photo, context,path)
         }
-
-
     }
-
-
 
 }
