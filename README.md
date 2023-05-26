@@ -33,12 +33,12 @@ Kotlin
 1. Clonez ce dépôt sur votre machine locale.
 
 ```bash
-git clone https://github.com/votre-utilisateur/dolphin.git
+git clone https://github.com/Antonin555/FriendsWave.git
 ```
 
 2. Ouvrez Android Studio.
 
-3. Sélectionnez "File" -> "Open" et naviguez vers le répertoire `dolphin` cloné précédemment.
+3. Sélectionnez "File" -> "Open" et naviguez vers le répertoire `FriendWave` cloné précédemment.
 
 4. Attendez que Gradle synchronise et télécharge les dépendances nécessaires.
 
