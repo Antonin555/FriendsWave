@@ -144,8 +144,8 @@ exports.sendNotificationToSpecificUser = functions.database.ref(`/event/{eventId
                         // Send the notification
                         const payload = {
                             data: {
-                                title: 'yo boy',
-                                body: 'Notification list inscrit',
+                                title: 'Un nouveau participant pour votre event',
+                                body: 'Regardez votre evenement',
                                 click_action: 'HOME_FRAGMENT'
                             }
                         };
@@ -212,26 +212,7 @@ exports.scheduledFunction = functions.pubsub
 
 
 
-  //exports.sendNotifAdminEventPublic = functions.database.ref(`/event/eventPublic/{eventId}/pendingRequestEventPublic`)
-  //  .onUpdate((snapshot, context) => {
-  //      const child_mail = [];
 
-  //      const admin_event = database().ref(`/event/eventPublic/${context.params.eventId}/admin`);
-
-  //      const userRef = admin.database().ref('/user').orderByChild('uid').equalTo(admin_event);
-  //      const recipientDeviceToken = userRef.child('token').val();
-//
-                // Send the notification
-   //             const payload = {
-  //                  notification: {
-   //                     title: 'Votre event a du succés',
-    //                    body: 'Une nouvelle personne souhaite rejoindre votre event'
-   //                 }
-   //             };
-   //             const response = admin.messaging().sendToTopic(topic, message);
-   //             promises.push(admin.messaging().sendToDevice(recipientDeviceToken, payload));
-   // });
-        
 
 // envoyer vers rating activity lorsque l'event est terminé :
     exports.checkExpiredEvents = functions.pubsub.schedule('every 24 hours').onRun((context) => {
@@ -266,8 +247,8 @@ exports.scheduledFunction = functions.pubsub
                     // Send the notification
                     const payload = {
                       data: {
-                        title: 'Event Expired',
-                        body: 'The event you registered for has expired',
+                        title: 'Vous avez participé un evenement, notez le',
+                        body: 'Cliquez pour noter votre dernier event',
                         click_action: 'HOME_FRAGMENT'
                       }
                     };
