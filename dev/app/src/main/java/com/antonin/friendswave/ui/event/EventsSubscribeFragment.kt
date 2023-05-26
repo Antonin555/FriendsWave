@@ -32,7 +32,6 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: Activité qui permet de voir les events pour lesquels on est inscrit
 
@@ -68,6 +67,7 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
 
         val layoutManager = LinearLayoutManager(context)
         val layoutManager1 = LinearLayoutManager(context)
+
         binding.recyclerMyEventInscrits.layoutManager = layoutManager
         binding.recyclerMyEventInscrits.adapter = adapter1
 

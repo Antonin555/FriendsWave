@@ -1,6 +1,5 @@
 package com.antonin.friendswave.outils
 
-
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -8,9 +7,9 @@ import android.content.DialogInterface
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: C'est une classe permettant d'afficher des alert Dialog
 
+// classe inspiré par https://www.javatpoint.com/android-alert-dialog-example et la doc android
+
 class AlertDialog: DialogInterface {
-
-
 
     fun showDialog(context: Context, title: String, msg: String,
                    positiveBtnText: String, negativeBtnText: String?,
@@ -28,7 +27,6 @@ class AlertDialog: DialogInterface {
         return alert
     }
 
-
     override fun cancel() {
         return
     }
@@ -36,7 +34,5 @@ class AlertDialog: DialogInterface {
     override fun dismiss() {
         return
     }
-
-
 
 }

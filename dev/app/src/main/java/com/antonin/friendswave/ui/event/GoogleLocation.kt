@@ -17,7 +17,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: Classe permettant d'avoir la localisation de l'utilisateur ou des evenements
 

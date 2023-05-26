@@ -15,10 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.antonin.friendswave.R
 import com.antonin.friendswave.data.firebase.FirebaseStore
 
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: permet d'avoir un view Holder pour les recycler View de facon générique. Le but est de pouvoir afficher différentes données dans plusieurs recycler View.
-
 
 // nous avons pris ce code pour s'inspirer https://proandroiddev.com/generic-listadapter-with-kotlin-write-once-use-more-recyclerview-viewpager-6314cbdced36
 // nous l'avons adapter à notre code
@@ -37,8 +35,6 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
             this.items.addAll(items)
             notifyDataSetChanged()
         }
-
-
 
         fun setOnListItemViewClickListener(onListItemViewClickListener: OnListItemViewClickListener?){
             this.onListItemViewClickListener = onListItemViewClickListener
@@ -89,7 +85,6 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
             fun bind(itemViewModel: T) {
                 binding.setVariable(BR.item, itemViewModel)
                 binding.executePendingBindings()
-
             }
         }
 

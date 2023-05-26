@@ -1,8 +1,8 @@
 package com.antonin.friendswave.data.firebase
 
-
 import android.content.Context
 import android.net.Uri
+import com.antonin.friendswave.FriendWaveApp
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.model.User
@@ -16,6 +16,10 @@ import java.util.Calendar
 
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: C'est le lien entre la base de donnée Firebase et notre application, elle recupere ou enregistre des données. Elle est dédiée en majorité aux users.
+
+//Documentation sur les requetes https://firebase.google.com/docs/reference/kotlin/com/google/firebase/database/Query
+// Beaucoup de temps passé à essayer de faire marcher l'asynchrone avec nos requêtes, il a fallut beaucoup d'essai et de remaniements grâce en partie à des forums
+// mais aussi chatGpt pour des cas plus complexes ou sans solution.
 
 class FirebaseSourceUser {
 
@@ -31,7 +35,6 @@ class FirebaseSourceUser {
     fun currentUser() = firebaseAuth.currentUser
 
     fun logout() {
-
         firebaseAuth.signOut()
         FirebaseDatabase.getInstance().goOffline()
 
@@ -68,7 +71,6 @@ class FirebaseSourceUser {
         userRef.child(uid).setValue(User(name,email,uid, familyName, nickname, city, date))
     }
 
-    //pour aller chercher les data du current user
     fun getUserData(onResult: (User?) -> Unit) {
         userRef.child(FirebaseAuth.getInstance().currentUser!!.uid)
             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -76,15 +78,12 @@ class FirebaseSourceUser {
                     val user = dataSnapshot.getValue(User::class.java)
                     onResult(user)
                 }
-
                 override fun onCancelled(databaseError: DatabaseError) {
-
                     onResult(null)
                 }
             })
     }
 
-    //pour afficher les interets
     fun fetchInteret(onResult: (List<String>?) -> Unit) {
         firebaseData.child("interet")
             .addValueEventListener(object : ValueEventListener {
@@ -134,7 +133,6 @@ class FirebaseSourceUser {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-
                     onResult(null)
                 }
             })
@@ -265,28 +263,20 @@ class FirebaseSourceUser {
                                 currentUser2?.friendList?.remove(mainUid)
                                 currentUser2?.friends = currentUser2?.friends?.minus(1)
                                 userRef.child(uid).setValue(currentUser2)
-
                             }
-
                         }
-
                         override fun onCancelled(error: DatabaseError) {
-
                         }
                     })
                 }
-
             }
-
             override fun onCancelled(error: DatabaseError) {
-
             }
         })
     }
 
     fun sendSignalement(uid: String?, messSignalement: String?){
         val messageObject = Messages(messSignalement, mainUid)
-
         firebaseData.child("signalement").child(uid!!).child("message").push()
             .setValue(messageObject)
     }
@@ -479,24 +469,6 @@ class FirebaseSourceUser {
         })
     }
 
-     // POUR AVOIR LE PROFILS DES USERS INSCRITS DANS LES EVENTS PUBLICS :
-    fun fetchUserByMail(mail:String, onResult: (User?) -> Unit){
-         userRef.addValueEventListener(object:ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for(snap in snapshot.children){
-                    val user = snapshot.getValue(User::class.java)
-                    if(user!!.email == mail){
-                        onResult(user)
-                    }
-
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
-                onResult(null)
-            }
-
-        })
-    }
 
     fun registerPhoto(photo: Uri, context: Context, path : String) : String{
 

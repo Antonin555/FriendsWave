@@ -24,12 +24,10 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: Activité qui permet de voir ses events
 
 class MyEventFragment : Fragment(), KodeinAware {
-
 
     override val kodein : Kodein by kodein()
     private val factory : EventFragmentVMFactory by instance()
@@ -47,7 +45,7 @@ class MyEventFragment : Fragment(), KodeinAware {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        // Inflate the layout for this fragment
+
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_my_event, container, false)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
@@ -59,6 +57,7 @@ class MyEventFragment : Fragment(), KodeinAware {
 
         val layoutManager = LinearLayoutManager(context)
         val layoutManager1 = LinearLayoutManager(context)
+
         binding.recyclerMyEventPrivate.layoutManager = layoutManager
         binding.recyclerMyEventPrivate.adapter = adapter1
 
@@ -93,12 +92,6 @@ class MyEventFragment : Fragment(), KodeinAware {
                 goToActivityWithArgs(view.context,MyEventManageActivity::class.java,"clef" to eventKey, "pos" to position )
 
             }
-
         })
-
     }
-
-
-
-
 }

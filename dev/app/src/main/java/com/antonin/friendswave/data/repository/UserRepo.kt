@@ -109,16 +109,7 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
         return interetLiveData
     }
 
-
-
-
-
-
-
-
     fun editProfil(user_live: User?) = firebaseUser.editProfil(user_live)
-
-
 
     fun getUserProfilData(profilUid: String?): LiveData<User> {
         val userLiveData = MutableLiveData<User>()
@@ -140,8 +131,6 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
         return amiLiveData
     }
 
-
-
     fun acceptRequest1(userNotif: User?){
         firebaseUser.acceptRequestUpdateUser(userNotif)
     }
@@ -149,8 +138,6 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
     fun refuseRequest(userNotif: User?){
         firebaseUser.refuseRequest(userNotif)
     }
-
-
 
     fun fetchDiscussion(receiverUid: String):LiveData<List<Messages>>{
         val messageList = MutableLiveData<List<Messages>>()
@@ -217,15 +204,9 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
         return userList
     }
 
-
-
-
     fun registerPhoto(photo: Uri, context: Context, path : String): String{
 
         return firebaseUser.registerPhoto(photo, context, path)
     }
-
-
-
 
 }

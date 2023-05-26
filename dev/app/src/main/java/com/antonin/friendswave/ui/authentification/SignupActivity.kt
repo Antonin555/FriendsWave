@@ -25,10 +25,10 @@ import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import com.antonin.friendswave.ui.viewModel.AuthViewModelFactory
 
-//Documentation https://openclassrooms.com/fr/courses/4872916-creez-un-backend-scalable-et-performant-sur-firebase/4982767-creez-votre-premier-systeme-dauthentification  // tuto pour faire le login signup
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: Activité qui permet de s'inscire'
+
+//Documentation https://openclassrooms.com/fr/courses/4872916-creez-un-backend-scalable-et-performant-sur-firebase/4982767-creez-votre-premier-systeme-dauthentification  // tuto pour faire le login signup
 
 class SignupActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
 
@@ -49,7 +49,7 @@ class SignupActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
             Places.initialize(applicationContext, apiKey)
         }
 
-//        progressbar = findViewById(R.id.progressbar)
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_singup)
         viewModel = ViewModelProviders.of(this, factory)[AuthViewModel::class.java]
         binding.viewmodel = viewModel
@@ -58,9 +58,6 @@ class SignupActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
         viewModel.fetchEmail()
         viewModel.fetchAllPseudo()
 
-//        viewModel.pseudoList_live.observe(this, Observer {
-//            viewModel.pseudoList = it
-//        })
 
         binding.searchCity.setOnClickListener {
             val fields = listOf(Place.Field.ID, Place.Field.NAME)
@@ -75,7 +72,7 @@ class SignupActivity : AppCompatActivity(), InterfaceAuth, KodeinAware {
 
     override fun onSuccess() {
         goToActivityWithoutArgs(this, ManageHomeActivity::class.java)
-//        startHomeActivity()
+
     }
 
     override fun onFailure(message: String) {

@@ -26,15 +26,13 @@ class MessageAdapter(val context: Context, val messageList: List<Messages>):
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         if(viewType == 1){
-            //inflate receive
             val view: View = LayoutInflater.from(context).inflate(R.layout.receive, parent, false)
             return ReceiveViewHoler(view)
+
         }else{
-            //inflate sent
             val view: View = LayoutInflater.from(context).inflate(R.layout.sent, parent, false)
             return SentViewHoler(view)
         }
-
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -48,7 +46,6 @@ class MessageAdapter(val context: Context, val messageList: List<Messages>):
 
         val currentMessage = messageList[position]
         if(holder.javaClass == SentViewHoler::class.java){
-
             holder as SentViewHoler
             holder.sentMessage.text = currentMessage.message
             if(currentMessage.timeStamp != null) holder.sendTimeStamp.text = currentMessage.timeStamp
@@ -60,7 +57,6 @@ class MessageAdapter(val context: Context, val messageList: List<Messages>):
             if(currentMessage.timeStamp != null) holder.reveiveTimeStamp.text = currentMessage.timeStamp
 
         }
-
     }
 
     override fun getItemViewType(position: Int): Int {

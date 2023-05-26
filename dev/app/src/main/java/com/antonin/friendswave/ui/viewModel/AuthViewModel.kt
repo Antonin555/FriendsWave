@@ -19,10 +19,10 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
-
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: Classe permettant de gerer le ViewModel pour l'authentification et le login
+
+// Methode du Completable : http://reactivex.io/RxJava/3.x/javadoc/io/reactivex/rxjava3/core/Completable.html
 
 class AuthViewModel(private val repository: UserRepo) : ViewModel() {
 
@@ -38,10 +38,8 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
     var city: String? = null
     var password: String? = null
     val toastMessage = MutableLiveData<String>()
-
-    private val disposables = CompositeDisposable()
     var interfaceAuth : InterfaceAuth? = null
-
+    private val disposables = CompositeDisposable()
     private val _pseudoList = MutableLiveData<List<String>>()
     var pseudoList_live: LiveData<List<String>> = _pseudoList
 
@@ -53,7 +51,6 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
     }
 
     fun goToSignup(view: View){
-
         // .also permet d'eviter de déclarer une variable :
         Intent(view.context, SignupActivity::class.java).also {
             view.context.startActivity(it)
@@ -61,17 +58,13 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
     }
 
     fun goToLogin(view: View){
-
         // .also permet d'eviter de déclarer une variable :
         Intent(view.context, LoginActivity::class.java).also {
             view.context.startActivity(it)
         }
-
-
     }
 
     fun login() {
-
         //validating email and password
         if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
             toastMessage.value = "Mauvais courriel ou mot de passe"
@@ -81,19 +74,15 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
 
         repository.login(email!!, password!!)
 
-        //calling login from repository to perform the actual authentication
         val disposable = repository.login(email!!, password!!).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
             interfaceAuth?.onSuccess()
         }, {
-            //sending a failure callback
             interfaceAuth?.onFailure("Mauvais courriel ou mot de passe")
-
         })
-
         disposables.add(disposable)
     }
 
-    //Doing same thing with signup
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun signup() {
         if (email.isNullOrEmpty() || password.isNullOrEmpty() || name.isNullOrEmpty() || familyName.isNullOrEmpty() || nickname.isNullOrEmpty() || city.isNullOrEmpty()) {
@@ -106,7 +95,7 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
                 return
             }
         }
-        //regarde si 18+ et si la date est supperieur a la date actuelle
+
         if(!verificatioAge(date!!)){
             interfaceAuth?.onFailure("Désolé pour utiliser cette application vous devez être majeur")
             return
@@ -121,12 +110,12 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
                 return
             }
         }
-//        interfaceAuth?.onStarted()
+
         val disposable = repository.register(name!!,email!!, password!!, familyName!!, nickname!!, city!!, date!!)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-//                dataReference.child().setValue(User(name,email,uid))
+
                 interfaceAuth?.onSuccess()
             }, {
                 interfaceAuth?.onFailure(it.message!!)
@@ -169,11 +158,8 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
         return age >= 18 && dateNaissance.isBefore(LocalDate.now())
     }
 
-
     fun isEmailValid(email: String): Boolean {
         return emailRegex.matches(email)
     }
-
-
 }
 

@@ -21,10 +21,9 @@ import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 
-
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: Activité qui permet de voir un event en détail
+
 class DetailEventActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein by kodein()
@@ -83,63 +82,37 @@ class DetailEventActivity : AppCompatActivity(), KodeinAware {
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
             override fun onClick(view: View, position: Int) {
-
                 val idGuest = viewModel.confirm_guestListPublic.value!!.get(position).uid
                 goToActivityWithArgs(view.context,ProfilActivity::class.java,"uid" to idGuest.toString())
-//                val intent = Intent(view.context, ProfilActivity::class.java )
-//                intent.putExtra("uid", idGuest)
-//                startActivity(intent)
-
             }
-
         })
 
         binding.linearDescriptionEvent.setOnClickListener{
-
             if(bool_linear_description_event){
-
                 animeLayout.expand(binding.linearDescriptionEvent, 1000,500)
                 bool_linear_description_event = false
 
             } else {
-
                 animeLayout.collapse(binding.linearDescriptionEvent, 1000, 40)
                 bool_linear_description_event = true
             }
-
         }
 
         binding.linearInscritEvent.setOnClickListener{
-
-
             if(bool_linear_inscrit) {
-
                 animeLayout.expand(binding.linearInscritEvent, 1000, 500)
                 bool_linear_inscrit = false
-            }else {
 
+            }else {
                 animeLayout.collapse(binding.linearInscritEvent, 1000, 40)
                 bool_linear_inscrit = true
             }
         }
 
         binding.profilHost.setOnClickListener{
-
             goToActivityWithArgs(this, ProfilActivity::class.java,"uid" to adminEvent.toString())
-//            val intent = Intent(this, ProfilActivity::class.java )
-//            intent.putExtra("uid", adminEvent)
-//            startActivity(intent)
         }
-
-
-
     }
-
-
-
-
-
-
 }
 
 

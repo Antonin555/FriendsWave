@@ -19,7 +19,6 @@ import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: Activité qui permet de gérer les fragments contenus dans FragmentMain
 
@@ -86,11 +85,5 @@ class ManageHomeActivity : AppCompatActivity() {
 
         return true
     }
-
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        finish()
-//    }
-
 
 }

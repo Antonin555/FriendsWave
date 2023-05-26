@@ -1,6 +1,5 @@
 package com.antonin.friendswave.ui.home
 
-
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
@@ -37,10 +36,11 @@ import java.io.IOException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: Activité qui permet d'éditer son profil'
+// les méthodes pour la position sont les memes que pour AddEventActivity
+// pour le gridview et la classe MyGridViewAdapter: https://www.geeksforgeeks.org/gridview-using-baseadapter-in-android-with-example/
+//spinner : https://developer.android.com/develop/ui/views/components/spinner
 
 class EditProfilActivity : AppCompatActivity(), KodeinAware {
 
@@ -65,8 +65,6 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
         viewModel = ViewModelProviders.of(this, factory)[HomeFragmentViewModel::class.java]
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
-
-//        val apiKey = getString(R.string.api_key_google_map)
 
         if (!Places.isInitialized()) {
             Places.initialize(applicationContext, getString(R.string.api_key_google_map))
@@ -97,8 +95,6 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
 
         binding.txtLieuEdit.setOnClickListener {
             val fields = listOf(Place.Field.ID, Place.Field.ADDRESS)
-//            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).setTypeFilter(
-//                TypeFilter.CITIES).build(this)
             val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this)
             startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
         }
@@ -108,12 +104,10 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 
             if (it.resultCode == Activity.RESULT_OK) {
-
                 val img_uri = it?.data?.data!!
                 binding.imgProfil.setImageURI(img_uri)
                 val path = "photos/"
                 viewModel.registerPhoto(img_uri, this, path)
-
             }
         }
 
@@ -122,12 +116,10 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 
             if (it.resultCode == Activity.RESULT_OK) {
-
                 val img_uri = it?.data?.data!!
                 binding.imageCover.setImageURI(img_uri)
                 val path = "photosCover/"
                 viewModel.registerPhoto(img_uri, this, path)
-
             }
         }
 
@@ -171,7 +163,7 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
                     data?.let {
                         val place = Autocomplete.getPlaceFromIntent(data)
                         binding.editLieu.setText(place.address!!.toString().split(",")[0])
-                        //Ajout Alex pour avoir longitude latitude du user
+
                         val geoCoder = Geocoder(this)
                         try {
                             addressList = geoCoder.getFromLocationName(place.address!!.toString(), 1)
@@ -179,7 +171,6 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
                         } catch (e: IOException) {
                             e.printStackTrace()
                         }
-
                         address = addressList!![0]
                     }
 

@@ -9,25 +9,25 @@ import java.time.format.DateTimeFormatter
 
 //Documentation sur Jaccard https://www.geeksforgeeks.org/find-the-jaccard-index-and-jaccard-distance-between-the-two-given-sets/
 
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: Les classes permettant d'implémenter les interfaces de strategies et definir chaque stratégie pour les utilisateurs
-class SearchHobbyFriend: InterfaceSearchFriend {
 
+class SearchHobbyFriend: InterfaceSearchFriend {
+    // methode aidé par https://www.geeksforgeeks.org/find-the-jaccard-index-and-jaccard-distance-between-the-two-given-sets/
     override fun sortedUser(mainUser: User?, totalUser: List<User>?): List<User> {
 
         var similarUsers : ArrayList<User> = ArrayList()
 
         for (user in totalUser!!){
             if (user != mainUser){
-                //p-e verifier si il y a des interets dans la liste des utilisateurs
+
                 val interests1 = mainUser?.interet!!.toSet()
                 val interests2 = user.interet!!.toSet()
 
                 val intersection = interests1.intersect(interests2)
                 val union = interests1.union(interests2)
                 val similarity = intersection.size.toDouble() / union.size.toDouble()
-                //plus grand que 0.5 car l'algo renvoie un chiffre entre 0 et 1 ou 1 signifie une similarite complete
+
                 if(similarity >= 0.5){
                     similarUsers.add(user)
                 }
@@ -51,7 +51,6 @@ class SearchCityFriend: InterfaceSearchFriend {
                 }
             }
         }
-
         return similarUsers
     }
 
@@ -66,10 +65,6 @@ class SearchAgeFriend: InterfaceSearchFriend {
 
         val mainUserAge = mainUser?.date?.let { calculateAge(it) }
 
-        //lambda pour aller chercher les utilisateur qui ont plus ou moin 5 ans
-//        similarUsers = totalUser!!.filter { user ->
-//            user.age in (mainUser!!.age - 5)..(mainUser.age + 5)
-//        } as ArrayList<User>
         similarUsers.addAll(totalUser!!
             .filter { user ->
                 val userAge = user.date?.let { calculateAge(it) }

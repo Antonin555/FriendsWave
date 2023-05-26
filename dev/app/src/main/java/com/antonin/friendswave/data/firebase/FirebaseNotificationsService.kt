@@ -17,10 +17,10 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.firebase.R
 
-//Documentation https://firebase.google.com/docs/cloud-messaging/android/client?hl=fr
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: Le lien avec la base de données Firebase pour envoyer des notifications sur un ou des téléphones.
+
+//Documentation https://firebase.google.com/docs/cloud-messaging/android/client?hl=fr
 
 class FirebaseNotificationsService : FirebaseMessagingService() {
 

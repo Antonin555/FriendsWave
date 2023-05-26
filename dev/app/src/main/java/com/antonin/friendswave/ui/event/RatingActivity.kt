@@ -15,9 +15,10 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: Activité qui permet de noter un event
+
+// Activité qu'on a pas pu finir, on aurait aimé la relier a une trigger function pour qu'a chaque fin d'event les utilisateurs puissent recevoir une notif et qu'il soit rediriger vers cette page
 
 class RatingActivity : AppCompatActivity(), KodeinAware {
 
@@ -36,12 +37,5 @@ class RatingActivity : AppCompatActivity(), KodeinAware {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
     }
-
-    override fun onResume() {
-        super.onResume()
-
-        //fetch les participants de l'event qui ne sont pas nous
-    }
-
 
 }

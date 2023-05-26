@@ -58,17 +58,10 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
         firebaseEvent.acceptRequestEvent(user)
     }
 
-//    fun acceptRequestEventSideUser(user: User?)
-//    {
-//
-//        firebaseEvent.acceptRequestEventSideUser(user)
-//    }
-
     fun declineRequestEvent(user:User?){
 
         firebaseEvent.declineRequestEvent(user)
     }
-
 
     fun fetchEvents() : LiveData<List<Event>> {
 
@@ -81,8 +74,6 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
         return eventList
     }
 
-
-
     fun addEventUser(name: String, isPublic: Boolean, nbrePersonnes:Int, uid: String, category:String, date: String, horaire:String, adress:String,
         description:String, longitude: String, latitude: String, photo:Uri, context: Context, host:String, timeStamp : Double, duree:Int) =
         firebaseEvent.addEventUser(name,isPublic,nbrePersonnes, uid, category, date, horaire, adress,description, longitude,latitude, photo, context, host, timeStamp, duree)
@@ -90,33 +81,25 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
     fun editEvent(event:Event?)= firebaseEvent.editEvent(event)
 
     fun deleteEvent(event:Event?) = firebaseEvent.deleteEvent(event)
-//    fun fetchEventsPublic5() = firebase.fetchEventsPublic2()
     fun deleteConfirmation(event: Event?) = firebaseEvent.deleteConfirmation(event)
     fun deleteConfirmationGuest(event: Event?, idGuest: String) = firebaseEvent.deleteConfirmationGuest(event, idGuest)
 
     fun deletePendingEvent(event: Event?) = firebaseEvent.deletePendingEvent(event)
 
-
     fun fetchEventsPrivateUser() : LiveData<List<Event>> {
-
         val eventList = MutableLiveData<List<Event>>()
 
         firebaseEvent.fetchEventsPrivateUser { event ->
             eventList.postValue(event)
         }
-
         return eventList
     }
 
     fun sendRequestToParticipatePublicEvent(idEvent:String, adminEvent:String){
-
         firebaseEvent.sendRequestToParticipatePublicEvent(idEvent,adminEvent)
-
-
     }
 
     fun getAllEventsPendingRequestPublic() : LiveData<List<Event>>{
-
         val pendingEvents = MutableLiveData<List<Event>>()
 
         firebaseEvent.getAllEventsPendingRequestPublic { event ->
@@ -127,34 +110,26 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
 
     fun sendAnInvitationEvent(email: String, event: Event) = firebaseEvent.sendAnInvitationEvent(event,email)
 
-
-
     fun fetchEventsPublicUser() : LiveData<List<Event>> {
-
         val eventList = MutableLiveData<List<Event>>()
 
         firebaseEvent.fetchEventsPublicUser { event ->
             eventList.postValue(event)
         }
-
         return eventList
-
     }
 
 
     fun fetchGuestConfirmDetailEventPublic(key: String?): LiveData<List<User>> {
-
         val confirm_guest_list = MutableLiveData<List<User>>()
 
         firebaseEvent.fetchGuestConfirmDetailEventPublic(key) { user ->
             confirm_guest_list.postValue(user)
         }
-
         return confirm_guest_list
     }
 
     fun fetchGuestDetailEventPublic(key:String?): LiveData<List<User>> {
-
         val guestList = MutableLiveData<List<User>>()
 
         firebaseEvent.fetchGuestDetailEventPublic(key) { user ->
@@ -164,7 +139,6 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
     }
 
     fun fetchPendingGuestEventPublic(key:String?): LiveData<List<User>> {
-
         val guestList = MutableLiveData<List<User>>()
 
         firebaseEvent.fetchPendingGuestEventPublic(key) { user ->
@@ -173,27 +147,21 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
         return guestList
     }
     fun fetchDetailEventPublicUser(key:String?): LiveData<Event> {
-
         val eventPublicUser = MutableLiveData<Event>()
 
         firebaseEvent.fetchDetailEventPublicUser(key) { event ->
             eventPublicUser.postValue(event)
         }
-
         return eventPublicUser
-
-
     }
 
     fun fetchDemandeInscriptionEventPublic(): LiveData<List<User>> {
-
         val requestEvent = MutableLiveData<List<User>>()
         firebaseEvent.fetchDemandeInscriptionEventPublic { user ->
             requestEvent.postValue(user)
 
         }
         return requestEvent
-
     }
 
     fun getEventData(key: String) : LiveData<Event> {
@@ -202,14 +170,6 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
         firebaseEvent.getEventData(key) { event ->
             eventLiveData.postValue(event)
         }
-
         return eventLiveData
     }
-
-//    fun registerPhotoEvent(photo: Uri, context: Context): String{
-//
-//        return firebaseEvent.registerPhotoEvent(photo, context)
-//    }
-
-
 }

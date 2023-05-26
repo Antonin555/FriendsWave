@@ -26,10 +26,11 @@ import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import java.io.IOException
 
-
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: Activité qui permet d'ajouter un event
+
+//les méthodes pour la position proviennent de https://www.javatpoint.com/android-google-map-search-location-using-geocodr mais aussi de la documentation de l'API googleMap
+
 class AddEventActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein by kodein()
@@ -38,12 +39,11 @@ class AddEventActivity : AppCompatActivity(), KodeinAware {
     private lateinit var viewModel: EventFragmentViewModel
     private var addressList: List<Address>? = null
     private lateinit var address : Address
-
     private val AUTOCOMPLETE_REQUEST_CODE = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_event)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_event)
         viewModel = ViewModelProviders.of(this, factory).get(EventFragmentViewModel::class.java)
         binding.viewmodel = viewModel
@@ -94,9 +94,7 @@ class AddEventActivity : AppCompatActivity(), KodeinAware {
                         } catch (e: IOException) {
                             e.printStackTrace()
                         }
-
                         address = addressList!![0]
-
                     }
 
                     viewModel.longitude = address.longitude.toString()
@@ -110,10 +108,9 @@ class AddEventActivity : AppCompatActivity(), KodeinAware {
                     }
                 }
                 Activity.RESULT_CANCELED -> {
-                    // The user canceled the operation.
+
                 }
             }
-
             return
         }
         super.onActivityResult(requestCode, resultCode, data)

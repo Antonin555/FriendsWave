@@ -39,8 +39,6 @@ import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import java.io.IOException
 
-
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: Activité qui permet d"éditer son event"
 
@@ -64,7 +62,6 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         setContentView(R.layout.activity_my_event_manage)
 
         val key_event = intent.getStringExtra("clef")
-//        val pos = intent.getIntExtra("position", 0)
         val binding: ActivityMyEventManageBinding = DataBindingUtil.setContentView(this, R.layout.activity_my_event_manage)
         viewModel = ViewModelProviders.of(this, factory)[EventFragmentViewModel::class.java]
         binding.viewmodel = viewModel
@@ -81,7 +78,6 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
             viewModel.fetchGuestDetailEventPublic(key_event) // chercher les invitations dans l'event Public
             viewModel.fetchGuestConfirmDetailEventPublic(key_event)
             viewModel.fetchPendingGuestEventPublic(key_event)
-
             viewModel.keyEvent = key_event
 
             viewModel.eventDataPublic.observe(this) {
@@ -144,7 +140,7 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
                         "Attention, vous êtes sur le point de supprimer ce participant a cet event",
                         " je confirme",
                         "Annuler", positiveDeleteGuest(event,idGuest!!), negativeButtonClickListener)
-//                    viewModel.deleteConfirmationGuest()
+
                 }else {
 
                     val intent = Intent(view.context, ProfilActivity::class.java)

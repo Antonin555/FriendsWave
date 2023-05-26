@@ -1,6 +1,5 @@
 package com.antonin.friendswave.ui.contact
 
-
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -21,8 +20,6 @@ import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
-
-
 
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: Activité qui permet d'ajouter un contact'
@@ -104,9 +101,6 @@ class AddContactActivity : AppCompatActivity(), KodeinAware, InterfaceAuth {
                     val userChoisi = tempList.get(position)
 
                     goToActivityWithArgs(view.context,ProfilActivity::class.java,"uid" to userChoisi.uid.toString())
-//                    val intent = Intent(view.context, ProfilActivity::class.java)
-//                    intent.putExtra("uid", userChoisi.uid)
-//                    startActivity(intent)
                 }
             })
         }
@@ -115,7 +109,6 @@ class AddContactActivity : AppCompatActivity(), KodeinAware, InterfaceAuth {
     override fun onSuccess() {
         TODO("Not yet implemented")
     }
-
 
     override fun onFailure(message: String) {
         toastShow(this,message)

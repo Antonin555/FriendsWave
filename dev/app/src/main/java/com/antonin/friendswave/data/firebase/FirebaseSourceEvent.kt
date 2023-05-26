@@ -19,11 +19,12 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-//Documentation sur les requetes https://firebase.google.com/docs/reference/kotlin/com/google/firebase/database/Query
-
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: C'est le lien entre la base de donnée Firebase et notre application, elle recupere ou enregistre des données. Elle est dédiée en majorité aux évents.
+
+//Documentation sur les requetes https://firebase.google.com/docs/reference/kotlin/com/google/firebase/database/Query
+// Beaucoup de temps passé à essayer de faire marcher l'asynchrone avec nos requêtes, il a fallut beaucoup d'essai et de remaniements grâce en partie à des forums
+// mais aussi chatGpt pour des cas plus complexes ou sans solution.
 
 class FirebaseSourceEvent {
 
@@ -37,40 +38,29 @@ class FirebaseSourceEvent {
     val firebaseUserCurrent = firebaseData.child("user").child(mainUid!!)
 
     fun editEvent(event: Event?){
-
         firebaseEvent.child(event!!.key.toString()).setValue(event)
     }
 
     fun deleteEvent(event: Event?){
-
         firebaseEvent.child(event!!.key.toString()).removeValue()
         firebaseData.child("chatsGroup").child(mainUid!!+ event.key.toString()).removeValue()
     }
 
-    // Fragment SUBSCRIBE EVENTS or pending :
-
     fun deleteConfirmation(event:Event?){
-
         firebaseEvent.child(event!!.key.toString()).child("listInscrits").child(mainUid!!).removeValue().addOnSuccessListener {
-
             firebaseData.child("user").child(mainUid).child("eventConfirmationList").child(event.key.toString()).removeValue()
         }
-
     }
 
     fun deleteConfirmationGuest(event: Event?, idGuest: String){
-
         firebaseEvent.child(event!!.key.toString()).child("listInscrits").child(idGuest).removeValue().addOnSuccessListener {
             firebaseData.child("user").child(idGuest).child("eventConfirmationList").child(event.key.toString()).removeValue()
         }
-
     }
 
     fun deletePendingEvent(event:Event?){
-
         firebaseEvent.child(event!!.key.toString()).child("pendingRequestEventPublic").child(currentUser()!!.uid).removeValue()
         firebaseUserCurrent.child("pendingRequestEventPublic").child(event.key.toString()).removeValue()
-
     }
 
     // GET EVENT DATA DETAIL PUBLIC PAGE EVENT FRAGMENT MAIN :
@@ -83,14 +73,11 @@ class FirebaseSourceEvent {
             }
 
             override fun onCancelled(error: DatabaseError) {
-//                Log.e("FirebaseHelper", "Error fetching data", error.toException())
                 onResult(null)
             }
         })
     }
 
-    //////////////////////// EVENTS  REQUETES /////////////////////////////////////////////////////
-    // 1/ L'UTILISATEUR ENVOIE UNE DEMANDE AUPRES D'UN EVENT PUBLIC :
     fun sendRequestToParticipatePublicEvent(idEvent:String, adminEvent: String){
 
         firebaseEvent.child(idEvent).child("pendingRequestEventPublic").child(currentUser()!!.uid).setValue(currentUser()!!.email)
@@ -159,9 +146,7 @@ class FirebaseSourceEvent {
                         }
                     })
 
-
-//                getUserFromUidList(userList, tempList, onResult)
-            }
+                }
             }
             override fun onCancelled(error: DatabaseError) {
             }
@@ -193,8 +178,6 @@ class FirebaseSourceEvent {
         })
     }
 
-
-    // cherche les invitations reçus :
     fun fetchInvitationEvents( onResult: (List<Event>) -> Unit) {
 
         var eventId: Any?
@@ -217,9 +200,7 @@ class FirebaseSourceEvent {
             }
         })
     }
-    // FRAGMENT EVENT SUBSCRIBE OR IN PENDING :
 
-    // cherche les events confirmés par l'admin de l'event :
     fun fetchConfirmationEvents( onResult: (List<Event>) -> Unit) {
         var hostId: Any?
         var eventValue: Any?
@@ -240,9 +221,6 @@ class FirebaseSourceEvent {
             }
         })
     }
-
-
-    // méthode commune à fetchInvitationEvents et fetchConfirmationEvents pour récupérer les events :
 
     fun searchEventsWithKey(eventIdList: HashMap<String, String>, eventList: ArrayList<Event>, onResult: (List<Event>) -> Unit){
         firebaseEvent.addValueEventListener(object :ValueEventListener {
@@ -296,8 +274,6 @@ class FirebaseSourceEvent {
             })
     }
 
-
-    // on recupere la liste des inscrits dans son event public :
     @SuppressLint("SuspiciousIndentation")
     fun fetchGuestDetailEventPublic(key:String?, onResult: (List<User>) -> Unit){
 
@@ -316,7 +292,6 @@ class FirebaseSourceEvent {
             }
         })
     }
-
 
     fun fetchPendingGuestEventPublic(key:String?, onResult: (List<User>) -> Unit){
 
@@ -359,9 +334,10 @@ class FirebaseSourceEvent {
                 return key
             }
         }
-        return null // Retourne null si la valeur n'est pas trouvée
+        return null
     }
-
+    // Un énième essai que nous avons fait avec l'aide de chatGPT afin d'avoir une coroutine sur l'acceptation d'un event. Helas, nous ne sommes pas parvenus et nous avons
+    // cherché de longues heures sans trouver de solutions
     fun acceptRequestEvent(user: User?) {
         // Utilisation d'une coroutine pour effectuer des opérations asynchrones
         CoroutineScope(Dispatchers.Main).launch {
@@ -430,17 +406,13 @@ class FirebaseSourceEvent {
 
     }
 
-
     fun acceptInvitationEvent(event: Event?){
 
         val queryEvent = firebaseEvent.child(event!!.key.toString())
         val queryAcceptEventUser = firebaseData.child("user").child(mainUid!!)
 
-
-
         queryEvent.child("invitation").child(mainUid).removeValue()
         queryEvent.child("listInscrits").child(mainUid).setValue(currentUser()!!.email.toString())
-
 
         queryAcceptEventUser.child("invitations").child(event.key!!).removeValue()
         queryAcceptEventUser.child("eventConfirmationList").child(event.key!!).setValue(event.admin)
@@ -470,7 +442,6 @@ class FirebaseSourceEvent {
                 }
                 onResult(eventsList)
             }
-
             override fun onCancelled(error: DatabaseError) {
 
             }
@@ -540,16 +511,13 @@ class FirebaseSourceEvent {
 
     }
 
-    //////////////////////////////////////////Strategie
     fun fetchStrategieEvent(onResult: (List<Event>) -> Unit){
         firebaseEvent.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val eventList = ArrayList<Event>()
                 for (postSnapshot in snapshot.children){
                     val event = postSnapshot.getValue(Event::class.java)
-
                     eventList.add(event!!)
-
                 }
                 onResult(eventList)
             }
@@ -565,9 +533,6 @@ class FirebaseSourceEvent {
         val currentTime = Calendar.getInstance().timeInMillis
         val storageRef = storage.reference.child("photosEvent/").child(key).child(currentTime.toString())
         val path = storageRef.toString().substringAfter("photosEvent/")
-
-
-
         Firebase.database.getReference("event/" + key).child("imgEvent").setValue(path)
         val inputStream = context.contentResolver.openInputStream(photo)
         val uploadTask = storageRef.putStream(inputStream!!)

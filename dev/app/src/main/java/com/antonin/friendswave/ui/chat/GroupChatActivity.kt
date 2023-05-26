@@ -28,7 +28,6 @@ import org.kodein.di.generic.instance
 import com.antonin.friendswave.ui.viewModel.ChatVMFactory
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
 
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: Activité qui permet de chatter en groupe
 
@@ -57,7 +56,6 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_group_chat)
 
-        //Aller chercher l'intent de l'Event
         eventKey = intent.getStringExtra("eventKey").toString()
         admin = intent.getStringExtra("admin").toString()
 
@@ -82,8 +80,6 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
         viewModel.messageGroup.observe(this) { message ->
             binding.messageBoxGroup.setText(message)
         }
-
-//        binding.teest.visibility = View.GONE
 
         binding.linearExpand.setOnClickListener{
 
@@ -118,7 +114,6 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
         viewModel.participantList.observe(this) {
             adapter1.addItems(it)
         }
-
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener {
             override fun onClick(view: View, position: Int) {

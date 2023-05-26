@@ -15,21 +15,18 @@ import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: Activité qui de gérer les fragments pour Mes Events
 
-class ManagerFragmentEvent : AppCompatActivity() {
+// Méthode de ViewPager avec une activité qui gére des fragments via un adapter. Methode qu'on a vu avec Eric Labonté dans son cours en Android et qu'on a adapté ici.
 
+class ManagerFragmentEvent : AppCompatActivity() {
 
     private lateinit var tabLayout : TabLayout
     private lateinit var viewPager : ViewPager2
-
     private lateinit var adapterFragment : AdapterFragmentEvent
-
     private lateinit var viewModel : EventFragmentViewModel
     private lateinit var viewModel2 : HomeFragmentViewModel
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +42,6 @@ class ManagerFragmentEvent : AppCompatActivity() {
             "Mes events",
             "Events inscrits",
         )
-
 
         tabLayout = findViewById(R.id.tabLayout)
         viewPager = findViewById(R.id.viewPager)
@@ -69,9 +65,7 @@ class ManagerFragmentEvent : AppCompatActivity() {
 
     }
 
-
-
-        override fun onDestroy() {
+    override fun onDestroy() {
         super.onDestroy()
         finish()
     }

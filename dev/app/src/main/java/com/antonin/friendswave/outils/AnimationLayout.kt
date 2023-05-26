@@ -8,11 +8,13 @@ import android.view.animation.DecelerateInterpolator
 
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: C'est une classe permettant d'afficher des animations
+
+//https://stackoverflow.com/questions/4946295/android-expand-collapse-animation
+
 class AnimationLayout {
 
-    //https://stackoverflow.com/questions/4946295/android-expand-collapse-animation
-    fun expand(view: View, duration:Int, targetHeight:Int) {
 
+    fun expand(view: View, duration:Int, targetHeight:Int) {
 
         var prevHeight  = view.getHeight()
 
@@ -44,7 +46,6 @@ class AnimationLayout {
         valueAnimator.start()
 
     }
-
 
     val Int.dp: Int
         get() = (this / Resources.getSystem().displayMetrics.density).toInt()

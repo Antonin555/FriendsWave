@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat
 import com.antonin.friendswave.R
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: L'adapteur du grid view pour permettre d'avoir un interaction avec le grid View (couleur qui change lorsqu'on clique)
 
@@ -40,7 +39,6 @@ class MyGridViewAdapter(private val context: Context, private val values: List<S
 
         } else {
             convertView as TextView
-
         }
 
         textView.gravity = Gravity.CENTER
@@ -58,12 +56,10 @@ class MyGridViewAdapter(private val context: Context, private val values: List<S
             textView.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
         }
 
-
         textView.setOnClickListener {
             if (selectedPositions.contains(position)) {
                 selectedPositions.remove(position)
                 viewModel.user_live.value!!.interet!!.remove(values[position])
-
 
             } else {
                 selectedPositions.add(position)

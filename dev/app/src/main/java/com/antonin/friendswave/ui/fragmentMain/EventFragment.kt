@@ -37,12 +37,12 @@ import com.antonin.friendswave.data.dataStructure.LinkedList
 import com.antonin.friendswave.outils.goToActivityWithArgs
 import com.antonin.friendswave.outils.toastShow
 
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: Fragment permettant de voir les events publics
 
-class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListener {
+// Methodes trouvés sur les exemples de  Google Maps https://developers.google.com/maps/documentation/android-sdk/start?hl=fr
 
+class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListener {
 
     override val kodein : Kodein by kodein()
     private val factory : EventFragmentVMFactory by instance()
@@ -54,7 +54,6 @@ class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListe
     private lateinit var loc : GoogleLocation
     private lateinit var googleMap: GoogleMap
     private var linkedList: LinkedList = LinkedList()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +75,6 @@ class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListe
 
         return binding.root
     }
-
 
     @SuppressLint("ResourceType")
     override fun onResume() {
@@ -123,7 +121,6 @@ class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListe
                 searchStrategy = Strategy(searchCategory)
             }
 
-
             viewModel.strCategory.value = ""
             strategyEvent(searchStrategy,type)
         }
@@ -138,16 +135,15 @@ class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListe
                     "position" to position,
                     "idEvent" to id_event.toString(),
                     "adminEvent" to admin_event)
-
             }
         })
     }
 
-
     fun strategyEvent(strategy: Strategy, str:String) {
-        var tempList: ArrayList<Event>
-        viewModel.eventList.observe(this){ eventList ->
 
+        var tempList: ArrayList<Event>
+
+        viewModel.eventList.observe(this){ eventList ->
             val user = viewModel.user_live.value
             tempList = strategy.search(str, eventList, user!!) as ArrayList<Event>
 
@@ -170,7 +166,6 @@ class EventFragment : Fragment(), KodeinAware, OnMapReadyCallback, LocationListe
                             "position" to position,
                             "idEvent" to id_event.toString(),
                             "adminEvent" to admin_event)
-
                     }
                 }
             })

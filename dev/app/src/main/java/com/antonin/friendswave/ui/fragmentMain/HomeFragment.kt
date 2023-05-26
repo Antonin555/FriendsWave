@@ -41,12 +41,11 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
 import org.kodein.di.android.x.kodein
 
-//Documentation https://www.kodeco.com/27690200-advanced-data-binding-in-android-observables
-//On s'en ai inspiré mais nous l'avons vraiment adapté a nos besoins
-
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: Fragment permettant de voir ses notifs et quelques infos perso
+
+//Documentation https://www.kodeco.com/27690200-advanced-data-binding-in-android-observables
+// méthodes pour les notifications et les permissions faite à partir des exemples suivant et de la doc android developers : https://stackoverflow.com/questions/44305206/ask-permission-for-push-notification
 
 class HomeFragment : Fragment(), KodeinAware {
 
@@ -113,24 +112,20 @@ class HomeFragment : Fragment(), KodeinAware {
 
         viewModel2.friendNotifList.observe(this){ notifUserList ->
             adapter1.addItems(notifUserList)
+
             if(adapter1.itemCount !=0 ) binding.makefriends.visibility= View.GONE
             else binding.makefriends.visibility = View.VISIBLE
         }
 
         viewModel2.eventList.observe(this){ eventList ->
             adapter3.addItems(eventList)
+
             if( adapter3.itemCount !=0) binding.tempInvitations.visibility = View.GONE
             else binding.tempInvitations.visibility = View.VISIBLE
         }
 
         viewModel2.requestListEvent.observe(this){ userList ->
-            println(userList)
-
-                adapter2.addItems(userList)
-//                adapter2.notifyDataSetChanged()
-
-//            adapter2.submitList(userList)
-
+            adapter2.addItems(userList)
 
             if(adapter2.itemCount != 0)  binding.searchEvents.visibility = View.GONE
             else binding.searchEvents.visibility = View.VISIBLE
@@ -160,18 +155,14 @@ class HomeFragment : Fragment(), KodeinAware {
             override fun onClick(view: View, position: Int) {
                 val userNotif = viewModel2.friendNotifList.value?.get(position)
                 if (view.id == R.id.accept_friend){
-
                     viewModel2.acceptRequest(userNotif)
-
                 }
 
                 else if (view.id == R.id.decline_friend){
                     viewModel2.refuseRequest(userNotif)
-
                 }
                 else if(view.id == R.id.imageProfil) {
                     goToActivityWithArgs(context,ProfilActivity::class.java,"uid" to userNotif?.uid.toString())
-
                 }
             }
 
@@ -182,8 +173,6 @@ class HomeFragment : Fragment(), KodeinAware {
 
                 val user = viewModel2.requestListEvent.value?.get(position)!!
 
-//                isObservingRequestList = false
-
                 if (view.id == R.id.non_event){
                     viewModel2.declineRequestEvent(user)
                     goToActivityWithoutArgs(requireContext(), ManageHomeActivity::class.java)
@@ -191,17 +180,13 @@ class HomeFragment : Fragment(), KodeinAware {
                 else if(view.id == R.id.oui_event) {
 
                     viewModel2.acceptRequestEvent(user)
-                   goToActivityWithoutArgs(requireContext(), ManageHomeActivity::class.java)
 
+                   goToActivityWithoutArgs(requireContext(), ManageHomeActivity::class.java)
                 }
                 else if(view.id == R.id.profil_potential_guest) {
                     goToActivityWithArgs(context,ProfilActivity::class.java,"uid" to user.uid.toString())
-
                 }
-
             }
-
-
         })
 
         adapter3.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{
@@ -223,13 +208,11 @@ class HomeFragment : Fragment(), KodeinAware {
                         "inscrit_ou_non" to bool,
                         "idEvent" to event!!.key.toString(),
                         "adminEvent" to event.admin)
-
             }
 
         })
 
     }
-
 
     @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -239,22 +222,16 @@ class HomeFragment : Fragment(), KodeinAware {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 print("ok")
                 // La permission a été accordée, vous pouvez maintenant accéder au fournisseur de documents de médias Android.
-            } else {
-                // La permission a été refusée, vous devez gérer le cas où l'utilisateur refuse la permission.
             }
         }
     }
 
     fun permissionNotifs() {
-        // Declare the launcher at the top of your Activity/Fragment:
          val requestPermissionLauncher = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
                 print("ok")
-                // FCM SDK (and your app) can post notifications.
-            } else {
-                // TODO: Inform user that that your app will not show notifications.
             }
         }
 

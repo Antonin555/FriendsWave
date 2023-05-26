@@ -19,11 +19,10 @@ import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import com.antonin.friendswave.ui.viewModel.ChatVMFactory
 
-//Tutoriel pour faire le chat: https://www.youtube.com/watch?v=8Pv96bvBJL4
-
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: Activité qui permet de chatter
+
+//Tutoriel pour faire le chat: https://www.youtube.com/watch?v=8Pv96bvBJL4
 
 class ChatActivity : AppCompatActivity(), KodeinAware {
 
@@ -49,11 +48,9 @@ class ChatActivity : AppCompatActivity(), KodeinAware {
         layoutManager.stackFromEnd = true
         binding.chatRecyclerView.layoutManager = layoutManager
 
-
         viewModel.messageList.observe(this) { messageList ->
             messageAdapter = MessageAdapter(this, messageList)
             messageAdapter.addItems(messageList)
-            //viewModel.user_live.value?.lastMessage?.put(reveiverUid.toString(), messageList.lastOrNull().toString())
             binding.chatRecyclerView.adapter = messageAdapter
         }
 

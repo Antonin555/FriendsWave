@@ -4,6 +4,7 @@ package com.antonin.friendswave.ui.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.User
 import com.antonin.friendswave.data.repository.EventRepo
@@ -53,21 +54,12 @@ class NotifFragmentViewModel (private val repository: UserRepo, private val repo
         repoEvent.acceptInvitationEvent(event)
     }
 
-
-
-
     fun acceptRequestEvent(user:User?){
 
         repoEvent.acceptRequestEvent(user)
         fetchDemandeInscriptionEventPublic()
     }
 
-
-//    fun acceptRequestEventSideUser(user:User?){
-//
-//        repoEvent.acceptRequestEventSideUser(user)
-//
-//    }
 
     fun declineRequestEvent(user:User?){
 

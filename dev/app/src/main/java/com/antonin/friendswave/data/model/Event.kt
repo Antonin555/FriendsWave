@@ -2,7 +2,6 @@ package com.antonin.friendswave.data.model
 
 import com.antonin.friendswave.adapter.ListItemViewModel
 
-
 //Auteur: Alexandre Caron et Antonin Lenoir
 //Contexte: C'est une data class contenant toutes les informations pour un event
 
@@ -28,5 +27,4 @@ data class Event(
     var pendingRequestEventPublic : HashMap<String, String> = HashMap(),
     var nbreInscrit : Int? = 0,
 
-
-):ListItemViewModel()
+    ):ListItemViewModel()

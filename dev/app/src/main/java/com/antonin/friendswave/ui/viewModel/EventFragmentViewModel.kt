@@ -134,7 +134,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
             repoEvent.sendRequestToParticipatePublicEvent(idEvent,adminEvent)
             toastShow(view.context,"Demande envoyée")
         }
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -182,12 +181,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
     }
 
 
-    fun executeOnSubscribeChanged(switch: CompoundButton,isSubscribe : Boolean) {
-        if(isSubscribe) FirebaseMessaging.getInstance().subscribeToTopic("nom-du-topic")
-        else FirebaseMessaging.getInstance().unsubscribeFromTopic("nom-du-topic")
-
-    }
-
     // pour recuperer la valeur de la categorie dans le spinner :
     fun onSelectItem(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
        categorie = parent!!.adapter.getItem(pos).toString()
@@ -206,7 +199,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         if (strDate != null)  timeStamp = strDate.time.toDouble()
         if (Date().after(strDate))  toastShow(view.context,"Impossible de remonter dans le temps")
 
-
     }
 
     fun changeHour(hour:Int, minute:Int) {
@@ -214,7 +206,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         val minuteString = if (minute < 10) "0$minute" else minute.toString()
         horaire = hourString + ":" + minuteString
     }
-
 
     fun fetchGuestConfirmDetailEventPublic(key: String?){
         repoEvent.fetchGuestConfirmDetailEventPublic(key).observeForever{ user ->
@@ -296,8 +287,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
             }
         }
 
-
-
         if (email.isNullOrEmpty() || !email!!.matches(emailRegex)) {
             toastShow(view.context,"Courriel vide ou non valide")
             return
@@ -322,8 +311,6 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
         email = ""
     }
 
-
-
     fun gotoMesEventsActivity(view: View) {
         goToActivityWithoutArgs(view.context,ManagerFragmentEvent::class.java)
     }
@@ -340,7 +327,7 @@ class EventFragmentViewModel(private val repository:UserRepo,private val repoEve
 
     fun deleteConfirmation(event:Event?) {
 
-//        _eventData.value!!.nbreInscrit?.minus(1)
+        _eventData.value!!.nbreInscrit?.minus(1)
         repoEvent.deleteConfirmation(event)
     }
 

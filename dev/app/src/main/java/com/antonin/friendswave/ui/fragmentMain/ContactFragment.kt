@@ -34,20 +34,16 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
-
-
 //Auteur: Alexandre Caron et Antonin Lenoir
-//Contexte: Fragment permettant de voir ses contacts
+//Contexte: Fragment representant la Vue pour voir ses contacts et cliquer dessus pour chatter ou voir leurs profils
 
 class ContactFragment : Fragment(), KodeinAware {
 
     override val kodein : Kodein by kodein()
-    var storage: FirebaseStorage = Firebase.storage
     private val factory : HomeFragmentVMFactory by instance()
     private lateinit var adapter1 : ListGeneriqueAdapter<User>
     private var viewModel: HomeFragmentViewModel  = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
     repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
-
     private lateinit var binding: FragmentContactBinding
     private val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 1
 
@@ -66,7 +62,6 @@ class ContactFragment : Fragment(), KodeinAware {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_PERMISSION_READ_EXTERNAL_STORAGE)
         }
 
-//        viewModel.fetchUsersFriends()
         adapter1 = ListGeneriqueAdapter(R.layout.recycler_contact)
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerFragmentContact.layoutManager = layoutManager
@@ -96,7 +91,6 @@ class ContactFragment : Fragment(), KodeinAware {
 
                 } else {
                     goToActivityWithArgs(view.context,ChatActivity::class.java,"uid" to userChoisi?.uid.toString())
-
                 }
             }
         })
