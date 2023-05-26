@@ -16,7 +16,7 @@ class AnimationLayout {
 
     fun expand(view: View, duration:Int, targetHeight:Int) {
 
-        var prevHeight  = view.getHeight()
+        val prevHeight  = view.getHeight()
 
         view.visibility = View.VISIBLE
         val valueAnimator : ValueAnimator = ValueAnimator.ofInt(prevHeight, targetHeight.px)
@@ -26,7 +26,7 @@ class AnimationLayout {
                 view.layoutParams.height = animation.getAnimatedValue() as Int
                 view.requestLayout()
             }
-        });
+        })
         valueAnimator.interpolator = DecelerateInterpolator()
         valueAnimator.duration = duration.toLong()
         valueAnimator.start()
@@ -46,9 +46,6 @@ class AnimationLayout {
         valueAnimator.start()
 
     }
-
-    val Int.dp: Int
-        get() = (this / Resources.getSystem().displayMetrics.density).toInt()
 
     val Int.px: Int
         get() = (this * Resources.getSystem().displayMetrics.density).toInt()

@@ -1,6 +1,5 @@
 package com.antonin.friendswave.ui.event
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View

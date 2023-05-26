@@ -26,9 +26,9 @@ class EventRepo(private val firebaseEvent: FirebaseSourceEvent) {
         return eventListConfirm
     }
 
-    fun fetchSpecificEvents(hostId: String, eventKey: String):LiveData<Event>{
+    fun fetchSpecificEvents( eventKey: String):LiveData<Event>{
         val event = MutableLiveData<Event>()
-        firebaseEvent.fetchSpecificEvents(hostId, eventKey) { user ->
+        firebaseEvent.fetchSpecificEvents(eventKey) { user ->
             event.postValue(user)
         }
         return event

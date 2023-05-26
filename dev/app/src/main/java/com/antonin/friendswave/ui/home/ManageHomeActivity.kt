@@ -1,6 +1,5 @@
 package com.antonin.friendswave.ui.home
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,11 +9,8 @@ import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.AdapterFragment
-import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
-import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
-import com.antonin.friendswave.ui.event.ManagerFragmentEvent
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -33,9 +29,7 @@ class ManageHomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        viewModel = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
-            repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
-        )
+        viewModel = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()))
 //        viewModel.fetchUserData()
         val tabLayoutArray = arrayOf(
             "Home",

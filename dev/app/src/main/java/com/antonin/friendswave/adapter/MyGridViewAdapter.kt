@@ -1,13 +1,11 @@
 package com.antonin.friendswave.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.antonin.friendswave.R
 import com.antonin.friendswave.ui.viewModel.HomeFragmentViewModel

@@ -24,25 +24,15 @@ import com.google.firebase.R
 
 class FirebaseNotificationsService : FirebaseMessagingService() {
 
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
 
-        if (message.data != null){
-            val title = message.data["title"]!!.toString()
-            val body = message.data["body"]!!.toString()
-            val intent_action = message.data["click_action"].toString()
-            sendNotification(title.toString(),body.toString(), intent_action)
+        val title = message.data["title"]!!.toString()
+        val body = message.data["body"]!!.toString()
+        val intent_action = message.data["click_action"].toString()
+        sendNotification(title,body, intent_action)
 
-        }
-
-        if(message.notification != null) {
-            val title = message.data["title"]!!.toString()
-            val body = message.data["body"]!!.toString()
-            val intent_action = message.data["click_action"].toString()
-            sendNotification(title.toString(),body.toString(), intent_action)
-        }
     }
 
     @RequiresApi(Build.VERSION_CODES.M)

@@ -239,7 +239,7 @@ class FirebaseSourceEvent {
         })
     }
 
-    fun fetchSpecificEvents( hostId: String, eventValue: String, onResult: (Event) -> Unit) {
+    fun fetchSpecificEvents( eventValue: String, onResult: (Event) -> Unit) {
         val eventValue = eventValue
         firebaseEvent.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -354,7 +354,7 @@ class FirebaseSourceEvent {
                 withContext(Dispatchers.IO) {
                     firebaseEvent.child(getKeyFromValue(user!!.pendingRequestEventPublic!!, mainUid!!).toString())
                         .child("listInscrits")
-                        .child(user!!.uid.toString())
+                        .child(user.uid.toString())
                         .setValue(user.email.toString())
                 }
 
@@ -372,7 +372,7 @@ class FirebaseSourceEvent {
                     firebaseData.child("user")
                         .child(user!!.uid.toString())
                         .child("eventConfirmationList")
-                        .child(getKeyFromValue(user!!.pendingRequestEventPublic!!, mainUid!!).toString())
+                        .child(getKeyFromValue(user.pendingRequestEventPublic!!, mainUid!!).toString())
                         .setValue(mainUid)
                 }
 
@@ -381,7 +381,7 @@ class FirebaseSourceEvent {
                     firebaseData.child("user")
                         .child(mainUid!!)
                         .child("confirmHostRequestEventPublic")
-                        .child(getKeyFromValue(user!!.pendingRequestEventPublic!!, mainUid!!).toString())
+                        .child(getKeyFromValue(user!!.pendingRequestEventPublic!!, mainUid).toString())
                         .setValue(user.email)
                 }
 
@@ -509,22 +509,6 @@ class FirebaseSourceEvent {
             adress, description, latitude, longitude, duree, host,timeStamp, nbreInscrit = 0))
         registerPhotoEvent(photo, context, myRef.key!!)
 
-    }
-
-    fun fetchStrategieEvent(onResult: (List<Event>) -> Unit){
-        firebaseEvent.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val eventList = ArrayList<Event>()
-                for (postSnapshot in snapshot.children){
-                    val event = postSnapshot.getValue(Event::class.java)
-                    eventList.add(event!!)
-                }
-                onResult(eventList)
-            }
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-        })
     }
 
     fun registerPhotoEvent(photo: Uri,context:Context ,key:String) : String{

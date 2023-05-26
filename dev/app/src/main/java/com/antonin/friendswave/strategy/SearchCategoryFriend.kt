@@ -16,7 +16,7 @@ class SearchHobbyFriend: InterfaceSearchFriend {
     // methode aidé par https://www.geeksforgeeks.org/find-the-jaccard-index-and-jaccard-distance-between-the-two-given-sets/
     override fun sortedUser(mainUser: User?, totalUser: List<User>?): List<User> {
 
-        var similarUsers : ArrayList<User> = ArrayList()
+        val similarUsers : ArrayList<User> = ArrayList()
 
         for (user in totalUser!!){
             if (user != mainUser){
@@ -42,7 +42,7 @@ class SearchCityFriend: InterfaceSearchFriend {
 
 
     override fun sortedUser(mainUser: User?, totalUser: List<User>?): List<User> {
-        var similarUsers : ArrayList<User> = ArrayList()
+        val similarUsers : ArrayList<User> = ArrayList()
 
         for(user in totalUser!!){
             if(user != mainUser){
@@ -61,7 +61,7 @@ class SearchAgeFriend: InterfaceSearchFriend {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun sortedUser(mainUser: User?, totalUser: List<User>?): List<User> {
-        var similarUsers : ArrayList<User> = ArrayList()
+        val similarUsers : ArrayList<User> = ArrayList()
 
         val mainUserAge = mainUser?.date?.let { calculateAge(it) }
 

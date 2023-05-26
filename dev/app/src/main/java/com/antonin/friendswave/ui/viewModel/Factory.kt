@@ -56,12 +56,12 @@ class EventFragmentVMFactory (private val repository: UserRepo, private val repo
 }
 
 @Suppress("UNCHECKED_CAST")
-class HomeFragmentVMFactory(private val repository: UserRepo, private val repoEvent: EventRepo) : ViewModelProvider.NewInstanceFactory() {
+class HomeFragmentVMFactory(private val repository: UserRepo) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeFragmentViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return HomeFragmentViewModel(repository, repoEvent) as T
+            return HomeFragmentViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

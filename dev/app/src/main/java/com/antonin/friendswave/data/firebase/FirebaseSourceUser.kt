@@ -2,7 +2,6 @@ package com.antonin.friendswave.data.firebase
 
 import android.content.Context
 import android.net.Uri
-import com.antonin.friendswave.FriendWaveApp
 import com.antonin.friendswave.data.model.Event
 import com.antonin.friendswave.data.model.Messages
 import com.antonin.friendswave.data.model.User

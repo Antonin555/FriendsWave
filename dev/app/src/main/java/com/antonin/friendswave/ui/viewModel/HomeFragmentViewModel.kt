@@ -41,7 +41,6 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
     var etudes : String? = ""
     var langue :String? = ""
 
-
     //DEUX USER LIVE***
     private val _user = MutableLiveData<User>()
     var user_live: LiveData<User> = _user

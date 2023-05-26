@@ -1,6 +1,5 @@
 package com.antonin.friendswave.ui.chat
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -40,9 +39,7 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
         repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
     )
 
-    private var viewModel2  = HomeFragmentViewModel(repository = UserRepo(firebaseUser= FirebaseSourceUser()),
-        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
-    )
+    private var viewModel2  = HomeFragmentViewModel(repository = UserRepo(firebaseUser= FirebaseSourceUser()))
     private lateinit var binding : ActivityGroupChatBinding
     private var eventKey: String = ""
     private var admin: String = ""
@@ -97,7 +94,7 @@ class GroupChatActivity : AppCompatActivity(),KodeinAware {
 
     override fun onResume() {
         super.onResume()
-        viewModel.fetchSpecificEvents(admin, eventKey)
+        viewModel.fetchSpecificEvents(eventKey)
         viewModel.fetchUserData()
         viewModel.fetchDiscussionGroup()
 

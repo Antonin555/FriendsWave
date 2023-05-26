@@ -1,13 +1,11 @@
 package com.antonin.friendswave.ui.event
 
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.antonin.friendswave.outils.toastShow
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -24,7 +22,6 @@ import com.antonin.friendswave.outils.AlertDialog
 import com.antonin.friendswave.outils.goToActivityWithArgs
 import com.antonin.friendswave.outils.goToActivityWithoutArgs
 import com.antonin.friendswave.ui.chat.GroupChatActivity
-import com.antonin.friendswave.ui.home.ManageHomeActivity
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
 import org.kodein.di.Kodein

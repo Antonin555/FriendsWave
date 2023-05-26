@@ -52,8 +52,7 @@ class HomeFragment : Fragment(), KodeinAware {
     private var storeMedia = FirebaseStore()
     override val kodein : Kodein by kodein()
     private val factory : HomeFragmentVMFactory by instance()
-    private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
-        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
+    private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()))
     private val factory2 : NotifFragmentVMFactory by instance()
     private var viewModel2: NotifFragmentViewModel = NotifFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
         repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))

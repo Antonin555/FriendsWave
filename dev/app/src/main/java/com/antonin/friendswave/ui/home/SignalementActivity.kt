@@ -5,9 +5,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.antonin.friendswave.R
-import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
-import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivitySignalementBinding
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
@@ -24,8 +22,7 @@ class SignalementActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein : Kodein by kodein()
     private val factory : HomeFragmentVMFactory by instance()
-    private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
-    repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
+    private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()))
     private lateinit var binding: ActivitySignalementBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

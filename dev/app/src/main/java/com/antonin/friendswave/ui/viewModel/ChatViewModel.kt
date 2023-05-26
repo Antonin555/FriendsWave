@@ -42,7 +42,7 @@ class ChatViewModel(private val repository: UserRepo, private val repoEvent: Eve
     val participantList: LiveData<List<User>> = _participantList
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun addMessagetoDatabase(view: View){
+    fun addMessagetoDatabase(){
 
         if(messageEnvoye != null){
 
@@ -58,7 +58,7 @@ class ChatViewModel(private val repository: UserRepo, private val repoEvent: Eve
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun addMessageGrouptoDatabase(view: View){
+    fun addMessageGrouptoDatabase(){
 
         if(messageEnvoye != null){
             val heureActuelle: LocalTime = LocalTime.now()
@@ -106,9 +106,9 @@ class ChatViewModel(private val repository: UserRepo, private val repoEvent: Eve
         }
 
     }
-    fun fetchSpecificEvents(hostId: String, eventKey: String)
+    fun fetchSpecificEvents( eventKey: String)
     {
-        repoEvent.fetchSpecificEvents(hostId, eventKey).observeForever{ event ->
+        repoEvent.fetchSpecificEvents(eventKey).observeForever{ event ->
             _mainEvent.value = event
         }
     }

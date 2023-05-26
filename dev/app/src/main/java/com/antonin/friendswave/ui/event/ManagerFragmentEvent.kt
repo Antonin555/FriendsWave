@@ -1,7 +1,6 @@
 package com.antonin.friendswave.ui.event
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.antonin.friendswave.R
@@ -34,9 +33,7 @@ class ManagerFragmentEvent : AppCompatActivity() {
 
         viewModel = EventFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
             repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
-
-        viewModel2 = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()),
-            repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
+        viewModel2 = HomeFragmentViewModel(repository = UserRepo(firebaseUser = FirebaseSourceUser()))
 
         val tabLayoutArray = arrayOf(
             "Mes events",

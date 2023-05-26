@@ -29,7 +29,7 @@ class FriendWaveApp : Application(), KodeinAware {
         bind() from singleton { EventRepo(instance()) }
         bind() from provider { ContactViewModelFactory(instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
-        bind() from provider { HomeFragmentVMFactory(instance(), instance()) }
+        bind() from provider { HomeFragmentVMFactory(instance()) }
         bind() from provider { EventFragmentVMFactory(instance(), instance()) }
         bind() from provider { NotifFragmentVMFactory(instance(), instance()) }
         bind() from provider { ChatVMFactory(instance(), instance()) }

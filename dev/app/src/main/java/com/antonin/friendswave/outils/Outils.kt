@@ -3,8 +3,6 @@ package com.antonin.friendswave.outils
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import com.antonin.friendswave.ui.authentification.LoginActivity
-import com.antonin.friendswave.ui.home.ManageHomeActivity
 import java.util.*
 import javax.mail.*
 import javax.mail.internet.InternetAddress

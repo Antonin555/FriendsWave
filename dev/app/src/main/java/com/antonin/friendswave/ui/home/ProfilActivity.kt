@@ -6,10 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.antonin.friendswave.R
-import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
 import com.antonin.friendswave.data.firebase.FirebaseStore
-import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityProfilBinding
 import com.antonin.friendswave.outils.AnimationLayout
@@ -29,8 +27,7 @@ class ProfilActivity : AppCompatActivity(), KodeinAware {
     override val kodein : Kodein by kodein()
     private val factory : HomeFragmentVMFactory by instance()
     private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(
-        repository = UserRepo(firebaseUser = FirebaseSourceUser()),
-        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent()))
+        repository = UserRepo(firebaseUser = FirebaseSourceUser()))
     private lateinit var binding: ActivityProfilBinding
     private var bool = true
     private var anim = AnimationLayout()

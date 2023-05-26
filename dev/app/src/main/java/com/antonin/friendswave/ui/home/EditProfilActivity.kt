@@ -16,9 +16,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.antonin.friendswave.R
 import com.antonin.friendswave.adapter.MyGridViewAdapter
-import com.antonin.friendswave.data.firebase.FirebaseSourceEvent
 import com.antonin.friendswave.data.firebase.FirebaseSourceUser
-import com.antonin.friendswave.data.repository.EventRepo
 import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityEditProfilBinding
 import com.antonin.friendswave.ui.viewModel.HomeFragmentVMFactory
@@ -47,9 +45,7 @@ class EditProfilActivity : AppCompatActivity(), KodeinAware {
     override val kodein : Kodein by kodein()
     private val factory : HomeFragmentVMFactory by instance()
     private var viewModel: HomeFragmentViewModel = HomeFragmentViewModel(
-        repository = UserRepo(firebaseUser = FirebaseSourceUser()),
-        repoEvent = EventRepo(firebaseEvent = FirebaseSourceEvent())
-    )
+        repository = UserRepo(firebaseUser = FirebaseSourceUser()))
     var addressList: List<Address>? = null
     lateinit var address : Address
     private lateinit var binding: ActivityEditProfilBinding
