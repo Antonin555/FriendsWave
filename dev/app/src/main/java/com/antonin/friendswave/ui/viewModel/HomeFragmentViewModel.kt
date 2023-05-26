@@ -177,9 +177,17 @@ class HomeFragmentViewModel(private val repository: UserRepo, private val repoEv
     }
 
     fun registerPhoto(photo: Uri, context: Context, path : String){
-        user_live.value?.img = repository.registerPhoto(photo, context, path)
+        if(path == "photos/"){
+            user_live.value?.img = repository.registerPhoto(photo, context, path)
+
+        }
+        if(path == "photosCover/") {
+            user_live.value?.imgCover = repository.registerPhoto(photo, context,path)
+        }
+
 
     }
+
 
 
 }

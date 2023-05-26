@@ -204,9 +204,11 @@ class UserRepo( private val firebaseUser: FirebaseSourceUser) {
         return userList
     }
 
-    fun registerPhoto(photo: Uri, context: Context, path : String): String{
+    fun registerPhoto(photo: Uri, context: Context, path:String): String{
 
         return firebaseUser.registerPhoto(photo, context, path)
     }
+
+
 
 }

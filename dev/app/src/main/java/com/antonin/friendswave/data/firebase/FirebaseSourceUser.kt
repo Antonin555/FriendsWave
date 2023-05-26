@@ -484,5 +484,19 @@ class FirebaseSourceUser {
         return path_img
     }
 
+    fun registerPhotoCover(photo: Uri, context: Context) : String{
+
+        val currentTime = Calendar.getInstance().timeInMillis
+        val storageRef = storage.reference.child("photosCover/").child(mainUid!!).child(currentTime.toString())
+        val path_img = storageRef.toString().substringAfter("photosCover/")
+        val inputStream = context.contentResolver.openInputStream(photo)
+        val uploadTask = storageRef.putStream(inputStream!!)
+        uploadTask.addOnSuccessListener {
+        }.addOnFailureListener {
+            // Une erreur s'est produite lors du chargement de la photo
+        }
+        return path_img
+    }
+
 
 }

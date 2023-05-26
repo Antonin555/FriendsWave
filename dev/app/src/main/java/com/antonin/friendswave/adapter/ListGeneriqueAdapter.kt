@@ -59,6 +59,7 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
 
             val image_event = holder.itemView.findViewById<ImageView>(R.id.imageEvent)
             val image_profil = holder.itemView.findViewById<ImageView>(R.id.imageProfil)
+
             val image_profil_potential_guest = holder.itemView.findViewById<ImageView>(R.id.profil_potential_guest)
 
             if(image_profil != null){
@@ -66,6 +67,7 @@ class ListGeneriqueAdapter <T : ListItemViewModel>(@LayoutRes val layoutId: Int)
                 store.displayImage(image_profil,path_profil)
 
             }
+
             if(image_event != null){
                 val path_event = "photosEvent/" + itemViewModel.imgEvent.toString()
                 store.displayImage(image_event,path_event)
