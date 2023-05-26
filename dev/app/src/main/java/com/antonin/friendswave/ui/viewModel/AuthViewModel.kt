@@ -105,7 +105,7 @@ class AuthViewModel(private val repository: UserRepo) : ViewModel() {
             return
         }
         if(!emailList.value.isNullOrEmpty()){
-            if(!emailList.value!!.contains(email!!)){
+            if(emailList.value!!.contains(email!!)){
                 interfaceAuth?.onFailure("Désolé, il existe deja un compte avec cette adresse mail, avez vous oublié votre mot de passe?")
                 return
             }

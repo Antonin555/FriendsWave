@@ -32,24 +32,19 @@
             android:layout_marginEnd="10dp"
             android:background="#4D7167" />
 
-        <LinearLayout
-            android:id="@+id/createYourFirstEvent"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_weight="0.5"
-            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView60"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_mono"
-                android:gravity="center"
-                android:text="Create Your First Event"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-        </LinearLayout>
+
+        <TextView
+            android:id="@+id/createYourFirstEvent"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_mono"
+            android:gravity="center"
+            android:text="Creer ton premier event et invite tes ami(e)s"
+            android:textColor="#FF8A65"
+            android:textSize="20sp" />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_my_event_private"
@@ -78,25 +73,19 @@
             android:layout_marginEnd="10dp"
             android:background="#4D7167" />
 
-        <LinearLayout
+
+        <TextView
             android:id="@+id/createYourFirstEventPublic"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
             android:layout_marginTop="20dp"
-            android:layout_weight="0.5"
-            android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_mono"
+            android:gravity="center"
+            android:text="Créer ton 1er event public et élargit ton cercle d'amis"
+            android:textColor="#FF8A65"
+            android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/textView61"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_mono"
-                android:gravity="center"
-                android:text="TextView"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
 
-        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_my_event_public"

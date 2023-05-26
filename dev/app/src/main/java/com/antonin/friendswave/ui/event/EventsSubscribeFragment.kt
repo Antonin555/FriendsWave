@@ -76,10 +76,16 @@ class EventsSubscribeFragment : Fragment(), KodeinAware{
 
         viewModel.eventListConfirm.observe(this){ eventList ->
             adapter1.addItems(eventList)
+            if(adapter1.itemCount != 0){
+                binding.eventConfirmFragment.visibility = View.GONE
+            }
         }
 
         viewModel.eventPendingPublic.observe(this){ eventList ->
             adapter2.addItems(eventList)
+            if(adapter2.itemCount != 0){
+                binding.eventPendingFragment.visibility = View.GONE
+            }
         }
 
         adapter1.setOnListItemViewClickListener(object : ListGeneriqueAdapter.OnListItemViewClickListener{

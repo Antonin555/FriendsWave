@@ -33,6 +33,16 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:background="#FF4D7167" />
+        <TextView
+            android:id="@+id/eventConfirmFragment"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_mono"
+            android:gravity="center"
+            android:text="Pas encore d'events confirmes"
+            android:textColor="#FF8A65"
+            android:textSize="20sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_my_event_inscrits"
@@ -60,7 +70,16 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:background="#FF4D7167" />
-
+        <TextView
+            android:id="@+id/eventPendingFragment"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_mono"
+            android:gravity="center"
+            android:text="Pas encore d'events en attente"
+            android:textColor="#FF8A65"
+            android:textSize="20sp" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_pending"
             android:layout_width="match_parent"

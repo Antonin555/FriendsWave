@@ -25,6 +25,7 @@ import com.antonin.friendswave.data.repository.UserRepo
 import com.antonin.friendswave.databinding.ActivityMyEventManageBinding
 import com.antonin.friendswave.outils.AlertDialog
 import com.antonin.friendswave.outils.AnimationLayout
+import com.antonin.friendswave.outils.goToActivityWithArgs
 import com.antonin.friendswave.ui.home.ProfilActivity
 import com.antonin.friendswave.ui.viewModel.EventFragmentVMFactory
 import com.antonin.friendswave.ui.viewModel.EventFragmentViewModel
@@ -142,11 +143,15 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
                         "Annuler", positiveDeleteGuest(event,idGuest!!), negativeButtonClickListener)
 
                 }else {
-
-                    val intent = Intent(view.context, ProfilActivity::class.java)
-                    intent.putExtra("uid", idGuest)
-                    startActivity(intent)
+                    goToActivityWithArgs(view.context,ProfilActivity::class.java,"uid" to idGuest!!)
                 }
+            }
+        })
+
+        adapter2.setOnListItemViewClickListener(object:ListGeneriqueAdapter.OnListItemViewClickListener{
+            override fun onClick(view: View, position: Int) {
+                val idGuest = viewModel.pending_guest_list.value!!.get(position).uid
+                goToActivityWithArgs(view.context,ProfilActivity::class.java,"uid" to idGuest!!)
             }
         })
 
@@ -162,7 +167,6 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
     val positiveButtonClickListener = DialogInterface.OnClickListener { _, which ->
         // Code à exécuter si le bouton positif est cliqué
         if (which == DialogInterface.BUTTON_POSITIVE) {
-
             viewModel.deleteEvent()
             finish()
         }
@@ -172,7 +176,6 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
         // Code à exécuter si le bouton négatif est cliqué
         if (which == DialogInterface.BUTTON_NEGATIVE) {
             toastShow(this,"ok on ne touche à rien")
-
         }
     }
 
@@ -252,9 +255,7 @@ class MyEventManageActivity : AppCompatActivity(), KodeinAware {
                 } else {
                     animation.collapse(view.rootView.findViewById(R.id.linear_description), 1000, 40)
                     bool_linear_description = true
-
                 }
-
             }
             if(view.id == R.id.linear_invitation){
 

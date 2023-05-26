@@ -57,7 +57,6 @@ class NotifFragmentViewModel (private val repository: UserRepo, private val repo
     fun acceptRequestEvent(user:User?){
 
         repoEvent.acceptRequestEvent(user)
-        fetchDemandeInscriptionEventPublic()
     }
 
 
