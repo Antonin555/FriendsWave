@@ -63,7 +63,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.1"
                     android:src="@drawable/envoi"
-                    android:onClick="@{() -> viewmodel.verifRequete()}"
+                    android:onClick="@{(v) -> viewmodel.addFriendRequestToUser(v)}"
                     tools:ignore="ContentDescription">
                 </ImageView>
 
