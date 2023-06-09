@@ -1,5 +1,6 @@
 package com.antonin.friendswave.ui.viewModel
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.os.Build
@@ -121,12 +122,14 @@ class HomeFragmentViewModel(private val repository: UserRepo):ViewModel() {
         }
     }
 
+    @SuppressLint("RestrictedApi")
     fun logout(view: View){
         repository.logout()
         val activity = view.context as Activity
 
         activity.finishAffinity()
         activity.finish()
+
 
     }
 

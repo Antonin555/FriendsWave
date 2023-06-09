@@ -528,5 +528,4 @@ class FirebaseSourceEvent {
 
         return path
     }
-
 }

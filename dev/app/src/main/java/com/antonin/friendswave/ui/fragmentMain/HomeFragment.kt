@@ -1,6 +1,7 @@
 package com.antonin.friendswave.ui.fragmentMain
 
 import android.Manifest
+import android.app.Fragment
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
