@@ -103,8 +103,8 @@
     <string name="by_city">ville</string>
     <string name="by_age">age</string>
 
-    <string name="api_key_google_map">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</string>
-    <string name="id_maps_pereso">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</string>
+    <string name="api_key_google_map">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</string>
+    <string name="id_maps_pereso">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</string>
 
     <string name="activity_group_chat">GROUP CHAT</string>
     <string name="activity_group_chat_information">INFORMATION</string>
